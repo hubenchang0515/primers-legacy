@@ -53,8 +53,8 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         return f"<table class='table is-fullwidth'>{text}</table>"
 
     def image(self, text, url, title=None):
-        if url.startswith("../.."):
-            wrapUrl = f"{self.__prefix}/{url[len('../..'):]}"
+        if url.startswith("/") and not url.startswith(self.__prefix):
+            wrapUrl = f"{self.__prefix}/{url[1:]}"
             return super().image(text, wrapUrl, title)
 
         return super().image(text, url, title)
@@ -216,10 +216,15 @@ class Renderer(object):
         self.__CURRENT_DIR = File(self.__CURRENT_FILE.dirpath())
         self.__DOCUMENT = self.__CURRENT_DIR.join("templates", "document.html")
         self.__SITEMAP = self.__CURRENT_DIR.join("templates", "sitemap.txt")
+        self.__RESOURCE_DIR = self.__CURRENT_DIR.join("..", "resource")
 
     def clean(self):
         buidldir = self.__CURRENT_DIR.join("..", "build")
         buidldir.remove()
+
+    def copy_resource(self):
+        targer = self.__CURRENT_DIR.join("..", "build", "Primers", "resource")
+        self.__RESOURCE_DIR.copyTo(targer.path())
 
     def render_sitamap(self, root:Node):
         with self.__SITEMAP.open() as fp:
@@ -251,6 +256,7 @@ if __name__ == "__main__":
     root:Node = Node("./document")
     renderer:Renderer = Renderer()
     renderer.clean()
+    renderer.copy_resource()
     renderer.render_sitamap(root)
     for category in root.subs():
         print(category.title())
