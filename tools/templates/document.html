@@ -123,8 +123,8 @@
                 </aside>
             {% endif %}
 
-            <div class="is-flex-grow-1 container">
-                <div class="content">
+            <div class="is-flex-grow-1 container is-flex is-flex-direction-column">
+                <div class="content is-flex-grow-1">
                     {{DOC.content()}}
                 </div>
 
@@ -151,14 +151,15 @@
                         async>
                 </script>
                 </div>
+
+                <div
+                <footer>
+                    <div class="has-text-centered">
+                        Powered by <a class="has-text-primary" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                    </div>
+                </footer>
             </div>
         </div>
-
-        <footer>
-            <div class="has-text-centered">
-                Powered by <a class="has-text-primary" href="https://github.com/hubenchang0515/Primers">Primers</a>
-            </div>
-        </footer>
 
         <div class="has-text-centered" style="position: fixed; bottom: 8px; right: 8px">
             <a class="github-button" href="https://github.com/hubenchang0515/Primers" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star hubenchang0515/Primers on GitHub">Star</a>
