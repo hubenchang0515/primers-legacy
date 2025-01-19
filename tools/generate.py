@@ -62,7 +62,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
     def codespan(self, text):
         return f"<code class='has-text-danger'>{text}</code>"
     
-    def block_code(self, code, info):
+    def block_code(self, code, info=None):
         if not info:
             return f'<pre><code>{mistune.escape(code)}</code></pre>\n'
         
