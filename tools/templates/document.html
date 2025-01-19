@@ -1,0 +1,167 @@
+
+<html lang="zh" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Primers - Learn to Program From Scratch</title>
+    <meta name="description" content="Programming tutorials including Python, Lua and etc. - {{DESCRIPTION}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <style>
+        :root {
+            --bulma-body-overflow-y: auto;
+        }
+
+        .aside-menu {
+            padding: 16px;
+            height: 100%;
+            width: 300px;
+            overflow: auto;
+        }
+
+        @media (max-width: 768px) {
+            .aside-menu {
+                position: absolute;
+                padding: 0;
+                height: 100%;
+                width: 0;
+                overflow: hidden;
+                transition: all 1s ease; 
+            }
+
+            .aside-menu.is-active {
+                position: absolute;
+                padding: 16px;
+                height: 100%;
+                width: 90%;
+                overflow-x: hidden;
+                overflow-y: auto;
+                transition: all 1s ease;
+            }
+        }
+
+        {{STYLE}}
+    </style>
+    <script>
+        function toggleNavTabs(query) {
+            const nodes = document.querySelectorAll(query);
+            for (const node of nodes) {
+                if (node.classList.contains('is-active')) {
+                    node.classList.remove('is-active')
+                } else {
+                    node.classList.add('is-active')
+                }
+            }
+        }
+    </script>
+</head>
+
+<body style="height: 100%;">
+    <div id="root" class="is-flex is-flex-direction-column" style="height: 100%;">
+        <nav class="navbar is-primary" role="navigation" >
+            
+            <div class="navbar-brand">
+                <button class="button is-primary is-hidden-desktop" onclick="toggleNavTabs('.aside-menu')">
+                    <span class="icon is-small has-text-white">
+                        <i class="fa-solid fa-right-left"></i>
+                    </span>
+                </button>
+                <a class="navbar-item" href="{{PREFIX}}">
+                    <p class="title has-text-white">Primers</p>
+                </a>
+
+                <a class="navbar-burger has-text-white" role="button" onclick="toggleNavTabs('.navbar-menu,.navbar-burger')">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navtabs" class="navbar-menu is-white">
+                <div class="navbar-start">
+                    {% for category in ROOT.subs() %}
+                        {% if category.isdir() %}
+                            {% if category == CATEGORY %}
+                                <a class="navbar-item has-text-white" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                            {% else %}
+                                <a class="navbar-item has-text-light" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </nav>
+        
+        <div class="is-flex is-flex-grow-1 is-flex-direction-row">
+            {% if CATEGORY.isdir() %}
+                <aside class="aside-menu menu has-background-success">
+                    {% for chapter in CATEGORY.subs() %}
+                        {% if chapter.isdir() %}
+                            <p class="menu-label has-text-white">{{chapter.title()}}</p>
+                            <ul class="menu-list">
+                                {% for doc in chapter.subs() %}
+                                    {% if doc == DOC %}
+                                        <li><a class="has-background-info has-text-white" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html">{{doc.title()}}</a></li>
+                                    {% else %}
+                                        <li><a class="has-background-success has-text-light" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html">{{doc.title()}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <ul class="menu-list">
+                                {% if chapter == DOC %}
+                                    <li><a class="has-background-info has-text-white" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html">{{chapter.title()}}</a></li>
+                                {% else %}
+                                    <li><a class="has-background-success has-text-light" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html">{{chapter.title()}}</a></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </aside>
+            {% endif %}
+
+            <div class="is-flex-grow-1 container">
+                <div class="content">
+                    {{DOC.content()}}
+                </div>
+
+                <div class="content">
+                    <div class="notification">
+                        此页 更新于: {{DOC.update_time()}} 创建于: {{DOC.create_time()}}
+                    </div>
+                </div>
+
+                <div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="hubenchang0515/Primers"
+                        data-repo-id="R_kgDONsZmvQ"
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDONsZmvc4CmJzV"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="preferred_color_scheme"
+                        data-lang="zh-CN"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="has-text-centered">
+                Powered by <a class="has-text-primary" href="https://github.com/hubenchang0515/Primers">Primers</a>
+            </div>
+        </footer>
+
+        <div class="has-text-centered" style="position: fixed; bottom: 8px; right: 8px">
+            <a class="github-button" href="https://github.com/hubenchang0515/Primers" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star hubenchang0515/Primers on GitHub">Star</a>
+        </div>
+    </div>
+</body>
+</html>
