@@ -225,7 +225,7 @@ class Renderer(object):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
             file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
-            content = renderer.render(PREFIX="/Primers", ROOT=root)
+            content = renderer.render(PREFIX="https://hubenchang0515.github.io/Primers", ROOT=root)
 
         with file.open("w") as fp:
             fp.write(content)
@@ -235,7 +235,7 @@ class Renderer(object):
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
 
-            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='emacs').get_style_defs('.highlight'))
+            content = renderer.render(PREFIX="https://hubenchang0515.github.io/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='emacs').get_style_defs('.highlight'))
         if depth3 == depth1:
             file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
         elif depth3 == depth2:
