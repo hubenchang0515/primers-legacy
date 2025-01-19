@@ -79,7 +79,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         else:
             lexer = get_lexer_by_name(infos[0], stripall=True)
             formatter = html.HtmlFormatter(style='emacs')
-            return highlight(code, lexer, formatter)
+            return f"<div class='block'>{highlight(code, lexer, formatter)}</div>"
 
 class File(object):
     '''
