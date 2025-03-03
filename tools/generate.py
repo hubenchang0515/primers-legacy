@@ -23,7 +23,11 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
     def heading(self, text:str, level, **attrs):
         _id = hashlib.sha256(text.encode('utf-8')).hexdigest()[:6]
-        return f"<h{level} id='{_id}' class='title is-{level}'><a class='has-text-info' href='#{_id}'>#</a> {text}</h{level}>"
+        if level < 4:
+            return f"<h{level} id='{_id}' class='view-h{level+2}'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
+        else:
+
+            return f"<h{level} id='{_id}' class='view-em'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
     
     def paragraph(self, text):
         if text.startswith('!class:'):
@@ -32,35 +36,35 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             content = '\n'.join(lines[1:])
             return f"<div class='{classList}'>{content}</div>"
         else:
-            return f"<p class='content'>{text}</p>"
+            return f"<p class='view-p'>{text}</p>"
     
     def link(self, text, url, title=None):
         if title:
-            return f"<a class='has-text-info' title='{title}' href='{url}' target='_blank'>{text}</a>"
+            return f"<a class='view-text-primary' title='{title}' href='{url}' target='_blank'>{text}</a>"
         else:
-            return f"<a class='has-text-info' href='{url}' target='_blank'>{text}</a>"
+            return f"<a class='view-text-primary' href='{url}' target='_blank'>{text}</a>"
     
     def block_quote(self, text):
-        return f"<div class='content'><blockquote>{text}</blockquote></div>"
+        return f"<div><blockquote>{text}</blockquote></div>"
 
     def list(self, text, ordered, **attrs):
         if ordered:
-            return f"<div class='content'><ol>{text}</ol></div>"
+            return f"<div><ol>{text}</ol></div>"
         else:
-            return f"<div class='content'><ul>{text}</ul></div>"
+            return f"<div><ul>{text}</ul></div>"
         
     def table(self, text):
-        return f"<table class='table is-fullwidth'>{text}</table>"
+        return f"<table class='view-width-100'>{text}</table>"
 
     def image(self, text, url, title=None):
         if url.startswith("/") and not url.startswith(self.__prefix):
             wrapUrl = f"{self.__prefix}/{url[1:]}"
-            return super().image(text, wrapUrl, title)
+            return f"<img class='view-dark-filter' src='{wrapUrl}' alt='{text}' title={title}>"
 
-        return super().image(text, url, title)
+        return f"<img class='view-dark-filter' src='{url}' alt='{text}' title={title}>"
     
     def codespan(self, text):
-        return f"<code class='has-text-danger'>{text}</code>"
+        return f"<code class='view-text-secondary view-border-1 view-border-secondary'>{text}</code>"
     
     def block_code(self, code, info=None):
         if not info:
@@ -230,7 +234,7 @@ class Renderer(object):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
             file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
-            content = renderer.render(PREFIX="https://hubenchang0515.github.io/Primers", ROOT=root)
+            content = renderer.render(PREFIX="/Primers", ROOT=root)
 
         with file.open("w") as fp:
             fp.write(content)
@@ -240,7 +244,7 @@ class Renderer(object):
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
 
-            content = renderer.render(PREFIX="https://hubenchang0515.github.io/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='emacs').get_style_defs('.highlight'))
+            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='emacs').get_style_defs('.highlight'))
         if depth3 == depth1:
             file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
         elif depth3 == depth2:
