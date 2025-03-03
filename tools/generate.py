@@ -223,7 +223,7 @@ class Renderer(object):
         self.__RESOURCE_DIR = self.__CURRENT_DIR.join("..", "resource")
 
     def clean(self):
-        buidldir = self.__CURRENT_DIR.join("..", "build")
+        buidldir = self.__CURRENT_DIR.join("..", "build", "Primers")
         buidldir.remove()
 
     def copy_resource(self):
