@@ -36,9 +36,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
     
     def link(self, text, url, title=None):
         if title:
-            return f"<a class='has-text-info' title='{title}' href='{url}'>{text}</a>"
+            return f"<a class='has-text-info' title='{title}' href='{url}' target='_blank'>{text}</a>"
         else:
-            return f"<a class='has-text-info' href='{url}'>{text}</a>"
+            return f"<a class='has-text-info' href='{url}' target='_blank'>{text}</a>"
     
     def block_quote(self, text):
         return f"<div class='content'><blockquote>{text}</blockquote></div>"
