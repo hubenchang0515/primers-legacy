@@ -7,12 +7,18 @@
     <meta name="description" content="Programming tutorials including Python, Lua and etc. - {{DESCRIPTION}}">
     <link rel="stylesheet" href="https://hubenchang0515.github.io/view/view.css">
     <style>
+        #side-menu {
+            width: 16rem;
+            transition: all 1s;
+        }
+
         .markdown-content * {
             margin-block-start: 1rem;
             margin-block-end: 1rem;
             margin-inline-start: 0px;
             margin-inline-end: 0px;
             max-width: 100%;
+            min-width: 16rem;
         }
 
         {{STYLE}}
@@ -25,11 +31,22 @@
         gtag('js', new Date());
         gtag('config', 'G-HEWPX7E6EV');
     </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            console.log(menu.style.width)
+            if (menu.style.width === '0px') {
+                menu.style.width = '16rem';
+            } else {
+                menu.style.width = '0px';
+            }
+        }
+    </script>
 </head>
 
 <body class="view-height-100">
     <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
-        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1" role="navigation" >
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
             <a class="view-text-light view-text-decoration-none" href="{{PREFIX}}">
                 <h5 class="view-padding-x-2">Primers</h5>
             </a>
@@ -38,7 +55,7 @@
                     {% if category == CATEGORY %}
                         <a class="view-text-light view-text-decoration-solid" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% else %}
-                        <a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                    <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -46,30 +63,39 @@
         
         <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
             {% if CATEGORY.isdir() %}
-                <aside class="view-background-hint view-overflow-auto view-flex-shrink-0 view-padding-x-1" style="width: 280px;">
-                    {% for chapter in CATEGORY.subs() %}
-                        {% if chapter.isdir() %}
-                            <p class="view-text-blue">{{chapter.title()}}</p>
-                            <ul>
-                                {% for doc in chapter.subs() %}
-                                    {% if doc == DOC %}
-                                        <p><a class="view-text-cyan view-text-decoration-solid" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html">{{doc.title()}}</a></p>
+                <aside id="side-menu" class="view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        {% for chapter in CATEGORY.subs() %}
+                            {% if chapter.isdir() %}
+                                <p class="view-text-miku">{{chapter.title()}}</p>
+                                <ul class="view-padding-0">
+                                    {% for doc in chapter.subs() %}
+                                        {% if doc == DOC %}
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
+                                        {% else %}
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <ul class="view-padding-0">
+                                    {% if chapter == DOC %}
+                                        <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
                                     {% else %}
-                                        <p><a class="view-text-blue view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html">{{doc.title()}}</a></p>
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
                                     {% endif %}
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <ul class="menu-list">
-                                {% if chapter == DOC %}
-                                    <p><a class="view-text-cyan view-text-decoration-solid" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html">{{chapter.title()}}</a></p>
-                                {% else %}
-                                    <p><a class="view-text-blue view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html">{{chapter.title()}}</a></p>
-                                {% endif %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://github.com/hubenchang0515/Primers">GitHub</a>
+                        </div>
+                    </div>
                 </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
             {% endif %}
 
             <div class="view-flex-grow-1 view-overflow-auto view-height-100">
