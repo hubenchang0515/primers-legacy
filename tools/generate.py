@@ -24,10 +24,10 @@ class MarkdownRenderer(mistune.HTMLRenderer):
     def heading(self, text:str, level, **attrs):
         _id = hashlib.sha256(text.encode('utf-8')).hexdigest()[:6]
         if level < 4:
-            return f"<h{level} id='{_id}' class='view-h{level+2}'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
+            return f"<h{level} id='{_id}' class='view-h{level+3}'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
         else:
 
-            return f"<h{level} id='{_id}' class='view-em'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
+            return f"<h{level} id='{_id}' class='view-p view-strong'><a class='view-text-miku' href='#{_id}'>#</a> {text}</h{level}>"
     
     def paragraph(self, text):
         if text.startswith('!class:'):
@@ -83,7 +83,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         else:
             lexer = get_lexer_by_name(infos[0], stripall=True)
             formatter = html.HtmlFormatter(style='nord')
-            return highlight(code, lexer, formatter)
+            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
 
 class File(object):
     '''
