@@ -82,8 +82,8 @@ class MarkdownRenderer(mistune.HTMLRenderer):
                 return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/?lane={infos[0]}&code={b64code}'></iframe>"
         else:
             lexer = get_lexer_by_name(infos[0], stripall=True)
-            formatter = html.HtmlFormatter(style='emacs')
-            return f"<div class='block'>{highlight(code, lexer, formatter)}</div>"
+            formatter = html.HtmlFormatter(style='nord')
+            return highlight(code, lexer, formatter)
 
 class File(object):
     '''
@@ -244,7 +244,7 @@ class Renderer(object):
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
 
-            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='emacs').get_style_defs('.highlight'))
+            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
         if depth3 == depth1:
             file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
         elif depth3 == depth2:
