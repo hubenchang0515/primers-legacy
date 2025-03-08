@@ -1,4 +1,5 @@
 import os
+import re
 import stat
 import shutil
 import subprocess
@@ -131,7 +132,7 @@ class File(object):
             os.chmod(self.__path, stat.S_IRWXU)
             os.rmdir(self.__path)
     
-    def open(self, mode:str="r", encoding="utf-8") -> any:
+    def open(self, mode:str="r", encoding="utf-8"):
         if not os.path.exists(self.dirpath()):
             os.makedirs(self.dirpath())
 
@@ -213,6 +214,12 @@ class Node(object):
                                 ])
         with self.__file.open() as fp:
             return mark(fp.read())
+        
+    def brief(self) -> str:
+        with self.__file.open() as fp:
+            text = str(fp.read(150))
+            return re.sub(r"\s+", "", text)
+
 
 class Renderer(object):
     def __init__(self):
@@ -240,11 +247,16 @@ class Renderer(object):
             fp.write(content)
 
     def render(self, root:Node, depth1:Node, depth2:Node, depth3:Node):
+
+        title = ""
+        title += f" - {depth1.title()}" if depth1.title() != "index" else ""
+        title += f" - {depth2.title()}" if depth2.title() != "index" else ""
+        title += f" - {depth3.title()}" if depth3.title() != "index" else ""
         
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
+            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
 
-            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
         if depth3 == depth1:
             file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
         elif depth3 == depth2:

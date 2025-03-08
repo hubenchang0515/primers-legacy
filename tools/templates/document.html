@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg+xml" href="{{PREFIX}}/resource/icon.svg">
-    <title>Primers - Learn to Program From Scratch</title>
-    <meta name="description" content="Programming tutorials including Python, Lua and etc. - {{DESCRIPTION}}">
+    <title>Primers{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
     <link rel="stylesheet" href="https://hubenchang0515.github.io/view/view.css">
     <style>
         #side-menu {
@@ -64,7 +64,7 @@
                     {% if category == CATEGORY %}
                         <a class="view-text-light view-text-decoration-solid" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% else %}
-                    <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% endif %}
                 {% endif %}
             {% endfor %}
