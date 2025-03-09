@@ -218,7 +218,7 @@ class Node(object):
     def brief(self) -> str:
         with self.__file.open() as fp:
             text = str(fp.read(150))
-            return re.sub(r"\s+", "", text)
+            return re.sub(r"[\s#>]+", "", text)
 
 
 class Renderer(object):
