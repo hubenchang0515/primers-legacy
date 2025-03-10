@@ -65,6 +65,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         return f"<img class='view-dark-filter' src='{url}' alt='{text}' title={title}>"
     
     def codespan(self, text):
+        text = text.replace("&amp;", "&")
         return f"<code class='view-text-secondary view-border-1 view-border-secondary'>{text}</code>"
     
     def block_code(self, code, info=None):
