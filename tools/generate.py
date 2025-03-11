@@ -79,9 +79,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/?lang={infos[0]}&input={b64input}&code={b64code}'></iframe>"
+                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe>"
             else:
-                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/?lang={infos[0]}&code={b64code}'></iframe>"
+                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/index.html?lang={infos[0]}&code={b64code}'></iframe>"
         else:
             lexer = get_lexer_by_name(infos[0], stripall=True)
             formatter = html.HtmlFormatter(style='nord')
