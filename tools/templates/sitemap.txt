@@ -1,8 +1,8 @@
-{{PREFIX}}/index.html
+{{DOMAIN}}{{PREFIX}}/index.html
 {%- for category in ROOT.subs() %}
 {%- for chapter in category.subs() %}
 {%- for doc in chapter.subs() %}
-{{PREFIX}}/{{category.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html
+{{DOMAIN}}{{PREFIX}}/{{category.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html
 {%- endfor %}
 {%- endfor %}
 {%- endfor %}

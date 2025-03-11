@@ -242,7 +242,7 @@ class Renderer(object):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
             file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
-            content = renderer.render(PREFIX="/Primers", ROOT=root)
+            content = renderer.render(DOMAIN="https://hubenchang0515.github.io", PREFIX="/Primers", ROOT=root)
 
         with file.open("w") as fp:
             fp.write(content)
