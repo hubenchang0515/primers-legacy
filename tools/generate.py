@@ -13,6 +13,10 @@ from pygments.formatters import html
 from urllib.parse import quote
 from jinja2 import Template
 
+SELF_DOMAIN:str = "https://primers.planc.moe"
+SELF_PREFIX:str = ""
+SHIFT_DOMAIN:str = "https://shift.planc.moe"
+
 class MarkdownRenderer(mistune.HTMLRenderer):
     '''
     Markdown 渲染器
@@ -59,7 +63,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
     def image(self, text, url, title=None):
         if url.startswith("/") and not url.startswith(self.__prefix):
-            wrapUrl = f"{self.__prefix}/{url[1:]}"
+            wrapUrl = f"/{self.__prefix}/{url[1:]}"
             return f"<img class='view-dark-filter' src='{wrapUrl}' alt='{text}' title={title}>"
 
         return f"<img class='view-dark-filter' src='{url}' alt='{text}' title={title}>"
@@ -79,9 +83,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe>"
+                return f" <iframe width='100%' height='600' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe>"
             else:
-                return f" <iframe width='100%' height='600' src='https://hubenchang0515.github.io/shift/index.html?lang={infos[0]}&code={b64code}'></iframe>"
+                return f" <iframe width='100%' height='600' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&code={b64code}'></iframe>"
         else:
             lexer = get_lexer_by_name(infos[0], stripall=True)
             formatter = html.HtmlFormatter(style='nord')
@@ -198,7 +202,7 @@ class Node(object):
         return self.__mtime.strftime("%Y-%m-%d %H:%M:%S")
     
     def content(self) -> str:
-        mark = mistune.create_markdown(renderer=MarkdownRenderer("/Primers", escape=False),
+        mark = mistune.create_markdown(renderer=MarkdownRenderer("", escape=False),
                                 plugins=[
                                     'strikethrough', 
                                     'footnotes', 
@@ -242,7 +246,7 @@ class Renderer(object):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
             file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
-            content = renderer.render(DOMAIN="https://hubenchang0515.github.io", PREFIX="/Primers", ROOT=root)
+            content = renderer.render(DOMAIN=SELF_DOMAIN, PREFIX=SELF_PREFIX, ROOT=root)
 
         with file.open("w") as fp:
             fp.write(content)
@@ -256,7 +260,7 @@ class Renderer(object):
         
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
-            content = renderer.render(PREFIX="/Primers", ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
+            content = renderer.render(PREFIX=SELF_PREFIX, ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
 
         if depth3 == depth1:
             file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
