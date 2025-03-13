@@ -233,6 +233,7 @@ class Renderer(object):
         self.__DOCUMENT = self.__CURRENT_DIR.join("templates", "document.html")
         self.__SITEMAP = self.__CURRENT_DIR.join("templates", "sitemap.txt")
         self.__RESOURCE_DIR = self.__CURRENT_DIR.join("..", "resource")
+        self.__STATIC_DIR = self.__CURRENT_DIR.join("..", "static")
 
     def clean(self):
         buidldir = self.__CURRENT_DIR.join("..", "build", "Primers")
@@ -241,6 +242,10 @@ class Renderer(object):
     def copy_resource(self):
         targer = self.__CURRENT_DIR.join("..", "build", "Primers", "resource")
         self.__RESOURCE_DIR.copyTo(targer.path())
+
+    def copy_static(self):
+        targer = self.__CURRENT_DIR.join("..", "build", "Primers")
+        self.__STATIC_DIR.copyTo(targer.path())
 
     def render_sitamap(self, root:Node):
         with self.__SITEMAP.open() as fp:
@@ -278,6 +283,7 @@ if __name__ == "__main__":
     renderer:Renderer = Renderer()
     renderer.clean()
     renderer.copy_resource()
+    renderer.copy_static()
     renderer.render_sitamap(root)
     for category in root.subs():
         print(category.title())
