@@ -13,9 +13,9 @@ from pygments.formatters import html
 from urllib.parse import quote
 from jinja2 import Template
 
-SELF_DOMAIN:str = "https://primers.planc.moe"
-SELF_PREFIX:str = ""
-SHIFT_DOMAIN:str = "https://shift.planc.moe"
+PRIMERS_DOMAIN:str = "https://xplanc.org"
+PRIMERS_PREFIX:str = "/Primers"
+SHIFT_URL:str = "https://xplanc.org/shift/index.html"
 
 class MarkdownRenderer(mistune.HTMLRenderer):
     '''
@@ -66,7 +66,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
     def image(self, text, url, title=None):
         if url.startswith("/") and not url.startswith(self.__prefix):
-            wrapUrl = f"/{self.__prefix}/{url[1:]}"
+            wrapUrl = f"{self.__prefix}/{url[1:]}"
             return f"<img class='view-dark-filter' src='{wrapUrl}' alt='{text}' title={title}>"
 
         return f"<img class='view-dark-filter' src='{url}' alt='{text}' title={title}>"
@@ -76,21 +76,22 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         return f"<code class='view-text-secondary view-border-1 view-border-secondary'>{text}</code>"
     
     def block_code(self, code, info=None):
+        formatter = html.HtmlFormatter(style='nord')
         if not info:
-            return f'<pre><code>{mistune.escape(code)}</code></pre>\n'
+            lexer = get_lexer_by_name('text', stripall=True)
+            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
         
         infos = info.split(" ")
         lexer = get_lexer_by_name(infos[0], stripall=True)
-        formatter = html.HtmlFormatter(style='nord')
         
         if len(infos) > 1 and infos[1] == 'shift':
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
 
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
             else:
-                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&code={b64code}'></iframe></div>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&code={b64code}'></iframe></div>"
         else:
             return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
 
@@ -205,7 +206,7 @@ class Node(object):
         return self.__mtime.strftime("%Y-%m-%d %H:%M:%S")
     
     def content(self) -> str:
-        mark = mistune.create_markdown(renderer=MarkdownRenderer("", escape=False),
+        mark = mistune.create_markdown(renderer=MarkdownRenderer(PRIMERS_PREFIX, escape=False),
                                 plugins=[
                                     'strikethrough', 
                                     'footnotes', 
@@ -254,7 +255,7 @@ class Renderer(object):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
             file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
-            content = renderer.render(DOMAIN=SELF_DOMAIN, PREFIX=SELF_PREFIX, ROOT=root)
+            content = renderer.render(DOMAIN=PRIMERS_DOMAIN, PREFIX=PRIMERS_PREFIX, ROOT=root)
 
         with file.open("w") as fp:
             fp.write(content)
@@ -268,7 +269,7 @@ class Renderer(object):
         
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
-            content = renderer.render(PREFIX=SELF_PREFIX, ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
+            content = renderer.render(PREFIX=PRIMERS_PREFIX, ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
 
         if depth3 == depth1:
             if depth1.title() == "index":

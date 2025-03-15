@@ -6,8 +6,8 @@
     <link rel="icon" type="image/svg+xml" href="{{PREFIX}}/icon.svg">
     <title>Primers{{TITLE}}</title>
     <meta name="description" content="{{DESCRIPTION}}">
-    <link rel="stylesheet" href="/view/view.css">
-    <script src="/MathJax/es5/tex-svg.js" async></script>
+    <link rel="stylesheet" href="{{PREFIX}}/view/view.css">
+    <script src="{{PREFIX}}/MathJax/es5/tex-svg.js" async></script>
     <style>
         #side-menu {
             width: 16rem;
@@ -18,12 +18,15 @@
             min-width: 16rem;
         }
 
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
         .markdown-content > * {
             margin-block-start: 1rem;
             margin-block-end: 1rem;
             margin-inline-start: 0px;
             margin-inline-end: 0px;
-            max-width: 100%;
         }
 
         .markdown-content .highlight pre {
