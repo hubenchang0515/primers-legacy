@@ -58,6 +58,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         else:
             return f"<div><ul>{text}</ul></div>"
         
+    def list_item(self, text):
+        return f"<li><p>{text}</p></li>"
+        
     def table(self, text):
         return f"<table class='view-width-100'>{text}</table>"
 
@@ -269,11 +272,14 @@ class Renderer(object):
             content = renderer.render(PREFIX=SELF_PREFIX, ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
 
         if depth3 == depth1:
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html')
+            if depth1.title() == "index":
+                file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html') # index 特殊处理，创建到根目录
+            else:
+                file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title() + '.html')
         elif depth3 == depth2:
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title(), depth2.title() + '.html')
+            file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title(), depth2.title() + '.html')
         else:
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title(), depth2.title(), depth3.title() + '.html')
+            file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title(), depth2.title(), depth3.title() + '.html')
 
         with file.open("w") as fp:
             fp.write(content)

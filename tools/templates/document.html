@@ -68,9 +68,9 @@
             {% for category in ROOT.subs() %}
                 {% if category.isdir() %}
                     {% if category == CATEGORY %}
-                        <a class="view-text-light view-text-decoration-solid" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                        <a class="view-text-light view-text-decoration-solid" href="{{PREFIX}}/document/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% else %}
-                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/{{category.urlPath()}}/index.html">{{category.title()}}</a>
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -86,18 +86,18 @@
                                 <ul class="view-padding-0">
                                     {% for doc in chapter.subs() %}
                                         {% if doc == DOC %}
-                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
                                         {% else %}
-                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
                             {% else %}
                                 <ul class="view-padding-0">
                                     {% if chapter == DOC %}
-                                        <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
+                                        <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
                                     {% else %}
-                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}.html" title="{{chapter.title()}}">{{chapter.title()}}</a></p>
                                     {% endif %}
                                 </ul>
                             {% endif %}

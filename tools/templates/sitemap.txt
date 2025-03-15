@@ -2,7 +2,7 @@
 {%- for category in ROOT.subs() %}
 {%- for chapter in category.subs() %}
 {%- for doc in chapter.subs() %}
-{{DOMAIN}}{{PREFIX}}/{{category.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html
+{{DOMAIN}}{{PREFIX}}/document/{{category.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html
 {%- endfor %}
 {%- endfor %}
 {%- endfor %}
