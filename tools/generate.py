@@ -50,13 +50,13 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return f"<a class='view-text-primary' href='{url}' target='_blank'>{text}</a>"
     
     def block_quote(self, text):
-        return f"<div><blockquote>{text}</blockquote></div>"
+        return f"<blockquote>{text}</blockquote>"
 
     def list(self, text, ordered, **attrs):
         if ordered:
-            return f"<div><ol>{text}</ol></div>"
+            return f"<ol>{text}</ol>"
         else:
-            return f"<div><ul>{text}</ul></div>"
+            return f"<ul>{text}</ul>"
         
     def list_item(self, text):
         return f"<li><p>{text}</p></li>"
@@ -80,19 +80,18 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return f'<pre><code>{mistune.escape(code)}</code></pre>\n'
         
         infos = info.split(" ")
+        lexer = get_lexer_by_name(infos[0], stripall=True)
+        formatter = html.HtmlFormatter(style='nord')
         
         if len(infos) > 1 and infos[1] == 'shift':
-            desc:str = mistune.escape(code).replace("\n", r"\n").replace("'", '"')
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
 
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f" <iframe width='100%' height='600' loading='lazy' title='{desc}' aria-describedby='{desc}' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
             else:
-                return f" <iframe width='100%' height='600' loading='lazy' title='{desc}' aria-describedby='{desc}' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&code={b64code}'></iframe>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_DOMAIN}/index.html?lang={infos[0]}&code={b64code}'></iframe></div>"
         else:
-            lexer = get_lexer_by_name(infos[0], stripall=True)
-            formatter = html.HtmlFormatter(style='nord')
             return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
 
 class File(object):

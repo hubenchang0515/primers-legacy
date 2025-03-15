@@ -1500,6 +1500,31 @@ pre > code {
     background-color: var(--view-color-red);
 }
 
+.view-overlap-container {
+    position:relative;
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
+.view-overlap-layer {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
 @media (prefers-color-scheme: dark) {
     .view-dark-filter {
         filter: brightness(0.5);
