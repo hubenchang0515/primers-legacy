@@ -12,6 +12,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import html
 from urllib.parse import quote
 from jinja2 import Template
+import graphviz
 
 PRIMERS_DOMAIN:str = "https://xplanc.org"
 PRIMERS_PREFIX:str = "/Primers"
@@ -24,7 +25,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
 
     def __init__(self, prefix:str, escape=True, allow_harmful_protocols=None):
         super().__init__(escape, allow_harmful_protocols)
-        self.__prefix = prefix
+        self.__CURRENT_FILE = File(__file__)
+        self.__CURRENT_DIR = File(self.__CURRENT_FILE.dirpath())
+        self.__PREFIX = prefix
 
     def heading(self, text:str, level, **attrs):
         _id = hashlib.sha256(text.encode('utf-8')).hexdigest()[:6]
@@ -65,8 +68,8 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         return f"<table class='view-width-100'>{text}</table>"
 
     def image(self, text, url, title=None):
-        if url.startswith("/") and not url.startswith(self.__prefix):
-            wrapUrl = f"{self.__prefix}/{url[1:]}"
+        if url.startswith("/") and not url.startswith(self.__PREFIX):
+            wrapUrl = f"{self.__PREFIX}/{url[1:]}"
             return f"<img class='view-dark-filter' src='{wrapUrl}' alt='{text}' title={title}>"
 
         return f"<img class='view-dark-filter' src='{url}' alt='{text}' title={title}>"
@@ -84,16 +87,24 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         infos = info.split(" ")
         lexer = get_lexer_by_name(infos[0], stripall=True)
         
-        if len(infos) > 1 and infos[1] == 'shift':
+        # 生成图片
+        if infos[0] == 'graphviz':
+            src = graphviz.Source(code)
+            id = hashlib.sha256(code.encode('utf-8')).hexdigest()
+            path = self.__CURRENT_DIR.join("..", "build", "Primers", "resource", "__graphviz", id)
+            src.render(path.path(), format='svg', cleanup=True)
+            return f"<img src='{self.__PREFIX}/resource/__graphviz/{id}.svg'/>"
+        # 普通代码
+        elif len(infos) < 2:
+            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
+        # 使用 shift 运行代码
+        elif infos[1] == 'shift':
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
-
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
                 return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
             else:
                 return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&code={b64code}'></iframe></div>"
-        else:
-            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
 
 class File(object):
     '''
