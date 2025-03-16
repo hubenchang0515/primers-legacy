@@ -10,8 +10,25 @@
     <script src="{{PREFIX}}/MathJax/es5/tex-svg.js" async></script>
     <style>
         #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
             width: 16rem;
-            transition: all 1s;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
         }
 
         .markdown-content {
@@ -52,11 +69,12 @@
     <script>
         function toggleMenu() {
             const menu = document.querySelector("#side-menu");
-            console.log(menu.style.width)
-            if (menu.style.width === '0px') {
-                menu.style.width = '16rem';
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
             } else {
-                menu.style.width = '0px';
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
             }
         }
     </script>
@@ -81,7 +99,7 @@
         
         <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
             {% if CATEGORY.isdir() %}
-                <aside id="side-menu" class="view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
                     <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
                         {% for chapter in CATEGORY.subs() %}
                             {% if chapter.isdir() %}
