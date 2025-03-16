@@ -85,20 +85,20 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
         
         infos = info.split(" ")
-        lexer = get_lexer_by_name(infos[0], stripall=True)
         
         # 生成图片
-        if infos[0] == 'graphviz':
-            src = graphviz.Source(code)
-            id = hashlib.sha256(code.encode('utf-8')).hexdigest()
-            path = self.__CURRENT_DIR.join("..", "build", "Primers", "resource", "__graphviz", id)
-            src.render(path.path(), format='svg', cleanup=True)
-            return f"<img src='{self.__PREFIX}/resource/__graphviz/{id}.svg'/>"
+        if infos[0] == 'svg':
+            return code
+        elif infos[0] == 'graphviz':
+            src = graphviz.Source(code, format='svg')
+            return src.pipe().decode('utf-8')
         # 普通代码
         elif len(infos) < 2:
+            lexer = get_lexer_by_name(infos[0], stripall=True)
             return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
         # 使用 shift 运行代码
         elif infos[1] == 'shift':
+            lexer = get_lexer_by_name(infos[0], stripall=True)
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
