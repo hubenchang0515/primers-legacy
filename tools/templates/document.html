@@ -46,8 +46,10 @@
             margin-inline-end: 0px;
         }
 
-        .markdown-content img,
-        .markdown-content svg {
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
             display: block;
             margin: 0 auto;
             max-width: 100%;
