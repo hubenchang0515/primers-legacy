@@ -87,7 +87,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         infos = info.split(" ")
         
         # 生成图片
-        if infos[0] == 'svg':
+        if infos[0] == 'embed':
             return code
         elif infos[0] == 'graphviz':
             src = graphviz.Source(code, format='svg')
