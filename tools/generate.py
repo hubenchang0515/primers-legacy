@@ -271,6 +271,17 @@ class Renderer(object):
         with file.open("w") as fp:
             fp.write(content)
 
+    def doc_path(self, category:Node, chapter:Node, doc:Node):
+        if category.title() == "index":
+            return "/index.html"
+        elif category == doc:
+            return f"/document/{doc.urlPath()}.html"
+        elif chapter == doc:
+            return f"/document/{category.urlPath()}/{doc.urlPath()}.html"
+        else:
+            return f"/document/{category.urlPath()}/{chapter.urlPath()}/{doc.urlPath()}.html"
+
+
     def render(self, root:Node, depth1:Node, depth2:Node, depth3:Node):
 
         title = ""
@@ -280,7 +291,16 @@ class Renderer(object):
         
         with self.__DOCUMENT.open() as fp:
             renderer:Template = Template(fp.read())
-            content = renderer.render(PREFIX=PRIMERS_PREFIX, ROOT=root, CATEGORY=depth1, CHAPTER=depth2, DOC=depth3, TITLE=title, DESCRIPTION=depth3.brief(), STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
+            content = renderer.render(DOMAIN=PRIMERS_DOMAIN, 
+                                      PREFIX=PRIMERS_PREFIX, 
+                                      ROOT=root, 
+                                      CATEGORY=depth1, 
+                                      CHAPTER=depth2, 
+                                      DOC=depth3, 
+                                      TITLE=title, 
+                                      CANONICAL=f"{PRIMERS_DOMAIN}{PRIMERS_PREFIX}{self.doc_path(depth1, depth2, depth3)}", 
+                                      DESCRIPTION=depth3.brief(), 
+                                      STYLE=html.HtmlFormatter(style='nord').get_style_defs('.highlight'))
 
         if depth3 == depth1:
             if depth1.title() == "index":
