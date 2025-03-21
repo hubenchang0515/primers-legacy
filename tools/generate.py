@@ -102,9 +102,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_URL}#lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
             else:
-                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_URL}?lang={infos[0]}&code={b64code}'></iframe></div>"
+                return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_URL}#lang={infos[0]}&code={b64code}'></iframe></div>"
 
 class File(object):
     '''
