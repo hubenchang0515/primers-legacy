@@ -15,7 +15,7 @@ from jinja2 import Template
 import graphviz
 
 PRIMERS_DOMAIN:str = "https://xplanc.org"
-PRIMERS_PREFIX:str = "/Primers"
+PRIMERS_PREFIX:str = "/primers-legacy"
 SHIFT_URL:str = "https://xplanc.org/shift/index.html"
 
 class MarkdownRenderer(mistune.HTMLRenderer):
@@ -127,6 +127,7 @@ class File(object):
         return os.path.dirname(self.__path)
     
     def join(self, *subs:str) -> 'File':
+        subs = [x.strip("/") for x in subs]
         return File(os.path.join(self.__path, *subs))
     
     def listdir(self,key:None=None) -> list[str]:
@@ -247,25 +248,25 @@ class Renderer(object):
         self.__CURRENT_DIR = File(self.__CURRENT_FILE.dirpath())
         self.__DOCUMENT = self.__CURRENT_DIR.join("templates", "document.html")
         self.__SITEMAP = self.__CURRENT_DIR.join("templates", "sitemap.txt")
-        self.__RESOURCE_DIR = self.__CURRENT_DIR.join("..", "resource")
         self.__STATIC_DIR = self.__CURRENT_DIR.join("..", "static")
 
     def clean(self):
-        buidldir = self.__CURRENT_DIR.join("..", "build", "Primers")
+        buidldir = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX)
         buidldir.remove()
 
-    def copy_resource(self):
-        targer = self.__CURRENT_DIR.join("..", "build", "Primers", "resource")
-        self.__RESOURCE_DIR.copyTo(targer.path())
+    def copy_resource(self, res:str):
+        target = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, "resource")
+        resource = File(res)
+        resource.copyTo(target.path())
 
     def copy_static(self):
-        targer = self.__CURRENT_DIR.join("..", "build", "Primers")
-        self.__STATIC_DIR.copyTo(targer.path())
+        target = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX)
+        self.__STATIC_DIR.copyTo(target.path())
 
     def render_sitamap(self, root:Node):
         with self.__SITEMAP.open() as fp:
             renderer:Template = Template(fp.read())
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", "sitemap.txt")
+            file = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, "sitemap.txt")
             content = renderer.render(DOMAIN=PRIMERS_DOMAIN, PREFIX=PRIMERS_PREFIX, ROOT=root)
 
         with file.open("w") as fp:
@@ -304,23 +305,25 @@ class Renderer(object):
 
         if depth3 == depth1:
             if depth1.title() == "index":
-                file = self.__CURRENT_DIR.join("..", "build", "Primers", depth1.title() + '.html') # index 特殊处理，创建到根目录
+                file = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, depth1.title() + '.html') # index 特殊处理，创建到根目录
             else:
-                file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title() + '.html')
+                file = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, "document", depth1.title() + '.html')
         elif depth3 == depth2:
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title(), depth2.title() + '.html')
+            file = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, "document", depth1.title(), depth2.title() + '.html')
         else:
-            file = self.__CURRENT_DIR.join("..", "build", "Primers", "document", depth1.title(), depth2.title(), depth3.title() + '.html')
+            file = self.__CURRENT_DIR.join("..", "build", PRIMERS_PREFIX, "document", depth1.title(), depth2.title(), depth3.title() + '.html')
 
         with file.open("w") as fp:
             fp.write(content)
 
 
 if __name__ == "__main__":
-    root:Node = Node("./document")
+    CURRENT_FILE = File(__file__)
+    CURRENT_DIR = File(CURRENT_FILE.dirpath())
+    root:Node = Node(CURRENT_DIR.join("../primers-document/document/zh").path())
     renderer:Renderer = Renderer()
     renderer.clean()
-    renderer.copy_resource()
+    renderer.copy_resource(CURRENT_DIR.join("../primers-document/resource").path())
     renderer.copy_static()
     renderer.render_sitamap(root)
     for category in root.subs():

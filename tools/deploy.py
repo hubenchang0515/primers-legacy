@@ -13,5 +13,5 @@ def deploy(target:str):
 if __name__ == '__main__':
     CURRENT_FILE = os.path.abspath(__file__)
     CURRENT_DIR =  os.path.dirname(CURRENT_FILE)
-    DEPLOY_DIR = os.path.join(CURRENT_DIR, "..", "build", "Primers")
+    DEPLOY_DIR = os.path.join(CURRENT_DIR, "..", "build", "primers-legacy")
     deploy(DEPLOY_DIR)
