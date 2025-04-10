@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - 通识基础 - Windows - 命令行及其基本操作</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" />
+    <meta name="description" content="">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Windows</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Linux</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 基础语法 - 模式匹配</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" />
+    <meta name="description" content="模式匹配!class:view-message-warning使用模式匹配需要Python版本$\geq$3.10，参考[PEP634](https://peps.python.org/pep-0634/)。模式匹配（PatternMatching）是一种检查变量是否符合">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='18d3c3' class='view-h4'><a class='view-text-miku' href='#18d3c3'>#</a> 模式匹配</h1><div class='view-message-warning'>使用模式匹配需要 Python 版本 <span class="math">\(\geq\)</span> 3.10，参考 <a class='view-text-primary' href='https://peps.python.org/pep-0634/' target='_blank'>PEP 634</a>。</div><p class='view-p'>模式匹配（Pattern Matching）是一种检查变量是否符合某种模式的语法结构，通过 <code class='view-text-secondary view-border-1 view-border-secondary'>match</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>case</code> 进行控制</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">match</span> <span class="n">变量</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">模式1</span><span class="p">:</span>
+        <span class="n">代码块1</span>
+    <span class="k">case</span> <span class="n">模式2</span><span class="p">:</span>
+        <span class="n">代码块2</span>
+    <span class="o">...</span>
+    <span class="k">case</span> <span class="n">模式n</span><span class="p">:</span>
+        <span class="n">代码块n</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>         <span class="c1"># 无条件匹配</span>
+        <span class="n">代码块n</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="363pt" height="494pt"
+ viewBox="0.00 0.00 363.42 493.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 489.75)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-489.75 359.42,-489.75 359.42,4 -4,4"/>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<ellipse fill="none" stroke="black" cx="96.21" cy="-467.75" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="96.21" y="-462.32" font-family="Helvetica,sans-Serif" font-size="14.00">开始</text>
+</g>
+<!-- cond1 -->
+<g id="node2" class="node">
+<title>cond1</title>
+<polygon fill="none" stroke="black" points="96.21,-412.75 0,-394.75 96.21,-376.75 192.42,-394.75 96.21,-412.75"/>
+<text text-anchor="middle" x="96.21" y="-389.32" font-family="Helvetica,sans-Serif" font-size="14.00">匹配模式1？</text>
+</g>
+<!-- start&#45;&gt;cond1 -->
+<g id="edge1" class="edge">
+<title>start&#45;&gt;cond1</title>
+<path fill="none" stroke="black" d="M96.21,-449.56C96.21,-441.98 96.21,-432.85 96.21,-424.29"/>
+<polygon fill="black" stroke="black" points="99.71,-424.29 96.21,-414.29 92.71,-424.29 99.71,-424.29"/>
+</g>
+<!-- code1 -->
+<g id="node3" class="node">
+<title>code1</title>
+<polygon fill="none" stroke="black" points="112.58,-271 41.83,-271 41.83,-235 112.58,-235 112.58,-271"/>
+<text text-anchor="middle" x="77.21" y="-247.57" font-family="Helvetica,sans-Serif" font-size="14.00">代码块1</text>
+</g>
+<!-- cond1&#45;&gt;code1 -->
+<g id="edge2" class="edge">
+<title>cond1&#45;&gt;code1</title>
+<path fill="none" stroke="black" d="M93.92,-376.89C90.74,-353.52 84.95,-310.94 81.09,-282.55"/>
+<polygon fill="black" stroke="black" points="84.59,-282.29 79.77,-272.86 77.65,-283.24 84.59,-282.29"/>
+<text text-anchor="middle" x="99.28" y="-345.45" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- cond2 -->
+<g id="node4" class="node">
+<title>cond2</title>
+<polygon fill="none" stroke="black" points="201.21,-325 105,-307 201.21,-289 297.42,-307 201.21,-325"/>
+<text text-anchor="middle" x="201.21" y="-301.57" font-family="Helvetica,sans-Serif" font-size="14.00">匹配模式2？</text>
+</g>
+<!-- cond1&#45;&gt;cond2 -->
+<g id="edge3" class="edge">
+<title>cond1&#45;&gt;cond2</title>
+<path fill="none" stroke="black" d="M113.55,-379.59C130.27,-365.94 155.79,-345.09 174.99,-329.41"/>
+<polygon fill="black" stroke="black" points="177.14,-332.17 182.67,-323.14 172.71,-326.75 177.14,-332.17"/>
+<text text-anchor="middle" x="165.99" y="-345.45" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- end -->
+<g id="node9" class="node">
+<title>end</title>
+<ellipse fill="none" stroke="black" cx="147.21" cy="-18" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="147.21" y="-12.57" font-family="Helvetica,sans-Serif" font-size="14.00">结束</text>
+</g>
+<!-- code1&#45;&gt;end -->
+<g id="edge8" class="edge">
+<title>code1&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M77.6,-234.63C78.56,-210.14 81.87,-164.26 93.21,-127 102.14,-97.66 118.5,-66.59 130.88,-45.34"/>
+<polygon fill="black" stroke="black" points="133.87,-47.15 135.98,-36.77 127.86,-43.57 133.87,-47.15"/>
+</g>
+<!-- code2 -->
+<g id="node5" class="node">
+<title>code2</title>
+<polygon fill="none" stroke="black" points="168.58,-163 97.83,-163 97.83,-127 168.58,-127 168.58,-163"/>
+<text text-anchor="middle" x="133.21" y="-139.57" font-family="Helvetica,sans-Serif" font-size="14.00">代码块2</text>
+</g>
+<!-- cond2&#45;&gt;code2 -->
+<g id="edge4" class="edge">
+<title>cond2&#45;&gt;code2</title>
+<path fill="none" stroke="black" d="M191.74,-290.38C181.46,-272.96 165.08,-243.7 154.21,-217 148.58,-203.19 143.74,-187.31 140.13,-174.08"/>
+<polygon fill="black" stroke="black" points="143.6,-173.5 137.67,-164.72 136.83,-175.28 143.6,-173.5"/>
+<text text-anchor="middle" x="188.53" y="-247.57" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- condn -->
+<g id="node6" class="node">
+<title>condn</title>
+<polygon fill="none" stroke="black" points="259.21,-217 163,-199 259.21,-181 355.42,-199 259.21,-217"/>
+<text text-anchor="middle" x="259.21" y="-193.57" font-family="Helvetica,sans-Serif" font-size="14.00">匹配模式n？</text>
+</g>
+<!-- cond2&#45;&gt;condn -->
+<g id="edge5" class="edge">
+<title>cond2&#45;&gt;condn</title>
+<path fill="none" stroke="black" d="M209.77,-290.36C219.06,-273.37 234.06,-245.96 245.1,-225.78"/>
+<polygon fill="black" stroke="black" points="248.16,-227.49 249.89,-217.03 242.02,-224.13 248.16,-227.49"/>
+<text text-anchor="middle" x="246.67" y="-247.57" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- code2&#45;&gt;end -->
+<g id="edge9" class="edge">
+<title>code2&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M135.16,-126.62C137.44,-106.19 141.27,-71.99 144,-47.62"/>
+<polygon fill="black" stroke="black" points="147.48,-48.06 145.11,-37.74 140.52,-47.29 147.48,-48.06"/>
+</g>
+<!-- coden -->
+<g id="node7" class="node">
+<title>coden</title>
+<polygon fill="none" stroke="black" points="223.58,-109 152.83,-109 152.83,-73 223.58,-73 223.58,-109"/>
+<text text-anchor="middle" x="188.21" y="-85.58" font-family="Helvetica,sans-Serif" font-size="14.00">代码块n</text>
+</g>
+<!-- condn&#45;&gt;coden -->
+<g id="edge6" class="edge">
+<title>condn&#45;&gt;coden</title>
+<path fill="none" stroke="black" d="M249.04,-182.81C237.83,-166.09 219.61,-138.88 206.02,-118.59"/>
+<polygon fill="black" stroke="black" points="209.09,-116.89 200.62,-110.53 203.28,-120.78 209.09,-116.89"/>
+<text text-anchor="middle" x="242.09" y="-139.57" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- else_block -->
+<g id="node8" class="node">
+<title>else_block</title>
+<polygon fill="none" stroke="black" points="328.46,-109 241.96,-109 241.96,-73 328.46,-73 328.46,-109"/>
+<text text-anchor="middle" x="285.21" y="-85.58" font-family="Helvetica,sans-Serif" font-size="14.00">代码块n+1</text>
+</g>
+<!-- condn&#45;&gt;else_block -->
+<g id="edge7" class="edge">
+<title>condn&#45;&gt;else_block</title>
+<path fill="none" stroke="black" d="M263.27,-181.44C267.29,-165.06 273.51,-139.69 278.3,-120.15"/>
+<polygon fill="black" stroke="black" points="281.66,-121.16 280.64,-110.62 274.86,-119.5 281.66,-121.16"/>
+<text text-anchor="middle" x="283.93" y="-139.57" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- coden&#45;&gt;end -->
+<g id="edge10" class="edge">
+<title>coden&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M178.28,-72.81C173.53,-64.58 167.73,-54.54 162.44,-45.38"/>
+<polygon fill="black" stroke="black" points="165.55,-43.76 157.52,-36.85 159.49,-47.26 165.55,-43.76"/>
+</g>
+<!-- else_block&#45;&gt;end -->
+<g id="edge11" class="edge">
+<title>else_block&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M251.45,-72.63C229.78,-61.48 201.77,-47.07 180.25,-36"/>
+<polygon fill="black" stroke="black" points="182.09,-33.01 171.6,-31.55 178.89,-39.24 182.09,-33.01"/>
+</g>
+</g>
+</svg>
+<p class='view-p'>按照先后顺序检查模式，只执行第一个匹配的模式下的代码块。</p><h2 id='391fe7' class='view-h5'><a class='view-text-miku' href='#391fe7'>#</a> 精确匹配</h2><p class='view-p'>模式为精确值，变量与模式相等时匹配。例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">value</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;好评请按1，差评请按2，投诉请按3：&quot;</span><span class="p">))</span>
+<span class="k">match</span> <span class="n">value</span><span class="p">:</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;好评&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;差评&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;投诉&quot;</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>                 <span class="c1"># 无条件匹配</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;无效输入&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&input=Mw==&code=dmFsdWUlM0FpbnQlMjAlM0QlMjBpbnQlMjhpbnB1dCUyOCUyMiVFNSVBNSVCRCVFOCVBRiU4NCVFOCVBRiVCNyVFNiU4QyU4OTElRUYlQkMlOEMlRTUlQjclQUUlRTglQUYlODQlRTglQUYlQjclRTYlOEMlODkyJUVGJUJDJThDJUU2JThBJTk1JUU4JUFGJTg5JUU4JUFGJUI3JUU2JThDJTg5MyVFRiVCQyU5QSUyMiUyOSUyOSUwQW1hdGNoJTIwdmFsdWUlM0ElMEElMjAlMjAlMjAlMjBjYXNlJTIwMSUzQSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU1JUE1JUJEJUU4JUFGJTg0JTIyJTI5JTBBJTIwJTIwJTIwJTIwY2FzZSUyMDIlM0ElMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNSVCNyVBRSVFOCVBRiU4NCUyMiUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjAzJTNBJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjglMjIlRTYlOEElOTUlRTglQUYlODklMjIlMjklMEElMjAlMjAlMjAlMjBjYXNlJTIwXyUzQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNiU5NyVBMCVFNiU5RCVBMSVFNCVCQiVCNiVFNSU4QyVCOSVFOSU4NSU4RCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU2JTk3JUEwJUU2JTk1JTg4JUU4JUJFJTkzJUU1JTg1JUE1JTIyJTI5JTBB'></iframe></div><h2 id='9077b0' class='view-h5'><a class='view-text-miku' href='#9077b0'>#</a> 类型匹配</h2><p class='view-p'>模式为类型，变量符合该类型时匹配。例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">value</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;233&quot;</span>
+<span class="k">match</span> <span class="n">value</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>                        <span class="c1"># 匹配成功时，value 会赋值给 x</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;类型为整数，值为&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;类型为字符串，值为&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&input=Mw==&code=dmFsdWUlM0FzdHIlMjAlM0QlMjAlMjIyMzMlMjIlMEFtYXRjaCUyMHZhbHVlJTNBJTBBJTIwJTIwJTIwJTIwY2FzZSUyMGludCUyOHglMjklM0ElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlOEMlQjklRTklODUlOEQlRTYlODglOTAlRTUlOEElOUYlRTYlOTclQjYlRUYlQkMlOEN2YWx1ZSUyMCVFNCVCQyU5QSVFOCVCNSU4QiVFNSU4MCVCQyVFNyVCQiU5OSUyMHglMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNyVCMSVCQiVFNSU5RSU4QiVFNCVCOCVCQSVFNiU5NSVCNCVFNiU5NSVCMCVFRiVCQyU4QyVFNSU4MCVCQyVFNCVCOCVCQSUyMiUyQyUyMHglMjklMEElMjAlMjAlMjAlMjBjYXNlJTIwc3RyJTI4eCUyOSUzQSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU3JUIxJUJCJUU1JTlFJThCJUU0JUI4JUJBJUU1JUFEJTk3JUU3JUFDJUE2JUU0JUI4JUIyJUVGJUJDJThDJUU1JTgwJUJDJUU0JUI4JUJBJTIyJTJDJTIweCUyOSUwQQ=='></iframe></div><h2 id='8d2335' class='view-h5'><a class='view-text-miku' href='#8d2335'>#</a> 条件匹配</h2><p class='view-p'>模式为条件表达式，变量满足表达式时匹配。例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">age</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入你的年龄：&quot;</span><span class="p">))</span>
+<span class="k">match</span> <span class="n">age</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>        <span class="c1"># 匹配成功时，age 会赋值给 x</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;岁婴儿&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;岁少年&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">44</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;岁青年&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">59</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;岁中年&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">x</span><span class="p">:</span>                 <span class="c1"># 无条件匹配</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;岁老年&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&input=MTc=&code=YWdlJTNBaW50JTIwJTNEJTIwaW50JTI4aW5wdXQlMjglMjIlRTglQUYlQjclRTglQkUlOTMlRTUlODUlQTUlRTQlQkQlQTAlRTclOUElODQlRTUlQjklQjQlRTklQkUlODQlRUYlQkMlOUElMjIlMjklMjklMEFtYXRjaCUyMGFnZSUzQSUwQSUyMCUyMCUyMCUyMGNhc2UlMjB4JTIwaWYlMjB4JTIwJTNDJTIwMyUzQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4QyVCOSVFOSU4NSU4RCVFNiU4OCU5MCVFNSU4QSU5RiVFNiU5NyVCNiVFRiVCQyU4Q2FnZSUyMCVFNCVCQyU5QSVFOCVCNSU4QiVFNSU4MCVCQyVFNyVCQiU5OSUyMHglMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOHglMkMlMjAlMjIlRTUlQjIlODElRTUlQTklQjQlRTUlODQlQkYlMjIlMjklMEElMjAlMjAlMjAlMjBjYXNlJTIweCUyMGlmJTIweCUyMCUzQyUyMDE4JTNBJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjh4JTJDJTIwJTIyJUU1JUIyJTgxJUU1JUIwJTkxJUU1JUI5JUI0JTIyJTI5JTBBJTIwJTIwJTIwJTIwY2FzZSUyMHglMjBpZiUyMHglMjAlM0MlMjA0NCUzQSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4eCUyQyUyMCUyMiVFNSVCMiU4MSVFOSU5RCU5MiVFNSVCOSVCNCUyMiUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjB4JTIwaWYlMjB4JTIwJTNDJTIwNTklM0ElMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOHglMkMlMjAlMjIlRTUlQjIlODElRTQlQjglQUQlRTUlQjklQjQlMjIlMjklMEElMjAlMjAlMjAlMjBjYXNlJTIweCUzQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNiU5NyVBMCVFNiU5RCVBMSVFNCVCQiVCNiVFNSU4QyVCOSVFOSU4NSU4RCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4eCUyQyUyMCUyMiVFNSVCMiU4MSVFOCU4MCU4MSVFNSVCOSVCNCUyMiUyOSUwQQ=='></iframe></div><div class='view-message'>还有多种模式，将在后面的内容中学习。</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 容器类型 - 集合 set</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" />
+    <meta name="description" content="集合（set）是一个基本的数学模型，指若干不同对象形成的总体。类似于只有键（key）的字典，简单来说，集合内的元素不会重复。字典的字面量使用花括号（`{}`）包裹一组值表示，例如：```pythonfruits:set[str]={'Apple','Orange','S">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='f67dd9' class='view-h4'><a class='view-text-miku' href='#f67dd9'>#</a> 集合（set）</h1><p class='view-p'>是一个基本的数学模型，指若干不同对象形成的总体。类似于只有键（key）的字典，简单来说，集合内的元素不会重复。</p><p class='view-p'>字典的字面量使用花括号（<code class='view-text-secondary view-border-1 view-border-secondary'>{}</code>）包裹一组值表示，例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">}</span>
+</pre></div>
+</div><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: HashTable Pages: 1 -->
+<svg width="416pt" height="134pt"
+ viewBox="0.00 0.00 416.00 133.50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 129.5)">
+<title>HashTable</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-129.5 412,-129.5 412,4 -4,4"/>
+<!-- fruits -->
+<g id="node1" class="node">
+<title>fruits</title>
+<ellipse fill="none" stroke="black" cx="193" cy="-107.5" rx="30.11" ry="18"/>
+<text text-anchor="middle" x="193" y="-102.08" font-family="Helvetica,sans-Serif" font-size="14.00">fruits</text>
+</g>
+<!-- bucket1 -->
+<g id="node2" class="node">
+<title>bucket1</title>
+<polygon fill="none" stroke="black" points="0,-0.5 0,-36.5 54,-36.5 54,-0.5 0,-0.5"/>
+<text text-anchor="middle" x="26.75" y="-13.07" font-family="Helvetica,sans-Serif" font-size="14.00">Apple</text>
+</g>
+<!-- fruits&#45;&gt;bucket1 -->
+<g id="edge1" class="edge">
+<title>fruits&#45;&gt;bucket1</title>
+<path fill="none" stroke="black" d="M166.15,-99.18C146.14,-93.18 118.52,-83.69 96,-71.5 81.81,-63.82 67.36,-53.41 55.38,-43.92"/>
+<polygon fill="black" stroke="black" points="57.88,-41.45 47.91,-37.86 53.47,-46.88 57.88,-41.45"/>
+<text text-anchor="middle" x="112.5" y="-58.2" font-family="Times New Roman,serif" font-size="14.00">Apple</text>
+</g>
+<!-- bucket2 -->
+<g id="node3" class="node">
+<title>bucket2</title>
+<polygon fill="none" stroke="black" points="72.12,-0.5 72.12,-36.5 133.88,-36.5 133.88,-0.5 72.12,-0.5"/>
+<text text-anchor="middle" x="103" y="-13.07" font-family="Helvetica,sans-Serif" font-size="14.00">Orange</text>
+</g>
+<!-- fruits&#45;&gt;bucket2 -->
+<g id="edge2" class="edge">
+<title>fruits&#45;&gt;bucket2</title>
+<path fill="none" stroke="black" d="M174.55,-92.85C166.51,-86.64 157.15,-79 149.25,-71.5 140.66,-63.35 131.88,-53.82 124.3,-45.17"/>
+<polygon fill="black" stroke="black" points="127.06,-43.01 117.89,-37.7 121.75,-47.57 127.06,-43.01"/>
+<text text-anchor="middle" x="169.12" y="-58.2" font-family="Times New Roman,serif" font-size="14.00">Orange</text>
+</g>
+<!-- bucket3 -->
+<g id="node4" class="node">
+<title>bucket3</title>
+<polygon fill="none" stroke="black" points="152.38,-0.5 152.38,-36.5 233.62,-36.5 233.62,-0.5 152.38,-0.5"/>
+<text text-anchor="middle" x="193" y="-13.07" font-family="Helvetica,sans-Serif" font-size="14.00">Strawberry</text>
+</g>
+<!-- fruits&#45;&gt;bucket3 -->
+<g id="edge3" class="edge">
+<title>fruits&#45;&gt;bucket3</title>
+<path fill="none" stroke="black" d="M193,-89.31C193,-77.59 193,-61.79 193,-48.18"/>
+<polygon fill="black" stroke="black" points="196.5,-48.46 193,-38.46 189.5,-48.46 196.5,-48.46"/>
+<text text-anchor="middle" x="223" y="-58.2" font-family="Times New Roman,serif" font-size="14.00">Strawberry</text>
+</g>
+<!-- bucket4 -->
+<g id="node5" class="node">
+<title>bucket4</title>
+<polygon fill="none" stroke="black" points="251.75,-0.5 251.75,-36.5 314.25,-36.5 314.25,-0.5 251.75,-0.5"/>
+<text text-anchor="middle" x="283" y="-13.07" font-family="Helvetica,sans-Serif" font-size="14.00">Banana</text>
+</g>
+<!-- fruits&#45;&gt;bucket4 -->
+<g id="edge4" class="edge">
+<title>fruits&#45;&gt;bucket4</title>
+<path fill="none" stroke="black" d="M218.12,-97.06C230.99,-91.23 246.19,-82.72 257,-71.5 263.7,-64.55 269.02,-55.54 273.06,-46.97"/>
+<polygon fill="black" stroke="black" points="276.21,-48.52 276.9,-37.94 269.77,-45.77 276.21,-48.52"/>
+<text text-anchor="middle" x="288.48" y="-58.2" font-family="Times New Roman,serif" font-size="14.00">Banana</text>
+</g>
+<!-- bucket5 -->
+<g id="node6" class="node">
+<title>bucket5</title>
+<polygon fill="none" stroke="black" points="332,-0.5 332,-36.5 408,-36.5 408,-0.5 332,-0.5"/>
+<text text-anchor="middle" x="370" y="-13.07" font-family="Helvetica,sans-Serif" font-size="14.00">Pineapple</text>
+</g>
+<!-- fruits&#45;&gt;bucket5 -->
+<g id="edge5" class="edge">
+<title>fruits&#45;&gt;bucket5</title>
+<path fill="none" stroke="black" d="M222.08,-101.86C247.33,-96.96 284.24,-87.65 313,-71.5 325.47,-64.5 337.45,-54.3 347.18,-44.78"/>
+<polygon fill="black" stroke="black" points="349.55,-47.36 354.05,-37.77 344.55,-42.46 349.55,-47.36"/>
+<text text-anchor="middle" x="361.95" y="-58.2" font-family="Times New Roman,serif" font-size="14.00">Pineapple</text>
+</g>
+</g>
+</svg>
+<p class='view-p'>类型标注 <code class='view-text-secondary view-border-1 view-border-secondary'>set[str]</code>，表示类型是 <strong>元素类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>str</code> 的集合</strong>。</p><div class=' view-message-warning'>参考 <a class='view-text-primary' href='https://peps.python.org/pep-0585/' target='_blank'>PEP 585</a>，此类型标注需要 Python 版本 <span class="math">\(\geq\)</span> 3.9，之前的版本需要引用 <code class='view-text-secondary view-border-1 view-border-secondary'>typing</code> 模块。</div><h2 id='7c9447' class='view-h5'><a class='view-text-miku' href='#7c9447'>#</a> 空集</h2><p class='view-p'>创建空集需要使用 <code class='view-text-secondary view-border-1 view-border-secondary'>set()</code>，而不能使用 <code class='view-text-secondary view-border-1 view-border-secondary'>{}</code>，因为后者表示空字典。</p><h2 id='c5c3c3' class='view-h5'><a class='view-text-miku' href='#c5c3c3'>#</a> 通过 list 或 tuple 创建集合</h2><p class='view-p'>可以通过列表或元组来创建集合，源列表或元组中重复的值会被过滤，从而实现去重：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers_list</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">numbers_set</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">numbers_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers_set</span><span class="p">)</span>
+
+<span class="n">numbers_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numbers_set</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers_list</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVyc19saXN0JTNBbGlzdCU1QmludCU1RCUyMCUzRCUyMCU1QjMlMkMlMjAxJTJDJTIwNCUyQyUyMDElMkMlMjA1JTJDJTIwOSUyQyUyMDIlMkMlMjA2JTJDJTIwNSUyQyUyMDMlMkMlMjA1JTJDJTIwOCUyQyUyMDklMkMlMjA3JTJDJTIwOSUyQyUyMDMlMkMlMjAyJTJDJTIwMyUyQyUyMDglMkMlMjA0JTJDJTIwNiU1RCUwQW51bWJlcnNfc2V0JTNBc2V0JTVCaW50JTVEJTIwJTNEJTIwc2V0JTI4bnVtYmVyc19saXN0JTI5JTBBcHJpbnQlMjhudW1iZXJzX2xpc3QlMjklMEFwcmludCUyOG51bWJlcnNfc2V0JTI5JTBBJTBBbnVtYmVyc19saXN0JTIwJTNEJTIwbGlzdCUyOG51bWJlcnNfc2V0JTI5JTBBcHJpbnQlMjhudW1iZXJzX2xpc3QlMjklMEE='></iframe></div><h2 id='2ab2ec' class='view-h5'><a class='view-text-miku' href='#2ab2ec'>#</a> 判断元素是否存在</h2><p class='view-p'>和字典类似，使用 <code class='view-text-secondary view-border-1 view-border-secondary'>in</code> 来判断元素是否在集合中：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Strawberry&#39;</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Strawberry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3QmFuYW5hJTI3JTJDJTIwJTI3UGluZWFwcGxlJTI3JTdEJTBBcHJpbnQlMjglMjdTdHJhd2JlcnJ5JTI3JTIwaW4lMjBmcnVpdHMlMjklMEFwcmludCUyOCUyN1N0cmF3YmVycnklMjclMjBub3QlMjBpbiUyMGZydWl0cyUyOSUwQQ=='></iframe></div><h2 id='b318f5' class='view-h5'><a class='view-text-miku' href='#b318f5'>#</a> 添加元素</h2><p class='view-p'>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>add</code> 方法添加元素：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">}</span>
+<span class="n">fruits</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Grape&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3QmFuYW5hJTI3JTJDJTIwJTI3UGluZWFwcGxlJTI3JTdEJTBBZnJ1aXRzLmFkZCUyOCUyN0dyYXBlJTI3JTI5JTBBcHJpbnQlMjhmcnVpdHMlMjklMEE='></iframe></div><h2 id='2c9846' class='view-h5'><a class='view-text-miku' href='#2c9846'>#</a> 删除元素</h2><p class='view-p'>可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>remove</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>discard</code> 方法删除元素：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>remove</code> - 删除指定元素，元素不存在时产生错误</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>discard</code> - 删除指定元素，元素不存在时不产生错误</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">}</span>
+<span class="n">fruits</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Apple&#39;</span><span class="p">)</span>          <span class="c1"># 删除 &#39;Apple&#39;</span>
+<span class="n">fruits</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s1">&#39;Banana&#39;</span><span class="p">)</span>        <span class="c1"># 删除 &#39;Banana&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3QmFuYW5hJTI3JTJDJTIwJTI3UGluZWFwcGxlJTI3JTdEJTBBZnJ1aXRzLnJlbW92ZSUyOCUyN0FwcGxlJTI3JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JTg4JUEwJUU5JTk5JUE0JTIwJTI3QXBwbGUlMjclMEFmcnVpdHMuZGlzY2FyZCUyOCUyN0JhbmFuYSUyNyUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4OCVBMCVFOSU5OSVBNCUyMCUyN0JhbmFuYSUyNyUwQXByaW50JTI4ZnJ1aXRzJTI5JTBB'></iframe></div><h2 id='839eb0' class='view-h5'><a class='view-text-miku' href='#839eb0'>#</a> 清空集合</h2><p class='view-p'>可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>clear</code> 方法清空集合：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">}</span>
+<span class="n">fruits</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3QmFuYW5hJTI3JTJDJTIwJTI3UGluZWFwcGxlJTI3JTdEJTBBZnJ1aXRzLmNsZWFyJTI4JTI5JTBBcHJpbnQlMjhmcnVpdHMlMjklMEE='></iframe></div><h2 id='59cd4d' class='view-h5'><a class='view-text-miku' href='#59cd4d'>#</a> 合并集合</h2><p class='view-p'>可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>update</code> 方法合并集合：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">}</span>
+<span class="n">fruits</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Pineapple&#39;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTdEJTBBZnJ1aXRzLnVwZGF0ZSUyOCU3QiUyN0JhbmFuYSUyNyUyQyUyMCUyN1BpbmVhcHBsZSUyNyU3RCUyOSUwQXByaW50JTI4ZnJ1aXRzJTI5JTBB'></iframe></div><h2 id='36bea0' class='view-h5'><a class='view-text-miku' href='#36bea0'>#</a> 交集</h2><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>intersection</code> 方法或 <code class='view-text-secondary view-border-1 view-border-secondary'>&</code> 运算符，可以求集合的交集（包含两个集合中相同的元素）:</p><ul><li><p>这两种方式都不改变原集合，而是返回一个新的集合。</p></li><li><p>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>intersection_update</code> 方法，则修改原集合为交集。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">}</span>
+<span class="n">vegetables</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cabbage&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">,</span> <span class="s1">&#39;Spinach&#39;</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">vegetables</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span> <span class="o">&amp;</span> <span class="n">vegetables</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3VG9tYXRvJTI3JTJDJTIwJTI3Q3VjdW1iZXIlMjclN0QlMEF2ZWdldGFibGVzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3Q2FiYmFnZSUyNyUyQyUyMCUyN1RvbWF0byUyNyUyQyUyMCUyN0N1Y3VtYmVyJTI3JTJDJTIwJTI3U3BpbmFjaCUyNyU3RCUwQSUwQXByaW50JTI4ZnJ1aXRzLmludGVyc2VjdGlvbiUyOHZlZ2V0YWJsZXMlMjklMjklMEFwcmludCUyOGZydWl0cyUyMCUyNiUyMHZlZ2V0YWJsZXMlMjklMEE='></iframe></div><h2 id='6c7db2' class='view-h5'><a class='view-text-miku' href='#6c7db2'>#</a> 并集</h2><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>union</code> 方法或 <code class='view-text-secondary view-border-1 view-border-secondary'>|</code> 运算符，可以求集合的并集（包含两个集合的元素组）:</p><ul><li><p>这两种方式都不改变原集合，而是返回一个新的集合。</p></li><li><p>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>update</code> 方法，则修改原集合为并集。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">}</span>
+<span class="n">vegetables</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cabbage&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">,</span> <span class="s1">&#39;Spinach&#39;</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">vegetables</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span> <span class="o">|</span> <span class="n">vegetables</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3VG9tYXRvJTI3JTJDJTIwJTI3Q3VjdW1iZXIlMjclN0QlMEF2ZWdldGFibGVzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3Q2FiYmFnZSUyNyUyQyUyMCUyN1RvbWF0byUyNyUyQyUyMCUyN0N1Y3VtYmVyJTI3JTJDJTIwJTI3U3BpbmFjaCUyNyU3RCUwQSUwQXByaW50JTI4ZnJ1aXRzLnVuaW9uJTI4dmVnZXRhYmxlcyUyOSUyOSUwQXByaW50JTI4ZnJ1aXRzJTIwJTdDJTIwdmVnZXRhYmxlcyUyOSUwQQ=='></iframe></div><h2 id='70ad47' class='view-h5'><a class='view-text-miku' href='#70ad47'>#</a> 差集</h2><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>difference</code> 方法或 <code class='view-text-secondary view-border-1 view-border-secondary'>|</code> 运算符，可以求集合的差集（包含只在第一个集合中存在的元素）:</p><ul><li><p>这两种方式都不改变原集合，而是返回一个新的集合。</p></li><li><p>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>difference_update</code> 方法，则修改原集合为差集。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">}</span>
+<span class="n">vegetables</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cabbage&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">,</span> <span class="s1">&#39;Spinach&#39;</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">vegetables</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span> <span class="o">-</span> <span class="n">vegetables</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3VG9tYXRvJTI3JTJDJTIwJTI3Q3VjdW1iZXIlMjclN0QlMEF2ZWdldGFibGVzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3Q2FiYmFnZSUyNyUyQyUyMCUyN1RvbWF0byUyNyUyQyUyMCUyN0N1Y3VtYmVyJTI3JTJDJTIwJTI3U3BpbmFjaCUyNyU3RCUwQSUwQXByaW50JTI4ZnJ1aXRzLmRpZmZlcmVuY2UlMjh2ZWdldGFibGVzJTI5JTI5JTBBcHJpbnQlMjhmcnVpdHMlMjAtJTIwdmVnZXRhYmxlcyUyOSUwQQ=='></iframe></div><h2 id='cf241e' class='view-h5'><a class='view-text-miku' href='#cf241e'>#</a> 对称差集</h2><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>symmetric_difference</code> 方法=可以求集合的对称差集（包含两个集合中不同的元素）:</p><ul><li><p>这两种方式都不改变原集合，而是返回一个新的集合。</p></li><li><p>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>symmetric_difference_update</code> 方法，则修改原集合为对称差集。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">fruits</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">}</span>
+<span class="n">vegetables</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cabbage&#39;</span><span class="p">,</span> <span class="s1">&#39;Tomato&#39;</span><span class="p">,</span> <span class="s1">&#39;Cucumber&#39;</span><span class="p">,</span> <span class="s1">&#39;Spinach&#39;</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">vegetables</span><span class="p">))</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=ZnJ1aXRzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3QXBwbGUlMjclMkMlMjAlMjdPcmFuZ2UlMjclMkMlMjAlMjdTdHJhd2JlcnJ5JTI3JTJDJTIwJTI3VG9tYXRvJTI3JTJDJTIwJTI3Q3VjdW1iZXIlMjclN0QlMEF2ZWdldGFibGVzJTNBc2V0JTVCc3RyJTVEJTIwJTNEJTIwJTdCJTI3Q2FiYmFnZSUyNyUyQyUyMCUyN1RvbWF0byUyNyUyQyUyMCUyN0N1Y3VtYmVyJTI3JTJDJTIwJTI3U3BpbmFjaCUyNyU3RCUwQSUwQXByaW50JTI4ZnJ1aXRzLnN5bW1ldHJpY19kaWZmZXJlbmNlJTI4dmVnZXRhYmxlcyUyOSUyOSUwQQ=='></iframe></div><h2 id='6b7889' class='view-h5'><a class='view-text-miku' href='#6b7889'>#</a> 子集和超集</h2><p class='view-p'>如果集合 A 的所有元素都被 集合 B 包含，则 A 是 B 的子集，B 是 A 的超集。<br />
+在此基础上，如果 A 和 B 不相等，则称 A 是 B 的真子集，B 是 A 的真超集。</p><p class='view-p'>Python 通过比较运算符 <code class='view-text-secondary view-border-1 view-border-secondary'>&lt;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&lt;=</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&gt;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&gt;=</code> 判断集合关系：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">关系</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>A &lt;= B</code></td>
+  <td style="text-align:left">A 是 B 的子集</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>A &lt; B</code></td>
+  <td style="text-align:left">A 是 B 的真子集</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>A &gt;= B</code></td>
+  <td style="text-align:left">A 是 B 的超集</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>A &gt; B</code></td>
+  <td style="text-align:left">A 是 B 的真超集</td>
+</tr>
+</tbody>
+</table>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

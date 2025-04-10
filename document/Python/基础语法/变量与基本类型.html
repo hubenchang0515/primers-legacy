@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 基础语法 - 变量与基本类型</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" />
+    <meta name="description" content="变量与基本类型计算机是用于计算的机器，而程序就是计算的步骤，编程语言的功能就是描述计算的步骤。因此，用于保存值的`变量`是编程中最基本的概念。变量，顾名思义就是可以改变的量，如果一个变量的值不会改变，则被称为`常量`。创建变量的格式为`变量名:变量类型=变量的初始值`，例">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='2355f0' class='view-h4'><a class='view-text-miku' href='#2355f0'>#</a> 变量与基本类型</h1><p class='view-p'>计算机是用于计算的机器，而程序就是计算的步骤，编程语言的功能就是描述计算的步骤。因此，用于保存值的 <code class='view-text-secondary view-border-1 view-border-secondary'>变量</code> 是编程中最基本的概念。</p><p class='view-p'>变量，顾名思义就是可以改变的量，如果一个变量的值不会改变，则被称为 <code class='view-text-secondary view-border-1 view-border-secondary'>常量</code>。</p><p class='view-p'>创建变量的格式为 <code class='view-text-secondary view-border-1 view-border-secondary'>变量名:变量类型 = 变量的初始值</code>，例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">age_of_yukari</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">17</span>          <span class="c1"># 创建名为 age_of_yukari 的变量，类型为整数（int），初始值为 17</span>
+<span class="n">sex_of_yukari</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;female&quot;</span>    <span class="c1"># 创建名为 sex_of_yukari 的变量，类型为字符串（str），初始值为 &quot;female&quot;</span>
+</pre></div>
+</div><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>age_of_yukari</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>sex_of_yukari</code> 是变量的名称。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>str</code> 是变量的类型。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>17</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;female&quot;</code> 是变量的值，这种直接写出来的值被称作 <strong>字面量（Literal）</strong>。</p></li></ul><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="345pt" height="100pt"
+ viewBox="0.00 0.00 344.50 100.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 96)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-96 340.5,-96 340.5,4 -4,4"/>
+<!-- age_of_yukari_value -->
+<g id="node1" class="node">
+<title>age_of_yukari_value</title>
+<polygon fill="none" stroke="black" points="255.25,-0.5 255.25,-36.5 311.75,-36.5 311.75,-0.5 255.25,-0.5"/>
+<text text-anchor="middle" x="283.5" y="-13.7" font-family="Courier,monospace" font-size="14.00">值 17</text>
+</g>
+<!-- sex_of_yukari_value -->
+<g id="node2" class="node">
+<title>sex_of_yukari_value</title>
+<polygon fill="none" stroke="black" points="230.5,-55.5 230.5,-91.5 336.5,-91.5 336.5,-55.5 230.5,-55.5"/>
+<text text-anchor="middle" x="283.5" y="-68.7" font-family="Courier,monospace" font-size="14.00">值 &quot;female&quot;</text>
+</g>
+<!-- age_of_yukari -->
+<g id="node3" class="node">
+<title>age_of_yukari</title>
+<polygon fill="none" stroke="black" points="0,-0.5 0,-36.5 163,-36.5 163,-0.5 0,-0.5"/>
+<text text-anchor="middle" x="81.5" y="-13.7" font-family="Courier,monospace" font-size="14.00">变量 age_of_yukari</text>
+</g>
+<!-- age_of_yukari&#45;&gt;age_of_yukari_value -->
+<g id="edge1" class="edge">
+<title>age_of_yukari&#45;&gt;age_of_yukari_value</title>
+<path fill="none" stroke="black" d="M163.27,-18.5C190.97,-18.5 220.71,-18.5 243.56,-18.5"/>
+<polygon fill="black" stroke="black" points="243.32,-22 253.32,-18.5 243.32,-15 243.32,-22"/>
+<text text-anchor="middle" x="196.75" y="-20.95" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+<!-- sex_of_yukari -->
+<g id="node4" class="node">
+<title>sex_of_yukari</title>
+<polygon fill="none" stroke="black" points="0,-55.5 0,-91.5 163,-91.5 163,-55.5 0,-55.5"/>
+<text text-anchor="middle" x="81.5" y="-68.7" font-family="Courier,monospace" font-size="14.00">变量 sex_of_yukari</text>
+</g>
+<!-- sex_of_yukari&#45;&gt;sex_of_yukari_value -->
+<g id="edge2" class="edge">
+<title>sex_of_yukari&#45;&gt;sex_of_yukari_value</title>
+<path fill="none" stroke="black" d="M163.27,-73.5C181.77,-73.5 201.18,-73.5 218.84,-73.5"/>
+<polygon fill="black" stroke="black" points="218.65,-77 228.65,-73.5 218.65,-70 218.65,-77"/>
+<text text-anchor="middle" x="196.75" y="-75.95" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+</g>
+</svg>
+<h2 id='e63a11' class='view-h5'><a class='view-text-miku' href='#e63a11'>#</a> 命名规则</h2><p class='view-p'>变量名只能由 <strong>字母</strong>、<strong>数字</strong> 和 <strong>下划线</strong> 组成，并且不能以数字开头。</p><p class='view-p'>除此之外，还有一些约定俗成的命名习惯。参考 <a class='view-text-primary' href='https://peps.python.org/pep-0008/' target='_blank'>PEP 8</a></p><ul><li><p>命名应当能够解释变量的作用，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>age_of_yukari</code> 表示 Yukari 的年龄。</p></li><li><p>变量名和函数名使用小写蛇形命名法（Snake Case），通过下划线分割单词，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>age_of_yukari</code>。</p></li><li><p>常量名使用大写蛇形命名法（Snake Case），通过下划线分割单词，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>AGE_OF_YUKARI</code>。</p></li><li><p>类名使用大驼峰命名法（Camel Case），通过大写字母分割单词且首字母大写，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>AgeOfYukari</code>。</p></li><li><p>私有变量使用两个下划线开头，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>__age_of_yukari</code>。</p></li><li><p><strong>严禁使用</strong>前后各两个下划线的命名，这种命名被用于特殊用途，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>__age_of_yukari__</code>。</p></li><li><p>有且只有一个下划线明命名的特殊变量 <code class='view-text-secondary view-border-1 view-border-secondary'>_</code>，用于接受不被需要的值。</p></li></ul><blockquote><p class='view-p'>这里提及了变量以外的概念，不理解的话请暂时放下。</p></blockquote><h2 id='7bb49b' class='view-h5'><a class='view-text-miku' href='#7bb49b'>#</a> Python 中的基本类型</h2><p class='view-p'>在 Python 中有以下基本类型：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">类型</th>
+  <th style="text-align:left">中文名</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int</code></td>
+  <td style="text-align:left">整型</td>
+  <td style="text-align:left">用于保存整数，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>0</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>-1</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>233</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code></td>
+  <td style="text-align:left">浮点型</td>
+  <td style="text-align:left">用于保存小数，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>3.14</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>2.71828</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>str</code></td>
+  <td style="text-align:left">字符串</td>
+  <td style="text-align:left">用于保存文本，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;hello world&quot;</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>bool</code></td>
+  <td style="text-align:left">布尔型</td>
+  <td style="text-align:left">用于表示逻辑的真假，只有两个值：<code class='view-text-secondary view-border-1 view-border-secondary'>True</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>False</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>None</code></td>
+  <td style="text-align:left">空值</td>
+  <td style="text-align:left">用于表示不存在的对象，只有一个值：<code class='view-text-secondary view-border-1 view-border-secondary'>None</code></td>
+</tr>
+</tbody>
+</table><h3 id='a2b364' class='view-h6'><a class='view-text-miku' href='#a2b364'>#</a> 整型</h3><p class='view-p'>整型变量用于保存整数，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>0</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>-1</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>233</code>。</p><p class='view-p'>计算机使用二进制存储数据，因此一些涉及底层的开发中常常使用二进制、八进制和十六进制表示数值。<br />
+Python 中使用 <code class='view-text-secondary view-border-1 view-border-secondary'>0x</code> 前缀来表示十六进制字面量，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>0xff</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>0x1234abcd</code>。<br />
+Python 中使用 <code class='view-text-secondary view-border-1 view-border-secondary'>0o</code> 表示八进制，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>0o23</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>0o456</code>。<br />
+Python 中使用 <code class='view-text-secondary view-border-1 view-border-secondary'>0b</code> 表示二进制，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>0b0011</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>0b1110</code>。<br />
+如果你不知道什么是二进制和十六进制的话，请查看 <a class='view-text-primary' title='TODO:页面建设中' href='#' target='_blank'>通识基础 - 进制</a> 页面。</p><p class='view-p'>对于很大的整数，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>1000000000000</code>，可能很难快速看清有多少个 0，因此 Python 允许在整数字面量中使用下划线（<code class='view-text-secondary view-border-1 view-border-secondary'>_</code>）进行分割。
+因此 <code class='view-text-secondary view-border-1 view-border-secondary'>1000000000000</code> 可以写成 <code class='view-text-secondary view-border-1 view-border-secondary'>1_000_000_000_000</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>1_0000_0000_0000</code>。</p><h3 id='6be8cf' class='view-h6'><a class='view-text-miku' href='#6be8cf'>#</a> 浮点型</h3><p class='view-p'>浮点型变量用于保存小数，例如：<code class='view-text-secondary view-border-1 view-border-secondary'>3.14</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>2.71828</code>。
+在数学上，整数是小数的特殊形式，因此整型的字面量也可以给浮点型变量赋值。</p><p class='view-p'>浮点型的字面量可以使用科学计数法表示，使用 <code class='view-text-secondary view-border-1 view-border-secondary'>e</code> 表示 <code class='view-text-secondary view-border-1 view-border-secondary'>×10^</code>。例如 <code class='view-text-secondary view-border-1 view-border-secondary'>2.33e8</code> 表示 2.33 乘以 10 的 8 次方</p><blockquote><p class='view-p'>之所以成为浮点型，是因为在计算机存储小数的格式中，用于存储整数部分的位数和用于存储小数部分的位数是可变的，即小数点的位置是浮动的。
+与之对应的，一种用于存储整数部分的位数和用于存储小数部分的位数不可变的的格式被称为定点数。</p></blockquote><h3 id='6aaf0b' class='view-h6'><a class='view-text-miku' href='#6aaf0b'>#</a> 字符串</h3><p class='view-p'>字符串变量用于保存文本，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;hello world&quot;</code>。</p><p class='view-p'>字符串字面量的内容使用成对的单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>）或双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>）包裹。<br />
+如果字符串的内容包含单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>），则通常使用双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>）包裹，<br />
+如果字符串的内容包含双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>），则通常使用单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>）包裹。<br />
+如果字符串的内容既有单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>）又有双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>），则需要使用反斜杠（<code class='view-text-secondary view-border-1 view-border-secondary'>\</code>）进行转义。<br />
+一些示例：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="s2">&quot;I&#39;m robot&quot;</span>                 <span class="c1"># 使用双引号包裹，内容包含单引号</span>
+<span class="s2">&quot;I say </span><span class="se">\&quot;</span><span class="s2">hello world</span><span class="se">\&quot;</span><span class="s2">&quot;</span>     <span class="c1"># 使用双引号包裹，内容也包含双引号，使用反斜杠转义</span>
+</pre></div>
+</div><h4 id='a6fc35' class='view-p view-strong'><a class='view-text-miku' href='#a6fc35'>#</a> 转义字符</h4><p class='view-p'>转义字符用于表示一些无法直接表示的字符，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>\n</code> 表示换行，以下是转义字符表：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">转义字符</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\\</code></td>
+  <td style="text-align:left">表示反斜杠（<code class='view-text-secondary view-border-1 view-border-secondary'>\</code>）本身</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\'</code></td>
+  <td style="text-align:left">表示单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\&quot;</code></td>
+  <td style="text-align:left">表示双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\a</code></td>
+  <td style="text-align:left">（用于让蜂鸣器发出响声，已不可用）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\b</code></td>
+  <td style="text-align:left">退格（Backspace）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\n</code></td>
+  <td style="text-align:left">换行符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\v</code></td>
+  <td style="text-align:left">纵向制表符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\t</code></td>
+  <td style="text-align:left">横向制表符（Tab）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\r</code></td>
+  <td style="text-align:left">回车（Return）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\f</code></td>
+  <td style="text-align:left">换页</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\oNN</code></td>
+  <td style="text-align:left">八进制字节，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>\o12</code> 表示换行</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\xNN</code></td>
+  <td style="text-align:left">十六进制字节，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>\x0a</code> 表示换行符</td>
+</tr>
+</tbody>
+</table><h4 id='9ac22d' class='view-p view-strong'><a class='view-text-miku' href='#9ac22d'>#</a> 索引</h4><p class='view-p'>字符串后跟方括号（<code class='view-text-secondary view-border-1 view-border-secondary'>[]</code>）索引，可以访问字符，和绝大多数编程语言一样，Python 的 <strong>索引从 0 开始</strong>：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">text</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFG&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=dGV4dCUzQXN0ciUyMCUzRCUyMCUyMkFCQ0RFRkclMjIlMEFwcmludCUyOHRleHQlNUI0JTVEJTI5JTBB'></iframe></div><h3 id='c000ea' class='view-h6'><a class='view-text-miku' href='#c000ea'>#</a> 布尔型</h3><p class='view-p'>布尔型用于表示逻辑运算的结果，只有两个值：真（<code class='view-text-secondary view-border-1 view-border-secondary'>True</code>）和假（<code class='view-text-secondary view-border-1 view-border-secondary'>False</code>）。
+布尔值可以通过 <code class='view-text-secondary view-border-1 view-border-secondary'>and</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>or</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>not</code> 进行运算。</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>and</code> 表示 <strong>与</strong>，多个布尔值相与时，只有全部为 <code class='view-text-secondary view-border-1 view-border-secondary'>True</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>True</code>，否则结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>False</code>。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>or</code> 表示 <strong>或</strong>，多个布尔值相或时，只有全部为 <code class='view-text-secondary view-border-1 view-border-secondary'>False</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>False</code>，否则结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>True</code>。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>not</code> 表示 <strong>非</strong>，将一个布尔值反转。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not True is&quot;</span><span class="p">,</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not False is&quot;</span><span class="p">,</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True and True is&quot;</span><span class="p">,</span> <span class="kc">True</span> <span class="ow">and</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True and False is&quot;</span><span class="p">,</span> <span class="kc">True</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False and True is&quot;</span><span class="p">,</span> <span class="kc">False</span> <span class="ow">and</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False and False is&quot;</span><span class="p">,</span> <span class="kc">False</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True or True is&quot;</span><span class="p">,</span> <span class="kc">True</span> <span class="ow">or</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True or False is&quot;</span><span class="p">,</span> <span class="kc">True</span> <span class="ow">or</span> <span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False or True is&quot;</span><span class="p">,</span> <span class="kc">False</span> <span class="ow">or</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False or False is&quot;</span><span class="p">,</span> <span class="kc">False</span> <span class="ow">or</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=cHJpbnQlMjglMjJub3QlMjBUcnVlJTIwaXMlMjIlMkMlMjBub3QlMjBUcnVlJTI5JTBBcHJpbnQlMjglMjJub3QlMjBGYWxzZSUyMGlzJTIyJTJDJTIwbm90JTIwRmFsc2UlMjklMEElMEFwcmludCUyOCUyMlRydWUlMjBhbmQlMjBUcnVlJTIwaXMlMjIlMkMlMjBUcnVlJTIwYW5kJTIwVHJ1ZSUyOSUwQXByaW50JTI4JTIyVHJ1ZSUyMGFuZCUyMEZhbHNlJTIwaXMlMjIlMkMlMjBUcnVlJTIwYW5kJTIwRmFsc2UlMjklMEFwcmludCUyOCUyMkZhbHNlJTIwYW5kJTIwVHJ1ZSUyMGlzJTIyJTJDJTIwRmFsc2UlMjBhbmQlMjBUcnVlJTI5JTBBcHJpbnQlMjglMjJGYWxzZSUyMGFuZCUyMEZhbHNlJTIwaXMlMjIlMkMlMjBGYWxzZSUyMGFuZCUyMEZhbHNlJTI5JTBBJTBBcHJpbnQlMjglMjJUcnVlJTIwb3IlMjBUcnVlJTIwaXMlMjIlMkMlMjBUcnVlJTIwb3IlMjBUcnVlJTI5JTBBcHJpbnQlMjglMjJUcnVlJTIwb3IlMjBGYWxzZSUyMGlzJTIyJTJDJTIwVHJ1ZSUyMG9yJTIwRmFsc2UlMjklMEFwcmludCUyOCUyMkZhbHNlJTIwb3IlMjBUcnVlJTIwaXMlMjIlMkMlMjBGYWxzZSUyMG9yJTIwVHJ1ZSUyOSUwQXByaW50JTI4JTIyRmFsc2UlMjBvciUyMEZhbHNlJTIwaXMlMjIlMkMlMjBGYWxzZSUyMG9yJTIwRmFsc2UlMjklMEE='></iframe></div><h3 id='3d872b' class='view-h6'><a class='view-text-miku' href='#3d872b'>#</a> 空值</h3><p class='view-p'>空值表示不存在的对象，此处暂时不做具体说明。</p><h3 id='e70d30' class='view-h6'><a class='view-text-miku' href='#e70d30'>#</a> 类型标注</h3><p class='view-p'>回看开头的代码，<code class='view-text-secondary view-border-1 view-border-secondary'>:int</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>:str</code> 被称作 <strong>类型标注（Type Hint）</strong>，参考 <a class='view-text-primary' href='https://peps.python.org/pep-0484/' target='_blank'>PEP 484</a>。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">age_of_yukari</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">17</span>          <span class="c1"># 创建名为 age_of_yukari 的变量，类型为整数（int），初始值为 17</span>
+<span class="n">sex_of_yukari</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;female&quot;</span>    <span class="c1"># 创建名为 sex_of_yukari 的变量，类型为字符串（str），初始值为 &quot;female&quot;</span>
+</pre></div>
+</div><p class='view-p'>Python 是一个动态类型语言，类型标注仅作为提示，增加代码的可读性和可维护性。</p><p class='view-p'>类型标注不是必须的，上述代码可以写成：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">age_of_yukari</span> <span class="o">=</span> <span class="mi">17</span>          <span class="c1"># 创建名为 age_of_yukari 的变量，类型为整数（int），初始值为 17</span>
+<span class="n">sex_of_yukari</span> <span class="o">=</span> <span class="s2">&quot;female&quot;</span>    <span class="c1"># 创建名为 sex_of_yukari 的变量，类型为字符串（str），初始值为 &quot;female&quot;</span>
+</pre></div>
+</div><p class='view-p'>像这样显而易见的类型 <strong>没有必要标注</strong>，并且语法工具能够自动推导类型。</p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

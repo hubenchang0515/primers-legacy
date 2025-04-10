@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 容器类型 - 列表 list</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" />
+    <meta name="description" content="列表（list）**列表（list）**是一组有序数据的**可变**集合。列表的字面量使用方括号（`[]`）包裹一组值表示，例如：```pythonstudents:list[str]=["Tom","Jerry","Spike"]``````graphvi">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='e5e447' class='view-h4'><a class='view-text-miku' href='#e5e447'>#</a> 列表（list）</h1><p class='view-p'><strong>列表（list）</strong> 是一组有序数据的 <strong>可变</strong> 集合。</p><p class='view-p'>列表的字面量使用方括号（<code class='view-text-secondary view-border-1 view-border-secondary'>[]</code>）包裹一组值表示，例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">students</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">]</span>
+</pre></div>
+</div><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Pages: 1 -->
+<svg width="426pt" height="118pt"
+ viewBox="0.00 0.00 426.38 118.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 114)">
+<polygon fill="white" stroke="none" points="-4,4 -4,-114 422.38,-114 422.38,4 -4,4"/>
+<!-- 列表: -->
+<g id="node1" class="node">
+<title>列表:</title>
+<text text-anchor="middle" x="29.38" y="-84.9" font-family="Times New Roman,serif" font-size="18.00" fill="red">列表:</text>
+</g>
+<!-- 索引: -->
+<g id="node2" class="node">
+<title>索引:</title>
+<text text-anchor="middle" x="29.38" y="-11.9" font-family="Times New Roman,serif" font-size="18.00" fill="red">索引:</text>
+</g>
+<!-- 列表:&#45;&gt;索引: -->
+<g id="edge1" class="edge">
+<title>列表:&#45;&gt;索引:</title>
+<path fill="none" stroke="white" d="M29.38,-73.67C29.38,-65.89 29.38,-56.44 29.38,-47.62"/>
+<polygon fill="white" stroke="white" points="32.88,-47.72 29.38,-37.72 25.88,-47.72 32.88,-47.72"/>
+</g>
+<!-- values -->
+<g id="node3" class="node">
+<title>values</title>
+<polygon fill="lightblue" stroke="blue" points="76.38,-73.5 76.38,-109.5 418.38,-109.5 418.38,-73.5 76.38,-73.5"/>
+<text text-anchor="middle" x="132.12" y="-86.45" font-family="Times New Roman,serif" font-size="14.00">Tom</text>
+<polyline fill="none" stroke="blue" points="187.88,-73.5 187.88,-109.5"/>
+<text text-anchor="middle" x="244.38" y="-86.45" font-family="Times New Roman,serif" font-size="14.00">Jerry</text>
+<polyline fill="none" stroke="blue" points="300.88,-73.5 300.88,-109.5"/>
+<text text-anchor="middle" x="359.25" y="-86.45" font-family="Times New Roman,serif" font-size="14.00">Spike</text>
+</g>
+<!-- indices -->
+<g id="node4" class="node">
+<title>indices</title>
+<polygon fill="none" stroke="white" points="76.38,-0.5 76.38,-36.5 418.38,-36.5 418.38,-0.5 76.38,-0.5"/>
+<text text-anchor="middle" x="133.25" y="-13.45" font-family="Times New Roman,serif" font-size="14.00">0</text>
+<polyline fill="none" stroke="white" points="190.12,-0.5 190.12,-36.5"/>
+<text text-anchor="middle" x="247" y="-13.45" font-family="Times New Roman,serif" font-size="14.00">1</text>
+<polyline fill="none" stroke="white" points="303.88,-0.5 303.88,-36.5"/>
+<text text-anchor="middle" x="360.75" y="-13.45" font-family="Times New Roman,serif" font-size="14.00">2</text>
+</g>
+</g>
+</svg>
+<p class='view-p'>类型标注 <code class='view-text-secondary view-border-1 view-border-secondary'>list[str]</code>，表示类型为 <strong>元素类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>str</code> 的列表</strong></p><div class=' view-message-warning'>参考 <a class='view-text-primary' href='https://peps.python.org/pep-0585/' target='_blank'>PEP 585</a>，此类型标注需要 Python 版本 <span class="math">\(\geq\)</span> 3.9，之前的版本需要引用 <code class='view-text-secondary view-border-1 view-border-secondary'>typing</code> 模块。</div><p class='view-p'>列表的元素类型可以不同，例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">ages</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="o">|</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;16&quot;</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>
+</pre></div>
+</div><p class='view-p'>类型标注 <code class='view-text-secondary view-border-1 view-border-secondary'>list[int|str]</code>，表示类型为 <strong>元素类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>str</code> 的列表</strong></p><blockquote><p class='view-p'>如果没有合理的理由，请不要使用元素类型不定的列表</p></blockquote><h2 id='9ac22d' class='view-h5'><a class='view-text-miku' href='#9ac22d'>#</a> 索引</h2><p class='view-p'>列表和元组一样，通过列表后跟方括号（<code class='view-text-secondary view-border-1 view-border-secondary'>[]</code>）索引访问元素，<strong>索引从 0 开始</strong>，并且列表的元素是可以修改的：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">students</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">students</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Tuffy&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=c3R1ZGVudHMlM0FsaXN0JTVCc3RyJTVEJTIwJTNEJTIwJTVCJTIyVG9tJTIyJTJDJTIwJTIySmVycnklMjIlMkMlMjAlMjJTcGlrZSUyMiU1RCUwQXByaW50JTI4c3R1ZGVudHMlMjklMEFwcmludCUyOHN0dWRlbnRzJTVCMCU1RCUyOSUwQXByaW50JTI4c3R1ZGVudHMlNUIxJTVEJTI5JTBBcHJpbnQlMjhzdHVkZW50cyU1QjIlNUQlMjklMEElMEFzdHVkZW50cyU1QjElNUQlMjAlM0QlMjAlMjJUdWZmeSUyMiUwQXByaW50JTI4c3R1ZGVudHMlMjklMEE='></iframe></div><h2 id='b318f5' class='view-h5'><a class='view-text-miku' href='#b318f5'>#</a> 添加元素</h2><p class='view-p'>Python 提供了多种方式向列表插入元素，主要包括 <code class='view-text-secondary view-border-1 view-border-secondary'>append</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>insert</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>extend</code>：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>append</code> - 在末尾追加元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>insert</code> - 在指定位置插入元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>extend</code> - 将另一个列表合并到末尾</p></li></ul><p class='view-p'>示例：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="n">numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>          <span class="c1"># 末尾追加 10</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">233</span><span class="p">)</span>      <span class="c1"># 在索引为 2 的位置插入 233</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">666</span><span class="p">)</span>    <span class="c1"># 索引 233 超出了当前长度，因此在末尾追加 666</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVycyUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTBBJTBBbnVtYmVycy5hcHBlbmQlMjgxMCUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNiU5QyVBQiVFNSVCMCVCRSVFOCVCRiVCRCVFNSU4QSVBMCUyMDEwJTBBbnVtYmVycy5pbnNlcnQlMjgyJTJDJTIwMjMzJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JTlDJUE4JUU3JUI0JUEyJUU1JUJDJTk1JUU0JUI4JUJBJTIwMiUyMCVFNyU5QSU4NCVFNCVCRCU4RCVFNyVCRCVBRSVFNiU4RiU5MiVFNSU4NSVBNSUyMDIzMyUwQW51bWJlcnMuaW5zZXJ0JTI4MjMzJTJDJTIwNjY2JTI5JTIwJTIwJTIwJTIwJTIzJTIwJUU3JUI0JUEyJUU1JUJDJTk1JTIwMjMzJTIwJUU4JUI2JTg1JUU1JTg3JUJBJUU0JUJBJTg2JUU1JUJEJTkzJUU1JTg5JThEJUU5JTk1JUJGJUU1JUJBJUE2JUVGJUJDJThDJUU1JTlCJUEwJUU2JUFEJUE0JUU1JTlDJUE4JUU2JTlDJUFCJUU1JUIwJUJFJUU4JUJGJUJEJUU1JThBJUEwJTIwNjY2JTBBcHJpbnQlMjhudW1iZXJzJTI5JTBB'></iframe></div><h2 id='2c9846' class='view-h5'><a class='view-text-miku' href='#2c9846'>#</a> 删除元素</h2><p class='view-p'>Python 提供了多种方式向列表插入元素，主要包括 <code class='view-text-secondary view-border-1 view-border-secondary'>pop</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>remove</code>：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pop</code> - 删除指定索引的元素，不指定索引则删除末尾的元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>remove</code> - 删除第一个等于指定值的元素</p></li></ul><p class='view-p'>示例：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="n">numbers</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>               <span class="c1"># 删除末尾元素</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>              <span class="c1"># 删除索引为 2 的元素</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>           <span class="c1"># 删除值为 7 的第一个元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVycyUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTBBJTBBbnVtYmVycy5wb3AlMjglMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlODglQTAlRTklOTklQTQlRTYlOUMlQUIlRTUlQjAlQkUlRTUlODUlODMlRTclQjQlQTAlMEFudW1iZXJzLnBvcCUyODIlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlODglQTAlRTklOTklQTQlRTclQjQlQTIlRTUlQkMlOTUlRTQlQjglQkElMjAyJTIwJUU3JTlBJTg0JUU1JTg1JTgzJUU3JUI0JUEwJTBBbnVtYmVycy5yZW1vdmUlMjg3JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JTg4JUEwJUU5JTk5JUE0JUU1JTgwJUJDJUU0JUI4JUJBJTIwNyUyMCVFNyU5QSU4NCVFNyVBQyVBQyVFNCVCOCU4MCVFNCVCOCVBQSVFNSU4NSU4MyVFNyVCNCVBMCUwQXByaW50JTI4bnVtYmVycyUyOSUwQQ=='></iframe></div><h2 id='a23802' class='view-h5'><a class='view-text-miku' href='#a23802'>#</a> 清空列表</h2><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>clear</code> 方法可以清空列表：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="n">numbers</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>             <span class="c1"># 清空列表</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVycyUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTBBJTBBbnVtYmVycy5jbGVhciUyOCUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNiVCOCU4NSVFNyVBOSVCQSVFNSU4OCU5NyVFOCVBMSVBOCUwQXByaW50JTI4bnVtYmVycyUyOSUwQQ=='></iframe></div><h2 id='94a53c' class='view-h5'><a class='view-text-miku' href='#94a53c'>#</a> 引用类型</h2><p class='view-p'>Python 的 <strong>所有类型都是引用类型</strong>，如果将一个变量赋值给另一个变量，它们将引用同一份实体。参考 <a class='view-text-primary' href='https://docs.python.org/3/reference/datamodel.html#mutable-sequences' target='_blank'>Python 官方文档 - 可变序列</a></p><p class='view-p'>因此，对于列表而言，通过任意一个变量修改列表都会影响到另一个变量：</p><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="477pt" height="100pt"
+ viewBox="0.00 0.00 476.50 100.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 96)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-96 472.5,-96 472.5,4 -4,4"/>
+<!-- data -->
+<g id="node1" class="node">
+<title>data</title>
+<polygon fill="none" stroke="black" points="181,-27.5 181,-63.5 468.5,-63.5 468.5,-27.5 181,-27.5"/>
+<text text-anchor="middle" x="324.75" y="-40.7" font-family="Courier,monospace" font-size="14.00">值 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</text>
+</g>
+<!-- numbers -->
+<g id="node2" class="node">
+<title>numbers</title>
+<polygon fill="none" stroke="black" points="0,-55.5 0,-91.5 113.5,-91.5 113.5,-55.5 0,-55.5"/>
+<text text-anchor="middle" x="56.75" y="-68.7" font-family="Courier,monospace" font-size="14.00">变量 numbers</text>
+</g>
+<!-- numbers&#45;&gt;data -->
+<g id="edge1" class="edge">
+<title>numbers&#45;&gt;data</title>
+<path fill="none" stroke="black" d="M113.84,-67.6C130.48,-65.84 149.57,-63.83 169.3,-61.76"/>
+<polygon fill="black" stroke="black" points="169.57,-65.25 179.15,-60.72 168.84,-58.29 169.57,-65.25"/>
+<text text-anchor="middle" x="147.25" y="-67.68" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+<!-- shadow -->
+<g id="node3" class="node">
+<title>shadow</title>
+<polygon fill="none" stroke="black" points="4.12,-0.5 4.12,-36.5 109.38,-36.5 109.38,-0.5 4.12,-0.5"/>
+<text text-anchor="middle" x="56.75" y="-13.7" font-family="Courier,monospace" font-size="14.00">变量 shadow</text>
+</g>
+<!-- shadow&#45;&gt;data -->
+<g id="edge2" class="edge">
+<title>shadow&#45;&gt;data</title>
+<path fill="none" stroke="black" d="M109.67,-23.77C127.24,-25.55 147.87,-27.65 169.26,-29.82"/>
+<polygon fill="black" stroke="black" points="168.7,-33.28 179,-30.81 169.4,-26.32 168.7,-33.28"/>
+<text text-anchor="middle" x="147.25" y="-31.24" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+</g>
+</svg>
+<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>  <span class="c1"># 创建了列表 [0, ..., 9]，并赋值给变量 numbers</span>
+<span class="n">shadow</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">numbers</span>                          <span class="c1"># 变量 numbers 赋值给 shadow，也即引用源头的 [0, ..., 9]</span>
+
+<span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">233</span>                                    <span class="c1"># 通过 numbers 修改列表元素</span>
+<span class="n">shadow</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">666</span>                                     <span class="c1"># 通过 shadow 修改列表元素</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>                                      <span class="c1"># 可以看到 numbers 和 shadow 都被修改了</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shadow</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVycyUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTIwJTIwJTIzJTIwJUU1JTg4JTlCJUU1JUJCJUJBJUU0JUJBJTg2JUU1JTg4JTk3JUU4JUExJUE4JTIwJTVCMCUyQyUyMC4uLiUyQyUyMDklNUQlRUYlQkMlOEMlRTUlQjklQjYlRTglQjUlOEIlRTUlODAlQkMlRTclQkIlOTklRTUlOEYlOTglRTklODclOEYlMjBudW1iZXJzJTBBc2hhZG93JTNBbGlzdCU1QmludCU1RCUyMCUzRCUyMG51bWJlcnMlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlOEYlOTglRTklODclOEYlMjBudW1iZXJzJTIwJUU4JUI1JThCJUU1JTgwJUJDJUU3JUJCJTk5JTIwc2hhZG93JUVGJUJDJThDJUU0JUI5JTlGJUU1JThEJUIzJUU1JUJDJTk1JUU3JTk0JUE4JUU2JUJBJTkwJUU1JUE0JUI0JUU3JTlBJTg0JTIwJTVCMCUyQyUyMC4uLiUyQyUyMDklNUQlMEElMEFudW1iZXJzJTVCMSU1RCUyMCUzRCUyMDIzMyUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFOSU4MCU5QSVFOCVCRiU4NyUyMG51bWJlcnMlMjAlRTQlQkYlQUUlRTYlOTQlQjklRTUlODglOTclRTglQTElQTglRTUlODUlODMlRTclQjQlQTAlMEFzaGFkb3clNUIyJTVEJTIwJTNEJTIwNjY2JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU5JTgwJTlBJUU4JUJGJTg3JTIwc2hhZG93JTIwJUU0JUJGJUFFJUU2JTk0JUI5JUU1JTg4JTk3JUU4JUExJUE4JUU1JTg1JTgzJUU3JUI0JUEwJTBBJTBBcHJpbnQlMjhudW1iZXJzJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JThGJUFGJUU0JUJCJUE1JUU3JTlDJThCJUU1JTg4JUIwJTIwbnVtYmVycyUyMCVFNSU5MiU4QyUyMHNoYWRvdyUyMCVFOSU4MyVCRCVFOCVBMiVBQiVFNCVCRiVBRSVFNiU5NCVCOSVFNCVCQSU4NiUwQXByaW50JTI4c2hhZG93JTI5JTBB'></iframe></div><p class='view-p'>之前学习的基本类型和元组都属于不可变类型，对他们的修改实际上是创建了一个新的对象。参考 <a class='view-text-primary' href='https://docs.python.org/3/reference/datamodel.html#immutable-sequences' target='_blank'>Python 官方文档 - 不可变序列</a></p><p class='view-p'>因此，引用同一个实体的对象之间不会感知到互相影响：</p><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="307pt" height="294pt"
+ viewBox="0.00 0.00 307.07 294.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 290)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-290 303.07,-290 303.07,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>cluster_1</title>
+<polygon fill="none" stroke="black" points="8,-8 8,-139 291.07,-139 291.07,-8 8,-8"/>
+<text text-anchor="middle" x="149.54" y="-121.7" font-family="Times New Roman,serif" font-size="14.00">After</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_0</title>
+<polygon fill="none" stroke="black" points="8,-147 8,-278 291.07,-278 291.07,-147 8,-147"/>
+<text text-anchor="middle" x="149.54" y="-260.7" font-family="Times New Roman,serif" font-size="14.00">Before</text>
+</g>
+<!-- svalue -->
+<g id="node1" class="node">
+<title>svalue</title>
+<ellipse fill="none" stroke="black" cx="248.7" cy="-34" rx="34.37" ry="18"/>
+<text text-anchor="middle" x="248.7" y="-29.32" font-family="Times New Roman,serif" font-size="14.00">值 11</text>
+</g>
+<!-- nvalue -->
+<g id="node2" class="node">
+<title>nvalue</title>
+<ellipse fill="none" stroke="black" cx="248.7" cy="-88" rx="34.37" ry="18"/>
+<text text-anchor="middle" x="248.7" y="-83.33" font-family="Times New Roman,serif" font-size="14.00">值 10</text>
+</g>
+<!-- shadow2 -->
+<g id="node3" class="node">
+<title>shadow2</title>
+<ellipse fill="none" stroke="black" cx="81.41" cy="-34" rx="64.89" ry="18"/>
+<text text-anchor="middle" x="81.41" y="-29.32" font-family="Times New Roman,serif" font-size="14.00">变量 shadow</text>
+</g>
+<!-- shadow2&#45;&gt;svalue -->
+<g id="edge1" class="edge">
+<title>shadow2&#45;&gt;svalue</title>
+<path fill="none" stroke="black" d="M146.79,-34C165.5,-34 185.52,-34 202.75,-34"/>
+<polygon fill="black" stroke="black" points="202.68,-37.5 212.68,-34 202.68,-30.5 202.68,-37.5"/>
+<text text-anchor="middle" x="180.58" y="-36.45" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+<!-- number2 -->
+<g id="node4" class="node">
+<title>number2</title>
+<ellipse fill="none" stroke="black" cx="81.41" cy="-88" rx="65.41" ry="18"/>
+<text text-anchor="middle" x="81.41" y="-83.33" font-family="Times New Roman,serif" font-size="14.00">变量 number</text>
+</g>
+<!-- number2&#45;&gt;nvalue -->
+<g id="edge2" class="edge">
+<title>number2&#45;&gt;nvalue</title>
+<path fill="none" stroke="black" d="M147.26,-88C165.78,-88 185.55,-88 202.61,-88"/>
+<polygon fill="black" stroke="black" points="202.42,-91.5 212.42,-88 202.42,-84.5 202.42,-91.5"/>
+<text text-anchor="middle" x="180.58" y="-90.45" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+<!-- value -->
+<g id="node5" class="node">
+<title>value</title>
+<ellipse fill="none" stroke="black" cx="248.7" cy="-196" rx="34.37" ry="18"/>
+<text text-anchor="middle" x="248.7" y="-191.32" font-family="Times New Roman,serif" font-size="14.00">值 10</text>
+</g>
+<!-- number -->
+<g id="node6" class="node">
+<title>number</title>
+<ellipse fill="none" stroke="black" cx="81.41" cy="-173" rx="65.41" ry="18"/>
+<text text-anchor="middle" x="81.41" y="-168.32" font-family="Times New Roman,serif" font-size="14.00">变量 number</text>
+</g>
+<!-- number&#45;&gt;value -->
+<g id="edge3" class="edge">
+<title>number&#45;&gt;value</title>
+<path fill="none" stroke="black" d="M146.56,-175.31C162.88,-176.53 180.32,-178.4 196.33,-181.25 200.14,-181.93 204.08,-182.78 208,-183.72"/>
+<polygon fill="black" stroke="black" points="206.85,-187.04 217.41,-186.2 208.63,-180.27 206.85,-187.04"/>
+<text text-anchor="middle" x="180.58" y="-183.7" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+<!-- shadow -->
+<g id="node7" class="node">
+<title>shadow</title>
+<ellipse fill="none" stroke="black" cx="81.41" cy="-227" rx="64.89" ry="18"/>
+<text text-anchor="middle" x="81.41" y="-222.32" font-family="Times New Roman,serif" font-size="14.00">变量 shadow</text>
+</g>
+<!-- shadow&#45;&gt;value -->
+<g id="edge4" class="edge">
+<title>shadow&#45;&gt;value</title>
+<path fill="none" stroke="black" d="M136.08,-216.94C158.35,-212.76 183.83,-207.98 204.82,-204.04"/>
+<polygon fill="black" stroke="black" points="205.3,-207.51 214.48,-202.23 204.01,-200.63 205.3,-207.51"/>
+<text text-anchor="middle" x="180.58" y="-213.95" font-family="Times New Roman,serif" font-size="14.00">引用</text>
+</g>
+</g>
+</svg>
+<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">number</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>         <span class="c1"># 创建了值为 10 的整数，并赋值给变量 number </span>
+<span class="n">shadow</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="n">number</span>     <span class="c1"># 变量 number 赋值给 shadow，也即引用源头的 10</span>
+
+<span class="n">number</span> <span class="o">=</span> <span class="mi">11</span>             <span class="c1"># 修改 number 并非将 10 修改为11，而是创建了新的值为 11 的整数并赋值给 number</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>           <span class="c1"># number 引用的值为 11</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shadow</span><span class="p">)</span>           <span class="c1"># shadow 仍引用原先的值</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVyJTNBaW50JTIwJTNEJTIwMTAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlODglOUIlRTUlQkIlQkElRTQlQkElODYlRTUlODAlQkMlRTQlQjglQkElMjAxMCUyMCVFNyU5QSU4NCVFNiU5NSVCNCVFNiU5NSVCMCVFRiVCQyU4QyVFNSVCOSVCNiVFOCVCNSU4QiVFNSU4MCVCQyVFNyVCQiU5OSVFNSU4RiU5OCVFOSU4NyU4RiUyMG51bWJlciUyMCUwQXNoYWRvdyUzQWludCUyMCUzRCUyMG51bWJlciUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4RiU5OCVFOSU4NyU4RiUyMG51bWJlciUyMCVFOCVCNSU4QiVFNSU4MCVCQyVFNyVCQiU5OSUyMHNoYWRvdyVFRiVCQyU4QyVFNCVCOSU5RiVFNSU4RCVCMyVFNSVCQyU5NSVFNyU5NCVBOCVFNiVCQSU5MCVFNSVBNCVCNCVFNyU5QSU4NCUyMDEwJTBBJTBBbnVtYmVyJTIwJTNEJTIwMTElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTQlQkYlQUUlRTYlOTQlQjklMjBudW1iZXIlMjAlRTUlQjklQjYlRTklOUQlOUUlRTUlQjAlODYlMjAxMCUyMCVFNCVCRiVBRSVFNiU5NCVCOSVFNCVCOCVCQTExJUVGJUJDJThDJUU4JTgwJThDJUU2JTk4JUFGJUU1JTg4JTlCJUU1JUJCJUJBJUU0JUJBJTg2JUU2JTk2JUIwJUU3JTlBJTg0JUU1JTgwJUJDJUU0JUI4JUJBJTIwMTElMjAlRTclOUElODQlRTYlOTUlQjQlRTYlOTUlQjAlRTUlQjklQjYlRTglQjUlOEIlRTUlODAlQkMlRTclQkIlOTklMjBudW1iZXIlMEElMEFwcmludCUyOG51bWJlciUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMG51bWJlciUyMCVFNSVCQyU5NSVFNyU5NCVBOCVFNyU5QSU4NCVFNSU4MCVCQyVFNCVCOCVCQSUyMDExJTBBcHJpbnQlMjhzaGFkb3clMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjBzaGFkb3clMjAlRTQlQkIlOEQlRTUlQkMlOTUlRTclOTQlQTglRTUlOEUlOUYlRTUlODUlODglRTclOUElODQlRTUlODAlQkMlMEE='></iframe></div><p class='view-p'>如果想要两个列表互不影响，就需要创建新的列表：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>  <span class="c1"># 创建了列表 [0, ..., 9]，并赋值给变量 numbers</span>
+<span class="n">shadow</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>                    <span class="c1"># 基于 numbers 的值创建新的列表，并赋值给 shadow</span>
+
+<span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">233</span>                                    <span class="c1"># 通过 numbers 修改列表元素</span>
+<span class="n">shadow</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">666</span>                                     <span class="c1"># 通过 shadow 修改列表元素</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shadow</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVycyUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTIwJTIwJTIzJTIwJUU1JTg4JTlCJUU1JUJCJUJBJUU0JUJBJTg2JUU1JTg4JTk3JUU4JUExJUE4JTIwJTVCMCUyQyUyMC4uLiUyQyUyMDklNUQlRUYlQkMlOEMlRTUlQjklQjYlRTglQjUlOEIlRTUlODAlQkMlRTclQkIlOTklRTUlOEYlOTglRTklODclOEYlMjBudW1iZXJzJTBBc2hhZG93JTNBbGlzdCU1QmludCU1RCUyMCUzRCUyMGxpc3QlMjhudW1iZXJzJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JTlGJUJBJUU0JUJBJThFJTIwbnVtYmVycyUyMCVFNyU5QSU4NCVFNSU4MCVCQyVFNSU4OCU5QiVFNSVCQiVCQSVFNiU5NiVCMCVFNyU5QSU4NCVFNSU4OCU5NyVFOCVBMSVBOCVFRiVCQyU4QyVFNSVCOSVCNiVFOCVCNSU4QiVFNSU4MCVCQyVFNyVCQiU5OSUyMHNoYWRvdyUwQSUwQW51bWJlcnMlNUIxJTVEJTIwJTNEJTIwMjMzJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU5JTgwJTlBJUU4JUJGJTg3JTIwbnVtYmVycyUyMCVFNCVCRiVBRSVFNiU5NCVCOSVFNSU4OCU5NyVFOCVBMSVBOCVFNSU4NSU4MyVFNyVCNCVBMCUwQXNoYWRvdyU1QjIlNUQlMjAlM0QlMjA2NjYlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTklODAlOUElRTglQkYlODclMjBzaGFkb3clMjAlRTQlQkYlQUUlRTYlOTQlQjklRTUlODglOTclRTglQTElQTglRTUlODUlODMlRTclQjQlQTAlMEElMEFwcmludCUyOG51bWJlcnMlMjklMEFwcmludCUyOHNoYWRvdyUyOSUwQQ=='></iframe></div><h2 id='c06c26' class='view-h5'><a class='view-text-miku' href='#c06c26'>#</a> len 函数</h2><p class='view-p'>通过内建函数 <code class='view-text-secondary view-border-1 view-border-secondary'>len</code> 可以获得元组和列表的长度。</p><p class='view-p'>示例：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">numbers_tuple</span><span class="p">:</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">numbers_list</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers_tuple</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers_list</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers_list</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">]))</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=bnVtYmVyc190dXBsZSUzQXR1cGxlJTVCaW50JTJDJTIwLi4uJTVEJTIwJTNEJTIwJTI4MCUyQyUyMDElMkMlMjAyJTJDJTIwMyUyQyUyMDQlMkMlMjA1JTJDJTIwNiUyQyUyMDclMkMlMjA4JTJDJTIwOSUyOSUwQW51bWJlcnNfbGlzdCUzQWxpc3QlNUJpbnQlNUQlMjAlM0QlMjAlNUIwJTJDJTIwMSUyQyUyMDIlMkMlMjAzJTJDJTIwNCUyQyUyMDUlMkMlMjA2JTJDJTIwNyUyQyUyMDglMkMlMjA5JTVEJTBBJTBBcHJpbnQlMjhsZW4lMjhudW1iZXJzX3R1cGxlJTI5JTI5JTBBcHJpbnQlMjhsZW4lMjhudW1iZXJzX2xpc3QlMjklMjklMEFwcmludCUyOGxlbiUyOG51bWJlcnNfbGlzdCU1QjIlM0E3JTVEJTI5JTI5JTBB'></iframe></div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

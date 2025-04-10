@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 基础语法 - 条件控制</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" />
+    <meta name="description" content="条件控制在编写程序时，我们经常需要根据不同的情况执行不同的代码。例如，在一个天气应用中，如果天气晴朗，就显示“出门记得戴太阳镜”；如果下雨，就显示“出门记得带上雨伞”。这种根据条件执行不同代码的行为称为**条件控制**。条件控制语法参考：[Python官方文档](http">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='cbebf1' class='view-h4'><a class='view-text-miku' href='#cbebf1'>#</a> 条件控制</h1><p class='view-p'>在编写程序时，我们经常需要根据不同的情况执行不同的代码。例如，在一个天气应用中，如果天气晴朗，就显示“出门记得戴太阳镜”；如果下雨，就显示“出门记得带上雨伞”。
+这种根据条件执行不同代码的行为称为 <strong>条件控制</strong>。</p><h2 id='c8ce65' class='view-h5'><a class='view-text-miku' href='#c8ce65'>#</a> 条件控制语法</h2><p class='view-p'>参考：<a class='view-text-primary' href='https://docs.python.org/3/reference/compound_stmts.html#the-if-statement' target='_blank'>Python 官方文档</a></p><p class='view-p'>Python 使用 <code class='view-text-secondary view-border-1 view-border-secondary'>if</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>elif</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>else</code> 来进行条件判断，其基本语法如下：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">条件1</span><span class="p">:</span>
+    <span class="n">代码块1</span>
+<span class="k">elif</span> <span class="n">条件2</span><span class="p">:</span>
+    <span class="n">代码块2</span>
+
+<span class="o">...</span>
+
+<span class="k">elif</span> <span class="n">条件n</span><span class="p">:</span>
+    <span class="n">代码块n</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">代码块n</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="295pt" height="494pt"
+ viewBox="0.00 0.00 294.62 493.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 489.75)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-489.75 290.62,-489.75 290.62,4 -4,4"/>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<ellipse fill="none" stroke="black" cx="54.38" cy="-467.75" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="54.38" y="-462.32" font-family="Helvetica,sans-Serif" font-size="14.00">开始</text>
+</g>
+<!-- cond1 -->
+<g id="node2" class="node">
+<title>cond1</title>
+<polygon fill="none" stroke="black" points="54.38,-412.75 2.62,-394.75 54.37,-376.75 106.13,-394.75 54.38,-412.75"/>
+<text text-anchor="middle" x="54.38" y="-389.32" font-family="Helvetica,sans-Serif" font-size="14.00">条件1</text>
+</g>
+<!-- start&#45;&gt;cond1 -->
+<g id="edge1" class="edge">
+<title>start&#45;&gt;cond1</title>
+<path fill="none" stroke="black" d="M54.38,-449.56C54.38,-442.09 54.38,-433.12 54.38,-424.67"/>
+<polygon fill="black" stroke="black" points="57.88,-424.79 54.38,-414.79 50.88,-424.79 57.88,-424.79"/>
+</g>
+<!-- code1 -->
+<g id="node3" class="node">
+<title>code1</title>
+<polygon fill="none" stroke="black" points="70.75,-271 0,-271 0,-235 70.75,-235 70.75,-271"/>
+<text text-anchor="middle" x="35.38" y="-247.57" font-family="Helvetica,sans-Serif" font-size="14.00">代码块1</text>
+</g>
+<!-- cond1&#45;&gt;code1 -->
+<g id="edge2" class="edge">
+<title>cond1&#45;&gt;code1</title>
+<path fill="none" stroke="black" d="M52.12,-377.17C48.96,-353.89 43.15,-311.17 39.27,-282.68"/>
+<polygon fill="black" stroke="black" points="42.76,-282.37 37.95,-272.93 35.83,-283.31 42.76,-282.37"/>
+<text text-anchor="middle" x="57.44" y="-345.45" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- cond2 -->
+<g id="node4" class="node">
+<title>cond2</title>
+<polygon fill="none" stroke="black" points="115.38,-325 63.62,-307 115.37,-289 167.13,-307 115.38,-325"/>
+<text text-anchor="middle" x="115.38" y="-301.57" font-family="Helvetica,sans-Serif" font-size="14.00">条件2</text>
+</g>
+<!-- cond1&#45;&gt;cond2 -->
+<g id="edge3" class="edge">
+<title>cond1&#45;&gt;cond2</title>
+<path fill="none" stroke="black" d="M64.18,-379.97C73.55,-366.8 87.85,-346.69 98.96,-331.07"/>
+<polygon fill="black" stroke="black" points="101.57,-333.44 104.52,-323.26 95.87,-329.38 101.57,-333.44"/>
+<text text-anchor="middle" x="98.21" y="-345.45" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- end -->
+<g id="node9" class="node">
+<title>end</title>
+<ellipse fill="none" stroke="black" cx="105.38" cy="-18" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="105.38" y="-12.57" font-family="Helvetica,sans-Serif" font-size="14.00">结束</text>
+</g>
+<!-- code1&#45;&gt;end -->
+<g id="edge8" class="edge">
+<title>code1&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M35.77,-234.63C36.73,-210.14 40.03,-164.26 51.38,-127 60.3,-97.66 76.66,-66.59 89.04,-45.34"/>
+<polygon fill="black" stroke="black" points="92.04,-47.15 94.15,-36.77 86.02,-43.57 92.04,-47.15"/>
+</g>
+<!-- code2 -->
+<g id="node5" class="node">
+<title>code2</title>
+<polygon fill="none" stroke="black" points="126.75,-163 56,-163 56,-127 126.75,-127 126.75,-163"/>
+<text text-anchor="middle" x="91.38" y="-139.57" font-family="Helvetica,sans-Serif" font-size="14.00">代码块2</text>
+</g>
+<!-- cond2&#45;&gt;code2 -->
+<g id="edge4" class="edge">
+<title>cond2&#45;&gt;code2</title>
+<path fill="none" stroke="black" d="M112.9,-289.48C108.82,-262.32 100.66,-207.9 95.64,-174.44"/>
+<polygon fill="black" stroke="black" points="99.12,-174.02 94.17,-164.65 92.19,-175.06 99.12,-174.02"/>
+<text text-anchor="middle" x="117.63" y="-247.57" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- condn -->
+<g id="node6" class="node">
+<title>condn</title>
+<polygon fill="none" stroke="black" points="173.38,-217 121.62,-199 173.37,-181 225.13,-199 173.38,-217"/>
+<text text-anchor="middle" x="173.38" y="-193.57" font-family="Helvetica,sans-Serif" font-size="14.00">条件n</text>
+</g>
+<!-- cond2&#45;&gt;condn -->
+<g id="edge5" class="edge">
+<title>cond2&#45;&gt;condn</title>
+<path fill="none" stroke="black" d="M123.2,-291.7C132.62,-274.48 148.61,-245.25 160.01,-224.43"/>
+<polygon fill="black" stroke="black" points="163.04,-226.19 164.77,-215.74 156.89,-222.83 163.04,-226.19"/>
+<text text-anchor="middle" x="160.83" y="-247.57" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- code2&#45;&gt;end -->
+<g id="edge9" class="edge">
+<title>code2&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M93.32,-126.62C95.61,-106.19 99.44,-71.99 102.17,-47.62"/>
+<polygon fill="black" stroke="black" points="105.64,-48.06 103.28,-37.74 98.69,-47.29 105.64,-48.06"/>
+</g>
+<!-- coden -->
+<g id="node7" class="node">
+<title>coden</title>
+<polygon fill="none" stroke="black" points="181.75,-109 111,-109 111,-73 181.75,-73 181.75,-109"/>
+<text text-anchor="middle" x="146.38" y="-85.58" font-family="Helvetica,sans-Serif" font-size="14.00">代码块n</text>
+</g>
+<!-- condn&#45;&gt;coden -->
+<g id="edge6" class="edge">
+<title>condn&#45;&gt;coden</title>
+<path fill="none" stroke="black" d="M169.27,-181.9C165.13,-165.61 158.63,-140.1 153.61,-120.4"/>
+<polygon fill="black" stroke="black" points="157.02,-119.6 151.16,-110.78 150.23,-121.33 157.02,-119.6"/>
+<text text-anchor="middle" x="171.75" y="-139.57" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- else_block -->
+<g id="node8" class="node">
+<title>else_block</title>
+<polygon fill="none" stroke="black" points="286.62,-109 200.12,-109 200.12,-73 286.62,-73 286.62,-109"/>
+<text text-anchor="middle" x="243.38" y="-85.58" font-family="Helvetica,sans-Serif" font-size="14.00">代码块n+1</text>
+</g>
+<!-- condn&#45;&gt;else_block -->
+<g id="edge7" class="edge">
+<title>condn&#45;&gt;else_block</title>
+<path fill="none" stroke="black" d="M182.53,-184.14C193.42,-167.65 211.86,-139.73 225.59,-118.94"/>
+<polygon fill="black" stroke="black" points="228.47,-120.92 231.06,-110.64 222.63,-117.06 228.47,-120.92"/>
+<text text-anchor="middle" x="226.61" y="-139.57" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- coden&#45;&gt;end -->
+<g id="edge10" class="edge">
+<title>coden&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M136.45,-72.81C131.7,-64.58 125.9,-54.54 120.61,-45.38"/>
+<polygon fill="black" stroke="black" points="123.71,-43.76 115.68,-36.85 117.65,-47.26 123.71,-43.76"/>
+</g>
+<!-- else_block&#45;&gt;end -->
+<g id="edge11" class="edge">
+<title>else_block&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M209.62,-72.63C187.95,-61.48 159.94,-47.07 138.41,-36"/>
+<polygon fill="black" stroke="black" points="140.26,-33.01 129.77,-31.55 137.06,-39.24 140.26,-33.01"/>
+</g>
+</g>
+</svg>
+<p class='view-p'>例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">SUNNY</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># 晴天</span>
+<span class="n">RAINY</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># 雨天</span>
+
+<span class="n">weather</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="n">SUNNY</span>
+
+<span class="k">if</span> <span class="n">weather</span> <span class="o">==</span> <span class="n">SUNNY</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;出门记得戴太阳镜&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">weather</span> <span class="o">==</span> <span class="n">RAINY</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;出门记得带上雨伞&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=U1VOTlklM0FpbnQlMjAlM0QlMjAxJTIwJTIwJTIwJTIzJTIwJUU2JTk5JUI0JUU1JUE0JUE5JTBBUkFJTlklM0FpbnQlMjAlM0QlMjAyJTIwJTIwJTIwJTIzJTIwJUU5JTlCJUE4JUU1JUE0JUE5JTBBJTBBd2VhdGhlciUzQWludCUyMCUzRCUyMFNVTk5ZJTBBJTBBaWYlMjB3ZWF0aGVyJTIwJTNEJTNEJTIwU1VOTlklM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNSU4NyVCQSVFOSU5NyVBOCVFOCVBRSVCMCVFNSVCRSU5NyVFNiU4OCVCNCVFNSVBNCVBQSVFOSU5OCVCMyVFOSU5NSU5QyUyMiUyOSUwQWVsaWYlMjB3ZWF0aGVyJTIwJTNEJTNEJTIwUkFJTlklM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNSU4NyVCQSVFOSU5NyVBOCVFOCVBRSVCMCVFNSVCRSU5NyVFNSVCOCVBNiVFNCVCOCU4QSVFOSU5QiVBOCVFNCVCQyU5RSUyMiUyOSUwQQ=='></iframe></div><h2 id='ddb4a6' class='view-h5'><a class='view-text-miku' href='#ddb4a6'>#</a> 代码块</h2><p class='view-p'>Python 的代码块通过 <strong>缩进</strong> 进行区分，例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是内层 if 条件的代码块&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是内层 if 条件的代码块&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是外层 if 条件的代码块&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是最外层代码块&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=aWYlMjBUcnVlJTNBJTBBJTIwJTIwJTIwJTIwaWYlMjBGYWxzZSUzQSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU4JUJGJTk5JUU2JTk4JUFGJUU1JTg2JTg1JUU1JUIxJTgyJTIwaWYlMjAlRTYlOUQlQTElRTQlQkIlQjYlRTclOUElODQlRTQlQkIlQTMlRTclQTAlODElRTUlOUQlOTclMjIlMjklMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFOCVCRiU5OSVFNiU5OCVBRiVFNSU4NiU4NSVFNSVCMSU4MiUyMGlmJTIwJUU2JTlEJUExJUU0JUJCJUI2JUU3JTlBJTg0JUU0JUJCJUEzJUU3JUEwJTgxJUU1JTlEJTk3JTIyJTI5JTBBJTIwJTIwJTIwJTIwcHJpbnQlMjglMjIlRTglQkYlOTklRTYlOTglQUYlRTUlQTQlOTYlRTUlQjElODIlMjBpZiUyMCVFNiU5RCVBMSVFNCVCQiVCNiVFNyU5QSU4NCVFNCVCQiVBMyVFNyVBMCU4MSVFNSU5RCU5NyUyMiUyOSUwQXByaW50JTI4JTIyJUU4JUJGJTk5JUU2JTk4JUFGJUU2JTlDJTgwJUU1JUE0JTk2JUU1JUIxJTgyJUU0JUJCJUEzJUU3JUEwJTgxJUU1JTlEJTk3JTIyJTI5JTBB'></iframe></div><p class='view-p'>缩进的方式并没有明确规定，但通常使用 <strong>四个空格</strong>。</p><h2 id='3cae1f' class='view-h5'><a class='view-text-miku' href='#3cae1f'>#</a> 练习</h2><p class='view-p'>请实现判断一个整数是偶数还是奇数，通过 <code class='view-text-secondary view-border-1 view-border-secondary'>input</code> 获取输入。</p><ul><li><p>可以被 2 整除的整数是偶数，不能被 2 整除的整数是奇数。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">number</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入一个整数：&quot;</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># 修改此处代码，判断 number 是偶数还是奇数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;是偶数&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;是奇数&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&input=MTk=&code=bnVtYmVyJTNBaW50JTIwJTNEJTIwaW50JTI4aW5wdXQlMjglMjIlRTglQUYlQjclRTglQkUlOTMlRTUlODUlQTUlRTQlQjglODAlRTQlQjglQUElRTYlOTUlQjQlRTYlOTUlQjAlRUYlQkMlOUElMjIlMjklMjklMEElMEFpZiUyMFRydWUlM0ElMjAlMjAlMjMlMjAlRTQlQkYlQUUlRTYlOTQlQjklRTYlQUQlQTQlRTUlQTQlODQlRTQlQkIlQTMlRTclQTAlODElRUYlQkMlOEMlRTUlODglQTQlRTYlOTYlQUQlMjBudW1iZXIlMjAlRTYlOTglQUYlRTUlODElQjYlRTYlOTUlQjAlRTglQkYlOTglRTYlOTglQUYlRTUlQTUlODclRTYlOTUlQjAlMEElMjAlMjAlMjAlMjBwcmludCUyOG51bWJlciUyQyUyMCUyMiVFNiU5OCVBRiVFNSU4MSVCNiVFNiU5NSVCMCUyMiUyOSUwQWVsc2UlM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOG51bWJlciUyQyUyMCUyMiVFNiU5OCVBRiVFNSVBNSU4NyVFNiU5NSVCMCUyMiUyOSUwQQ=='></iframe></div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

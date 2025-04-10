@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 容器类型 - 模式匹配</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" />
+    <meta name="description" content="模式匹配!class:view-message-warning使用模式匹配需要Python版本$\geq$3.10，参考[PEP634](https://peps.python.org/pep-0634/)。元组或列表的模式匹配使用元组或列表形式的模式，可以匹配元">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='18d3c3' class='view-h4'><a class='view-text-miku' href='#18d3c3'>#</a> 模式匹配</h1><div class='view-message-warning'>使用模式匹配需要 Python 版本 <span class="math">\(\geq\)</span> 3.10，参考 <a class='view-text-primary' href='https://peps.python.org/pep-0634/' target='_blank'>PEP 634</a>。</div><h2 id='4fa670' class='view-h5'><a class='view-text-miku' href='#4fa670'>#</a> 元组或列表的模式匹配</h2><p class='view-p'>使用元组或列表形式的模式，可以匹配元组或列表：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">students</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">]</span>              <span class="c1"># 列表</span>
+<span class="k">match</span> <span class="n">students</span><span class="p">:</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">):</span>                              <span class="c1"># 匹配两个元素的元组或列表</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;有两名学生，分别是&quot;</span><span class="p">,</span> <span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="k">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="o">*</span><span class="n">other</span><span class="p">):</span>                              <span class="c1"># 匹配四个以上元素的元组或列表</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;有四名以上学生，分别是&quot;</span><span class="p">,</span> <span class="n">students</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;Tuffy&quot;</span><span class="p">,</span> <span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">):</span>                     <span class="c1"># 匹配三个元素且第一个元素是 Tuffy 的元组或列表</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuffy 后面的座位是&quot;</span><span class="p">,</span> <span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">):</span>                     <span class="c1"># 匹配三个元素且第三个元素是 Spike 的元组或列表</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spike 前面的座位是&quot;</span><span class="p">,</span> <span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BBQ&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=c3R1ZGVudHMlM0FsaXN0JTVCc3RyJTVEJTIwJTNEJTIwJTVCJTIyVG9tJTIyJTJDJTIwJTIySmVycnklMjIlMkMlMjAlMjJTcGlrZSUyMiU1RCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4OCU5NyVFOCVBMSVBOCUwQW1hdGNoJTIwc3R1ZGVudHMlM0ElMEElMjAlMjAlMjAlMjBjYXNlJTIwJTI4c3R1ZGVudDElMkMlMjBzdHVkZW50MiUyOSUzQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4QyVCOSVFOSU4NSU4RCVFNCVCOCVBNCVFNCVCOCVBQSVFNSU4NSU4MyVFNyVCNCVBMCVFNyU5QSU4NCVFNSU4NSU4MyVFNyVCQiU4NCVFNiU4OCU5NiVFNSU4OCU5NyVFOCVBMSVBOCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU2JTlDJTg5JUU0JUI4JUE0JUU1JTkwJThEJUU1JUFEJUE2JUU3JTk0JTlGJUVGJUJDJThDJUU1JTg4JTg2JUU1JTg4JUFCJUU2JTk4JUFGJTIyJTJDJTIwc3R1ZGVudDElMkMlMjBzdHVkZW50MiUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjAlMjhfJTJDJTIwXyUyQyUyMF8lMkMlMjBfJTJDJTIwJTJBb3RoZXIlMjklM0ElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlOEMlQjklRTklODUlOEQlRTUlOUIlOUIlRTQlQjglQUElRTQlQkIlQTUlRTQlQjglOEElRTUlODUlODMlRTclQjQlQTAlRTclOUElODQlRTUlODUlODMlRTclQkIlODQlRTYlODglOTYlRTUlODglOTclRTglQTElQTglMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNiU5QyU4OSVFNSU5QiU5QiVFNSU5MCU4RCVFNCVCQiVBNSVFNCVCOCU4QSVFNSVBRCVBNiVFNyU5NCU5RiVFRiVCQyU4QyVFNSU4OCU4NiVFNSU4OCVBQiVFNiU5OCVBRiUyMiUyQyUyMHN0dWRlbnRzJTI5JTBBJTIwJTIwJTIwJTIwY2FzZSUyMCUyOCUyMlR1ZmZ5JTIyJTJDJTIwc3R1ZGVudDElMkMlMjBzdHVkZW50MiUyOSUzQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4QyVCOSVFOSU4NSU4RCVFNCVCOCU4OSVFNCVCOCVBQSVFNSU4NSU4MyVFNyVCNCVBMCVFNCVCOCU5NCVFNyVBQyVBQyVFNCVCOCU4MCVFNCVCOCVBQSVFNSU4NSU4MyVFNyVCNCVBMCVFNiU5OCVBRiUyMFR1ZmZ5JTIwJUU3JTlBJTg0JUU1JTg1JTgzJUU3JUJCJTg0JUU2JTg4JTk2JUU1JTg4JTk3JUU4JUExJUE4JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjglMjJUdWZmeSUyMCVFNSU5MCU4RSVFOSU5RCVBMiVFNyU5QSU4NCVFNSVCQSVBNyVFNCVCRCU4RCVFNiU5OCVBRiUyMiUyQyUyMHN0dWRlbnQxJTJDJTIwc3R1ZGVudDIlMjklMEElMjAlMjAlMjAlMjBjYXNlJTIwJTI4c3R1ZGVudDElMkMlMjBzdHVkZW50MiUyQyUyMCUyMlNwaWtlJTIyJTI5JTNBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JThDJUI5JUU5JTg1JThEJUU0JUI4JTg5JUU0JUI4JUFBJUU1JTg1JTgzJUU3JUI0JUEwJUU0JUI4JTk0JUU3JUFDJUFDJUU0JUI4JTg5JUU0JUI4JUFBJUU1JTg1JTgzJUU3JUI0JUEwJUU2JTk4JUFGJTIwU3Bpa2UlMjAlRTclOUElODQlRTUlODUlODMlRTclQkIlODQlRTYlODglOTYlRTUlODglOTclRTglQTElQTglMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMlNwaWtlJTIwJUU1JTg5JThEJUU5JTlEJUEyJUU3JTlBJTg0JUU1JUJBJUE3JUU0JUJEJThEJUU2JTk4JUFGJTIyJTJDJTIwc3R1ZGVudDElMkMlMjBzdHVkZW50MiUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjBfJTNBJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjglMjJCQlElMjIlMjklMEE='></iframe></div><p class='view-p'>模式既可以写成元组的形式，也可以写成列表的形式，甚至可写成序列形式（无括号）。<br />
+但无论写成哪种形式，模式都不区分元组和列表，既能匹配元组，也能匹配列表，。</p><p class='view-p'>如果需要进行区分，可以组合其它模式共同实现。</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">students</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">)</span>              <span class="c1"># 列表</span>
+<span class="k">match</span> <span class="n">students</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">,</span> <span class="n">student3</span><span class="p">)):</span>             <span class="c1"># 两层括号，外层为函数调用，内存为元组形式的模式</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;三个元素的元组&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nb">list</span><span class="p">((</span><span class="n">student1</span><span class="p">,</span> <span class="n">student2</span><span class="p">,</span> <span class="n">student3</span><span class="p">)):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;三个元素的列表&quot;</span><span class="p">)</span> 
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BBQ&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=c3R1ZGVudHMlM0FsaXN0JTVCc3RyJTVEJTIwJTNEJTIwJTI4JTIyVG9tJTIyJTJDJTIwJTIySmVycnklMjIlMkMlMjAlMjJTcGlrZSUyMiUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNSU4OCU5NyVFOCVBMSVBOCUwQW1hdGNoJTIwc3R1ZGVudHMlM0ElMEElMjAlMjAlMjAlMjBjYXNlJTIwdHVwbGUlMjglMjhzdHVkZW50MSUyQyUyMHN0dWRlbnQyJTJDJTIwc3R1ZGVudDMlMjklMjklM0ElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTQlQjglQTQlRTUlQjElODIlRTYlOEIlQUMlRTUlOEYlQjclRUYlQkMlOEMlRTUlQTQlOTYlRTUlQjElODIlRTQlQjglQkElRTUlODclQkQlRTYlOTUlQjAlRTglQjAlODMlRTclOTQlQTglRUYlQkMlOEMlRTUlODYlODUlRTUlQUQlOTglRTQlQjglQkElRTUlODUlODMlRTclQkIlODQlRTUlQkQlQTIlRTUlQkMlOEYlRTclOUElODQlRTYlQTglQTElRTUlQkMlOEYlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNCVCOCU4OSVFNCVCOCVBQSVFNSU4NSU4MyVFNyVCNCVBMCVFNyU5QSU4NCVFNSU4NSU4MyVFNyVCQiU4NCUyMiUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjBsaXN0JTI4JTI4c3R1ZGVudDElMkMlMjBzdHVkZW50MiUyQyUyMHN0dWRlbnQzJTI5JTI5JTNBJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjglMjIlRTQlQjglODklRTQlQjglQUElRTUlODUlODMlRTclQjQlQTAlRTclOUElODQlRTUlODglOTclRTglQTElQTglMjIlMjklMjAlMEElMjAlMjAlMjAlMjBjYXNlJTIwXyUzQSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyQkJRJTIyJTI5JTBB'></iframe></div><h2 id='ee0d18' class='view-h5'><a class='view-text-miku' href='#ee0d18'>#</a> 字典的模式匹配</h2><p class='view-p'>使用字典形式的模式，可以匹配字典：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">score_list</span><span class="p">:</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Tom&#39;</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span>
+    <span class="s1">&#39;Jerry&#39;</span><span class="p">:</span> <span class="mi">99</span><span class="p">,</span>
+    <span class="s1">&#39;Spike&#39;</span><span class="p">:</span> <span class="mi">66</span>
+<span class="p">}</span>
+
+<span class="k">match</span> <span class="n">score_list</span><span class="p">:</span>
+    <span class="k">case</span> <span class="p">{</span><span class="s2">&quot;Tuffy&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">}:</span>                                      <span class="c1"># 匹配含有 Tuffy 键的字典</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Toffy 的成绩是&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">{</span><span class="s2">&quot;Jerry&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)}:</span>                                 <span class="c1"># 匹配 Jerry 键对应的值类型为 str 的字典</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Toffy 的成绩是&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">{</span><span class="s2">&quot;Tom&quot;</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">}:</span>                           <span class="c1"># 匹配 Tom 键对应的值为 77 且含有 Jerry 键的字典</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tom 成绩 88 的那次考试，Jerry 的成绩是&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BBQ&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=c2NvcmVfbGlzdCUzQWRpY3QlNUJzdHIlMkNpbnQlNUQlMjAlM0QlMjAlN0IlMEElMjAlMjAlMjAlMjAlMjdUb20lMjclM0ElMjA4OCUyQyUwQSUyMCUyMCUyMCUyMCUyN0plcnJ5JTI3JTNBJTIwOTklMkMlMEElMjAlMjAlMjAlMjAlMjdTcGlrZSUyNyUzQSUyMDY2JTBBJTdEJTBBJTBBbWF0Y2glMjBzY29yZV9saXN0JTNBJTBBJTIwJTIwJTIwJTIwY2FzZSUyMCU3QiUyMlR1ZmZ5JTIyJTNBJTIwc2NvcmUlN0QlM0ElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjMlMjAlRTUlOEMlQjklRTklODUlOEQlRTUlOTAlQUIlRTYlOUMlODklMjBUdWZmeSUyMCVFOSU5NCVBRSVFNyU5QSU4NCVFNSVBRCU5NyVFNSU4NSVCOCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyVG9mZnklMjAlRTclOUElODQlRTYlODglOTAlRTclQkIlQTklRTYlOTglQUYlMjIlMkMlMjBzY29yZSUyOSUwQSUyMCUyMCUyMCUyMGNhc2UlMjAlN0IlMjJKZXJyeSUyMiUzQSUyMHN0ciUyOHNjb3JlJTI5JTdEJTNBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JThDJUI5JUU5JTg1JThEJTIwSmVycnklMjAlRTklOTQlQUUlRTUlQUYlQjklRTUlQkElOTQlRTclOUElODQlRTUlODAlQkMlRTclQjElQkIlRTUlOUUlOEIlRTQlQjglQkElMjBzdHIlMjAlRTclOUElODQlRTUlQUQlOTclRTUlODUlQjglMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMlRvZmZ5JTIwJUU3JTlBJTg0JUU2JTg4JTkwJUU3JUJCJUE5JUU2JTk4JUFGJTIyJTJDJTIwc2NvcmUlMjklMEElMjAlMjAlMjAlMjBjYXNlJTIwJTdCJTIyVG9tJTIyJTNBJTIwODglMkMlMjAlMjJKZXJyeSUyMiUzQSUyMHNjb3JlJTdEJTNBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU1JThDJUI5JUU5JTg1JThEJTIwVG9tJTIwJUU5JTk0JUFFJUU1JUFGJUI5JUU1JUJBJTk0JUU3JTlBJTg0JUU1JTgwJUJDJUU0JUI4JUJBJTIwNzclMjAlRTQlQjglOTQlRTUlOTAlQUIlRTYlOUMlODklMjBKZXJyeSUyMCVFOSU5NCVBRSVFNyU5QSU4NCVFNSVBRCU5NyVFNSU4NSVCOCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHByaW50JTI4JTIyVG9tJTIwJUU2JTg4JTkwJUU3JUJCJUE5JTIwODglMjAlRTclOUElODQlRTklODIlQTMlRTYlQUMlQTElRTglODAlODMlRTglQUYlOTUlRUYlQkMlOENKZXJyeSUyMCVFNyU5QSU4NCVFNiU4OCU5MCVFNyVCQiVBOSVFNiU5OCVBRiUyMiUyQyUyMHNjb3JlJTI5JTBBJTIwJTIwJTIwJTIwY2FzZSUyMF8lM0ElMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMkJCUSUyMiUyOSUwQQ=='></iframe></div><h2 id='3310fd' class='view-h5'><a class='view-text-miku' href='#3310fd'>#</a> 集合的模式匹配</h2><p class='view-p'>集合 <strong>不能作为模式</strong>，仅能用空集来判断变量是不是集合，但使用 <code class='view-text-secondary view-border-1 view-border-secondary'>if</code> 或者 <code class='view-text-secondary view-border-1 view-border-secondary'>isinstance</code> 判断更加方便：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">students</span><span class="p">:</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="s2">&quot;Spike&quot;</span><span class="p">}</span>              <span class="c1"># 集合</span>
+<span class="k">match</span> <span class="n">students</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nb">set</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;集合&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=c3R1ZGVudHMlM0FzZXQlNUJzdHIlNUQlMjAlM0QlMjAlN0IlMjJUb20lMjIlMkMlMjAlMjJKZXJyeSUyMiUyQyUyMCUyMlNwaWtlJTIyJTdEJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIzJTIwJUU5JTlCJTg2JUU1JTkwJTg4JTBBbWF0Y2glMjBzdHVkZW50cyUzQSUwQSUyMCUyMCUyMCUyMGNhc2UlMjBzZXQlMjglMjklM0ElMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFOSU5QiU4NiVFNSU5MCU4OCUyMiUyOSUwQQ=='></iframe></div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>Primers - Python - 基础语法 - 循环控制</title>
+    <link rel="canonical" href="https://xplanc.org/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" />
+    <meta name="description" content="循环控制在编写程序时，我们经常需要重复执行同一段代码。例如在游戏中释放了一个持续的治疗技能，效果是一段时间内不断的回血，总计回复十次。这样的写法显然不合适：```pythonhp:int=10治疗hp+=1hp+=1hp+=1hp+=1hp">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEWPX7E6EV');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                        <div class="view-flex-grow-1"></div>
+                        <div class="view-display-flex">
+                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <h1 id='250b90' class='view-h4'><a class='view-text-miku' href='#250b90'>#</a> 循环控制</h1><p class='view-p'>在编写程序时，我们经常需要重复执行同一段代码。例如在游戏中释放了一个持续的治疗技能，效果是一段时间内不断的回血，总计回复十次。</p><p class='view-p'>这样的写法显然不合适：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">hp</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 治疗</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div><p class='view-p'>此时就需要使用循环来优化代码，Python 有两种循环语法，分别由 <code class='view-text-secondary view-border-1 view-border-secondary'>while</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>for</code> 控制。</p><h2 id='314217' class='view-h5'><a class='view-text-miku' href='#314217'>#</a> while 循环</h2><p class='view-p'>参考：<a class='view-text-primary' href='https://docs.python.org/3/reference/compound_stmts.html#the-while-statement' target='_blank'>Python 官方文档</a></p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>while</code> 循环的结构如下：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">循环条件</span>
+    <span class="n">循环体</span>
+</pre></div>
+</div><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.2.1 (20241206.2353)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="164pt" height="205pt"
+ viewBox="0.00 0.00 163.94 204.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 200.75)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-200.75 159.94,-200.75 159.94,4 -4,4"/>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<ellipse fill="none" stroke="black" cx="74.33" cy="-178.75" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="74.33" y="-173.32" font-family="Helvetica,sans-Serif" font-size="14.00">开始</text>
+</g>
+<!-- condition -->
+<g id="node2" class="node">
+<title>condition</title>
+<polygon fill="none" stroke="black" points="74.33,-123.75 0,-105.75 74.33,-87.75 148.66,-105.75 74.33,-123.75"/>
+<text text-anchor="middle" x="74.33" y="-100.33" font-family="Helvetica,sans-Serif" font-size="14.00">循环判断</text>
+</g>
+<!-- start&#45;&gt;condition -->
+<g id="edge1" class="edge">
+<title>start&#45;&gt;condition</title>
+<path fill="none" stroke="black" d="M74.33,-160.56C74.33,-152.98 74.33,-143.85 74.33,-135.29"/>
+<polygon fill="black" stroke="black" points="77.83,-135.29 74.33,-125.29 70.83,-135.29 77.83,-135.29"/>
+</g>
+<!-- loop_body -->
+<g id="node3" class="node">
+<title>loop_body</title>
+<polygon fill="none" stroke="black" points="74.96,-36 11.71,-36 11.71,0 74.96,0 74.96,-36"/>
+<text text-anchor="middle" x="43.33" y="-12.57" font-family="Helvetica,sans-Serif" font-size="14.00">循环体</text>
+</g>
+<!-- condition&#45;&gt;loop_body -->
+<g id="edge2" class="edge">
+<title>condition&#45;&gt;loop_body</title>
+<path fill="none" stroke="black" d="M59.08,-91.25C53.43,-85.28 47.65,-77.8 44.58,-69.75 41.97,-62.92 40.93,-55.18 40.7,-47.84"/>
+<polygon fill="black" stroke="black" points="44.2,-48.06 40.91,-37.98 37.2,-47.91 44.2,-48.06"/>
+<text text-anchor="middle" x="52.46" y="-56.45" font-family="Times New Roman,serif" font-size="14.00">是</text>
+</g>
+<!-- end -->
+<g id="node4" class="node">
+<title>end</title>
+<ellipse fill="none" stroke="black" cx="124.33" cy="-18" rx="31.6" ry="18"/>
+<text text-anchor="middle" x="124.33" y="-12.57" font-family="Helvetica,sans-Serif" font-size="14.00">结束</text>
+</g>
+<!-- condition&#45;&gt;end -->
+<g id="edge4" class="edge">
+<title>condition&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M83.27,-89.42C90.41,-77.17 100.59,-59.72 109.02,-45.25"/>
+<polygon fill="black" stroke="black" points="112.01,-47.07 114.03,-36.67 105.97,-43.55 112.01,-47.07"/>
+<text text-anchor="middle" x="111.69" y="-56.45" font-family="Times New Roman,serif" font-size="14.00">否</text>
+</g>
+<!-- loop_body&#45;&gt;condition -->
+<g id="edge3" class="edge">
+<title>loop_body&#45;&gt;condition</title>
+<path fill="none" stroke="black" d="M52.45,-36.17C55.2,-41.76 58.09,-48.06 60.33,-54 63.16,-61.5 65.69,-69.81 67.8,-77.5"/>
+<polygon fill="black" stroke="black" points="64.38,-78.24 70.28,-87.04 71.15,-76.49 64.38,-78.24"/>
+</g>
+</g>
+</svg>
+<p class='view-p'>只要 <em>条件</em> 为 True，就循环执行 <em>循环体代码块</em>，直到 <em>条件</em> 为 False 时结束循环，继续执行后面的代码。</p><p class='view-p'>例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">hp</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">times</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 治疗</span>
+<span class="k">while</span> <span class="n">times</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;恢复 1 点 HP，当前 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+    <span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">times</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=aHAlM0FpbnQlMjAlM0QlMjAxMCUwQXRpbWVzJTNBaW50JTIwJTNEJTIwMTAlMEElMEElMjMlMjAlRTYlQjIlQkIlRTclOTYlOTclMEF3aGlsZSUyMHRpbWVzJTIwJTNFJTIwMCUzQSUwQSUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU2JTgxJUEyJUU1JUE0JThEJTIwMSUyMCVFNyU4MiVCOSUyMEhQJUVGJUJDJThDJUU1JUJEJTkzJUU1JTg5JThEJTIwSFAlMjAlRTQlQjglQkElMjIlMkMlMjBocCUyOSUwQSUyMCUyMCUyMCUyMGhwJTIwJTJCJTNEJTIwMSUwQSUyMCUyMCUyMCUyMHRpbWVzJTIwLSUzRCUyMDElMEElMEFwcmludCUyOCUyMiVFNiU5QyU4MCVFNyVCQiU4OCUyMEhQJTIwJUU0JUI4JUJBJTIyJTJDJTIwaHAlMjklMEE='></iframe></div><h2 id='b86a2c' class='view-h5'><a class='view-text-miku' href='#b86a2c'>#</a> for 循环</h2><p class='view-p'>参考：<a class='view-text-primary' href='https://docs.python.org/3/reference/compound_stmts.html#the-for-statement' target='_blank'>Python 官方文档</a></p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>for</code> 循环的结构如下：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">循环变量</span> <span class="ow">in</span> <span class="n">可迭代对象</span><span class="p">:</span>
+    <span class="n">循环体</span>
+</pre></div>
+</div><p class='view-p'>循环会不断从 <em>可迭代对象</em> 中取出值赋值给 <em>循环变量</em> 并执行 <em>循环体</em>，直到 <em>可迭代对象</em> 的值被取完时结束循环，继续执行后面的代码。</p><blockquote><p class='view-p'>可迭代对象将在后面学习，请暂时放下。</p></blockquote><p class='view-p'>例如：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">hp</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 治疗</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;恢复 1 点 HP，当前 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+    <span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=aHAlM0FpbnQlMjAlM0QlMjAxMCUwQSUwQSUyMyUyMCVFNiVCMiVCQiVFNyU5NiU5NyUwQWZvciUyMF8lMjBpbiUyMHJhbmdlJTI4MTAlMjklM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOCUyMiVFNiU4MSVBMiVFNSVBNCU4RCUyMDElMjAlRTclODIlQjklMjBIUCVFRiVCQyU4QyVFNSVCRCU5MyVFNSU4OSU4RCUyMEhQJTIwJUU0JUI4JUJBJTIyJTJDJTIwaHAlMjklMEElMjAlMjAlMjAlMjBocCUyMCUyQiUzRCUyMDElMEElMEFwcmludCUyOCUyMiVFNiU5QyU4MCVFNyVCQiU4OCUyMEhQJTIwJUU0JUI4JUJBJTIyJTJDJTIwaHAlMjklMEE='></iframe></div><ul><li><p>这里的 <code class='view-text-secondary view-border-1 view-border-secondary'>range</code> 是一个内建函数，他会返回一个可迭代对象，依次得到 0 至 n-1，此处为 0 至 9。</p></li><li><p>由于我们只需要循环 10 次，而不需要迭代的值，因此使用特殊变量 <code class='view-text-secondary view-border-1 view-border-secondary'>_</code> 来接收。</p></li></ul><h2 id='554dc0' class='view-h5'><a class='view-text-miku' href='#554dc0'>#</a> range 函数</h2><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>range</code> 函数十分常用，它由三种用法：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span>                 <span class="c1"># 迭代对象依次得到 0 至 stop，不含 stop 本身，每次递增 1</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>          <span class="c1"># 迭代对象依次得到 start 至 stop，不含 stop 本身，每次递增 1</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>    <span class="c1"># 迭代对象依次得到 start 至 stop，不含 stop 本身，每次递增 step</span>
+</pre></div>
+</div><p class='view-p'>示例：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span> <span class="c1"># 通过 end 参数替换掉结尾默认的换行</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>                <span class="c1"># 打印空字符串，结尾默认换行</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=Zm9yJTIwbnVtJTIwaW4lMjByYW5nZSUyODEwJTI5JTNBJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhudW0lMkMlMjBlbmQlM0QlMjIlMkMlMjAlMjIlMjklMjAlMjMlMjAlRTklODAlOUElRTglQkYlODclMjBlbmQlMjAlRTUlOEYlODIlRTYlOTUlQjAlRTYlOUIlQkYlRTYlOEQlQTIlRTYlOEUlODklRTclQkIlOTMlRTUlQjAlQkUlRTklQkIlOTglRTglQUUlQTQlRTclOUElODQlRTYlOEQlQTIlRTglQTElOEMlMEFwcmludCUyOCUyMiUyMiUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMyUyMCVFNiU4OSU5MyVFNSU4RCVCMCVFNyVBOSVCQSVFNSVBRCU5NyVFNyVBQyVBNiVFNCVCOCVCMiVFRiVCQyU4QyVFNyVCQiU5MyVFNSVCMCVCRSVFOSVCQiU5OCVFOCVBRSVBNCVFNiU4RCVBMiVFOCVBMSU4QyUwQSUwQWZvciUyMG51bSUyMGluJTIwcmFuZ2UlMjg1JTJDJTIwMTAlMjklM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOG51bSUyQyUyMGVuZCUzRCUyMiUyQyUyMCUyMiUyOSUwQXByaW50JTI4JTIyJTIyJTI5JTBBJTBBZm9yJTIwbnVtJTIwaW4lMjByYW5nZSUyODUlMkMlMjAxMCUyQyUyMDMlMjklM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOG51bSUyQyUyMGVuZCUzRCUyMiUyQyUyMCUyMiUyOSUwQXByaW50JTI4JTIyJTIyJTI5JTBB'></iframe></div><h2 id='7f95df' class='view-h5'><a class='view-text-miku' href='#7f95df'>#</a> break 和 continue</h2><p class='view-p'>在循环中有两个是否常用的操作，<code class='view-text-secondary view-border-1 view-border-secondary'>break</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>continue</code>。</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>break</code> 的作用是提前结束整个循环</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>continue</code> 的作用是结束本轮循环，进入下一轮循环。</p></li></ul><p class='view-p'>例如，我们的生命值上限是 15 点，如果生命值已经达到了上限就不应该继续治疗了。</p><p class='view-p'>可以在生命值达到上限时通过 <code class='view-text-secondary view-border-1 view-border-secondary'>break</code> 结束治疗：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">MAX_HP</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">hp</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 治疗</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;恢复 1 点 HP，当前 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hp</span> <span class="o">&gt;=</span> <span class="n">MAX_HP</span><span class="p">:</span> <span class="c1"># 如果 hp 已经满了就结束治疗</span>
+        <span class="k">break</span>
+    <span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=TUFYX0hQJTNBaW50JTIwJTNEJTIwMTUlMEFocCUzQWludCUyMCUzRCUyMDEwJTBBJTBBJTIzJTIwJUU2JUIyJUJCJUU3JTk2JTk3JTBBZm9yJTIwXyUyMGluJTIwcmFuZ2UlMjgxMCUyOSUzQSUwQSUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU2JTgxJUEyJUU1JUE0JThEJTIwMSUyMCVFNyU4MiVCOSUyMEhQJUVGJUJDJThDJUU1JUJEJTkzJUU1JTg5JThEJTIwSFAlMjAlRTQlQjglQkElMjIlMkMlMjBocCUyOSUwQSUyMCUyMCUyMCUyMGlmJTIwaHAlMjAlM0UlM0QlMjBNQVhfSFAlM0ElMjAlMjMlMjAlRTUlQTYlODIlRTYlOUUlOUMlMjBocCUyMCVFNSVCNyVCMiVFNyVCQiU4RiVFNiVCQiVBMSVFNCVCQSU4NiVFNSVCMCVCMSVFNyVCQiU5MyVFNiU5RCU5RiVFNiVCMiVCQiVFNyU5NiU5NyUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMGJyZWFrJTBBJTIwJTIwJTIwJTIwaHAlMjAlMkIlM0QlMjAxJTBBJTBBcHJpbnQlMjglMjIlRTYlOUMlODAlRTclQkIlODglMjBIUCUyMCVFNCVCOCVCQSUyMiUyQyUyMGhwJTI5JTBB'></iframe></div><p class='view-p'>这种方式下，如果在持续时间内玩家会受到伤害，由于治疗技能已经提前结束了，因此无法进行恢复。</p><p class='view-p'>另一种方式是在生命值达到上限时通过 <code class='view-text-secondary view-border-1 view-border-secondary'>continue</code> 跳过本次回复：</p><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">MAX_HP</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">hp</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 治疗</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;恢复 1 点 HP，当前 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hp</span> <span class="o">&gt;=</span> <span class="n">MAX_HP</span><span class="p">:</span> <span class="c1"># 如果 hp 已经满了就跳过本次</span>
+        <span class="k">continue</span>
+    <span class="n">hp</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终 HP 为&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&code=TUFYX0hQJTNBaW50JTIwJTNEJTIwMTUlMEFocCUzQWludCUyMCUzRCUyMDEwJTBBJTBBJTIzJTIwJUU2JUIyJUJCJUU3JTk2JTk3JTBBZm9yJTIwXyUyMGluJTIwcmFuZ2UlMjgxMCUyOSUzQSUwQSUyMCUyMCUyMCUyMHByaW50JTI4JTIyJUU2JTgxJUEyJUU1JUE0JThEJTIwMSUyMCVFNyU4MiVCOSUyMEhQJUVGJUJDJThDJUU1JUJEJTkzJUU1JTg5JThEJTIwSFAlMjAlRTQlQjglQkElMjIlMkMlMjBocCUyOSUwQSUyMCUyMCUyMCUyMGlmJTIwaHAlMjAlM0UlM0QlMjBNQVhfSFAlM0ElMjAlMjMlMjAlRTUlQTYlODIlRTYlOUUlOUMlMjBocCUyMCVFNSVCNyVCMiVFNyVCQiU4RiVFNiVCQiVBMSVFNCVCQSU4NiVFNSVCMCVCMSVFOCVCNyVCMyVFOCVCRiU4NyVFNiU5QyVBQyVFNiVBQyVBMSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMGNvbnRpbnVlJTBBJTIwJTIwJTIwJTIwaHAlMjAlMkIlM0QlMjAxJTBBJTBBcHJpbnQlMjglMjIlRTYlOUMlODAlRTclQkIlODglMjBIUCUyMCVFNCVCOCVCQSUyMiUyQyUyMGhwJTI5JTBB'></iframe></div><p class='view-p'>这种方式下，如果在持续时间内玩家会受到伤害，治疗技能将在下一次回复时恢复生命值。</p><h2 id='efa812' class='view-h5'><a class='view-text-miku' href='#efa812'>#</a> 循环中的 else</h2><p class='view-p'>Python 可以在循环后接 <code class='view-text-secondary view-border-1 view-border-secondary'>else</code>，它的代码块将在循环结束时执行，但通过 <code class='view-text-secondary view-border-1 view-border-secondary'>break</code> 结束循环时不执行 <code class='view-text-secondary view-border-1 view-border-secondary'>else</code> 的代码块。<br />
+如果循环条件从一开始就是 <code class='view-text-secondary view-border-1 view-border-secondary'>False</code>（或者可迭代对象是空的），也会执行 <code class='view-text-secondary view-border-1 view-border-secondary'>else</code> 的代码块。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">条件</span><span class="p">:</span>
+    <span class="n">循环体代码块</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">代码块</span>
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">循环变量</span> <span class="ow">in</span> <span class="n">可迭代对象</span><span class="p">:</span>
+    <span class="n">循环体代码块</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">代码块</span>
+</pre></div>
+</div><h2 id='3cae1f' class='view-h5'><a class='view-text-miku' href='#3cae1f'>#</a> 练习</h2><p class='view-p'>请实现判断一个正整数是否是质数，通过 <code class='view-text-secondary view-border-1 view-border-secondary'>input</code> 获取输入。</p><ul><li><p>特别规定 1 不是质数。</p></li><li><p>只能被 1 和自己整除的正整数是质数，否则不是。</p></li></ul><div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'><div class="highlight"><pre><span></span><span class="n">number</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入一个整数：&quot;</span><span class="p">))</span>
+<span class="n">is_prime</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># 请在此处实现代码，如果 number 是质数就将 is_prime 改为 True</span>
+
+
+<span class="k">if</span> <span class="n">is_prime</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;是质数&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;不是质数&quot;</span><span class="p">)</span>
+</pre></div>
+</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='https://xplanc.org/shift/index.html#lang=python&input=MjM4OQ==&code=bnVtYmVyJTNBaW50JTIwJTNEJTIwaW50JTI4aW5wdXQlMjglMjIlRTglQUYlQjclRTglQkUlOTMlRTUlODUlQTUlRTQlQjglODAlRTQlQjglQUElRTYlOTUlQjQlRTYlOTUlQjAlRUYlQkMlOUElMjIlMjklMjklMEFpc19wcmltZSUzQWJvb2wlMjAlM0QlMjBGYWxzZSUwQSUwQSUyMyUyMCVFOCVBRiVCNyVFNSU5QyVBOCVFNiVBRCVBNCVFNSVBNCU4NCVFNSVBRSU5RSVFNyU4RSVCMCVFNCVCQiVBMyVFNyVBMCU4MSVFRiVCQyU4QyVFNSVBNiU4MiVFNiU5RSU5QyUyMG51bWJlciUyMCVFNiU5OCVBRiVFOCVCNCVBOCVFNiU5NSVCMCVFNSVCMCVCMSVFNSVCMCU4NiUyMGlzX3ByaW1lJTIwJUU2JTk0JUI5JUU0JUI4JUJBJTIwVHJ1ZSUwQSUwQSUwQWlmJTIwaXNfcHJpbWUlM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOG51bWJlciUyQyUyMCUyMiVFNiU5OCVBRiVFOCVCNCVBOCVFNiU5NSVCMCUyMiUyOSUwQWVsc2UlM0ElMEElMjAlMjAlMjAlMjBwcmludCUyOG51bWJlciUyQyUyMCUyMiVFNCVCOCU4RCVFNiU5OCVBRiVFOCVCNCVBOCVFNiU5NSVCMCUyMiUyOSUwQQ=='></iframe></div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-04-11 04:08:45 创建于: 2025-04-11 04:08:45
+                        </div>
+                    </div>
+
+                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
+                    <div class="view-display-flex view-gap-1 view-align-items-end">
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
+                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
+                    </div>
+
+                    <div class="view-margin-y-4">
+                        <script src="https://giscus.app/client.js"
+                            data-repo="hubenchang0515/Primers"
+                            data-repo-id="R_kgDONsZmvQ"
+                            data-category="Announcements"
+                            data-category-id="DIC_kwDONsZmvc4CmJzV"
+                            data-mapping="pathname"
+                            data-strict="0"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="bottom"
+                            data-theme="preferred_color_scheme"
+                            data-lang="zh-CN"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
