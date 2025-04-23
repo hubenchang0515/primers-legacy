@@ -42,7 +42,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             lines:list[str] = text.splitlines()
             classList = lines[0][len('!class:'):]
             content = '\n'.join(lines[1:])
-            return f"<div class='{classList}'>{content}</div>"
+            return f"<div class='custom {classList}'>{content}</div>"
         else:
             return f"<p class='view-p'>{text}</p>"
     
@@ -53,7 +53,10 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return f"<a class='view-text-primary' href='{url}' target='_blank'>{text}</a>"
     
     def block_quote(self, text):
-        return f"<blockquote>{text}</blockquote>"
+        if ('custom' in text):
+            return text
+        else:
+            return f"<blockquote>{text}</blockquote>"
 
     def list(self, text, ordered, **attrs):
         if ordered:
