@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg+xml" href="{{PREFIX}}/icon.svg">
-    <title>Primers{{TITLE}}</title>
+    <title>编程伙伴 {{TITLE}}</title>
     <link rel="canonical" href="{{CANONICAL}}" />
     <meta name="description" content="{{DESCRIPTION}}">
     <link rel="stylesheet" href="{{PREFIX}}/view/view.css">
+    <link rel="stylesheet" href="{{PREFIX}}/adapter/adapter.css">
     <script src="{{PREFIX}}/MathJax/es5/tex-svg.js" async></script>
     <style>
         #side-menu {
@@ -69,12 +70,13 @@
         {{STYLE}}
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEWPX7E6EV"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-HEWPX7E6EV');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
     </script>
     <script>
         function toggleMenu() {
@@ -98,7 +100,8 @@
             </a>
             {% for category in ROOT.subs() %}
                 {% if category.isdir() %}
-                    {% if category == CATEGORY %}
+                    {% if category.filename().endswith(".hide") %}
+                    {% elif category == CATEGORY %}
                         <a class="view-text-light view-text-decoration-solid" href="{{PREFIX}}/document/{{category.urlPath()}}/index.html">{{category.title()}}</a>
                     {% else %}
                         <a class="view-text-nowrap view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{category.urlPath()}}/index.html">{{category.title()}}</a>
@@ -112,11 +115,13 @@
                 <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
                     <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
                         {% for chapter in CATEGORY.subs() %}
-                            {% if chapter.isdir() %}
+                            {% if chapter.filename().endswith(".hide") %}
+                            {% elif chapter.isdir() %}
                                 <p class="view-text-miku">{{chapter.title()}}</p>
                                 <ul class="view-padding-0">
                                     {% for doc in chapter.subs() %}
-                                        {% if doc == DOC %}
+                                        {% if doc.filename().endswith(".hide") %}
+                                        {% elif doc == DOC %}
                                             <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
                                         {% else %}
                                             <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
@@ -133,10 +138,6 @@
                                 </ul>
                             {% endif %}
                         {% endfor %}
-                        <div class="view-flex-grow-1"></div>
-                        <div class="view-display-flex">
-                            <a class="view-button view-padding-1" href="https://xplanc.org/primers/">新版</a>
-                        </div>
                     </div>
                 </aside>
                 <div class="view-display-flex view-flex-direction-column view-justify-content-center">
@@ -147,6 +148,14 @@
             <div class="view-flex-grow-1 view-overflow-auto view-height-100">
                 <div class="view-container-lg view-padding-x-1">
                     <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            <a class="view-text-light" href="https://xplanc.org/primers/">Primers 编程伙伴 国际服</a>
+                            以获得更好的体验。
+                            快速访问 
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh/{{CATEGORY.filename()}}/{{CHAPTER.filename()}}/{{DOC.filename()}}">{{CATEGORY.title()}} {{CHAPTER.title()}} {{DOC.title()}}</a>
+                        </div>
+
                         {{DOC.content()}}
 
                         <div class="view-text-hint">
@@ -154,36 +163,14 @@
                         </div>
                     </div>
 
-                    <h1 class="view-h6 view-text-hint">作者的链接</h6>
-                    <div class="view-display-flex view-gap-1 view-align-items-end">
-                        <a class="view-text-hint" href="https://hubenchang0515.github.io/" target="_blank">主页</a>
-                        <a class="view-text-hint" href="https://hubenchang0515.github.io/Phosphophyllite/" target="_blank">博客</a>
-                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">QtTheme</a>
-                        <a class="view-text-hint" href="https://hubenchang0515.github.io/moe-tools/" target="_blank">萌萌工具箱</a>
-                        <a class="view-text-hint" href="https://hubenchang0515.github.io/QtTheme/" target="_blank">Shift</a>
-                    </div>
-
-                    <div class="view-margin-y-4">
-                        <script src="https://giscus.app/client.js"
-                            data-repo="hubenchang0515/Primers"
-                            data-repo-id="R_kgDONsZmvQ"
-                            data-category="Announcements"
-                            data-category-id="DIC_kwDONsZmvc4CmJzV"
-                            data-mapping="pathname"
-                            data-strict="0"
-                            data-reactions-enabled="1"
-                            data-emit-metadata="0"
-                            data-input-position="bottom"
-                            data-theme="preferred_color_scheme"
-                            data-lang="zh-CN"
-                            crossorigin="anonymous"
-                            async>
-                        </script>
-                    </div>
-
                     <footer class="view-background-miku">
                         <div class="view-text-align-center view-text-light">
-                            Powered by <a class="view-text-light" href="https://github.com/hubenchang0515/Primers">Primers</a>
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
                         </div>
                     </footer>
                 </div>

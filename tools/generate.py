@@ -8,14 +8,18 @@ import base64
 import hashlib
 from datetime import datetime, timezone
 from pygments import highlight
+import pygments
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import html
 from urllib.parse import quote
 from jinja2 import Template
-import graphviz
 
-PRIMERS_DOMAIN:str = "https://xplanc.org"
-PRIMERS_PREFIX:str = "/primers-legacy"
+PRIMERS_DOMAIN:str = "https://hmirrorxyz.github.io"
+PRIMERS_PREFIX:str = ""
+
+DOCUMENT_DIR:str = "primers-document/document/zh"
+RESOURCE_DIR:str = "primers-document/resource"
+
 SHIFT_URL:str = "https://xplanc.org/shift/index.html"
 
 class MarkdownRenderer(mistune.HTMLRenderer):
@@ -47,6 +51,8 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return f"<p class='view-p'>{text}</p>"
     
     def link(self, text, url, title=None):
+        if url.startswith('/document/zh'):
+            url = 'https://xplanc.org/primers' + url
         if title:
             return f"<a class='view-text-primary' title='{title}' href='{url}' target='_blank'>{text}</a>"
         else:
@@ -89,16 +95,22 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         
         infos = info.split(" ")
         
-        # 生成图片
-        if infos[0] == 'embed':
-            return code
-        elif infos[0] == 'graphviz':
-            src = graphviz.Source(code, format='svg')
-            return src.pipe().decode('utf-8')
         # 普通代码
-        elif len(infos) < 2:
-            lexer = get_lexer_by_name(infos[0], stripall=True)
+        if len(infos) < 2:
+            try:
+                lexer = get_lexer_by_name(infos[0], stripall=True)
+            except pygments.util.ClassNotFound:
+                lexer = get_lexer_by_name('text', stripall=True)
             return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
+        # 嵌入代码
+        elif infos[1] == 'embed':
+            return code
+        # 删除特殊
+        elif infos[1] in ['iframe', 'shift', 'graphviz', 'mermaid']:  
+            return "" 
+        # iframe
+        elif infos[1] == 'iframe':
+            return f"<iframe srcdoc='{code.replace("\"", "\\\"")}' style='width:100%;background:#fafafa;'/>"
         # 使用 shift 运行代码
         elif infos[1] == 'shift':
             lexer = get_lexer_by_name(infos[0], stripall=True)
@@ -108,6 +120,12 @@ class MarkdownRenderer(mistune.HTMLRenderer):
                 return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' title='代码运行环境' src='{SHIFT_URL}#lang={infos[0]}&input={b64input}&code={b64code}'></iframe></div>"
             else:
                 return f"<div class='view-overlap-container' style='height:600px'><div class='view-overlap-layer view-monofont'>{highlight(code, lexer, formatter)}</div><iframe class='view-overlap-layer' loading='lazy' loading='lazy' title='代码运行环境' src='{SHIFT_URL}#lang={infos[0]}&code={b64code}'></iframe></div>"
+        else:
+            try:
+                lexer = get_lexer_by_name(infos[0], stripall=True)
+            except pygments.util.ClassNotFound:
+                lexer = get_lexer_by_name('text', stripall=True)
+            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
 
 class File(object):
     '''
@@ -193,14 +211,19 @@ class Node(object):
     def path(self) -> str:
         return self.__file.path()
 
+    def filename(self) -> str:
+        return self.__file.filename()
+
     def title(self) -> str:
         items:list[str] = self.__file.filename().split(".")
         if len(items) == 0:
             return "未命名"
-        elif len(items) == 1 or not items[0].isdigit():
+        elif len(items) == 1:
             return items[0]
-        else:
+        elif len(items) == 2:
             return items[1]
+        else:
+            return ".".join(items[1:-1])
         
     def urlPath(self) -> str:
         return quote(self.title())
@@ -221,7 +244,7 @@ class Node(object):
         return self.__mtime.strftime("%Y-%m-%d %H:%M:%S")
     
     def content(self) -> str:
-        mark = mistune.create_markdown(renderer=MarkdownRenderer(PRIMERS_PREFIX, escape=False),
+        mark = mistune.create_markdown(renderer=MarkdownRenderer(PRIMERS_PREFIX, escape=True),
                                 plugins=[
                                     'strikethrough', 
                                     'footnotes', 
@@ -323,10 +346,10 @@ class Renderer(object):
 if __name__ == "__main__":
     CURRENT_FILE = File(__file__)
     CURRENT_DIR = File(CURRENT_FILE.dirpath())
-    root:Node = Node(CURRENT_DIR.join("../primers-document/document/zh").path())
+    root:Node = Node(CURRENT_DIR.join('..', DOCUMENT_DIR).path())
     renderer:Renderer = Renderer()
     renderer.clean()
-    renderer.copy_resource(CURRENT_DIR.join("../primers-document/resource").path())
+    renderer.copy_resource(CURRENT_DIR.join('..', RESOURCE_DIR).path())
     renderer.copy_static()
     renderer.render_sitamap(root)
     for category in root.subs():
