@@ -150,10 +150,33 @@
                     <div class="markdown-content">
                         <div class="view-message-success">
                             国际访客建议访问
-                            <a class="view-text-light" href="https://xplanc.org/primers/">Primers 编程伙伴 国际服</a>
+                            <a class="view-text-light" href="https://xplanc.org/primers/" rel="nofollow">Primers 编程伙伴 国际版</a>
                             以获得更好的体验。
-                            快速访问 
-                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh/{{CATEGORY.filename()}}/{{CHAPTER.filename()}}/{{DOC.filename()}}">{{CATEGORY.title()}} {{CHAPTER.title()}} {{DOC.title()}}</a>
+                            <br/>
+                            快速访问
+                            {% if CATEGORY == DOC %}
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">Primers 编程伙伴</a>
+                            {% elif CHAPTER == DOC %}
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/{{CATEGORY.filename()}}" rel="nofollow">
+                                    {{CATEGORY.title()}} 教程
+                                </a>
+                            {% else %}
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/{{CATEGORY.filename()}}" rel="nofollow">
+                                    {{CATEGORY.title()}} 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/{{CATEGORY.filename()}}/{{CHAPTER.filename()}}/{{DOC.filename()}}" rel="nofollow">
+                                    {{DOC.title()}}
+                                </a>
+                            {% endif %}
                         </div>
 
                         {{DOC.content()}}

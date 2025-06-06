@@ -14,7 +14,7 @@ from pygments.formatters import html
 from urllib.parse import quote
 from jinja2 import Template
 
-PRIMERS_DOMAIN:str = "https://hmirrorxyz.github.io"
+PRIMERS_DOMAIN:str = "http://primers.cn"
 PRIMERS_PREFIX:str = ""
 
 DOCUMENT_DIR:str = "primers-document/document/zh"
@@ -107,7 +107,11 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             return code
         # 删除特殊
         elif infos[1] in ['iframe', 'shift', 'graphviz', 'mermaid']:  
-            return "" 
+            try:
+                lexer = get_lexer_by_name(infos[0], stripall=True)
+            except pygments.util.ClassNotFound:
+                lexer = get_lexer_by_name('text', stripall=True)
+            return f"<div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
         # iframe
         elif infos[1] == 'iframe':
             return f"<iframe srcdoc='{code.replace("\"", "\\\"")}' style='width:100%;background:#fafafa;'/>"
