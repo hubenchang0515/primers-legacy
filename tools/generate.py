@@ -22,6 +22,17 @@ RESOURCE_DIR:str = "primers-document/resource"
 
 SHIFT_URL:str = "https://xplanc.org/shift/index.html"
 
+def file_title(filename) -> str:
+    items:list[str] = filename.split(".")
+    if len(items) == 0:
+        return "未命名"
+    elif len(items) == 1:
+        return items[0]
+    elif len(items) == 2:
+        return items[1]
+    else:
+        return ".".join(items[1:-1])
+
 class MarkdownRenderer(mistune.HTMLRenderer):
     '''
     Markdown 渲染器
@@ -52,7 +63,10 @@ class MarkdownRenderer(mistune.HTMLRenderer):
     
     def link(self, text, url, title=None):
         if url.startswith('/document/zh'):
-            url = 'https://xplanc.org/primers' + url
+            items = url.removeprefix('/document/zh').split('/')
+            items = map(lambda x:file_title(x), items)
+            url = '/document' + '/'.join(items) + '.html'
+            return f"<a class='view-text-primary' href='{url}'>{text}</a>"
         if title:
             return f"<a class='view-text-primary' title='{title}' href='{url}' target='_blank'>{text}</a>"
         else:
@@ -219,15 +233,7 @@ class Node(object):
         return self.__file.filename()
 
     def title(self) -> str:
-        items:list[str] = self.__file.filename().split(".")
-        if len(items) == 0:
-            return "未命名"
-        elif len(items) == 1:
-            return items[0]
-        elif len(items) == 2:
-            return items[1]
-        else:
-            return ".".join(items[1:-1])
+        return file_title(self.__file.filename())
         
     def urlPath(self) -> str:
         return quote(self.title())

@@ -122,7 +122,7 @@
                                     {% for doc in chapter.subs() %}
                                         {% if doc.filename().endswith(".hide") %}
                                         {% elif doc == DOC %}
-                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
                                         {% else %}
                                             <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="{{PREFIX}}/document/{{CATEGORY.urlPath()}}/{{chapter.urlPath()}}/{{doc.urlPath()}}.html" title="{{doc.title()}}">{{doc.title()}}</a></p>
                                         {% endif %}
