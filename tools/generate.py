@@ -131,9 +131,9 @@ class MarkdownRenderer(mistune.HTMLRenderer):
             b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
-                return f"<p><a class='view-message-success view-text-light' href='{SHIFT_URL}#lang={infos[0]}&input={b64input}&code={b64code}'>运行示例</a></p><div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
+                return f"<p><a class='view-message-success view-text-light' target='_blank' href='{SHIFT_URL}#lang={infos[0]}&input={b64input}&code={b64code}'>运行示例</a></p><div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
             else:
-                return f"<p><a class='view-message-success view-text-light' href='{SHIFT_URL}#lang={infos[0]}&code={b64code}'>运行示例</a></p><div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
+                return f"<p><a class='view-message-success view-text-light' target='_blank' href='{SHIFT_URL}#lang={infos[0]}&code={b64code}'>运行示例</a></p><div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
         else:
             try:
                 lexer = get_lexer_by_name(infos[0], stripall=True)
