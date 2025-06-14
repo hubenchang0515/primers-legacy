@@ -120,11 +120,11 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         elif infos[1] == 'embed':
             return code
         # 删除特殊
-        elif infos[1] in ['graphviz', 'mermaid']:  
+        elif infos[1] in ['graphviz', 'mermaid',]:  
             return f""
         # iframe
         elif infos[1] == 'iframe':
-            return f"<iframe srcdoc='{code.replace("\"", "\\\"")}' style='width:100%;background:#fafafa;'/>"
+            return f"<iframe srcdoc='{code.replace("'", "\'")}' style='width:100%;background:#fafafa;'></iframe>"
         # 使用 shift 运行代码
         elif infos[1] == 'shift':
             lexer = get_lexer_by_name(infos[0], stripall=True)
