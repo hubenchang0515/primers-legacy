@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - HTML - 帮助手册 - HTML 元素的全局属性</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/HTML/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/HTML%20%E5%85%83%E7%B4%A0%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7.html" />
+    <meta name="description" content="HTML元素的全局属性列表!class:info转载自[MDN](https://developer.mozilla.org/)全局属性是所有HTML元素共有的属性；它们可以用于所有元素，即使属性可能对某些元素不起作用。我们可以在所有的HTML元素，甚至是在标准">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84.html" title="文档结构">文档结构</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E5%85%83%E7%B4%A0%E5%92%8C%E5%B1%9E%E6%80%A7.html" title="元素和属性">元素和属性</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E6%B3%A8%E9%87%8A.html" title="注释">注释</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E6%A0%87%E9%A2%98.html" title="标题">标题</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E6%AE%B5%E8%90%BD.html" title="段落">段落</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E6%A0%BC%E5%BC%8F%E5%8C%96.html" title="格式化">格式化</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E5%BC%95%E7%94%A8.html" title="引用">引用</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E5%88%86%E5%9D%97.html" title="分块">分块</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E5%9B%BE%E7%89%87.html" title="图片">图片</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E9%93%BE%E6%8E%A5.html" title="链接">链接</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8.html" title="列表">列表</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E8%A1%A8%E6%A0%BC.html" title="表格">表格</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E8%AF%AD%E4%B9%89%E5%8C%96.html" title="语义化">语义化</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%9F%BA%E7%A1%80/%E7%BB%BC%E5%90%88%E7%A4%BA%E4%BE%8B.html" title="综合示例">综合示例</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">样式</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/CSS%20%E7%AE%80%E4%BB%8B.html" title="CSS 简介">CSS 简介</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E9%80%89%E6%8B%A9%E5%99%A8.html" title="选择器">选择器</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E9%A2%9C%E8%89%B2.html" title="颜色">颜色</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E5%B0%BA%E5%AF%B8.html" title="尺寸">尺寸</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B.html" title="盒子模型">盒子模型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E5%86%85%E5%A4%96%E8%BE%B9%E8%B7%9D.html" title="内外边距">内外边距</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E8%BE%B9%E6%A1%86.html" title="边框">边框</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80.html" title="弹性布局">弹性布局</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80.html" title="网格布局">网格布局</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E6%B5%AE%E5%8A%A8.html" title="浮动">浮动</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E5%AE%9A%E4%BD%8D.html" title="定位">定位</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E8%83%8C%E6%99%AF.html" title="背景">背景</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E6%A0%B7%E5%BC%8F/%E6%B8%90%E5%8F%98.html" title="渐变">渐变</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/HTML%20%E5%85%83%E7%B4%A0%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C.html" title="HTML 元素帮助手册">HTML 元素帮助手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/HTML%20%E5%85%83%E7%B4%A0%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7.html" title="HTML 元素的全局属性">HTML 元素的全局属性</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/CSS%20%E7%9A%84%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7.html" title="CSS 的常用属性">CSS 的常用属性</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">HTML 元素</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/a.html" title="a">a</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/abbr.html" title="abbr">abbr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/acronym.html" title="acronym">acronym</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/address.html" title="address">address</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/area.html" title="area">area</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/article.html" title="article">article</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/aside.html" title="aside">aside</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/audio.html" title="audio">audio</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/b.html" title="b">b</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/base.html" title="base">base</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/bdi.html" title="bdi">bdi</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/bdo.html" title="bdo">bdo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/big.html" title="big">big</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/blockquote.html" title="blockquote">blockquote</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/body.html" title="body">body</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/br.html" title="br">br</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/button.html" title="button">button</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/canvas.html" title="canvas">canvas</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/caption.html" title="caption">caption</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/center.html" title="center">center</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/cite.html" title="cite">cite</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/code.html" title="code">code</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/col.html" title="col">col</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/colgroup.html" title="colgroup">colgroup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/data.html" title="data">data</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/datalist.html" title="datalist">datalist</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dd.html" title="dd">dd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/del.html" title="del">del</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/details.html" title="details">details</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dfn.html" title="dfn">dfn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dialog.html" title="dialog">dialog</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dir.html" title="dir">dir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/div.html" title="div">div</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dl.html" title="dl">dl</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/dt.html" title="dt">dt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/em.html" title="em">em</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/embed.html" title="embed">embed</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/fieldset.html" title="fieldset">fieldset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/figcaption.html" title="figcaption">figcaption</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/figure.html" title="figure">figure</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/font.html" title="font">font</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/footer.html" title="footer">footer</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/form.html" title="form">form</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/frame.html" title="frame">frame</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/frameset.html" title="frameset">frameset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h1.html" title="h1">h1</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h2.html" title="h2">h2</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h3.html" title="h3">h3</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h4.html" title="h4">h4</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h5.html" title="h5">h5</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/h6.html" title="h6">h6</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/head.html" title="head">head</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/header.html" title="header">header</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/hr.html" title="hr">hr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/html.html" title="html">html</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/i.html" title="i">i</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/iframe.html" title="iframe">iframe</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/img.html" title="img">img</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/input.html" title="input">input</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/ins.html" title="ins">ins</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/kbd.html" title="kbd">kbd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/label.html" title="label">label</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/legend.html" title="legend">legend</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/li.html" title="li">li</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/link.html" title="link">link</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/main.html" title="main">main</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/map.html" title="map">map</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/mark.html" title="mark">mark</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/marquee.html" title="marquee">marquee</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/math.html" title="math">math</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/menu.html" title="menu">menu</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/meta.html" title="meta">meta</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/meter.html" title="meter">meter</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/nav.html" title="nav">nav</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/nobr.html" title="nobr">nobr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/noembed.html" title="noembed">noembed</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/noframes.html" title="noframes">noframes</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/noscript.html" title="noscript">noscript</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/object.html" title="object">object</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/ol.html" title="ol">ol</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/optgroup.html" title="optgroup">optgroup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/option.html" title="option">option</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/output.html" title="output">output</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/p.html" title="p">p</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/param.html" title="param">param</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/picture.html" title="picture">picture</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/plaintext.html" title="plaintext">plaintext</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/pre.html" title="pre">pre</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/progress.html" title="progress">progress</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/q.html" title="q">q</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/rb.html" title="rb">rb</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/rp.html" title="rp">rp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/rt.html" title="rt">rt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/rtc.html" title="rtc">rtc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/ruby.html" title="ruby">ruby</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/s.html" title="s">s</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/samp.html" title="samp">samp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/script.html" title="script">script</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/section.html" title="section">section</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/slot.html" title="slot">slot</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/small.html" title="small">small</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/source.html" title="source">source</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/span.html" title="span">span</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/strike.html" title="strike">strike</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/strong.html" title="strong">strong</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/style.html" title="style">style</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/sub.html" title="sub">sub</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/summary.html" title="summary">summary</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/sup.html" title="sup">sup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/svg.html" title="svg">svg</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/table.html" title="table">table</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/tbody.html" title="tbody">tbody</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/td.html" title="td">td</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/template.html" title="template">template</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/textarea.html" title="textarea">textarea</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/tfoot.html" title="tfoot">tfoot</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/th.html" title="th">th</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/thead.html" title="thead">thead</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/time.html" title="time">time</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/title.html" title="title">title</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/tr.html" title="tr">tr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/track.html" title="track">track</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/tt.html" title="tt">tt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/u.html" title="u">u</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/ul.html" title="ul">ul</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/var.html" title="var">var</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/video.html" title="video">video</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/wbr.html" title="wbr">wbr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/HTML/HTML%20%E5%85%83%E7%B4%A0/xmp.html" title="xmp">xmp</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/03.HTML" rel="nofollow">
+                                    HTML 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/03.HTML/99.帮助手册/02.HTML 元素的全局属性.md" rel="nofollow">
+                                    HTML 元素的全局属性
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='1a81c9' class='view-h4'><a class='view-text-miku' href='#1a81c9'>#</a> HTML 元素的全局属性列表</h1><div class='custom info'>转载自 <a class='view-text-primary' href='https://developer.mozilla.org/' target='_blank'>MDN</a></div><p class='view-p'>全局属性是所有 HTML 元素共有的属性；它们可以用于所有元素，即使属性可能对某些元素不起作用。</p><p class='view-p'>我们可以在所有的 HTML 元素，甚至是在标准里没有指定的元素上指定全局属性。这意味着任何非标准元素仍必须能够允许应用这些属性，即使使用这些元素意味着文档不再是 HTML5 兼容的。</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>accesskey</code>: 为当前元素提供一个生成键盘快捷键的提示。该属性由一个空格分隔的字符列表组成。浏览器应该使用计算机键盘布局上存在的第一个字符。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>autocapitalize</code>: 控制用户的文本输入是否和如何自动大写，它可以有以下的值：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>off</code>  或 none，不应用自动大写（所有字母都默认为小写字母）。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>on</code>  或 sentences，每个句子的第一个字母默认为大写字母，所有其他字母都默认为小写字母。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>words</code> ，每个单词的第一个字母默认为大写字母，所有其他字母都默认为小写字母。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>characters</code> ，所有的字母都应该默认为大写。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>autofocus</code>: 表示一个元素将在页面加载时自动聚焦，或者在其所属的 &lt;dialog&gt; 显示时被聚焦。该属性是一个布尔值，初始化为 false。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>class</code>: 一个以空格分隔的元素的类名列表，它允许 CSS 和 Javascript 通过类选择器或 DOM 方法 Document.getElementsByClassName() 来选择和访问特定的元素。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>contenteditable</code>: 一个枚举属性，表示元素是否可被用户编辑。如果可以，浏览器会调整元素的部件以允许编辑。该属性必须是下列值之一：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>true</code>  或者空字符串，表明元素是可被编辑的；</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>false</code> ，表明元素不能被编辑。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>data-*</code>: 形成一类属性，称为自定义数据属性，允许在 HTML 和其 DOM 表示之间交换专有信息，可由脚本使用。所有这些自定义数据属性都可以通过所属元素的 HTMLElement 接口来访问。通过 HTMLElement.dataset 属性可以访问它们。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>dir</code>: 一个指示元素中文本方向的枚举属性。它的取值如下：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>ltr</code> ，指从左到右，用于那种从左向右书写的语言（比如英语）；</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>rtl</code> ，指从右到左，用于那种从右向左书写的语言（比如阿拉伯语）；</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>auto</code> ，指由用户代理决定方向。它在解析元素中字符时会运用一个基本算法，直到发现一个具有强方向性的字符，然后将这一方向应用于整个元素。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>draggable</code>: 一种枚举属性，指示是否可以使用 Drag and Drop API 拖动元素。它可以有以下的值：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>true</code> , 这表明元素可被拖动；</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>false</code> , 这表明元素不可被拖动。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>enterkeyhint</code>: 提示在虚拟键盘上为回车键呈现什么动作标签（或图标）。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>exportparts</code>: 用于将隐藏部分从一个嵌套的影子树（shadow tree）中过渡性地导出到一个包含该树的常规树（light tree）中。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>hidden</code>: 一个枚举的属性，表示该元素还没有，或者不再相关。例如，它可以用来隐藏页面中的元素，这些元素在登录过程完成之前不能使用。浏览器不会渲染这样的元素。这个属性不能用来隐藏可以合法显示的内容。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>id</code>: 定义唯一标识符（ID），该标识符在整个文档中必须是唯一的。其目的是在链接（使用片段标识符），脚本或样式（使用 CSS）时标识元素。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>inert</code>: 一个布尔值，使浏览器忽略该元素的用户输入事件。在有点击事件的情况下很有用。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>inputmode</code>: 向浏览器提供有关在编辑此元素或其内容时要使用的虚拟键盘配置类型的提示。主要用于 &lt;input&gt; 元素，但在 contenteditable 模式下可用于任何元素。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>is</code>: 允许指定标准 HTML 元素的行为如同已注册的自定义内置元素一样（有关更多详细信息，请参阅使用自定义元素）。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>itemid</code>: 项的唯一全局标识符。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>itemprop</code>: 用于向项添加属性。每个 HTML 元素都可以指定一个 itemprop 属性，其中 itemprop 由一个名称和值对组成。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>itemref</code>: 只有不是具有 itemscope 属性的元素的后代，它的属性才可以与使用 itemref 项目相关联。它提供了元素 ID 列表（而不是 itemid）以及文档中其他位置的其他属性。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>itemscope</code>: itemscope（通常）与 itemtype 一起使用，以指定包含在关于特定项目代码块中的 HTML。itemscope 创建数据项并定义与之关联的 itemtype 的范围。itemtype 是描述项及其属性上下文的词汇表（例如 schema.org）的有效 URL。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>itemtype</code>: 指定将用于在数据结构中定义 itemprops（项属性）的词汇表的 URL。itemscope 用于设置数据结构中按 itemtype 设置的词汇表的生效范围。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>lang</code>: 帮助定义元素的语言：不可编辑元素所在的语言，或者应该由用户编写的可编辑元素的语言。该属性包含一个“语言标记”（由用连字符分隔的“语言子标记”组成），格式在 RFC 5646: Tags for Identifying Languages（也称为 BCP 47） 中定义。xml:lang 优先于它。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>nonce</code>: 一个加密的 nonce（“只使用一次的数字”），可以被内容安全策略使用，以确定是否允许进行给定的获取。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>part</code>: 元素的部件名称的空格分隔列表。Part 名称允许 CSS 通过 ::part 伪元素选择和设置影子树中的特定元素。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>popover</code>: 用于将某个元素指定为弹出式元素（详见 Popover API）。弹出式元素通过 display: none 隐藏，直到通过调用/控制元素（即 &lt;button&gt; 或 &lt;input type=&quot;button&quot;&gt; 带有 popovertarget 属性）或 HTMLElement.showPopover() 调用而打开。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>role</code>: Role 定义了内容的语义，允许屏幕阅读器和其他工具以符合用户对该类型对象的期望的方式来展示和支持与该对象的互动。roles 以 role=&quot;role_type&quot; 的形式添加到 HTML 元素中，其中 role_type 是 ARIA 规范中的一个角色名称。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>slot</code>: 将影子 DOM 影子树中的一个空槽分配给一个元素：具有 slot 属性的元素被分配给由 &lt;slot&gt; 元素创建的空槽，其 name 属性的值与 slot 属性的值匹配。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>spellcheck</code>: 枚举属性，定义是否可以检查元素是否存在拼写错误。它可能具有以下值：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>true</code>  或空字符串，表示如果可能，应检查元素是否存在拼写错误；</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>false</code> ，表示不应检查元素的拼写错误。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>style</code>: 含有要应用于元素的 CSS 样式声明。请注意，建议在单独的文件中定义样式。该属性和 &lt;style&gt; 元素主要用于快速添加样式，例如用于测试目的。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>tabindex</code>: 整数属性，指示元素是否可以获取输入焦点（可聚焦），是否应该参与顺序键盘导航，如果是，则表示哪个位置。它可以接受下列值之一：<ul><li><p>负值表示该元素应该是可聚焦的，但不应通过顺序键盘导航到达;</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>0</code>  表示元素应通过顺序键盘导航可聚焦和可到达，但其相对顺序由平台约定定义;</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>tabindex</code> 正值意味着元素应该可以通过顺序键盘导航进行聚焦和访问；元素聚焦的顺序是 tabindex 的增加值。如果多个元素共享相同的 ，则它们的相对顺序遵循它们在文档中的相对位置。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>title</code>: 包含表示与其所属元素相关信息的文本。这些信息通常可以作为提示呈现给用户，但不是必须的。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>translate</code>: 枚举属性，用于指定在页面本地化时是否转换元素的属性值及其 Text 节点子节点的值，或者是否保持它们不变。它可以具有以下值：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>yes</code> 空字符串和 ，表示元素将被翻译。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>no</code> ，表示该元素不会被翻译。</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>virtualkeyboardpolicy</code>: 一个枚举属性，用于控制屏幕上的虚拟键盘行为，如平板电脑、手机或其他设备上的硬件键盘可能无法使用的元素，也使用 contenteditable 属性。<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>auto</code>  或一个空字符串，当元素被聚焦或点击时自动显示虚拟键盘。</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>manual</code> ，它将焦点和元素上的点击与虚拟键盘的状态解耦。</p></li></ul></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:32:59 创建于: 2025-11-27 09:32:59
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 内置模块 - string-module</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" />
+    <meta name="description" content="Lua的String模块!class:info请查看[Lua标准库模块列表](/document/zh/09.Lua/90.API%20帮助手册.md/01.目录.mdb07e50)了解更多相关API。|函数">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/92.内置模块/EX.string-module.md" rel="nofollow">
+                                    string-module
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='c67087' class='view-h4'><a class='view-text-miku' href='#c67087'>#</a> Lua 的 String 模块</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html'>Lua 标准库模块列表</a> 了解更多相关 API。</div><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.byte' target='_blank'>string.byte</a>)</td>
+  <td style="text-align:left">读取字节（字符的编码）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.char' target='_blank'>string.char</a>)</td>
+  <td style="text-align:left">由编码生成字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.dump' target='_blank'>string.dump</a>)</td>
+  <td style="text-align:left">将函数编译成二进制块</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.find' target='_blank'>string.find</a>)</td>
+  <td style="text-align:left">字符串搜索</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.format' target='_blank'>string.format</a>)</td>
+  <td style="text-align:left">格式化生成字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.gmatch' target='_blank'>string.gmatch</a>)</td>
+  <td style="text-align:left">字符串全局匹配</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.gsub' target='_blank'>string.gsub</a>)</td>
+  <td style="text-align:left">字符串全局替换</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.len' target='_blank'>string.len</a>)</td>
+  <td style="text-align:left">获取字符串长度</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.lower' target='_blank'>string.lower</a>)</td>
+  <td style="text-align:left">字符串转小写</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.match' target='_blank'>string.match</a>)</td>
+  <td style="text-align:left">字符串匹配</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.pack' target='_blank'>string.pack</a>)</td>
+  <td style="text-align:left">格式化生成二进制字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.packsize' target='_blank'>string.packsize</a>)</td>
+  <td style="text-align:left">获取格式化二进制字符串的长度</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.rep' target='_blank'>string.rep</a>)</td>
+  <td style="text-align:left">重复字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.reverse' target='_blank'>string.reverse</a>)</td>
+  <td style="text-align:left">反转字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.sub' target='_blank'>string.sub</a>)</td>
+  <td style="text-align:left">提取子字符串</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.unpack' target='_blank'>string.unpack</a>)</td>
+  <td style="text-align:left">从二进制字符串中解包数据</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(string.upper' target='_blank'>string.upper</a>)</td>
+  <td style="text-align:left">字符串转大写</td>
+</tr>
+</tbody>
+</table><h2 id='6b0596' class='view-h5'><a class='view-text-miku' href='#6b0596'>#</a> string.byte</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.byte (s [, i [, j]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>从字符串中读取多个字节：<code class='view-text-secondary view-border-1 view-border-secondary'>s[i]</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>s[i+1]</code>, ..., <code class='view-text-secondary view-border-1 view-border-secondary'>s[j]</code>。</p><p class='view-p'>索引可以为负数，从字符串末尾向前索引，最后一个字符位的索引为 -1。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要读取的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>i</code> - 要读取的第一个字节索引；默认为 1</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>j</code> - 要读取的最后一个字节索引；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回字符的整数编码 <code class='view-text-secondary view-border-1 view-border-secondary'>s[i]</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>s[i+1]</code>, ..., <code class='view-text-secondary view-border-1 view-border-secondary'>s[j]</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjB0ZXh0JTIwJTNEJTIwJTIySGVsbG8lMjBXb3JsZCUyMiUwQXByaW50JTI4c3RyaW5nLmJ5dGUlMjh0ZXh0JTJDJTIwMyUyQyUyMDclMjklMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello World&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.byte</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='ade9c2' class='view-h5'><a class='view-text-miku' href='#ade9c2'>#</a> string.char</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.char (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>通过字符编码生成字符串。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 字符编码</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcuY2hhciUyODcyJTJDJTIwMTAxJTJDJTIwMTA4JTJDJTIwMTA4JTJDJTIwMTExJTJDJTIwMzIlMkMlMjA4NyUyQyUyMDExMSUyQyUyMDExNCUyQyUyMDEwOCUyQyUyMDEwMCUyOSUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.char</span><span class="p">(</span><span class="mi">72</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='725d1a' class='view-h5'><a class='view-text-miku' href='#725d1a'>#</a> string.dump</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.dump (function [, strip])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将函数编译成二进制代码块，可以被 <a class='view-text-primary' href='/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html'>load</a> 函数加载后调用。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>function</code> - 要编译的函数</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>strip</code> - 是否包含调试信息；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的二进制代码块（字符串）</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBhZGQlMjhhJTJDJTIwYiUyOSUwQSUyMCUyMCUyMCUyMHJldHVybiUyMGElMjAlMkIlMjBiJTBBZW5kJTBBJTBBLS0lMjAlRTUlQjAlODYlRTUlODclQkQlRTYlOTUlQjAlRTclQkMlOTYlRTglQUYlOTElRTQlQjglQkElRTQlQkElOEMlRTglQkYlOUIlRTUlODglQjYlRTUlQUQlOTclRTclQUMlQTYlRTQlQjglQjIlMEFsb2NhbCUyMGJpbmFyeV9jb2RlJTIwJTNEJTIwc3RyaW5nLmR1bXAlMjhhZGQlMjklMEFwcmludCUyOHR5cGUlMjhiaW5hcnlfY29kZSUyOSUyOSUyMCUyMC0tJTIwJUU4JUJFJTkzJUU1JTg3JUJBJTNBJTIwc3RyaW5nJTBBcHJpbnQlMjglMjNiaW5hcnlfY29kZSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUJFJTkzJUU1JTg3JUJBJTNBJTIwJUU0JUJBJThDJUU4JUJGJTlCJUU1JTg4JUI2JUU0JUJCJUEzJUU3JUEwJTgxJUU3JTlBJTg0JUU5JTk1JUJGJUU1JUJBJUE2JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="kr">end</span>
+
+<span class="c1">-- 将函数编译为二进制字符串</span>
+<span class="kd">local</span> <span class="n">binary_code</span> <span class="o">=</span> <span class="nb">string.dump</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">binary_code</span><span class="p">))</span>  <span class="c1">-- 输出: string</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="n">binary_code</span><span class="p">)</span>       <span class="c1">-- 输出: 二进制代码的长度</span>
+</pre></div>
+</div><h2 id='658082' class='view-h5'><a class='view-text-miku' href='#658082'>#</a> string.find</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.find (s, pattern [, init [, plain]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>在字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 中查找第一个匹配的 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code>，返回起始和结束位置的索引。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 被搜索的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> - 模式串，参考 <a class='view-text-primary' href='#!hash(%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D' target='_blank'>模式匹配</a>)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>init</code> - 开始搜索的位置索引；默认为 1</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>plain</code> - 是否是纯文本，为 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code> 时禁用 <a class='view-text-primary' href='#!hash(%E9%AD%94%E6%B3%95%E5%AD%97%E7%AC%A6' target='_blank'>魔法字符</a>)；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回匹配字符串的首尾索引以及全部的子捕获</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTclQUUlODAlRTUlOEQlOTUlRTYlOUYlQTUlRTYlODklQkUlRTUlQUQlOTAlRTQlQjglQjIlMEFwcmludCUyOHN0cmluZy5maW5kJTI4JTIyaGVsbG8lMjB3b3JsZCUyMiUyQyUyMCUyMndvcmxkJTIyJTI5JTI5JTBBcHJpbnQlMjhzdHJpbmcuZmluZCUyOCUyMmhlbGxvJTIwd29ybGQlMjIlMkMlMjAlMjIlMjh3b3JsZCUyOSUyMiUyOSUyOSUwQSUwQS0tJTIwJUU2JUE4JUExJUU1JUJDJThGJUU1JThDJUI5JUU5JTg1JThEJUU1JTg4JTg2JUU2JTlFJTkwJUU5JTgyJUFFJUU3JUFFJUIxJUU1JTlDJUIwJUU1JTlEJTgwJTBBcHJpbnQlMjhzdHJpbmcuZmluZCUyOCUyMmh1YmVuY2hhbmcwNTE1JTQwZ21haWwuY29tJTIyJTJDJTIwJTIyJTI4LiUyQSUyOSU0MCUyOCU1QiU1RSUyNS4lNUQlMkElMjklMjUuJTI4LiUyQSUyOSUyMiUyOSUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 简单查找子串</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.find</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.find</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">,</span> <span class="s2">&quot;(world)&quot;</span><span class="p">))</span>
+
+<span class="c1">-- 模式匹配分析邮箱地址</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.find</span><span class="p">(</span><span class="s2">&quot;hubenchang0515@gmail.com&quot;</span><span class="p">,</span> <span class="s2">&quot;(.*)@([^%.]*)%.(.*)&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='2b1ed8' class='view-h5'><a class='view-text-miku' href='#2b1ed8'>#</a> string.format</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.format (fmt, ···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>格式化生成字符串，参考 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/sprintf.html'>C 语言标准库函数 sprintf</a>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> - 格式化字符串，参考 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/printf.html'>ISO C 格式</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 额外参数</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTYlOTUlQjQlRTYlOTUlQjAlRTYlQTAlQkMlRTUlQkMlOEYlRTUlOEMlOTYlMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTYlOTUlQjQlRTYlOTUlQjAlM0ElMjAlMjVkJTIyJTJDJTIwNDIlMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVCRSU5MyVFNSU4NyVCQSUzQSUyMCVFNiU5NSVCNCVFNiU5NSVCMCUzQSUyMDQyJTBBcHJpbnQlMjhzdHJpbmcuZm9ybWF0JTI4JTIyJUU0JUJCJUI3JUU2JUEwJUJDJTNBJTIwJTI1ZCUyMCVFNSU4NSU4MyUyMiUyQyUyMDEwMCUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUJFJTkzJUU1JTg3JUJBJTNBJTIwJUU0JUJCJUI3JUU2JUEwJUJDJTNBJTIwMTAwJTIwJUU1JTg1JTgzJTBBJTBBLS0lMjAlRTYlQjUlQUUlRTclODIlQjklRTYlOTUlQjAlRTYlQTAlQkMlRTUlQkMlOEYlRTUlOEMlOTYlMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTUlOUMlODYlRTUlOTElQTglRTclOEUlODclM0ElMjAlMjVmJTIyJTJDJTIwbWF0aC5waSUyOSUyOSUyMCUyMCUyMCUyMC0tJTIwJUU4JUJFJTkzJUU1JTg3JUJBJTNBJTIwJUU1JTlDJTg2JUU1JTkxJUE4JUU3JThFJTg3JTNBJTIwMy4xNDE1OTMlMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTclOTklQkUlRTUlODglODYlRTYlQUYlOTQlM0ElMjAlMjUuMmYlMjUlMjUlMjIlMkMlMjA4NS41NjclMjklMjklMjAtLSUyMCVFOCVCRSU5MyVFNSU4NyVCQSUzQSUyMCVFNyU5OSVCRSVFNSU4OCU4NiVFNiVBRiU5NCUzQSUyMDg1LjU3JTI1JTBBJTBBLS0lMjAlRTclQTclOTElRTUlQUQlQTYlRTglQUUlQTElRTYlOTUlQjAlRTYlQjMlOTUlMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTclQTclOTElRTUlQUQlQTYlRTglQUUlQTElRTYlOTUlQjAlM0ElMjAlMjVlJTIyJTJDJTIwMTIzNDU2NyUyOSUyOSUyMCUyMC0tJTIwJUU4JUJFJTkzJUU1JTg3JUJBJTNBJTIwJUU3JUE3JTkxJUU1JUFEJUE2JUU4JUFFJUExJUU2JTk1JUIwJTNBJTIwMS4yMzQ1NjdlJTJCMDYlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 整数格式化</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;整数: %d&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span>           <span class="c1">-- 输出: 整数: 42</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;价格: %d 元&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>       <span class="c1">-- 输出: 价格: 100 元</span>
+
+<span class="c1">-- 浮点数格式化</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;圆周率: %f&quot;</span><span class="p">,</span> <span class="nb">math.pi</span><span class="p">))</span>    <span class="c1">-- 输出: 圆周率: 3.141593</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;百分比: %.2f%%&quot;</span><span class="p">,</span> <span class="mf">85.567</span><span class="p">))</span> <span class="c1">-- 输出: 百分比: 85.57%</span>
+
+<span class="c1">-- 科学计数法</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;科学计数: %e&quot;</span><span class="p">,</span> <span class="mi">1234567</span><span class="p">))</span>  <span class="c1">-- 输出: 科学计数: 1.234567e+06</span>
+</pre></div>
+</div><h2 id='edb2e9' class='view-h5'><a class='view-text-miku' href='#edb2e9'>#</a> string.gmatch</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.gmatch (s, pattern [, init])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>在字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 中查找所有匹配模式 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> 的字串，返回迭代器函数。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 被搜索的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> - 模式串，参考 <a class='view-text-primary' href='#!hash(%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D' target='_blank'>模式匹配</a>)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>init</code> - 开始搜索的位置索引；默认为 1</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回一个迭代器函数，每次迭代时返回一个匹配</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjB0ZXh0JTIwJTNEJTIwJTIyaGVsbG8lMjB3b3JsZCUyMGZyb20lMjBsdWElMjBwcm9ncmFtbWluZyUyMiUwQSUwQWZvciUyMHdvcmQlMjBpbiUyMHN0cmluZy5nbWF0Y2glMjh0ZXh0JTJDJTIwJTIyJTI1YSUyQiUyMiUyOSUyMGRvJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjh3b3JkJTI5JTBBZW5kJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;hello world from lua programming&quot;</span>
+
+<span class="kr">for</span> <span class="n">word</span> <span class="kr">in</span> <span class="nb">string.gmatch</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;%a+&quot;</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='13693a' class='view-h5'><a class='view-text-miku' href='#13693a'>#</a> string.gsub</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.gsub (s, pattern, repl [, n])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 中所有匹配模式 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> 的字串替换为 <code class='view-text-secondary view-border-1 view-border-secondary'>repl</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 被搜索的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> - 模式串，参考 <a class='view-text-primary' href='#!hash(%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D' target='_blank'>模式匹配</a>)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>repl</code> - 用于替换的字符串，也可以是表或函数<ul><li><p>字符串 - 直接替换，其中 <code class='view-text-secondary view-border-1 view-border-secondary'>%</code> 是转义字符， <code class='view-text-secondary view-border-1 view-border-secondary'>%n</code> 表示第 n 个子捕获</p></li><li><p>表 - 用匹配的子串作为索引读取元素，用该元素替换</p></li><li><p>函数 - 用匹配的子串作为参数调用函数，用返回值替换</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n</code> -</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回替换后的字符串和替换的次数</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTclQUUlODAlRTUlOEQlOTUlRTYlOTYlODclRTYlOUMlQUMlRTYlOUIlQkYlRTYlOEQlQTIlMEFwcmludCUyOHN0cmluZy5nc3ViJTI4JTIyaGVsbG8lMjB3b3JsZCUyMiUyQyUyMCUyMndvcmxkJTIyJTJDJTIwJTIyTHVhJTIyJTI5JTI5JTBBJTBBLS0lMjAlRTYlQTglQTElRTUlQkMlOEYlRTUlOEMlQjklRTklODUlOEQlMEFwcmludCUyOHN0cmluZy5nc3ViJTI4JTIyYXBwbGUlMjAlNUN0JTIwb3JhbmdlJTIwJTIwJTIwJTVDbiUyMCUyMGJhbmFuYSUyMiUyQyUyMCUyMiUyNXMlMkIlMjIlMkMlMjAlMjIlMjAlMjIlMjklMjklMEElMEEtLSUyMCVFNiU5RiVBNSVFOCVBMSVBOCVFNiU5QiVCRiVFNiU4RCVBMiUwQWxvY2FsJTIwcmVwbF90YWJsZSUyMCUzRCUyMCU3QmFwcGxlJTNEJTIyQVBQTEUlMjIlMkMlMjBvcmFuZ2UlM0QlMjJPcmFuZ2UlMjIlMkMlMjBiYW5hbmElM0QlMjJCYW5hbmElMjIlN0QlMEFwcmludCUyOHN0cmluZy5nc3ViJTI4JTIyYXBwbGUlMjBvcmFuZ2UlMjBiYW5hbmElMjIlMkMlMjAlMjIlMjVhJTJCJTIyJTJDJTIwcmVwbF90YWJsZSUyOSUyOSUwQSUwQS0tJTIwJUU4JUIwJTgzJUU3JTk0JUE4JUU1JTg3JUJEJUU2JTk1JUIwJUU2JTlCJUJGJUU2JThEJUEyJTBBbG9jYWwlMjByZXBsX2Z1bmMlMjAlM0QlMjBmdW5jdGlvbiUyOHRleHQlMjklMjBwcmludCUyOHN0cmluZy5zdWIlMjh0ZXh0JTJDJTIwMSUyQyUyMDElMjklMjklMjBlbmQlMEFwcmludCUyOHN0cmluZy5nc3ViJTI4JTIyYXBwbGUlMjBvcmFuZ2UlMjBiYW5hbmElMjIlMkMlMjAlMjIlMjVhJTJCJTIyJTJDJTIwcmVwbF9mdW5jJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 简单文本替换</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.gsub</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;Lua&quot;</span><span class="p">))</span>
+
+<span class="c1">-- 模式匹配</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.gsub</span><span class="p">(</span><span class="s2">&quot;apple </span><span class="se">\t</span><span class="s2"> orange   </span><span class="se">\n</span><span class="s2">  banana&quot;</span><span class="p">,</span> <span class="s2">&quot;%s+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>
+
+<span class="c1">-- 查表替换</span>
+<span class="kd">local</span> <span class="n">repl_table</span> <span class="o">=</span> <span class="p">{</span><span class="n">apple</span><span class="o">=</span><span class="s2">&quot;APPLE&quot;</span><span class="p">,</span> <span class="n">orange</span><span class="o">=</span><span class="s2">&quot;Orange&quot;</span><span class="p">,</span> <span class="n">banana</span><span class="o">=</span><span class="s2">&quot;Banana&quot;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.gsub</span><span class="p">(</span><span class="s2">&quot;apple orange banana&quot;</span><span class="p">,</span> <span class="s2">&quot;%a+&quot;</span><span class="p">,</span> <span class="n">repl_table</span><span class="p">))</span>
+
+<span class="c1">-- 调用函数替换</span>
+<span class="kd">local</span> <span class="n">repl_func</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="nb">print</span><span class="p">(</span><span class="nb">string.sub</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="kr">end</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.gsub</span><span class="p">(</span><span class="s2">&quot;apple orange banana&quot;</span><span class="p">,</span> <span class="s2">&quot;%a+&quot;</span><span class="p">,</span> <span class="n">repl_func</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='f7684e' class='view-h5'><a class='view-text-miku' href='#f7684e'>#</a> string.len</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.len (s)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取字符串的长度。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要获取长度的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回字符串的长度</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcubGVuJTI4JTIyJTIyJTI5JTI5JTIwLS0lMjAlRTclQTklQkElRTUlQUQlOTclRTclQUMlQTYlRTQlQjglQjIlMEFwcmludCUyOHN0cmluZy5sZW4lMjglMjJIZWxsbyUyMFdvcmxkJTIyJTI5JTI5JTBBcHJpbnQlMjhzdHJpbmcubGVuJTI4JTIyWCU1QzAwMFklNUMwMDBaJTIyJTI5JTI5JTIwLS0lMjAlRTclQTklQkElRTUlQUQlOTclRTclQUMlQTYlMjAlNUMwMDAlMjAlRTQlQjklOUYlRTglQUUlQTElRTclQUUlOTclRTklOTUlQkYlRTUlQkElQTYlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.len</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="c1">-- 空字符串</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.len</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.len</span><span class="p">(</span><span class="s2">&quot;X</span><span class="se">\000</span><span class="s2">Y</span><span class="se">\000</span><span class="s2">Z&quot;</span><span class="p">))</span> <span class="c1">-- 空字符 \000 也计算长度</span>
+</pre></div>
+</div><h2 id='853453' class='view-h5'><a class='view-text-miku' href='#853453'>#</a> string.lower</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.lower (s)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 转换为小写。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要转换的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回转换后的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcubG93ZXIlMjglMjJIZWxsbyUyMFdvcmxkJTIyJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.lower</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='6d2041' class='view-h5'><a class='view-text-miku' href='#6d2041'>#</a> string.match</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.match (s, pattern [, init])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>在字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 中查找第一个与模式 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> 匹配的字串。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 被搜索的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code> - 模式串，参考 <a class='view-text-primary' href='#!hash(%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D' target='_blank'>模式匹配</a>)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>init</code> - 开始搜索的位置索引；默认为 1</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回匹配的字串</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTclQUUlODAlRTUlOEQlOTUlRTYlOUYlQTUlRTYlODklQkUlRTUlQUQlOTclRTQlQjglQjIlMEFwcmludCUyOHN0cmluZy5tYXRjaCUyOCUyMkFwcGxlJTIwT3JhbmdlJTIwQmFuYW5hJTIyJTJDJTIwJTIyT3JhbmdlJTIyJTI5JTI5JTBBJTBBLS0lMjAlRTYlQTglQTElRTUlQkMlOEYlRTUlOEMlQjklRTklODUlOEQlMEFwcmludCUyOHN0cmluZy5tYXRjaCUyOCUyMkFwcGxlJTIwT3JhbmdlJTIwQmFuYW5hJTIyJTJDJTIwJTIyQiUyNWElMkElMjIlMjklMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 简单查找字串</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.match</span><span class="p">(</span><span class="s2">&quot;Apple Orange Banana&quot;</span><span class="p">,</span> <span class="s2">&quot;Orange&quot;</span><span class="p">))</span>
+
+<span class="c1">-- 模式匹配</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.match</span><span class="p">(</span><span class="s2">&quot;Apple Orange Banana&quot;</span><span class="p">,</span> <span class="s2">&quot;B%a*&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='9d13d6' class='view-h5'><a class='view-text-miku' href='#9d13d6'>#</a> string.pack</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.pack (fmt, v1, v2, ···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将数据按照格式 <code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> 打包成二进制块（字符串）。</p><p class='view-p'>返回的结果可以使用 <a class='view-text-primary' href='#!hash(string.unpack' target='_blank'>string.unpack</a>) 解包。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> - 格式字符串<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&lt;</code> - 设置小端</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&gt;</code> - 设置大端</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>=</code> - 设置本机字节序</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>![n]</code> - 设置最大对齐方式 n （默认为原生对齐方式）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>b</code> - 有符号字节（char）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>B</code> - 无符号字节（char）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>h</code> - 有符号 <code class='view-text-secondary view-border-1 view-border-secondary'>short</code>（本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>H</code> - 无符号 <code class='view-text-secondary view-border-1 view-border-secondary'>short</code>（本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>l</code> - 有符号 <code class='view-text-secondary view-border-1 view-border-secondary'>long</code>（本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>L</code> - 无符号 <code class='view-text-secondary view-border-1 view-border-secondary'>long</code>（本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>j</code> - 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>lua_Integer</code></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>J</code> - 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>lua_Unsigned</code></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>T</code> - 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>size_t</code>（原始尺寸）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>i[n]</code> - n 字节有符号 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code>（默认为本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>I[n]</code> - n 字节无符号 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code>（默认为本机大小）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code>（原始尺寸）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>d</code> -: 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code>（原始尺寸）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n</code> - 一个 <code class='view-text-secondary view-border-1 view-border-secondary'>lua_Number</code></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>cn</code> - 具有 n 字节的固定大小字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>z</code> - 以零结尾的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s[n]</code> - 一个字符串，其长度以字节为单位编码为无符号整数n（默认为 a size_t）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>x</code> - 一个字节的填充</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>Xop</code> - 根据选项对齐的空项op （否则将被忽略）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>' '</code>（空格）- 忽略，不会起到任何效果，可用于分隔格式字符提高可读性</p></li></ul></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的二进制字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTYlODklOTMlRTUlOEMlODUlMEFsb2NhbCUyMGJpbmFyeSUyMCUzRCUyMHN0cmluZy5wYWNrJTI4JTIyaWlkJTIyJTJDJTIwMTAwJTJDJTIwMjAwJTJDJTIwMy4xNDE1OSUyOSUwQXByaW50JTI4JTIyJUU2JTg5JTkzJUU1JThDJTg1JUU1JUE0JUE3JUU1JUIwJThGJTNBJTIyJTJDJTIwJTIzYmluYXJ5JTI5JTBBJTBBLS0lMjAlRTglQTclQTMlRTUlOEMlODUlMEFsb2NhbCUyMHYxJTJDJTIwdjIlMkMlMjB2MyUyQyUyMHBvcyUyMCUzRCUyMHN0cmluZy51bnBhY2slMjglMjJpaWQlMjIlMkMlMjBiaW5hcnklMjklMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTglQTclQTMlRTUlOEMlODUlRTclQkIlOTMlRTYlOUUlOUMlM0ElMjAlMjVkJTJDJTIwJTI1ZCUyQyUyMCUyNS41ZiUyMiUyQyUyMHYxJTJDJTIwdjIlMkMlMjB2MyUyOSUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 打包</span>
+<span class="kd">local</span> <span class="n">binary</span> <span class="o">=</span> <span class="nb">string.pack</span><span class="p">(</span><span class="s2">&quot;iid&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mf">3.14159</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;打包大小:&quot;</span><span class="p">,</span> <span class="o">#</span><span class="n">binary</span><span class="p">)</span>
+
+<span class="c1">-- 解包</span>
+<span class="kd">local</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="nb">string.unpack</span><span class="p">(</span><span class="s2">&quot;iid&quot;</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;解包结果: %d, %d, %.5f&quot;</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='effa54' class='view-h5'><a class='view-text-miku' href='#effa54'>#</a> string.packsize</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.packsize (fmt)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取 <a class='view-text-primary' href='#!hash(string.pack' target='_blank'>string.pack</a>) 使用 <code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> 格式打包数据的结果大小。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> - 格式字符串，参考 <a class='view-text-primary' href='#!hash(string.pack' target='_blank'>string.pack</a>)，不能使用可变长度的格式</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回预计打包大小</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcucGFja3NpemUlMjglMjJpaWQlMjIlMjklMjklMEFwcmludCUyOHN0cmluZy5wYWNrc2l6ZSUyOCUyMmlpZGpqJTIyJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.packsize</span><span class="p">(</span><span class="s2">&quot;iid&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.packsize</span><span class="p">(</span><span class="s2">&quot;iidjj&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='7e142c' class='view-h5'><a class='view-text-miku' href='#7e142c'>#</a> string.rep</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.rep (s, n [, sep])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>重复 <code class='view-text-secondary view-border-1 view-border-secondary'>n</code> 次字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code>，生成字符串。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要重复的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n</code> - 要重复的次数</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>sep</code> - 重复时插入的分隔符</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTclQUUlODAlRTUlOEQlOTUlRTklODclOEQlRTUlQTQlOEQlMEFwcmludCUyOHN0cmluZy5yZXAlMjglMjJIZWxsbyUyMiUyQyUyMDUlMjklMjklMEElMEEtLSUyMCVFNiVCNyVCQiVFNSU4QSVBMCVFNSU4OCU4NiVFOSU5QSU5NCVFNyVBQyVBNiUwQXByaW50JTI4c3RyaW5nLnJlcCUyOCUyMlhYWCUyMiUyQyUyMDUlMkMlMjAlMjItJTIyJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 简单重复</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.rep</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1">-- 添加分隔符</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.rep</span><span class="p">(</span><span class="s2">&quot;XXX&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='ba4eba' class='view-h5'><a class='view-text-miku' href='#ba4eba'>#</a> string.reverse</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.reverse (s)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 反转。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要反转的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回反转后的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcucmV2ZXJzZSUyOCUyMkhlbGxvJTIwV29ybGQlMjIlMjklMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.reverse</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='8ef46f' class='view-h5'><a class='view-text-miku' href='#8ef46f'>#</a> string.sub</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.sub (s, i [, j])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>从字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 中提取索引 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>j</code> 的字串。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要提取的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>i</code> - 子串的起始索引</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>j</code> - 字串的结束索引；默认为 -1</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回提取的字串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcuc3ViJTI4JTIyUHJpbWVycyUyMCVFNyVCQyU5NiVFNyVBOCU4QiVFNCVCQyU5OSVFNCVCQyVCNCUyMiUyQyUyMDklMjklMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.sub</span><span class="p">(</span><span class="s2">&quot;Primers 编程伙伴&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='df1243' class='view-h5'><a class='view-text-miku' href='#df1243'>#</a> string.unpack</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.unpack (fmt, s [, pos])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>从 <a class='view-text-primary' href='#!hash(string.pack' target='_blank'>string.pack</a>) 生成的二进制块（字符串）中解包数据。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>fmt</code> - 格式化字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要解包的二进制块（字符串）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pos</code> - 要解包的起始索引；默认为 1</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回解包的结果</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTYlODklOTMlRTUlOEMlODUlMEFsb2NhbCUyMGJpbmFyeSUyMCUzRCUyMHN0cmluZy5wYWNrJTI4JTIyaWlkJTIyJTJDJTIwMTAwJTJDJTIwMjAwJTJDJTIwMy4xNDE1OSUyOSUwQXByaW50JTI4JTIyJUU2JTg5JTkzJUU1JThDJTg1JUU1JUE0JUE3JUU1JUIwJThGJTNBJTIyJTJDJTIwJTIzYmluYXJ5JTI5JTBBJTBBLS0lMjAlRTglQTclQTMlRTUlOEMlODUlMEFsb2NhbCUyMHYxJTJDJTIwdjIlMkMlMjB2MyUyQyUyMHBvcyUyMCUzRCUyMHN0cmluZy51bnBhY2slMjglMjJpaWQlMjIlMkMlMjBiaW5hcnklMjklMEFwcmludCUyOHN0cmluZy5mb3JtYXQlMjglMjIlRTglQTclQTMlRTUlOEMlODUlRTclQkIlOTMlRTYlOUUlOUMlM0ElMjAlMjVkJTJDJTIwJTI1ZCUyQyUyMCUyNS41ZiUyMiUyQyUyMHYxJTJDJTIwdjIlMkMlMjB2MyUyOSUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 打包</span>
+<span class="kd">local</span> <span class="n">binary</span> <span class="o">=</span> <span class="nb">string.pack</span><span class="p">(</span><span class="s2">&quot;iid&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mf">3.14159</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;打包大小:&quot;</span><span class="p">,</span> <span class="o">#</span><span class="n">binary</span><span class="p">)</span>
+
+<span class="c1">-- 解包</span>
+<span class="kd">local</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="nb">string.unpack</span><span class="p">(</span><span class="s2">&quot;iid&quot;</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;解包结果: %d, %d, %.5f&quot;</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='63801e' class='view-h5'><a class='view-text-miku' href='#63801e'>#</a> string.upper</h2><div class='view-monofont'><div class="highlight"><pre><span></span>string.upper (s)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>s</code> 转换为打写。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>s</code> - 要转换的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回转换后的字符串</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhzdHJpbmcudXBwZXIlMjglMjJIZWxsbyUyMFdvcmxkJTIyJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">string.upper</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='18d3c3' class='view-h5'><a class='view-text-miku' href='#18d3c3'>#</a> 模式匹配</h2><p class='view-p'>模式匹配是一种在字符串中查找、识别和提取特定模式的技术。在 Lua 中，模式匹配使用基于字符的模式而不是完整的正则表达式，但功能依然强大。</p><h3 id='2fcf3a' class='view-h6'><a class='view-text-miku' href='#2fcf3a'>#</a> 魔法字符</h3><p class='view-p'>Lua 的魔法字符是在模式匹配中实用的特殊字符，包含 <code class='view-text-secondary view-border-1 view-border-secondary'>^$()%.[]*+-?</code>。</p><p class='view-p'>除了魔法字符 <code class='view-text-secondary view-border-1 view-border-secondary'>^$()%.[]*+-?</code> 以外的字符是普通字符，魔法字符可以实用 <code class='view-text-secondary view-border-1 view-border-secondary'>%</code> 转义成普通字符。</p><h3 id='82bb27' class='view-h6'><a class='view-text-miku' href='#82bb27'>#</a> 基本项</h3><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%a</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isalpha.html'>字母</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%c</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/iscntrl.html'>控制字符</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%d</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isdigit.html'>数字</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%g</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isgraph.html'>图形字符</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%l</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/islower.html'>小写字母</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%p</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/ispunct.html'>标点符号</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%s</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isspace.html'>空白字符</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%u</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isupper.html'>大写字母</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%w</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isalnum.html'>字母或数字</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%x</code> - 代表任意 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/isxdigit.html'>十六进制数字</a></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>.</code> - 代表任意字符</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>^</code> - 在模式开头时表示开头，否则表示普通字符</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>$</code> - 在模式末尾时表示末尾，否则表示普通字符</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>[set]</code> - 代表字符集合</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>[^set]</code> - 代表字符集合的补集</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>(xxx)</code> - 子捕获</p></li></ul><h3 id='3b2a88' class='view-h6'><a class='view-text-miku' href='#3b2a88'>#</a> 模式项</h3><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>*</code> - 表示前项匹配 $ \geq 0 $ 次，且优先匹配最长序列</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>+</code> - 表示前项匹配 $ \geq 1 $ 次，且优先匹配最长序列</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-</code> - 表示前项匹配 $ \geq 0 $ 次，且优先匹配最短序列</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>?</code> - 表示前项匹配零或一次，且优先匹配一次</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%n</code> - <code class='view-text-secondary view-border-1 view-border-secondary'>n</code> 是数字，在 1 到 9 之间，表示第 n 个子捕获</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%bxy</code> - <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>y</code> 是两个不同的字符，匹配以 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 开头 <code class='view-text-secondary view-border-1 view-border-secondary'>y</code> 结尾的字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%f[set]</code> - 边界模式，匹配 <code class='view-text-secondary view-border-1 view-border-secondary'>[set]</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>[^set]</code> 的边界</p></li></ul><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://www.lua.org/manual/5.4/manual.html#6.4' target='_blank'>String Manipulation - Lua 5.4 Reference Manual</a></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:10 创建于: 2025-11-27 09:33:10
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,2657 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Bash - 帮助手册 - less</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/less.html" />
+    <meta name="description" content="Bash的less命令```bashless[OPTION]...FELE...````!subtitle:功能`分页查看文件内容。`!subtitle:类型`可执行文件（`/usr/bin/less`），属于[less](https://greenwoods">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%9F%BA%E7%A1%80/%E5%BC%80%E5%A7%8B.html" title="开始">开始</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F.html" title="变量">变量</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/until%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="until 循环语句">until 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/case%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="case 分支语句">case 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/alias.html" title="alias">alias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/arch.html" title="arch">arch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/b2sum.html" title="b2sum">b2sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base32.html" title="base32">base32</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base64.html" title="base64">base64</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basename.html" title="basename">basename</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basenc.html" title="basenc">basenc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/break.html" title="break">break</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cat.html" title="cat">cat</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cd.html" title="cd">cd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chcon.html" title="chcon">chcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chgrp.html" title="chgrp">chgrp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chmod.html" title="chmod">chmod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chown.html" title="chown">chown</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cksum.html" title="cksum">cksum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/clear.html" title="clear">clear</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/comm.html" title="comm">comm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/continue.html" title="continue">continue</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cp.html" title="cp">cp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/csplit.html" title="csplit">csplit</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cut.html" title="cut">cut</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/date.html" title="date">date</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dd.html" title="dd">dd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/df.html" title="df">df</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dir.html" title="dir">dir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dircolors.html" title="dircolors">dircolors</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirname.html" title="dirname">dirname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirs.html" title="dirs">dirs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/du.html" title="du">du</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/echo.html" title="echo">echo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/env.html" title="env">env</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expand.html" title="expand">expand</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/export.html" title="export">export</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expr.html" title="expr">expr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/factor.html" title="factor">factor</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/false.html" title="false">false</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/finger.html" title="finger">finger</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fmt.html" title="fmt">fmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fold.html" title="fold">fold</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/function.html" title="function">function</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/groups.html" title="groups">groups</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/head.html" title="head">head</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/hostid.html" title="hostid">hostid</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/id.html" title="id">id</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/install.html" title="install">install</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/join.html" title="join">join</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/less.html" title="less">less</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/link.html" title="link">link</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ln.html" title="ln">ln</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/logname.html" title="logname">logname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ls.html" title="ls">ls</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/man.html" title="man">man</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/md5sum.html" title="md5sum">md5sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkdir.html" title="mkdir">mkdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkfifo.html" title="mkfifo">mkfifo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mknod.html" title="mknod">mknod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mktemp.html" title="mktemp">mktemp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/more.html" title="more">more</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mv.html" title="mv">mv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nice.html" title="nice">nice</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nl.html" title="nl">nl</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nohup.html" title="nohup">nohup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nproc.html" title="nproc">nproc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/numfmt.html" title="numfmt">numfmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/od.html" title="od">od</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/paste.html" title="paste">paste</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pathchk.html" title="pathchk">pathchk</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pinky.html" title="pinky">pinky</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/popd.html" title="popd">popd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pr.html" title="pr">pr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printenv.html" title="printenv">printenv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printf.html" title="printf">printf</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ptx.html" title="ptx">ptx</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pushd.html" title="pushd">pushd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pwd.html" title="pwd">pwd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/readlink.html" title="readlink">readlink</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/realpath.html" title="realpath">realpath</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rm.html" title="rm">rm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rmdir.html" title="rmdir">rmdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/runcon.html" title="runcon">runcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/seq.html" title="seq">seq</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha1sum.html" title="sha1sum">sha1sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha224sum.html" title="sha224sum">sha224sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha256sum.html" title="sha256sum">sha256sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha384sum.html" title="sha384sum">sha384sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha512sum.html" title="sha512sum">sha512sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/source.html" title="source">source</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sync.html" title="sync">sync</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/tail.html" title="tail">tail</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/test.html" title="test">test</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/touch.html" title="touch">touch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/true.html" title="true">true</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/unalias.html" title="unalias">unalias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/yes.html" title="yes">yes</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash" rel="nofollow">
+                                    Bash 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash/90.帮助手册/EX.less.md" rel="nofollow">
+                                    less
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='b317cc' class='view-h4'><a class='view-text-miku' href='#b317cc'>#</a> Bash 的 less 命令</h1><div class='view-monofont'><div class="highlight"><pre><span></span>less<span class="w"> </span><span class="o">[</span>OPTION<span class="o">]</span>...<span class="w"> </span>FELE...
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:功能</code></p><p class='view-p'>分页查看文件内容。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:类型</code></p><p class='view-p'>可执行文件（<code class='view-text-secondary view-border-1 view-border-secondary'>/usr/bin/less</code>），属于 <a class='view-text-primary' href='https://greenwoodsoftware.com/less' target='_blank'>less</a>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>FILE</code> 文件列表，如果没有这个参数或指定为 <code class='view-text-secondary view-border-1 view-border-secondary'>-</code>，则读取标准输入</p></li></ul><h2 id='25b37d' class='view-h5'><a class='view-text-miku' href='#25b37d'>#</a> 操作说明</h2><p class='view-p'>| 命令                                        | 说明（中文）                                                            |
+| ----------------------------------------- | ----------------------------------------------------------------- |
+| <strong>h 或 H</strong>                                 | 显示帮助信息，总览所有命令。忘记其他命令时记住这条即可。                                      |
+| <strong>SPACE / ^V / f / ^F</strong>                   | 向前滚动 N 行，默认滚动一页（窗口大小）。若 N 大于屏幕高度，只显示最后的屏幕内容。注意：某些系统把 ^V 用作特殊转义字符。 |
+| <strong>z</strong>                                     | 与 SPACE 类似，但若指定 N，则把 N 设置为新的窗口大小。                                 |
+| <strong>ESC-SPACE</strong>                             | 与 SPACE 类似，但总是滚动整整一屏，即使会越过文件末尾。                                   |
+| <strong>ENTER / RETURN / ^N / e / ^E / j / ^J</strong> | 向前滚动 N 行，默认 1 行。即使 N 超过屏幕高度，也会完整显示 N 行。                           |
+| <strong>d / ^D</strong>                                | 向前滚动 N 行，默认为屏幕的一半。若指定 N，则此 N 变为随后 d 与 u 的默认值。                     |
+| <strong>b / ^B / ESC-v</strong>                        | 向后滚动 N 行，默认滚动一页。若 N 超出屏幕大小，只显示最后的屏幕内容。                            |
+| <strong>w</strong>                                     | 与 ESC-v 类似，但如果指定 N，则设置新的窗口大小。                                     |
+| <strong>y / ^Y / ^P / k / ^K</strong>                  | 向后滚动 N 行，默认 1 行。即使 N 超过屏幕高度，也会完整显示 N 行。注意：某些系统把 ^Y 作业控制用途。        |
+| <strong>u / ^U</strong>                                | 向后滚动 N 行，默认为屏幕的一半。若指定 N，则设置为随后 d/u 的默认 N。                         |
+| <strong>J</strong>                                     | 类似 j，但可继续滚动过文件末尾。                                                 |
+| <strong>K 或 Y</strong>                                 | 类似 k，但可继续滚动到文件开头之前。                                               |
+| <strong>ESC-) （或→ 方向键）</strong> | 向右移动 N 列，默认 1 列。                                                     |
+| <strong>ESC-( （或← 方向键）</strong> | 向左移动 N 列，默认 1 列。注意某些系统把 <code class='view-text-secondary view-border-1 view-border-secondary'>(</code> 用作 shell 特殊字符。                           |
+| <strong>ESC-}</strong>          | 向右移动 N 屏宽，默认一次屏幕宽度。                                                  |
+| <strong>ESC-{</strong>          | 向左移动 N 屏宽，默认一次屏幕宽度。注意某些系统把 <code class='view-text-secondary view-border-1 view-border-secondary'>{</code> 作为特殊字符。                               |
+| <strong>F</strong>              | 类似 <code class='view-text-secondary view-border-1 view-border-secondary'>tail -f</code>：显示文件最新内容。当到达文件末尾时，如果文件继续增长则自动显示新增内容。按 <code class='view-text-secondary view-border-1 view-border-secondary'>Ctrl-C</code> 退出 F 模式。 |
+| <strong>ESC-F</strong>          | 与 <code class='view-text-secondary view-border-1 view-border-secondary'>F</code> 类似，但如果底部提示抑制，则不提示。                                             |
+| <strong>g 或 &lt;</strong>          | 跳到文件开头；若输入 N，则跳到第 N 行开头。                                             |
+| <strong>G 或 &gt;</strong>          | 跳到文件末尾（等待文件增长）。若输入 N，则跳到第 N 行开头。                                     |
+| <strong>p 或 %</strong>          | 跳转到文件的 N%。例如：50% 跳到文件中间。                                             |
+| <strong>m x</strong>            | 在当前位置设置书签，名称为 x（x 是任意字母）。                                            |
+| <strong>' x</strong>            | 跳到名称为 x 的书签位置。                                                       |
+| <strong>''</strong>             | 跳回前一位置（双引号，两次）。                                                      |
+| <strong>/pattern</strong>       | 向前搜索 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code>。搜索完成后滚动到匹配行顶部。                                        |
+| <strong>?pattern</strong>       | 向后搜索 <code class='view-text-secondary view-border-1 view-border-secondary'>pattern</code>。搜索完成后滚动到匹配行底部。                                        |
+| <strong>n</strong>              | 重复最近一次搜索（方向相同）。                                                      |
+| <strong>N</strong>              | 重复最近一次搜索（方向相反）。                                                      |
+| <strong>ESC-n</strong>          | 重复最近一次搜索，但方向固定为向前。                                                   |
+| <strong>ESC-N</strong>          | 重复最近一次搜索，但方向固定为向后。                                                   |
+| <strong>ESC-/pattern</strong>   | 搜索但不移动屏幕，仅高亮匹配内容（如果启用了高亮）。                                           |
+| <strong>:&amp;pattern</strong>      | 删除匹配 pattern 的搜索高亮。                                                  |
+| <strong>Ctrl-G</strong>         | 显示当前文件名、当前行等信息。再按一次关闭。                                               |
+| <strong>f 文件名</strong>          | 打开并显示新的文件。                                                           |
+| <strong>:n</strong>             | 切换到参数列表中的下一个文件。                                                      |
+| <strong>:p</strong>             | 切换到参数列表中的前一个文件。                                                      |
+| <strong>:e 文件</strong>          | 编辑文件（从 LESS 中调到编辑器）。                                                 |
+| <strong>v</strong>              | 使用编辑器编辑当前文件（取决于 <code class='view-text-secondary view-border-1 view-border-secondary'>$EDITOR</code> 环境变量）。                                     |
+| <strong>:x</strong>                   | 查看命令行列表中的第一个文件；若指定 N，则查看第 N 个文件。                                       |                                                                                   |
+| <strong>:d</strong>                   | 从文件列表中删除当前文件。                                                          |                                                                                   |
+| <strong>t</strong>                    | 跳到下一个 tag（如果当前 tag 有多个匹配）。详见 <code class='view-text-secondary view-border-1 view-border-secondary'>-t</code> 选项说明。                                |                                                                                   |
+| <strong>T</strong>                    | 跳到上一个 tag（如果当前 tag 有多个匹配）。                                             |                                                                                   |
+| <strong>= 或 Ctrl-G 或 :f</strong>      | 显示当前文件信息，包括文件名、显示底行的行号和字节偏移量。如果可能，还会显示文件长度、总行数及已显示部分百分比。               |                                                                                   |
+| <strong>-</strong>                    | 修改命令行选项的设置，并显示新的设置消息。输入 <code class='view-text-secondary view-border-1 view-border-secondary'>Ctrl-P</code> 可以不显示消息。支持数字或字符串选项。                   |                                                                                   |
+| <strong>--</strong>                   | 与 <code class='view-text-secondary view-border-1 view-border-secondary'>-</code> 类似，但使用长选项名。按 ENTER 确认。                                           |                                                                                   |
+| <strong>-+</strong>                   | 将选项恢复为默认值，并显示设置消息。不适用于字符串选项。                                           |                                                                                   |
+| <strong>--+</strong>                  | 与 -+ 类似，但使用长选项名。                                                       |                                                                                   |
+| <strong>-!</strong>                   | 将选项设置为与默认值相反，并显示消息。不适用于数字或字符串选项。                                       |                                                                                   |
+| <strong>--!</strong>                  | 与 -! 类似，但使用长选项名。                                                       |                                                                                   |
+| <strong>_</strong>                    | 显示当前选项设置，但不修改。                                                         |                                                                                   |
+| <strong>__</strong>                   | 与 <code class='view-text-secondary view-border-1 view-border-secondary'>_</code> 类似，但使用长选项名。按 ENTER 确认。                                           |                                                                                   |
+| <strong>+cmd</strong>                 | 每次查看新文件时执行指定命令。例如 <code class='view-text-secondary view-border-1 view-border-secondary'>+G</code> 让 less 从文件末尾开始显示。                               |                                                                                   |
+| <strong>V</strong>                    | 显示 less 版本号。                                                           |                                                                                   |
+| <strong>q 或 Q 或 :q 或 :Q 或 ZZ</strong> | 退出 less。                                                               |                                                                                   |
+| <strong>! shell-command</strong>      | 在 shell 中执行指定命令。命令中的 <code class='view-text-secondary view-border-1 view-border-secondary'>%</code> 被替换为当前文件名，<code class='view-text-secondary view-border-1 view-border-secondary'>#</code> 被替换为上一个文件名。<code class='view-text-secondary view-border-1 view-border-secondary'>!!</code> 重复上一次 shell 命令。 |                                                                                   |
+| **                       | &lt;m&gt; shell-command**                                                    | 将当前屏幕与标记位置 m 之间的内容通过管道传给 shell 命令执行。 <code class='view-text-secondary view-border-1 view-border-secondary'>&lt;m&gt;</code> 可以是标记字母、^ 或 $（文件开始/结束），或 . / 换行表示当前屏幕。 |
+| <strong>s filename</strong>           | 将输入保存到文件。仅在输入为管道时有效，普通文件不可用。                                           |                                                                                   |</p><h2 id='f837e2' class='view-h5'><a class='view-text-miku' href='#f837e2'>#</a> 相关命令</h2><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">命令</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/more.html'>more</a></td>
+  <td style="text-align:left">分页查看文件内容</td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://www.man7.org/linux/man-pages/man1/less.1.html' target='_blank'>less(1) — Linux manual page</a></p></li></ul><h2 id='5fe4e2' class='view-h5'><a class='view-text-miku' href='#5fe4e2'>#</a> 手册</h2><div class='view-monofont'><div class="highlight"><pre><span></span>LESS(1)                     General Commands Manual                    LESS(1)
+
+NAME
+       less - opposite of more
+
+SYNOPSIS
+       less -?
+       less --help
+       less -V
+       less --version
+       less [-[+]aABcCdeEfFgGiIJKLmMnNqQrRsSuUVwWX~]
+            [-b space] [-h lines] [-j line] [-k keyfile]
+            [-{oO} logfile] [-p pattern] [-P prompt] [-t tag]
+            [-T tagsfile] [-x tab,...] [-y lines] [-[z] lines]
+            [-# shift] [+[+]cmd] [--] [filename]...
+       (See  the  OPTIONS section for alternate option syntax with long option
+       names.)
+
+DESCRIPTION
+       Less is a program similar to more(1), but it has  many  more  features.
+       Less  does  not  have to read the entire input file before starting, so
+       with large input files it starts  up  faster  than  text  editors  like
+       vi(1).   Less uses termcap (or terminfo on some systems), so it can run
+       on a variety of terminals.  There is even limited support for  hardcopy
+       terminals.   (On  a hardcopy terminal, lines which should be printed at
+       the top of the screen are prefixed with a caret.)
+
+       Commands are based on both more and vi.  Commands may be preceded by  a
+       decimal number, called N in the descriptions below.  The number is used
+       by some commands, as indicated.
+
+COMMANDS
+       In  the following descriptions, ^X means control-X.  ESC stands for the
+       ESCAPE key; for example ESC-v means the  two  character  sequence  &quot;ES‐
+       CAPE&quot;, then &quot;v&quot;.
+
+       h or H Help:  display  a  summary of these commands.  If you forget all
+              the other commands, remember this one.
+
+       SPACE or ^V or f or ^F
+              Scroll forward N lines, default one window (see  option  -z  be‐
+              low).  If N is more than the screen size, only the final screen‐
+              ful  is  displayed.   Warning:  some systems use ^V as a special
+              literalization character.
+
+       z      Like SPACE, but if N is specified, it  becomes  the  new  window
+              size.
+
+       ESC-SPACE
+              Like  SPACE,  but  scrolls  a full screenful, even if it reaches
+              end-of-file in the process.
+
+       ENTER or RETURN or ^N or e or ^E or j or ^J
+              Scroll forward N lines, default 1.  The entire N lines are  dis‐
+              played, even if N is more than the screen size.
+
+       d or ^D
+              Scroll forward N lines, default one half of the screen size.  If
+              N  is specified, it becomes the new default for subsequent d and
+              u commands.
+
+       b or ^B or ESC-v
+              Scroll backward N lines, default one window (see option  -z  be‐
+              low).  If N is more than the screen size, only the final screen‐
+              ful is displayed.
+
+       w      Like  ESC-v,  but  if  N is specified, it becomes the new window
+              size.
+
+       y or ^Y or ^P or k or ^K
+              Scroll backward N lines, default 1.  The entire N lines are dis‐
+              played, even if N is more than the screen size.   Warning:  some
+              systems use ^Y as a special job control character.
+
+       u or ^U
+              Scroll  backward  N  lines, default one half of the screen size.
+              If N is specified, it becomes the new default for  subsequent  d
+              and u commands.
+
+       J      Like j, but continues to scroll beyond the end of the file.
+
+       K or Y Like  k,  but  continues  to  scroll beyond the beginning of the
+              file.
+
+       ESC-) or RIGHTARROW
+              Scroll horizontally right N characters, default half the  screen
+              width  (see  the -# option).  If a number N is specified, it be‐
+              comes the default for future RIGHTARROW and LEFTARROW  commands.
+              While  the  text  is  scrolled,  it acts as though the -S option
+              (chop lines) were in effect.
+
+       ESC-( or LEFTARROW
+              Scroll horizontally left N characters, default half  the  screen
+              width  (see  the -# option).  If a number N is specified, it be‐
+              comes the default for future RIGHTARROW and LEFTARROW commands.
+
+       ESC-} or ^RIGHTARROW
+              Scroll horizontally right to show the end of  the  longest  dis‐
+              played line.
+
+       ESC-{ or ^LEFTARROW
+              Scroll horizontally left back to the first column.
+
+       r or ^R or ^L
+              Repaint the screen.
+
+       R      Repaint the screen, discarding any buffered input.  That is, re‐
+              load  the current file.  Useful if the file is changing while it
+              is being viewed.
+
+       F      Scroll forward, and keep trying to read when the end of file  is
+              reached.   Normally  this  command would be used when already at
+              the end of the file.  It is a way to monitor the tail of a  file
+              which  is  growing  while  it is being viewed.  (The behavior is
+              similar to the &quot;tail -f&quot; command.)  To  stop  waiting  for  more
+              data,  enter the interrupt character (usually ^C).  On some sys‐
+              tems you can also use ^X.
+
+       ESC-F  Like F, but as soon as a line is found which  matches  the  last
+              search  pattern, the terminal bell is rung and forward scrolling
+              stops.
+
+       g or &lt; or ESC-&lt;
+              Go to line N in the file, default 1 (beginning of file).  (Warn‐
+              ing: this may be slow if N is large.)
+
+       G or &gt; or ESC-&gt;
+              Go to line N in the file, default the end of the  file.   (Warn‐
+              ing:  this  may  be slow if N is large, or if N is not specified
+              and standard input, rather than a file, is being read.)
+
+       ESC-G  Same as G, except if no number N is specified and the  input  is
+              standard  input,  goes  to  the  last  line  which  is currently
+              buffered.
+
+       p or % Go to a position N percent into the file.  N should be between 0
+              and 100, and may contain a decimal point.
+
+       P      Go to the line containing byte offset N in the file.
+
+       {      If a left curly bracket appears in the top line displayed on the
+              screen, the { command  will  go  to  the  matching  right  curly
+              bracket.   The matching right curly bracket is positioned on the
+              bottom line of the screen.  If there is more than one left curly
+              bracket on the top line, a number N may be used to  specify  the
+              N-th bracket on the line.
+
+       }      If a right curly bracket appears in the bottom line displayed on
+              the  screen,  the  }  command will go to the matching left curly
+              bracket.  The matching left curly bracket is positioned  on  the
+              top  line  of the screen.  If there is more than one right curly
+              bracket on the top line, a number N may be used to  specify  the
+              N-th bracket on the line.
+
+       (      Like {, but applies to parentheses rather than curly brackets.
+
+       )      Like }, but applies to parentheses rather than curly brackets.
+
+       [      Like  {, but applies to square brackets rather than curly brack‐
+              ets.
+
+       ]      Like }, but applies to square brackets rather than curly  brack‐
+              ets.
+
+       ESC-^F Followed  by two characters, acts like {, but uses the two char‐
+              acters as open and close brackets, respectively.   For  example,
+              &quot;ESC  ^F &lt; &gt;&quot; could be used to go forward to the &gt; which matches
+              the &lt; in the top displayed line.
+
+       ESC-^B Followed by two characters, acts like }, but uses the two  char‐
+              acters  as  open and close brackets, respectively.  For example,
+              &quot;ESC ^B &lt; &gt;&quot; could be used to go backward to the &lt; which matches
+              the &gt; in the bottom displayed line.
+
+       m      Followed by any lowercase or uppercase letter, marks  the  first
+              displayed  line  with  that letter.  If the status column is en‐
+              abled via the -J option, the  status  column  shows  the  marked
+              line.
+
+       M      Acts  like  m,  except  the last displayed line is marked rather
+              than the first displayed line.
+
+       &#39;      (Single quote.)  Followed by any lowercase or uppercase  letter,
+              returns  to  the  position which was previously marked with that
+              letter.  Followed by another single quote, returns to the  posi‐
+              tion  at  which  the last &quot;large&quot; movement command was executed.
+              Followed by a ^ or $, jumps to the beginning or end of the  file
+              respectively.   Marks are preserved when a new file is examined,
+              so the &#39; command can be used to switch between input files.
+
+       ^X^X   Same as single quote.
+
+       ESC-m  Followed by any lowercase or uppercase letter, clears  the  mark
+              identified by that letter.
+
+       /pattern
+              Search forward in the file for the N-th line containing the pat‐
+              tern.  N defaults to 1.  The pattern is a regular expression, as
+              recognized  by  the  regular expression library supplied by your
+              system.  The search starts at the first line displayed (but  see
+              the -a and -j options, which change this).
+
+              Certain  characters  are  special if entered at the beginning of
+              the pattern; they modify the type of search rather  than  become
+              part of the pattern:
+
+              ^N or !
+                     Search for lines which do NOT match the pattern.
+
+              ^E or *
+                     Search  multiple  files.   That is, if the search reaches
+                     the END of the current file without finding a match,  the
+                     search  continues  in  the  next file in the command line
+                     list.
+
+              ^F or @
+                     Begin the search at the first line of the FIRST  file  in
+                     the  command  line  list, regardless of what is currently
+                     displayed on the screen or the settings of the -a  or  -j
+                     options.
+
+              ^K     Highlight  any text which matches the pattern on the cur‐
+                     rent screen, but don&#39;t move to the first match (KEEP cur‐
+                     rent position).
+
+              ^R     Don&#39;t interpret regular expression  metacharacters;  that
+                     is, do a simple textual comparison.
+
+              ^W     WRAP  around  the  current  file.  That is, if the search
+                     reaches the end of the current  file  without  finding  a
+                     match,  the  search  continues from the first line of the
+                     current file up to the line where it started.
+
+       ?pattern
+              Search backward in the file for the  N-th  line  containing  the
+              pattern.   The search starts at the last line displayed (but see
+              the -a and -j options, which change this).
+
+              Certain characters are special as in the / command:
+
+              ^N or !
+                     Search for lines which do NOT match the pattern.
+
+              ^E or *
+                     Search multiple files.  That is, if  the  search  reaches
+                     the  beginning  of  the  current  file  without finding a
+                     match, the search continues in the previous file  in  the
+                     command line list.
+
+              ^F or @
+                     Begin the search at the last line of the last file in the
+                     command  line  list, regardless of what is currently dis‐
+                     played on the screen or the settings of the -a or -j  op‐
+                     tions.
+
+              ^K     As in forward searches.
+
+              ^R     As in forward searches.
+
+              ^W     WRAP  around  the  current  file.  That is, if the search
+                     reaches the beginning of the current file without finding
+                     a match, the search continues from the last line  of  the
+                     current file up to the line where it started.
+
+       ESC-/pattern
+              Same as &quot;/*&quot;.
+
+       ESC-?pattern
+              Same as &quot;?*&quot;.
+
+       n      Repeat  previous  search, for N-th line containing the last pat‐
+              tern.  If the previous search was modified by ^N, the search  is
+              made  for the N-th line NOT containing the pattern.  If the pre‐
+              vious search was modified by ^E, the  search  continues  in  the
+              next  (or  previous)  file if not satisfied in the current file.
+              If the previous search was modified by ^R, the  search  is  done
+              without  using  regular  expressions.  There is no effect if the
+              previous search was modified by ^F or ^K.
+
+       N      Repeat previous search, but in the reverse direction.
+
+       ESC-n  Repeat previous search, but crossing file boundaries.   The  ef‐
+              fect is as if the previous search were modified by *.
+
+       ESC-N  Repeat  previous search, but in the reverse direction and cross‐
+              ing file boundaries.
+
+       ESC-u  Undo search highlighting.   Turn  off  highlighting  of  strings
+              matching the current search pattern.  If highlighting is already
+              off  because of a previous ESC-u command, turn highlighting back
+              on.  Any search command will also  turn  highlighting  back  on.
+              (Highlighting can also be disabled by toggling the -G option; in
+              that case search commands do not turn highlighting back on.)
+
+       ESC-U  Like  ESC-u  but  also  clears the saved search pattern.  If the
+              status column is enabled via the  -J  option,  this  clears  all
+              search matches marked in the status column.
+
+       &amp;pattern
+              Display  only  lines which match the pattern; lines which do not
+              match the pattern are not displayed.  If pattern  is  empty  (if
+              you  type  &amp;  immediately  followed  by ENTER), any filtering is
+              turned off, and all lines are displayed.  While filtering is  in
+              effect,  an  ampersand  is  displayed  at  the  beginning of the
+              prompt, as a reminder that some lines in the file may be hidden.
+              Multiple &amp; commands may be entered, in  which  case  only  lines
+              which match all of the patterns will be displayed.
+
+              Certain characters are special as in the / command:
+
+              ^N or !
+                     Display only lines which do NOT match the pattern.
+
+              ^R     Don&#39;t  interpret  regular expression metacharacters; that
+                     is, do a simple textual comparison.
+
+       :e [filename]
+              Examine a new file.  If the filename is missing,  the  &quot;current&quot;
+              file  (see  the :n and :p commands below) from the list of files
+              in the command line is re-examined.  A percent sign (%)  in  the
+              filename  is  replaced by the name of the current file.  A pound
+              sign (#) is replaced by the  name  of  the  previously  examined
+              file.   However,  two  consecutive  percent signs are simply re‐
+              placed with a single percent sign.  This allows you to  enter  a
+              filename  that  contains a percent sign in the name.  Similarly,
+              two consecutive pound signs are replaced  with  a  single  pound
+              sign.   The  filename  is inserted into the command line list of
+              files so that it can be seen by subsequent :n and  :p  commands.
+              If the filename consists of several files, they are all inserted
+              into  the  list  of files and the first one is examined.  If the
+              filename contains one or more spaces, the entire filename should
+              be enclosed in double quotes (also see the -&quot; option).
+
+       ^X^V or E
+              Same as :e.  Warning: some systems use ^V as a special  literal‐
+              ization  character.  On such systems, you may not be able to use
+              ^V.
+
+       :n     Examine the next file (from the list of files given in the  com‐
+              mand  line).   If a number N is specified, the N-th next file is
+              examined.
+
+       :p     Examine the previous file in the command line list.  If a number
+              N is specified, the N-th previous file is examined.
+
+       :x     Examine the first file in the command line list.  If a number  N
+              is specified, the N-th file in the list is examined.
+
+       :d     Remove the current file from the list of files.
+
+       t      Go  to the next tag, if there were more than one matches for the
+              current tag.  See the -t option for more details about tags.
+
+       T      Go to the previous tag, if there were more than one matches  for
+              the current tag.
+
+       = or ^G or :f
+              Prints  some  information about the file being viewed, including
+              its name and the line number and byte offset of the bottom  line
+              being  displayed.  If possible, it also prints the length of the
+              file, the number of lines in the file and  the  percent  of  the
+              file above the last displayed line.
+
+       -      Followed  by one of the command line option letters (see OPTIONS
+              below), this will change the setting of that option and print  a
+              message  describing the new setting.  If a ^P (CONTROL-P) is en‐
+              tered immediately after the dash, the setting of the  option  is
+              changed  but  no message is printed.  If the option letter has a
+              numeric value (such as -b or -h), or a string value (such as  -P
+              or  -t), a new value may be entered after the option letter.  If
+              no new value is entered, a message describing the  current  set‐
+              ting is printed and nothing is changed.
+
+       --     Like  the  -  command, but takes a long option name (see OPTIONS
+              below) rather than a single option letter.  You must press ENTER
+              or RETURN after typing the option name.  A ^P immediately  after
+              the  second dash suppresses printing of a message describing the
+              new setting, as in the - command.
+
+       -+     Followed by one of the command line option letters this will re‐
+              set the option to its default setting and print  a  message  de‐
+              scribing  the  new  setting.   (The  &quot;-+X&quot; command does the same
+              thing as &quot;-+X&quot; on the command line.)  This  does  not  work  for
+              string-valued options.
+
+       --+    Like  the -+ command, but takes a long option name rather than a
+              single option letter.
+
+       -!     Followed by one of the command line option  letters,  this  will
+              reset  the  option  to the &quot;opposite&quot; of its default setting and
+              print a message describing the new setting.  This does not  work
+              for numeric or string-valued options.
+
+       --!    Like  the -! command, but takes a long option name rather than a
+              single option letter.
+
+       _      (Underscore.)  Followed by one of the command line  option  let‐
+              ters,  this  will print a message describing the current setting
+              of that option.  The setting of the option is not changed.
+
+       __     (Double underscore.)  Like the _ (underscore) command, but takes
+              a long option name rather than a single option letter.  You must
+              press ENTER or RETURN after typing the option name.
+
+       +cmd   Causes the specified cmd to be executed each time a new file  is
+              examined.  For example, +G causes less to initially display each
+              file starting at the end rather than the beginning.
+
+       V      Prints the version number of less being run.
+
+       q or Q or :q or :Q or ZZ
+              Exits less.
+
+       The  following four commands may or may not be valid, depending on your
+       particular installation.
+
+       v      Invokes an editor to edit the current file  being  viewed.   The
+              editor is taken from the environment variable VISUAL if defined,
+              or  EDITOR if VISUAL is not defined, or defaults to &quot;vi&quot; if nei‐
+              ther VISUAL nor EDITOR is defined.  See also the  discussion  of
+              LESSEDIT under the section on PROMPTS below.
+
+       ! shell-command
+              Invokes  a shell to run the shell-command given.  A percent sign
+              (%) in the command is replaced by the name of the current  file.
+              A pound sign (#) is replaced by the name of the previously exam‐
+              ined  file.   &quot;!!&quot;  repeats the last shell command.  &quot;!&quot; with no
+              shell command simply invokes a  shell.   On  Unix  systems,  the
+              shell  is taken from the environment variable SHELL, or defaults
+              to &quot;sh&quot;.  On MS-DOS and OS/2 systems, the shell  is  the  normal
+              command processor.
+
+       | &lt;m&gt; shell-command
+              &lt;m&gt;  represents  any  mark letter.  Pipes a section of the input
+              file to the given shell command.  The section of the file to  be
+              piped  is between the position marked by the letter and the cur‐
+              rent screen.  The entire current screen is included,  regardless
+              of  whether  the  marked position is before or after the current
+              screen.  &lt;m&gt; may also be ^ or $ to indicate beginning or end  of
+              file  respectively.   If &lt;m&gt; is . or newline, the current screen
+              is piped.
+
+       s filename
+              Save the input to a file.  This only works if  the  input  is  a
+              pipe, not an ordinary file.
+
+OPTIONS
+       Command  line options are described below.  Most options may be changed
+       while less is running, via the &quot;-&quot; command.
+
+       Most options may be given in one of two forms: either a  dash  followed
+       by  a  single  letter, or two dashes followed by a long option name.  A
+       long option name may be abbreviated as long as the abbreviation is  un‐
+       ambiguous.   For  example, --quit-at-eof may be abbreviated --quit, but
+       not --qui, since both --quit-at-eof and --quiet begin with --qui.  Some
+       long option names are in uppercase, such as --QUIT-AT-EOF, as  distinct
+       from  --quit-at-eof.  Such option names need only have their first let‐
+       ter capitalized; the remainder of the name may be in either case.   For
+       example, --Quit-at-eof is equivalent to --QUIT-AT-EOF.
+
+       Options are also taken from the environment variable &quot;LESS&quot;.  For exam‐
+       ple, to avoid typing &quot;less -options ...&quot; each time less is invoked, you
+       might tell csh:
+
+       setenv LESS &quot;-options&quot;
+
+       or if you use sh:
+
+       LESS=&quot;-options&quot;; export LESS
+
+       On  MS-DOS,  you don&#39;t need the quotes, but you should replace any per‐
+       cent signs in the options string by double percent signs.
+
+       The environment variable is parsed before the command line, so  command
+       line  options override the LESS environment variable.  If an option ap‐
+       pears in the LESS variable, it can be reset to its default value on the
+       command line by beginning the command line option with &quot;-+&quot;.
+
+       Some options like -k or -D require a string to follow the  option  let‐
+       ter.   The  string  for  that option is considered to end when a dollar
+       sign ($) is found.  For example, you can set two -D options  on  MS-DOS
+       like this:
+
+       LESS=&quot;Dn9.1$Ds4.1&quot;
+
+       If  the  --use-backslash  option appears earlier in the options, then a
+       dollar sign or backslash may be included literally in an option  string
+       by preceding it with a backslash.  If the --use-backslash option is not
+       in  effect, then backslashes are not treated specially, and there is no
+       way to include a dollar sign in the option string.
+
+       -? or --help
+              This option displays a summary of the commands accepted by  less
+              (the  same  as the h command).  (Depending on how your shell in‐
+              terprets the question mark, it may be  necessary  to  quote  the
+              question mark, thus: &quot;-\?&quot;.)
+
+       -a or --search-skip-screen
+              By  default,  forward searches start at the top of the displayed
+              screen and backwards searches start at the bottom  of  the  dis‐
+              played  screen (except for repeated searches invoked by the n or
+              N commands, which start after or before the  &quot;target&quot;  line  re‐
+              spectively;  see  the -j option for more about the target line).
+              The -a option causes forward searches to instead  start  at  the
+              bottom  of  the screen and backward searches to start at the top
+              of the screen, thus skipping all lines displayed on the screen.
+
+       -A or --SEARCH-SKIP-SCREEN
+              Causes all forward searches (not just non-repeated searches)  to
+              start  just  after the target line, and all backward searches to
+              start just before the target line.  Thus, forward searches  will
+              skip part of the displayed screen (from the first line up to and
+              including  the  target line).  Similarly backwards searches will
+              skip the displayed screen from the last line up to and including
+              the target line.  This was the default behavior in less versions
+              prior to 441.
+
+       -bn or --buffers=n
+              Specifies the amount of buffer space  less  will  use  for  each
+              file,  in  units of kilobytes (1024 bytes).  By default 64 KB of
+              buffer space is used for each file (unless the file is  a  pipe;
+              see  the  -B  option).   The  -b option specifies instead that n
+              kilobytes of buffer space should be used for each file.  If n is
+              -1, buffer space is unlimited; that is, the entire file  can  be
+              read into memory.
+
+       -B or --auto-buffers
+              By default, when data is read from a pipe, buffers are allocated
+              automatically as needed.  If a large amount of data is read from
+              the  pipe,  this  can cause a large amount of memory to be allo‐
+              cated.  The -B option  disables  this  automatic  allocation  of
+              buffers  for  pipes,  so that only 64 KB (or the amount of space
+              specified by the -b option) is used for the pipe.  Warning:  use
+              of  -B  can result in erroneous display, since only the most re‐
+              cently viewed part of the piped data is kept in memory; any ear‐
+              lier data is lost.
+
+       -c or --clear-screen
+              Causes full screen repaints to be  painted  from  the  top  line
+              down.   By  default,  full screen repaints are done by scrolling
+              from the bottom of the screen.
+
+       -C or --CLEAR-SCREEN
+              Same as -c, for compatibility with older versions of less.
+
+       -d or --dumb
+              The -d option suppresses the error message normally displayed if
+              the terminal is dumb; that is, lacks some important  capability,
+              such as the ability to clear the screen or scroll backward.  The
+              -d  option  does  not otherwise change the behavior of less on a
+              dumb terminal.
+
+       -Dxcolor or --color=xcolor
+              Changes the color of different parts of the displayed  text.   x
+              is a single character which selects the type of text whose color
+              is being set:
+
+              B      Binary characters.
+
+              C      Control characters.
+
+              E      Errors and informational messages.
+
+              M      Mark letters in the status column.
+
+              N      Line numbers enabled via the -N option.
+
+              P      Prompts.
+
+              R      The rscroll character.
+
+              S      Search results.
+
+              W      The highlight enabled via the -w option.
+
+              d      Bold text.
+
+              k      Blinking text.
+
+              s      Standout text.
+
+              u      Underlined text.
+
+              The  uppercase letters can be used only when the --use-color op‐
+              tion is enabled.  When text color is specified by both an upper‐
+              case letter and a lowercase letter, the uppercase  letter  takes
+              precedence.   For example, error messages are normally displayed
+              as standout text.  So if both &quot;s&quot; and &quot;E&quot; are given a color, the
+              &quot;E&quot; color applies to error messages, and the &quot;s&quot;  color  applies
+              to  other  standout text.  The &quot;d&quot; and &quot;u&quot; letters refer to bold
+              and underline text formed by overstriking with  backspaces  (see
+              the -u option), not to text using ANSI escape sequences with the
+              -R option.
+
+              A  lowercase letter may be followed by a + to indicate that both
+              the normal format change and the specified color should both  be
+              used.  For example, -Dug displays underlined text as green with‐
+              out  underlining;  the green color has replaced the usual under‐
+              line formatting.  But -Du+g displays  underlined  text  as  both
+              green and in underlined format.
+
+              color is either a 4-bit color string or an 8-bit color string:
+
+              A  4-bit  color string is zero, one or two characters, where the
+              first character specifies the foreground color  and  the  second
+              specifies the background color as follows:
+
+              b      Blue
+
+              c      Cyan
+
+              g      Green
+
+              k      Black
+
+              m      Magenta
+
+              r      Red
+
+              w      White
+
+              y      Yellow
+
+              The  corresponding upper-case letter denotes a brighter shade of
+              the color.  For example, -DNGk displays line numbers  as  bright
+              green  text on a black background, and -DEbR displays error mes‐
+              sages as blue text on a bright red background.  If either  char‐
+              acter  is a &quot;-&quot; or is omitted, the corresponding color is set to
+              that of normal text.
+
+              An 8-bit color string is one or two decimal  integers  separated
+              by a dot, where the first integer specifies the foreground color
+              and  the second specifies the background color.  Each integer is
+              a value between 0 and 255 inclusive which selects a  &quot;CSI  38;5&quot;
+              color value (see
+              https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters)
+              If either integer is a &quot;-&quot; or is omitted, the corresponding col‐
+              or  is  set to that of normal text.  On MS-DOS versions of less,
+              8-bit color is not supported; instead, decimal values are inter‐
+              preted as 4-bit CHAR_INFO.Attributes values (see
+              https://docs.microsoft.com/en-us/windows/console/char-info-str).
+
+       -e or --quit-at-eof
+              Causes less to automatically exit the  second  time  it  reaches
+              end-of-file.   By  default, the only way to exit less is via the
+              &quot;q&quot; command.
+
+       -E or --QUIT-AT-EOF
+              Causes less to automatically exit the first time it reaches end-
+              of-file.
+
+       -f or --force
+              Forces non-regular files to be opened.  (A non-regular file is a
+              directory or a device special file.)  Also suppresses the  warn‐
+              ing message when a binary file is opened.  By default, less will
+              refuse to open non-regular files.  Note that some operating sys‐
+              tems will not allow directories to be read, even if -f is set.
+
+       -F or --quit-if-one-screen
+              Causes less to automatically exit if the entire file can be dis‐
+              played on the first screen.
+
+       -g or --hilite-search
+              Normally,  less  will highlight ALL strings which match the last
+              search command.  The -g option changes this  behavior  to  high‐
+              light  only  the  particular  string which was found by the last
+              search command.  This can cause less to run somewhat faster than
+              the default.
+
+       -G or --HILITE-SEARCH
+              The -G option suppresses all highlighting of  strings  found  by
+              search commands.
+
+       -hn or --max-back-scroll=n
+              Specifies  a  maximum number of lines to scroll backward.  If it
+              is necessary to scroll backward more than n lines, the screen is
+              repainted in a forward direction instead.  (If the terminal does
+              not have the ability to scroll backward, -h0 is implied.)
+
+       -i or --ignore-case
+              Causes searches to ignore case; that is, uppercase and lowercase
+              are considered identical.  This option is ignored if any  upper‐
+              case  letters appear in the search pattern; in other words, if a
+              pattern contains uppercase letters, then that  search  does  not
+              ignore case.
+
+       -I or --IGNORE-CASE
+              Like  -i,  but searches ignore case even if the pattern contains
+              uppercase letters.
+
+       -jn or --jump-target=n
+              Specifies a line on the screen where the &quot;target&quot; line is to  be
+              positioned.   The  target line is the line specified by any com‐
+              mand to search for a pattern, jump to a line number, jump  to  a
+              file percentage or jump to a tag.  The screen line may be speci‐
+              fied  by  a number: the top line on the screen is 1, the next is
+              2, and so on.  The number may be negative to specify a line rel‐
+              ative to the bottom of the screen: the bottom line on the screen
+              is -1, the second to the bottom is -2, and so on.   Alternately,
+              the  screen line may be specified as a fraction of the height of
+              the screen, starting with a decimal point: .5 is in  the  middle
+              of  the screen, .3 is three tenths down from the first line, and
+              so on.  If the line is specified as a fraction, the actual  line
+              number  is  recalculated  if  the terminal window is resized, so
+              that the target line remains at the specified  fraction  of  the
+              screen  height.   If any form of the -j option is used, repeated
+              forward searches (invoked with &quot;n&quot; or &quot;N&quot;) begin at the line im‐
+              mediately after the target line, and repeated backward  searches
+              begin at the target line, unless changed by -a or -A.  For exam‐
+              ple, if &quot;-j4&quot; is used, the target line is the fourth line on the
+              screen,  so  forward  searches  begin  at  the fifth line on the
+              screen.  However nonrepeated searches (invoked with &quot;/&quot; or  &quot;?&quot;)
+              always  begin  at the start or end of the current screen respec‐
+              tively.
+
+       -J or --status-column
+              Displays a status column at the left edge of  the  screen.   The
+              status  column  shows the lines that matched the current search,
+              and any lines that are marked (via the m or M command).
+
+       -kfilename or --lesskey-file=filename
+              Causes less to open and interpret the named file as a lesskey(1)
+              binary file.  Multiple -k options  may  be  specified.   If  the
+              LESSKEY  or  LESSKEY_SYSTEM environment variable is set, or if a
+              lesskey file is found in a standard place (see KEY BINDINGS), it
+              is also used as a lesskey file.
+
+       --lesskey-src=filename
+              Causes less to open and interpret the named file as a lesskey(1)
+              source file.  If the LESSKEYIN or  LESSKEYIN_SYSTEM  environment
+              variable is set, or if a lesskey source file is found in a stan‐
+              dard  place  (see  KEY  BINDINGS),  it is also used as a lesskey
+              source file.  Prior to version 582, the lesskey  program  needed
+              to  be  run to convert a lesskey source file to a lesskey binary
+              file for less to use.  Newer versions of less read  the  lesskey
+              source  file  directly  and ignore the binary file if the source
+              file exists.
+
+       -K or --quit-on-intr
+              Causes less to exit immediately (with status 2) when  an  inter‐
+              rupt  character  (usually  ^C) is typed.  Normally, an interrupt
+              character causes less to stop whatever it is doing and return to
+              its command prompt.  Note that use of this option makes  it  im‐
+              possible to return to the command prompt from the &quot;F&quot; command.
+
+       -L or --no-lessopen
+              Ignore  the  LESSOPEN  environment  variable (see the INPUT PRE‐
+              PROCESSOR section below).  This option can be  set  from  within
+              less,  but  it will apply only to files opened subsequently, not
+              to the file which is currently open.
+
+       -m or --long-prompt
+              Causes less to prompt verbosely (like more),  with  the  percent
+              into the file.  By default, less prompts with a colon.
+
+       -M or --LONG-PROMPT
+              Causes less to prompt even more verbosely than more.
+
+       -n or --line-numbers
+              Suppresses  line numbers.  The default (to use line numbers) may
+              cause less to run more slowly in some cases, especially  with  a
+              very large input file.  Suppressing line numbers with the -n op‐
+              tion  will  avoid  this  problem.  Using line numbers means: the
+              line number will be displayed in the verbose prompt and in the =
+              command, and the v command will pass the current line number  to
+              the  editor  (see also the discussion of LESSEDIT in PROMPTS be‐
+              low).
+
+       -N or --LINE-NUMBERS
+              Causes a line number to be displayed at the  beginning  of  each
+              line in the display.
+
+       -ofilename or --log-file=filename
+              Causes  less  to copy its input to the named file as it is being
+              viewed.  This applies only when the input file is a pipe, not an
+              ordinary file.  If the file already exists, less  will  ask  for
+              confirmation before overwriting it.
+
+       -Ofilename or --LOG-FILE=filename
+              The -O option is like -o, but it will overwrite an existing file
+              without asking for confirmation.
+
+              If  no log file has been specified, the -o and -O options can be
+              used from within less to specify a log  file.   Without  a  file
+              name, they will simply report the name of the log file.  The &quot;s&quot;
+              command is equivalent to specifying -o from within less.
+
+       -ppattern or --pattern=pattern
+              The  -p  option  on the command line is equivalent to specifying
+              +/pattern; that is, it tells less to start at the  first  occur‐
+              rence of pattern in the file.
+
+       -Pprompt or --prompt=prompt
+              Provides  a  way  to  tailor the three prompt styles to your own
+              preference.  This option would normally be put in the LESS envi‐
+              ronment variable, rather than being typed in with each less com‐
+              mand.  Such an option must either be the last option in the LESS
+              variable, or be terminated by a dollar sign.
+               -Ps followed by a string changes the default (short) prompt  to
+              that string.
+               -Pm changes the medium (-m) prompt.
+               -PM changes the long (-M) prompt.
+               -Ph changes the prompt for the help screen.
+               -P= changes the message printed by the = command.
+               -Pw  changes the message printed while waiting for data (in the
+              F command).
+
+              All prompt strings consist of a sequence of letters and  special
+              escape sequences.  See the section on PROMPTS for more details.
+
+       -q or --quiet or --silent
+              Causes  moderately  &quot;quiet&quot;  operation: the terminal bell is not
+              rung if an attempt is made to scroll past the end of the file or
+              before the beginning of the file.  If the terminal has a &quot;visual
+              bell&quot;, it is used instead.  The bell will  be  rung  on  certain
+              other  errors, such as typing an invalid character.  The default
+              is to ring the terminal bell in all such cases.
+
+       -Q or --QUIET or --SILENT
+              Causes totally &quot;quiet&quot; operation: the  terminal  bell  is  never
+              rung.   If  the  terminal has a &quot;visual bell&quot;, it is used in all
+              cases where the terminal bell would have been rung.
+
+       -r or --raw-control-chars
+              Causes &quot;raw&quot; control characters to be displayed.  The default is
+              to display control characters using the caret notation; for  ex‐
+              ample,  a  control-A (octal 001) is displayed as &quot;^A&quot;.  Warning:
+              when the -r option is used, less cannot keep track of the actual
+              appearance of the screen (since this depends on how  the  screen
+              responds to each type of control character).  Thus, various dis‐
+              play  problems may result, such as long lines being split in the
+              wrong place.
+
+              USE OF THE -r OPTION IS NOT RECOMMENDED.
+
+       -R or --RAW-CONTROL-CHARS
+              Like -r, but only ANSI &quot;color&quot; escape sequences and OSC 8 hyper‐
+              link sequences are output in &quot;raw&quot; form.  Unlike -r, the  screen
+              appearance  is  maintained correctly, provided that there are no
+              escape sequences in the file other than these  types  of  escape
+              sequences.   Color  escape sequences are only supported when the
+              color is changed within one line, not across  lines.   In  other
+              words,  the beginning of each line is assumed to be normal (non-
+              colored), regardless of any escape sequences in previous  lines.
+              For the purpose of keeping track of screen appearance, these es‐
+              cape sequences are assumed to not move the cursor.
+
+              OSC 8 hyperlinks are sequences of the form:
+
+                   ESC ] 8 ; ... \7
+
+              The  terminating  sequence may be either a BEL character (\7) or
+              the two-character sequence &quot;ESC \&quot;.
+
+              ANSI color escape sequences are sequences of the form:
+
+                   ESC [ ... m
+
+              where the &quot;...&quot; is zero or more color specification  characters.
+              You  can  make less think that characters other than &quot;m&quot; can end
+              ANSI color escape sequences by setting the environment  variable
+              LESSANSIENDCHARS to the list of characters which can end a color
+              escape  sequence.   And  you can make less think that characters
+              other than the standard ones may appear between the ESC and  the
+              m  by  setting  the environment variable LESSANSIMIDCHARS to the
+              list of characters which can appear.
+
+       -s or --squeeze-blank-lines
+              Causes consecutive blank lines to  be  squeezed  into  a  single
+              blank line.  This is useful when viewing nroff output.
+
+       -S or --chop-long-lines
+              Causes  lines  longer than the screen width to be chopped (trun‐
+              cated) rather than wrapped.  That is, the portion of a long line
+              that does not fit in the screen width is not displayed until you
+              press RIGHT-ARROW.  The default is to wrap long lines; that  is,
+              display the remainder on the next line.
+
+       -ttag or --tag=tag
+              The -t option, followed immediately by a TAG, will edit the file
+              containing  that tag.  For this to work, tag information must be
+              available; for example, there may be a file in the  current  di‐
+              rectory called &quot;tags&quot;, which was previously built by ctags(1) or
+              an equivalent command.  If the environment variable LESSGLOBALT‐
+              AGS  is  set, it is taken to be the name of a command compatible
+              with global(1), and that command is executed to  find  the  tag.
+              (See  http://www.gnu.org/software/global/global.html).   The  -t
+              option may also be specified from within less (using the -  com‐
+              mand)  as  a  way  of examining a new file.  The command &quot;:t&quot; is
+              equivalent to specifying -t from within less.
+
+       -Ttagsfile or --tag-file=tagsfile
+              Specifies a tags file to be used instead of &quot;tags&quot;.
+
+       -u or --underline-special
+              Causes backspaces and carriage returns to be treated  as  print‐
+              able  characters;  that  is,  they are sent to the terminal when
+              they appear in the input.
+
+       -U or --UNDERLINE-SPECIAL
+              Causes backspaces, tabs, carriage returns and &quot;formatting  char‐
+              acters&quot; (as defined by Unicode) to be treated as control charac‐
+              ters; that is, they are handled as specified by the -r option.
+
+              By  default, if neither -u nor -U is given, backspaces which ap‐
+              pear adjacent to an underscore character are treated  specially:
+              the  underlined  text is displayed using the terminal&#39;s hardware
+              underlining capability.  Also, backspaces which  appear  between
+              two  identical  characters are treated specially: the overstruck
+              text is printed using the terminal&#39;s hardware boldface capabili‐
+              ty.  Other backspaces are  deleted,  along  with  the  preceding
+              character.   Carriage  returns immediately followed by a newline
+              are deleted.  Other carriage returns are handled as specified by
+              the -r option.  Unicode formatting characters, such as the  Byte
+              Order  Mark, are sent to the terminal.  Text which is overstruck
+              or underlined can be searched for if neither -u nor -U is in ef‐
+              fect.
+
+       -V or --version
+              Displays the version number of less.
+
+       -w or --hilite-unread
+              Temporarily highlights the first  &quot;new&quot;  line  after  a  forward
+              movement of a full page.  The first &quot;new&quot; line is the line imme‐
+              diately  following  the  line  previously  at  the bottom of the
+              screen.  Also highlights the target line after a g or p command.
+              The highlight is removed at the next command which causes  move‐
+              ment.   The  entire line is highlighted, unless the -J option is
+              in effect, in which case only the status column is highlighted.
+
+       -W or --HILITE-UNREAD
+              Like -w, but temporarily highlights the first new line after any
+              forward movement command larger than one line.
+
+       -xn,... or --tabs=n,...
+              Sets tab stops.  If only one n is specified, tab stops  are  set
+              at  multiples  of n.  If multiple values separated by commas are
+              specified, tab stops are set at those positions, and  then  con‐
+              tinue  with  the  same  spacing  as  the last two.  For example,
+              -x9,17 will set tabs at positions 9, 17, 25, 33, etc.   The  de‐
+              fault for n is 8.
+
+       -X or --no-init
+              Disables sending the termcap initialization and deinitialization
+              strings  to  the  terminal.   This is sometimes desirable if the
+              deinitialization string does something unnecessary, like  clear‐
+              ing the screen.
+
+       -yn or --max-forw-scroll=n
+              Specifies a maximum number of lines to scroll forward.  If it is
+              necessary to scroll forward more than n lines, the screen is re‐
+              painted  instead.   The  -c  or -C option may be used to repaint
+              from the top of the screen if desired.  By default, any  forward
+              movement causes scrolling.
+
+       -zn or --window=n or -n
+              Changes  the  default scrolling window size to n lines.  The de‐
+              fault is one screenful.  The z and w commands can also  be  used
+              to  change the window size.  The &quot;z&quot; may be omitted for compati‐
+              bility with some versions of more.  If the number n is negative,
+              it indicates n lines less than the current screen size.  For ex‐
+              ample, if the screen is 24 lines, -z-4 sets the scrolling window
+              to 20 lines.   If  the  screen  is  resized  to  40  lines,  the
+              scrolling window automatically changes to 36 lines.
+
+       -&quot;cc or --quotes=cc
+              Changes  the  filename quoting character.  This may be necessary
+              if you are trying to name a file which contains both spaces  and
+              quote  characters.  Followed by a single character, this changes
+              the quote character to that character.  Filenames  containing  a
+              space should then be surrounded by that character rather than by
+              double  quotes.   Followed  by  two characters, changes the open
+              quote to the first character, and the close quote to the  second
+              character.  Filenames containing a space should then be preceded
+              by  the  open  quote  character  and followed by the close quote
+              character.  Note  that  even  after  the  quote  characters  are
+              changed,  this  option  remains  -&quot; (a dash followed by a double
+              quote).
+
+       -~ or --tilde
+              Normally lines after end of file are displayed as a single tilde
+              (~).  This option causes lines after end of file to be displayed
+              as blank lines.
+
+       -# or --shift
+              Specifies the default number of positions to scroll horizontally
+              in the RIGHTARROW and LEFTARROW commands.  If the number  speci‐
+              fied  is  zero,  it  sets the default number of positions to one
+              half of the screen width.  Alternately, the number may be speci‐
+              fied as a fraction of the width of the screen, starting  with  a
+              decimal  point:  .5  is  half  of  the screen width, .3 is three
+              tenths of the screen width, and so on.  If the number is  speci‐
+              fied as a fraction, the actual number of scroll positions is re‐
+              calculated if the terminal window is resized, so that the actual
+              scroll remains at the specified fraction of the screen width.
+
+       --file-size
+              If --file-size is specified, less will determine the size of the
+              file  immediately  after opening the file.  Normally this is not
+              done, because it can be slow if the input file is large.
+
+       --follow-name
+              Normally, if the input file is renamed while an F command is ex‐
+              ecuting, less will continue to display the contents of the orig‐
+              inal file despite its name change.  If --follow-name  is  speci‐
+              fied,  during an F command less will periodically attempt to re‐
+              open the file by name.  If the reopen succeeds and the file is a
+              different file from the original (which means that  a  new  file
+              has  been  created  with  the same name as the original (now re‐
+              named) file), less will display the contents of that new file.
+
+       --incsearch
+              Subsequent search commands will be &quot;incremental&quot;; that is,  less
+              will  advance  to the next line containing the search pattern as
+              each character of the pattern is typed in.
+
+       --line-num-width
+              Sets the minimum width of the line number field when the -N  op‐
+              tion is in effect.  The default is 7 characters.
+
+       --mouse
+              Enables  mouse  input: scrolling the mouse wheel down moves for‐
+              ward in the file, scrolling the mouse wheel up  moves  backwards
+              in  the  file,  and  clicking the mouse sets the &quot;#&quot; mark to the
+              line where the mouse is clicked.  The number of lines to  scroll
+              when  the wheel is moved can be set by the --wheel-lines option.
+              Mouse input works only on terminals which support X11 mouse  re‐
+              porting, and on the Windows version of less.
+
+       --MOUSE
+              Like --mouse, except the direction scrolled on mouse wheel move‐
+              ment is reversed.
+
+       --no-keypad
+              Disables  sending the keypad initialization and deinitialization
+              strings to the terminal.  This is sometimes useful if the keypad
+              strings make the numeric keypad behave in an undesirable manner.
+
+       --no-histdups
+              This option changes the behavior so that if a search  string  or
+              file  name  is  typed  in, and the same string is already in the
+              history list, the existing copy is removed from the history list
+              before the new one is added.  Thus, a given string  will  appear
+              only  once  in  the history list.  Normally, a string may appear
+              multiple times.
+
+       --rscroll
+              This option changes the character used to mark truncated  lines.
+              It may begin with a two-character attribute indicator like LESS‐
+              BINFMT  does.   If  there is no attribute indicator, standout is
+              used.  If set to &quot;-&quot;, truncated lines are not marked.
+
+       --save-marks
+              Save marks in the history file, so  marks  are  retained  across
+              different invocations of less.
+
+       --status-col-width
+              Sets the width of the status column when the -J option is in ef‐
+              fect.  The default is 2 characters.
+
+       --use-backslash
+              This  option changes the interpretations of options which follow
+              this one.  After the --use-backslash option, any backslash in an
+              option string is removed and the following  character  is  taken
+              literally.   This  allows a dollar sign to be included in option
+              strings.
+
+       --use-color
+              Enables the colored text in various places.  The -D  option  can
+              be  used  to  change the colors.  Colored text works only if the
+              terminal supports ANSI color escape sequences (as defined in EC‐
+              MA-48 SGR; see
+              https://www.ecma-international.org/publications-and-
+              standards/standards/ecma-48).
+
+       --wheel-lines=n
+              Set the number of lines  to  scroll  when  the  mouse  wheel  is
+              scrolled  and  the  --mouse or --MOUSE option is in effect.  The
+              default is 1 line.
+
+       --     A command line argument of &quot;--&quot; marks the end  of  option  argu‐
+              ments.   Any  arguments  following this are interpreted as file‐
+              names.  This can be useful when viewing a file whose name begins
+              with a &quot;-&quot; or &quot;+&quot;.
+
+       +      If a command line option begins with +, the  remainder  of  that
+              option  is taken to be an initial command to less.  For example,
+              +G tells less to start at the end of the file  rather  than  the
+              beginning,  and  +/xyz tells it to start at the first occurrence
+              of &quot;xyz&quot; in the file.  As a special case,  +&lt;number&gt;  acts  like
+              +&lt;number&gt;g; that is, it starts the display at the specified line
+              number  (however,  see  the caveat under the &quot;g&quot; command above).
+              If the option starts with ++, the  initial  command  applies  to
+              every  file being viewed, not just the first one.  The + command
+              described previously may also be used to set (or change) an ini‐
+              tial command for every file.
+
+LINE EDITING
+       When entering a command line at the bottom of the screen (for  example,
+       a  filename  for  the :e command, or the pattern for a search command),
+       certain keys can be used to manipulate the command line.  Most commands
+       have an alternate form in [ brackets ] which can be used if a key  does
+       not  exist  on  a  particular keyboard.  (Note that the forms beginning
+       with ESC do not work in some MS-DOS and Windows systems because ESC  is
+       the  line  erase  character.)  Any of these special keys may be entered
+       literally by preceding it with the &quot;literal&quot; character,  either  ^V  or
+       ^A.   A  backslash itself may also be entered literally by entering two
+       backslashes.
+
+       LEFTARROW [ ESC-h ]
+              Move the cursor one space to the left.
+
+       RIGHTARROW [ ESC-l ]
+              Move the cursor one space to the right.
+
+       ^LEFTARROW [ ESC-b or ESC-LEFTARROW ]
+              (That is, CONTROL and LEFTARROW simultaneously.)  Move the  cur‐
+              sor one word to the left.
+
+       ^RIGHTARROW [ ESC-w or ESC-RIGHTARROW ]
+              (That is, CONTROL and RIGHTARROW simultaneously.)  Move the cur‐
+              sor one word to the right.
+
+       HOME [ ESC-0 ]
+              Move the cursor to the beginning of the line.
+
+       END [ ESC-$ ]
+              Move the cursor to the end of the line.
+
+       BACKSPACE
+              Delete  the  character  to the left of the cursor, or cancel the
+              command if the command line is empty.
+
+       DELETE or [ ESC-x ]
+              Delete the character under the cursor.
+
+       ^BACKSPACE [ ESC-BACKSPACE ]
+              (That is, CONTROL and  BACKSPACE  simultaneously.)   Delete  the
+              word to the left of the cursor.
+
+       ^DELETE [ ESC-X or ESC-DELETE ]
+              (That  is,  CONTROL and DELETE simultaneously.)  Delete the word
+              under the cursor.
+
+       UPARROW [ ESC-k ]
+              Retrieve the previous command line.  If  you  first  enter  some
+              text  and then press UPARROW, it will retrieve the previous com‐
+              mand which begins with that text.
+
+       DOWNARROW [ ESC-j ]
+              Retrieve the next command line.  If you first  enter  some  text
+              and  then  press  DOWNARROW,  it  will retrieve the next command
+              which begins with that text.
+
+       TAB    Complete the partial filename to the left of the cursor.  If  it
+              matches  more than one filename, the first match is entered into
+              the command line.  Repeated  TABs  will  cycle  thru  the  other
+              matching filenames.  If the completed filename is a directory, a
+              &quot;/&quot;  is  appended to the filename.  (On MS-DOS systems, a &quot;\&quot; is
+              appended.)  The environment variable LESSSEPARATOR can  be  used
+              to specify a different character to append to a directory name.
+
+       BACKTAB [ ESC-TAB ]
+              Like, TAB, but cycles in the reverse direction thru the matching
+              filenames.
+
+       ^L     Complete  the partial filename to the left of the cursor.  If it
+              matches more than one filename, all matches are entered into the
+              command line (if they fit).
+
+       ^U (Unix and OS/2) or ESC (MS-DOS)
+              Delete the entire command line, or cancel  the  command  if  the
+              command line is empty.  If you have changed your line-kill char‐
+              acter in Unix to something other than ^U, that character is used
+              instead of ^U.
+
+       ^G     Delete the entire command line and return to the main prompt.
+
+KEY BINDINGS
+       You  may  define  your  own  less commands by creating a lesskey source
+       file.  This file specifies a set of command keys and an action  associ‐
+       ated  with  each  key.   You may also change the line-editing keys (see
+       LINE EDITING), and to set environment variables.   If  the  environment
+       variable  LESSKEYIN  is  set, less uses that as the name of the lesskey
+       source file.  Otherwise, less looks in a standard place for the lesskey
+       source file: On Unix systems, less looks  for  a  lesskey  file  called
+       &quot;$XDG_CONFIG_HOME/lesskey&quot;  or &quot;$HOME/.lesskey&quot;.  On MS-DOS and Windows
+       systems, less looks for a lesskey file called &quot;$HOME/_lesskey&quot;, and  if
+       it  is not found there, then looks for a lesskey file called &quot;_lesskey&quot;
+       in any directory specified in the PATH environment variable.   On  OS/2
+       systems,  less looks for a lesskey file called &quot;$HOME/lesskey.ini&quot;, and
+       if it is not found, then looks for a lesskey file called  &quot;lesskey.ini&quot;
+       in  any directory specified in the INIT environment variable, and if it
+       not found there, then looks for a lesskey file called &quot;lesskey.ini&quot;  in
+       any  directory  specified  in  the  PATH environment variable.  See the
+       lesskey manual page for more details.
+
+       A system-wide lesskey source file may also be set  up  to  provide  key
+       bindings.   If a key is defined in both a local lesskey file and in the
+       system-wide file, key bindings in the local file take  precedence  over
+       those   in   the   system-wide   file.   If  the  environment  variable
+       LESSKEYIN_SYSTEM is set, less uses that as the name of the  system-wide
+       lesskey  file.   Otherwise, less looks in a standard place for the sys‐
+       tem-wide lesskey file: On Unix systems, the system-wide lesskey file is
+       /usr/local/etc/syslesskey.  (However, if less was built with a  differ‐
+       ent  sysconf directory than /usr/local/etc, that directory is where the
+       sysless file is found.)  On MS-DOS and Windows systems, the system-wide
+       lesskey file is  c:\_syslesskey.   On  OS/2  systems,  the  system-wide
+       lesskey file is c:\syslesskey.ini.
+
+       Previous versions of less (before v582) used lesskey files with a bina‐
+       ry  format,  produced by the lesskey program. It is no longer necessary
+       to use the lesskey program.
+
+INPUT PREPROCESSOR
+       You may define an &quot;input preprocessor&quot; for less.  Before less  opens  a
+       file, it first gives your input preprocessor a chance to modify the way
+       the  contents of the file are displayed.  An input preprocessor is sim‐
+       ply an executable program (or shell script), which writes the  contents
+       of the file to a different file, called the replacement file.  The con‐
+       tents  of  the replacement file are then displayed in place of the con‐
+       tents of the original file.  However, it will appear to the user as  if
+       the  original  file  is opened; that is, less will display the original
+       filename as the name of the current file.
+
+       An input preprocessor receives one command line argument, the  original
+       filename,  as  entered  by  the user.  It should create the replacement
+       file, and when finished, print the name of the replacement file to  its
+       standard  output.  If the input preprocessor does not output a replace‐
+       ment filename, less uses the original file, as normal.  The input  pre‐
+       processor  is not called when viewing standard input.  To set up an in‐
+       put preprocessor, set the LESSOPEN environment variable  to  a  command
+       line  which  will  invoke  your  input preprocessor.  This command line
+       should include one occurrence of the string &quot;%s&quot;,  which  will  be  re‐
+       placed by the filename when the input preprocessor command is invoked.
+
+       When less closes a file opened in such a way, it will call another pro‐
+       gram,  called  the  input  postprocessor, which may perform any desired
+       clean-up action (such as  deleting  the  replacement  file  created  by
+       LESSOPEN).  This program receives two command line arguments, the orig‐
+       inal  filename  as entered by the user, and the name of the replacement
+       file.  To set up an input postprocessor, set the LESSCLOSE  environment
+       variable  to a command line which will invoke your input postprocessor.
+       It may include two occurrences of the string &quot;%s&quot;;  the  first  is  re‐
+       placed  with the original name of the file and the second with the name
+       of the replacement file, which was output by LESSOPEN.
+
+       For example, on many Unix systems, these two scripts will allow you  to
+       keep files in compressed format, but still let less view them directly:
+
+       lessopen.sh:
+            #! /bin/sh
+            case &quot;$1&quot; in
+            *.Z) TEMPFILE=$(mktemp)
+                 uncompress -c $1  &gt;$TEMPFILE  2&gt;/dev/null
+                 if [ -s $TEMPFILE ]; then
+                      echo $TEMPFILE
+                 else
+                      rm -f $TEMPFILE
+                 fi
+                 ;;
+            esac
+
+       lessclose.sh:
+            #! /bin/sh
+            rm $2
+
+       To  use these scripts, put them both where they can be executed and set
+       LESSOPEN=&quot;lessopen.sh %s&quot;,  and  LESSCLOSE=&quot;lessclose.sh %s %s&quot;.   More
+       complex  LESSOPEN  and LESSCLOSE scripts may be written to accept other
+       types of compressed files, and so on.
+
+       It is also possible to set up an input preprocessor to  pipe  the  file
+       data  directly to less, rather than putting the data into a replacement
+       file.  This avoids the need to decompress the entire file before start‐
+       ing to view it.  An input preprocessor that works this way is called an
+       input pipe.  An input pipe, instead of writing the name of  a  replace‐
+       ment file on its standard output, writes the entire contents of the re‐
+       placement  file  on  its  standard  output.  If the input pipe does not
+       write any characters on its standard output, then there is no  replace‐
+       ment  file and less uses the original file, as normal.  To use an input
+       pipe, make the first character in the LESSOPEN environment  variable  a
+       vertical  bar  (|)  to  signify that the input preprocessor is an input
+       pipe.  As with non-pipe input preprocessors, the  command  string  must
+       contain  one  occurrence  of %s, which is replaced with the filename of
+       the input file.
+
+       For example, on many Unix systems, this script will work like the  pre‐
+       vious example scripts:
+
+       lesspipe.sh:
+            #! /bin/sh
+            case &quot;$1&quot; in
+            *.Z) uncompress -c $1  2&gt;/dev/null
+                 ;;
+            *)   exit 1
+                 ;;
+            esac
+            exit $?
+
+       To  use  this  script,  put  it  where  it  can  be  executed  and  set
+       LESSOPEN=&quot;|lesspipe.sh %s&quot;.
+
+       Note that a preprocessor cannot output an empty file, since that is in‐
+       terpreted as meaning there is no replacement, and the original file  is
+       used.   To  avoid  this, if LESSOPEN starts with two vertical bars, the
+       exit status of the script becomes meaningful.  If the  exit  status  is
+       zero,  the  output  is considered to be replacement text, even if it is
+       empty.  If the exit status is nonzero, any output is  ignored  and  the
+       original  file  is  used.   For compatibility with previous versions of
+       less, if LESSOPEN starts with only one vertical bar, the exit status of
+       the preprocessor is ignored.
+
+       When an input pipe is used, a LESSCLOSE postprocessor can be used,  but
+       it is usually not necessary since there is no replacement file to clean
+       up.   In  this  case, the replacement file name passed to the LESSCLOSE
+       postprocessor is &quot;-&quot;.
+
+       For compatibility with previous versions of less, the input  preproces‐
+       sor or pipe is not used if less is viewing standard input.  However, if
+       the  first  character of LESSOPEN is a dash (-), the input preprocessor
+       is used on standard input as well as other files.  In  this  case,  the
+       dash  is  not  considered  to  be part of the preprocessor command.  If
+       standard input is being viewed, the input preprocessor is passed a file
+       name consisting of a single dash.  Similarly, if the first two  charac‐
+       ters  of  LESSOPEN  are vertical bar and dash (|-) or two vertical bars
+       and a dash (||-), the input pipe is used on standard input as  well  as
+       other files.  Again, in this case the dash is not considered to be part
+       of the input pipe command.
+
+NATIONAL CHARACTER SETS
+       There are three types of characters in the input file:
+
+       normal characters
+              can be displayed directly to the screen.
+
+       control characters
+              should  not  be displayed directly, but are expected to be found
+              in ordinary text files (such as backspace and tab).
+
+       binary characters
+              should not be displayed directly and  are  not  expected  to  be
+              found in text files.
+
+       A &quot;character set&quot; is simply a description of which characters are to be
+       considered  normal,  control,  and binary.  The LESSCHARSET environment
+       variable may be used to select a character set.   Possible  values  for
+       LESSCHARSET are:
+
+       ascii  BS,  TAB, NL, CR, and formfeed are control characters, all chars
+              with values between 32 and 126 are normal, and  all  others  are
+              binary.
+
+       iso8859
+              Selects  an  ISO 8859 character set.  This is the same as ASCII,
+              except characters between 160 and  255  are  treated  as  normal
+              characters.
+
+       latin1 Same as iso8859.
+
+       latin9 Same as iso8859.
+
+       dos    Selects a character set appropriate for MS-DOS.
+
+       ebcdic Selects an EBCDIC character set.
+
+       IBM-1047
+              Selects  an  EBCDIC  character set used by OS/390 Unix Services.
+              This is the EBCDIC analogue of latin1.  You get similar  results
+              by setting either LESSCHARSET=IBM-1047 or LC_CTYPE=en_US in your
+              environment.
+
+       koi8-r Selects a Russian character set.
+
+       next   Selects a character set appropriate for NeXT computers.
+
+       utf-8  Selects  the  UTF-8  encoding  of  the  ISO 10646 character set.
+              UTF-8 is special in that it supports  multi-byte  characters  in
+              the input file.  It is the only character set that supports mul‐
+              ti-byte characters.
+
+       windows
+              Selects  a  character  set appropriate for Microsoft Windows (cp
+              1251).
+
+       In rare cases, it may be desired to tailor less to use a character  set
+       other  than the ones definable by LESSCHARSET.  In this case, the envi‐
+       ronment variable LESSCHARDEF can be used to define a character set.  It
+       should be set to a string where each character in the string represents
+       one character in the character set.  The character &quot;.&quot; is  used  for  a
+       normal  character, &quot;c&quot; for control, and &quot;b&quot; for binary.  A decimal num‐
+       ber may be used for repetition.   For  example,  &quot;bccc4b.&quot;  would  mean
+       character  0 is binary, 1, 2 and 3 are control, 4, 5, 6 and 7 are bina‐
+       ry, and 8 is normal.  All characters after the last are taken to be the
+       same as the last, so characters 9 through 255 would be  normal.   (This
+       is  an  example,  and does not necessarily represent any real character
+       set.)
+
+       This table shows the value of LESSCHARDEF which is equivalent  to  each
+       of the possible values for LESSCHARSET:
+            ascii      8bcccbcc18b95.b
+            dos        8bcccbcc12bc5b95.b.
+            ebcdic     5bc6bcc7bcc41b.9b7.9b5.b..8b6.10b6.b9.7b
+                       9.8b8.17b3.3b9.7b9.8b8.6b10.b.b.b.
+            IBM-1047   4cbcbc3b9cbccbccbb4c6bcc5b3cbbc4bc4bccbc
+                       191.b
+            iso8859    8bcccbcc18b95.33b.
+            koi8-r     8bcccbcc18b95.b128.
+            latin1     8bcccbcc18b95.33b.
+            next       8bcccbcc18b95.bb125.bb
+
+       If  neither  LESSCHARSET nor LESSCHARDEF is set, but any of the strings
+       &quot;UTF-8&quot;, &quot;UTF8&quot;, &quot;utf-8&quot; or &quot;utf8&quot; is found in the LC_ALL, LC_CTYPE  or
+       LANG environment variables, then the default character set is utf-8.
+
+       If that string is not found, but your system supports the setlocale in‐
+       terface,  less will use setlocale to determine the character set.  set‐
+       locale is controlled by setting the LANG or LC_CTYPE environment  vari‐
+       ables.
+
+       Finally,  if the setlocale interface is also not available, the default
+       character set is latin1.
+
+       Control and  binary  characters  are  displayed  in  standout  (reverse
+       video).  Each such character is displayed in caret notation if possible
+       (e.g.  ^A for control-A).  Caret notation is used only if inverting the
+       0100 bit results in a normal printable character.  Otherwise, the char‐
+       acter is displayed as a hex number in angle brackets.  This format  can
+       be  changed by setting the LESSBINFMT environment variable.  LESSBINFMT
+       may begin with a &quot;*&quot; and one character to select the display attribute:
+       &quot;*k&quot; is blinking, &quot;*d&quot; is bold, &quot;*u&quot; is underlined, &quot;*s&quot;  is  standout,
+       and  &quot;*n&quot;  is  normal.  If LESSBINFMT does not begin with a &quot;*&quot;, normal
+       attribute is assumed.  The remainder of LESSBINFMT is  a  string  which
+       may  include one printf-style escape sequence (a % followed by x, X, o,
+       d, etc.).  For example, if LESSBINFMT is  &quot;*u[%x]&quot;,  binary  characters
+       are  displayed  in  underlined hexadecimal surrounded by brackets.  The
+       default if no LESSBINFMT is specified is &quot;*s&lt;%02X&gt;&quot;.  Warning: the  re‐
+       sult  of  expanding  the  character via LESSBINFMT must be less than 31
+       characters.
+
+       When the character set is utf-8, the LESSUTFBINFMT environment variable
+       acts similarly to LESSBINFMT but it applies to Unicode code points that
+       were successfully decoded but are unsuitable for display  (e.g.,  unas‐
+       signed  code  points).   Its  default  value is &quot;&lt;U+%04lX&gt;&quot;.  Note that
+       LESSUTFBINFMT and LESSBINFMT  share  their  display  attribute  setting
+       (&quot;*x&quot;)  so specifying one will affect both; LESSUTFBINFMT is read after
+       LESSBINFMT so its setting, if any,  will  have  priority.   Problematic
+       octets  in  a  UTF-8  file (octets of a truncated sequence, octets of a
+       complete but non-shortest form  sequence,  invalid  octets,  and  stray
+       trailing  octets)  are displayed individually using LESSBINFMT so as to
+       facilitate diagnostic of how the UTF-8 file is ill-formed.
+
+PROMPTS
+       The -P option allows you to tailor the prompt to your preference.   The
+       string  given  to  the  -P option replaces the specified prompt string.
+       Certain characters in the string are interpreted specially.  The prompt
+       mechanism is rather complicated to provide flexibility, but  the  ordi‐
+       nary  user need not understand the details of constructing personalized
+       prompt strings.
+
+       A percent sign followed by a single character is expanded according  to
+       what the following character is:
+
+       %bX    Replaced  by the byte offset into the current input file.  The b
+              is followed by a single character (shown as X above) which spec‐
+              ifies the line whose byte offset is to be used.  If the  charac‐
+              ter  is a &quot;t&quot;, the byte offset of the top line in the display is
+              used, an &quot;m&quot; means use the middle line, a &quot;b&quot; means use the bot‐
+              tom line, a &quot;B&quot; means use the line just after the  bottom  line,
+              and  a  &quot;j&quot;  means use the &quot;target&quot; line, as specified by the -j
+              option.
+
+       %B     Replaced by the size of the current input file.
+
+       %c     Replaced by the column number of the text appearing in the first
+              column of the screen.
+
+       %dX    Replaced by the page number of a line in the  input  file.   The
+              line to be used is determined by the X, as with the %b option.
+
+       %D     Replaced  by  the  number of pages in the input file, or equiva‐
+              lently, the page number of the last line in the input file.
+
+       %E     Replaced by the name of the editor (from the VISUAL  environment
+              variable,  or  the  EDITOR environment variable if VISUAL is not
+              defined).  See the discussion of the LESSEDIT feature below.
+
+       %f     Replaced by the name of the current input file.
+
+       %F     Replaced by the last component of the name of the current  input
+              file.
+
+       %g     Replaced  by  the  shell-escaped name of the current input file.
+              This is useful when the expanded string will be used in a  shell
+              command, such as in LESSEDIT.
+
+       %i     Replaced  by  the index of the current file in the list of input
+              files.
+
+       %lX    Replaced by the line number of a line in the  input  file.   The
+              line to be used is determined by the X, as with the %b option.
+
+       %L     Replaced by the line number of the last line in the input file.
+
+       %m     Replaced by the total number of input files.
+
+       %pX    Replaced  by  the  percent into the current input file, based on
+              byte offsets.  The line used is determined by the X as with  the
+              %b option.
+
+       %PX    Replaced  by  the  percent into the current input file, based on
+              line numbers.  The line used is determined by the X as with  the
+              %b option.
+
+       %s     Same as %B.
+
+       %t     Causes  any  trailing spaces to be removed.  Usually used at the
+              end of the string, but may appear anywhere.
+
+       %T     Normally expands to the word &quot;file&quot;.  However if  viewing  files
+              via  a  tags  list  using  the -t option, it expands to the word
+              &quot;tag&quot;.
+
+       %x     Replaced by the name of the next input file in the list.
+
+       If any item is unknown (for example, the file size if input is a pipe),
+       a question mark is printed instead.
+
+       The format of the prompt string can be  changed  depending  on  certain
+       conditions.   A  question mark followed by a single character acts like
+       an &quot;IF&quot;: depending on the following character, a condition is  evaluat‐
+       ed.   If  the  condition is true, any characters following the question
+       mark and condition character, up to  a  period,  are  included  in  the
+       prompt.   If  the condition is false, such characters are not included.
+       A colon appearing between the question mark and the period can be  used
+       to establish an &quot;ELSE&quot;: any characters between the colon and the period
+       are  included  in  the string if and only if the IF condition is false.
+       Condition characters (which follow a question mark) may be:
+
+       ?a     True if any characters have been included in the prompt so far.
+
+       ?bX    True if the byte offset of the specified line is known.
+
+       ?B     True if the size of current input file is known.
+
+       ?c     True if the text is horizontally shifted (%c is not zero).
+
+       ?dX    True if the page number of the specified line is known.
+
+       ?e     True if at end-of-file.
+
+       ?f     True if there is an input filename (that is, if input is  not  a
+              pipe).
+
+       ?lX    True if the line number of the specified line is known.
+
+       ?L     True if the line number of the last line in the file is known.
+
+       ?m     True if there is more than one input file.
+
+       ?n     True if this is the first prompt in a new input file.
+
+       ?pX    True  if  the percent into the current input file, based on byte
+              offsets, of the specified line is known.
+
+       ?PX    True if the percent into the current input file, based  on  line
+              numbers, of the specified line is known.
+
+       ?s     Same as &quot;?B&quot;.
+
+       ?x     True  if there is a next input file (that is, if the current in‐
+              put file is not the last one).
+
+       Any characters other than the special ones (question mark, colon, peri‐
+       od, percent, and backslash) become literally part of the  prompt.   Any
+       of  the  special  characters may be included in the prompt literally by
+       preceding it with a backslash.
+
+       Some examples:
+
+       ?f%f:Standard input.
+
+       This prompt prints the filename, if known; otherwise the string  &quot;Stan‐
+       dard input&quot;.
+
+       ?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...
+
+       This  prompt  would print the filename, if known.  The filename is fol‐
+       lowed by the line number, if known, otherwise  the  percent  if  known,
+       otherwise the byte offset if known.  Otherwise, a dash is printed.  No‐
+       tice  how each question mark has a matching period, and how the % after
+       the %pt is included literally by escaping it with a backslash.
+
+       ?n?f%f .?m(%T %i of %m) ..?e(END) ?x- Next\: %x..%t&quot;;
+
+       This prints the filename if this is the first prompt in  a  file,  fol‐
+       lowed  by  the  &quot;file  N  of N&quot; message if there is more than one input
+       file.  Then, if we are at end-of-file, the string  &quot;(END)&quot;  is  printed
+       followed  by  the name of the next file, if there is one.  Finally, any
+       trailing spaces are truncated.  This is the default prompt.  For refer‐
+       ence, here are the defaults for the other two prompts (-m  and  -M  re‐
+       spectively).  Each is broken into two lines here for readability only.
+
+       ?n?f%f .?m(%T %i of %m) ..?e(END) ?x- Next\: %x.:
+            ?pB%pB\%:byte %bB?s/%s...%t
+
+       ?f%f .?n?m(%T %i of %m) ..?ltlines %lt-%lb?L/%L. :
+            byte %bB?s/%s. .?e(END) ?x- Next\: %x.:?pB%pB\%..%t
+
+       And here is the default message produced by the = command:
+
+       ?f%f .?m(%T %i of %m) .?ltlines %lt-%lb?L/%L. .
+            byte %bB?s/%s. ?e(END) :?pB%pB\%..%t
+
+       The  prompt expansion features are also used for another purpose: if an
+       environment variable LESSEDIT is defined, it is used as the command  to
+       be  executed when the v command is invoked.  The LESSEDIT string is ex‐
+       panded in the same way as the prompt strings.  The  default  value  for
+       LESSEDIT is:
+
+            %E ?lm+%lm. %g
+
+       Note that this expands to the editor name, followed by a + and the line
+       number,  followed  by the shell-escaped file name.  If your editor does
+       not accept the &quot;+linenumber&quot; syntax, or has other differences in  invo‐
+       cation  syntax, the LESSEDIT variable can be changed to modify this de‐
+       fault.
+
+SECURITY
+       When the environment variable LESSSECURE is set to 1, less  runs  in  a
+       &quot;secure&quot; mode.  This means these features are disabled:
+
+              !      the shell command
+
+              |      the pipe command
+
+              :e     the examine command.
+
+              v      the editing command
+
+              s  -o  log files
+
+              -k     use of lesskey files
+
+              -t     use of tags files
+
+                     metacharacters in filenames, such as *
+
+                     filename completion (TAB, ^L)
+
+       Less can also be compiled to be permanently in &quot;secure&quot; mode.
+
+COMPATIBILITY WITH MORE
+       If the environment variable LESS_IS_MORE is set to 1, or if the program
+       is  invoked via a file link named &quot;more&quot;, less behaves (mostly) in con‐
+       formance with the POSIX &quot;more&quot; command specification.   In  this  mode,
+       less behaves differently in these ways:
+
+       The -e option works differently.  If the -e option is not set, less be‐
+       haves  as if the -e option were set.  If the -e option is set, less be‐
+       haves as if the -E option were set.
+
+       The -m option works differently.  If the -m  option  is  not  set,  the
+       medium  prompt  is used, and it is prefixed with the string &quot;--More--&quot;.
+       If the -m option is set, the short prompt is used.
+
+       The -n option acts like the -z option.  The normal behavior of  the  -n
+       option is unavailable in this mode.
+
+       The  parameter  to  the  -p option is taken to be a less command rather
+       than a search pattern.
+
+       The LESS environment variable is  ignored,  and  the  MORE  environment
+       variable is used in its place.
+
+ENVIRONMENT VARIABLES
+       Environment variables may be specified either in the system environment
+       as  usual,  or  in a lesskey(1) file.  If environment variables are de‐
+       fined in more than one place, variables defined in a local lesskey file
+       take precedence over variables defined in the system environment, which
+       take precedence over variables defined in the system-wide lesskey file.
+
+       COLUMNS
+              Sets the number of columns on the screen.  Takes precedence over
+              the number of columns specified by the TERM variable.   (But  if
+              you  have  a  windowing  system  which  supports  TIOCGWINSZ  or
+              WIOCGETD, the window system&#39;s idea  of  the  screen  size  takes
+              precedence over the LINES and COLUMNS environment variables.)
+
+       EDITOR The name of the editor (used for the v command).
+
+       HOME   Name  of  the user&#39;s home directory (used to find a lesskey file
+              on Unix and OS/2 systems).
+
+       HOMEDRIVE, HOMEPATH
+              Concatenation of the HOMEDRIVE and  HOMEPATH  environment  vari‐
+              ables is the name of the user&#39;s home directory if the HOME vari‐
+              able is not set (only in the Windows version).
+
+       INIT   Name  of  the user&#39;s init directory (used to find a lesskey file
+              on OS/2 systems).
+
+       LANG   Language for determining the character set.
+
+       LC_CTYPE
+              Language for determining the character set.
+
+       LESS   Options which are passed to less automatically.
+
+       LESSANSIENDCHARS
+              Characters which may end an ANSI color escape sequence  (default
+              &quot;m&quot;).
+
+       LESSANSIMIDCHARS
+              Characters  which  may  appear between the ESC character and the
+              end  character  in  an  ANSI  color  escape  sequence   (default
+              &quot;0123456789:;[?!&quot;&#39;#%()*+ &quot;.
+
+       LESSBINFMT
+              Format for displaying non-printable, non-control characters.
+
+       LESSCHARDEF
+              Defines a character set.
+
+       LESSCHARSET
+              Selects a predefined character set.
+
+       LESSCLOSE
+              Command line to invoke the (optional) input-postprocessor.
+
+       LESSECHO
+              Name of the lessecho program (default &quot;lessecho&quot;).  The lessecho
+              program  is needed to expand metacharacters, such as * and ?, in
+              filenames on Unix systems.
+
+       LESSEDIT
+              Editor prototype string (used for the v command).   See  discus‐
+              sion under PROMPTS.
+
+       LESSGLOBALTAGS
+              Name  of  the command used by the -t option to find global tags.
+              Normally should be set to &quot;global&quot; if your system has the  glob‐
+              al(1) command.  If not set, global tags are not used.
+
+       LESSHISTFILE
+              Name  of  the  history file used to remember search commands and
+              shell commands between invocations of less.  If set  to  &quot;-&quot;  or
+              &quot;/dev/null&quot;,  a  history  file  is  not  used.   The  default is
+              &quot;$XDG_DATA_HOME/lesshst&quot; or &quot;$HOME/.lesshst&quot;  on  Unix  systems,
+              &quot;$HOME/_lesshst&quot;    on    DOS    and    Windows    systems,   or
+              &quot;$HOME/lesshst.ini&quot; or &quot;$INIT/lesshst.ini&quot; on OS/2 systems.
+
+       LESSHISTSIZE
+              The maximum number of commands to save in the history file.  The
+              default is 100.
+
+       LESSKEYIN
+              Name of the default lesskey source file.
+
+       LESSKEY
+              Name  of  the  default  lesskey  binary  file.  (Not   used   if
+              &quot;$LESSKEYIN&quot; exists.)
+
+       LESSKEYIN_SYSTEM
+              Name of the default system-wide lesskey source file.
+
+       LESSKEY_SYSTEM
+              Name  of  the default system-wide lesskey binary file. (Not used
+              if &quot;$LESSKEYIN_SYSTEM&quot; exists.)
+
+       LESSMETACHARS
+              List of characters which are considered &quot;metacharacters&quot; by  the
+              shell.
+
+       LESSMETAESCAPE
+              Prefix  which  less will add before each metacharacter in a com‐
+              mand sent to the shell.  If LESSMETAESCAPE is an  empty  string,
+              commands  containing  metacharacters  will  not be passed to the
+              shell.
+
+       LESSOPEN
+              Command line to invoke the (optional) input-preprocessor.
+
+       LESSSECURE
+              Runs less in &quot;secure&quot; mode.  See discussion under SECURITY.
+
+       LESSSEPARATOR
+              String to be appended to a directory name  in  filename  comple‐
+              tion.
+
+       LESSUTFBINFMT
+              Format for displaying non-printable Unicode code points.
+
+       LESS_IS_MORE
+              Emulate the more(1) command.
+
+       LINES  Sets  the  number of lines on the screen.  Takes precedence over
+              the number of lines specified by the TERM variable.  (But if you
+              have a windowing system which supports TIOCGWINSZ  or  WIOCGETD,
+              the  window  system&#39;s  idea  of the screen size takes precedence
+              over the LINES and COLUMNS environment variables.)
+
+       MORE   Options which are passed to less automatically when  running  in
+              more compatible mode.
+
+       PATH   User&#39;s  search  path  (used to find a lesskey file on MS-DOS and
+              OS/2 systems).
+
+       SHELL  The shell used to execute the ! command, as well  as  to  expand
+              filenames.
+
+       TERM   The type of terminal on which less is being run.
+
+       VISUAL The name of the editor (used for the v command).
+
+SEE ALSO
+       lesskey(1)
+
+COPYRIGHT
+       Copyright (C) 1984-2021  Mark Nudelman
+
+       less  is  part of the GNU project and is free software.  You can redis‐
+       tribute it and/or modify it under the terms of either (1) the GNU  Gen‐
+       eral  Public  License  as published by the Free Software Foundation; or
+       (2) the Less License.  See the file README in the less distribution for
+       more details regarding redistribution.  You should have received a copy
+       of the GNU General Public License along with the source for  less;  see
+       the  file  COPYING.   If not, write to the Free Software Foundation, 59
+       Temple Place, Suite 330, Boston, MA  02111-1307, USA.  You should  also
+       have received a copy of the Less License; see the file LICENSE.
+
+       less is distributed in the hope that it will be useful, but WITHOUT ANY
+       WARRANTY;  without even the implied warranty of MERCHANTABILITY or FIT‐
+       NESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  for
+       more details.
+
+AUTHOR
+       Mark Nudelman
+       Report bugs at https://github.com/gwsw/less/issues.
+       For more information, see the less homepage at
+       https://greenwoodsoftware.com/less
+
+                           Version 590: 03 Jun 2021                    LESS(1)
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:12 创建于: 2025-11-27 09:33:12
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

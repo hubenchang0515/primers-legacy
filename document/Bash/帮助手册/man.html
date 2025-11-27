@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Bash - 帮助手册 - man</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/man.html" />
+    <meta name="description" content="Bash的man命令```bashman[OPTION...][[SECTION]PAGE...]...````!subtitle:功能`查看系统手册。`!subtitle:类型`Bash内置命令。`man`也是[coreutils](htt">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%9F%BA%E7%A1%80/%E5%BC%80%E5%A7%8B.html" title="开始">开始</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F.html" title="变量">变量</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/until%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="until 循环语句">until 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/case%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="case 分支语句">case 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/alias.html" title="alias">alias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/arch.html" title="arch">arch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/b2sum.html" title="b2sum">b2sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base32.html" title="base32">base32</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base64.html" title="base64">base64</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basename.html" title="basename">basename</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basenc.html" title="basenc">basenc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/break.html" title="break">break</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cat.html" title="cat">cat</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cd.html" title="cd">cd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chcon.html" title="chcon">chcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chgrp.html" title="chgrp">chgrp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chmod.html" title="chmod">chmod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chown.html" title="chown">chown</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cksum.html" title="cksum">cksum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/clear.html" title="clear">clear</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/comm.html" title="comm">comm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/continue.html" title="continue">continue</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cp.html" title="cp">cp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/csplit.html" title="csplit">csplit</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cut.html" title="cut">cut</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/date.html" title="date">date</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dd.html" title="dd">dd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/df.html" title="df">df</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dir.html" title="dir">dir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dircolors.html" title="dircolors">dircolors</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirname.html" title="dirname">dirname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirs.html" title="dirs">dirs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/du.html" title="du">du</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/echo.html" title="echo">echo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/env.html" title="env">env</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expand.html" title="expand">expand</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/export.html" title="export">export</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expr.html" title="expr">expr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/factor.html" title="factor">factor</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/false.html" title="false">false</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/finger.html" title="finger">finger</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fmt.html" title="fmt">fmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fold.html" title="fold">fold</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/function.html" title="function">function</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/groups.html" title="groups">groups</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/head.html" title="head">head</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/hostid.html" title="hostid">hostid</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/id.html" title="id">id</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/install.html" title="install">install</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/join.html" title="join">join</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/less.html" title="less">less</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/link.html" title="link">link</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ln.html" title="ln">ln</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/logname.html" title="logname">logname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ls.html" title="ls">ls</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/man.html" title="man">man</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/md5sum.html" title="md5sum">md5sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkdir.html" title="mkdir">mkdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkfifo.html" title="mkfifo">mkfifo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mknod.html" title="mknod">mknod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mktemp.html" title="mktemp">mktemp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/more.html" title="more">more</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mv.html" title="mv">mv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nice.html" title="nice">nice</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nl.html" title="nl">nl</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nohup.html" title="nohup">nohup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nproc.html" title="nproc">nproc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/numfmt.html" title="numfmt">numfmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/od.html" title="od">od</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/paste.html" title="paste">paste</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pathchk.html" title="pathchk">pathchk</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pinky.html" title="pinky">pinky</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/popd.html" title="popd">popd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pr.html" title="pr">pr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printenv.html" title="printenv">printenv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printf.html" title="printf">printf</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ptx.html" title="ptx">ptx</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pushd.html" title="pushd">pushd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pwd.html" title="pwd">pwd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/readlink.html" title="readlink">readlink</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/realpath.html" title="realpath">realpath</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rm.html" title="rm">rm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rmdir.html" title="rmdir">rmdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/runcon.html" title="runcon">runcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/seq.html" title="seq">seq</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha1sum.html" title="sha1sum">sha1sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha224sum.html" title="sha224sum">sha224sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha256sum.html" title="sha256sum">sha256sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha384sum.html" title="sha384sum">sha384sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha512sum.html" title="sha512sum">sha512sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/source.html" title="source">source</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sync.html" title="sync">sync</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/tail.html" title="tail">tail</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/test.html" title="test">test</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/touch.html" title="touch">touch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/true.html" title="true">true</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/unalias.html" title="unalias">unalias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/yes.html" title="yes">yes</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash" rel="nofollow">
+                                    Bash 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash/90.帮助手册/EX.man.md" rel="nofollow">
+                                    man
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='c3094d' class='view-h4'><a class='view-text-miku' href='#c3094d'>#</a> Bash 的 man 命令</h1><div class='view-monofont'><div class="highlight"><pre><span></span>man<span class="w"> </span><span class="o">[</span>OPTION...<span class="o">]</span><span class="w"> </span><span class="o">[[</span>SECTION<span class="o">]</span><span class="w"> </span>PAGE<span class="w"> </span>...<span class="o">]</span><span class="w"> </span>...
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:功能</code></p><p class='view-p'>查看系统手册。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:类型</code></p><p class='view-p'>Bash 内置命令。</p><blockquote><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>man</code> 也是 <a class='view-text-primary' href='https://www.gnu.org/software/coreutils/' target='_blank'>coreutils</a> 的一个可执行文件；为了保持 POSIX 标准的兼容性，确保在其他 shell（比如一些极简的或古老的 shell）或者某些特定环境下，命令依然可用。</p></blockquote><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>OPTION</code> 选项：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-C file</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>--config-file=file</code> - 使用用户配置的文件，而不是默认的 <code class='view-text-secondary view-border-1 view-border-secondary'>~/.manpath</code></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-d</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>--debug</code> - 打印调试信息</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-D</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>--default</code> - 将命令的行为重置为默认值，通常用作第一个选项</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>--warnings[=warnings]</code> - 开启 <code class='view-text-secondary view-border-1 view-border-secondary'>groff</code> 警告</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>SECTION</code> 章节：<ol><li><p>可执行程序和 SHELL 命令</p></li><li><p>系统调用（内核提高的函数）</p></li><li><p>库函数</p></li><li><p>特殊文件</p></li><li><p>文件格式约定（例如 <code class='view-text-secondary view-border-1 view-border-secondary'>/etc/passwd</code>）</p></li><li><p>游戏</p></li><li><p>杂项</p></li><li><p>系统管理员命令</p></li><li><p>内核例程（非标准）</p></li></ol></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>PAGE</code> 页面 - 具体要查看的文档，可以是命令名、函数名等。</p></li></ul><h2 id='ae27b4' class='view-h5'><a class='view-text-miku' href='#ae27b4'>#</a> 环境变量</h2><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANPATH</code> - 指定 <code class='view-text-secondary view-border-1 view-border-secondary'>man</code> 文档的搜索路径</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANROFFOPT</code> - <code class='view-text-secondary view-border-1 view-border-secondary'>man</code> 格式化时，内容添加到格式化命令行中</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANROFFSEQ</code> - 指定预处理器</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANSECT</code> - 指定章节的搜索顺序，以冒号分隔的章节列表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANPAGER</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>PAGER</code> - 用作手册页显示的程序名</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANLESS</code> - 用作 <code class='view-text-secondary view-border-1 view-border-secondary'>less</code> 分页器的提示字符串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>BROWSER</code> - <code class='view-text-secondary view-border-1 view-border-secondary'>man --html</code> 时尝试启动的 Web 浏览器列表，以冒号分隔</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>SYSTEM</code> - 要查看的系统（可以查看其它系统的手册）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MANWIDTH</code> - 输出的宽度</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MAN_KEEP_FORMATTING</code> - 输出到非终端设备时（例如文件），保持格式化</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MAN_KEEP_STDERR</code> - 输出到非终端设备时（例如文件），保留错误</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>MAN_DISABLE_SECCOMP</code> - 禁用安全沙盒；设为任何非空值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>PIPELINE_DEBUG</code> - 在标准错误中打印调试信息；设为 1</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>LANG</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>LC_MESSAGES</code> - 语言</p></li></ul><h2 id='0d53f0' class='view-h5'><a class='view-text-miku' href='#0d53f0'>#</a> 示例</h2><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>man<span class="w"> </span>chmod<span class="w">     </span><span class="c1"># 查看 chmod 的文档，默认查看第一个有效的章节</span>
+CHMOD<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w">                         </span>User<span class="w"> </span>Commands<span class="w">                        </span>CHMOD<span class="o">(</span><span class="m">1</span><span class="o">)</span>
+
+NAME
+<span class="w">       </span>chmod<span class="w"> </span>-<span class="w"> </span>change<span class="w"> </span>file<span class="w"> </span>mode<span class="w"> </span>bits
+
+SYNOPSIS
+<span class="w">       </span>chmod<span class="w"> </span><span class="o">[</span>OPTION<span class="o">]</span>...<span class="w"> </span>MODE<span class="o">[</span>,MODE<span class="o">]</span>...<span class="w"> </span>FILE...
+<span class="w">       </span>chmod<span class="w"> </span><span class="o">[</span>OPTION<span class="o">]</span>...<span class="w"> </span>OCTAL-MODE<span class="w"> </span>FILE...
+<span class="w">       </span>chmod<span class="w"> </span><span class="o">[</span>OPTION<span class="o">]</span>...<span class="w"> </span>--reference<span class="o">=</span>RFILE<span class="w"> </span>FILE...
+...
+$<span class="w"> </span>man<span class="w"> </span><span class="m">2</span><span class="w"> </span>chmod<span class="w">   </span><span class="c1"># 查看 第 2 章节（系统调用）的 chmod 的文档</span>
+chmod<span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w">                      </span>System<span class="w"> </span>Calls<span class="w"> </span>Manual<span class="w">                     </span>chmod<span class="o">(</span><span class="m">2</span><span class="o">)</span>
+
+NAME
+<span class="w">       </span>chmod,<span class="w"> </span>fchmod,<span class="w"> </span>fchmodat<span class="w"> </span>-<span class="w"> </span>change<span class="w"> </span>permissions<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>file
+
+LIBRARY
+<span class="w">       </span>Standard<span class="w"> </span>C<span class="w"> </span>library<span class="w"> </span><span class="o">(</span>libc,<span class="w"> </span>-lc<span class="o">)</span>
+
+SYNOPSIS
+<span class="w">       </span><span class="c1">#include &lt;sys/stat.h&gt;</span>
+
+<span class="w">       </span>int<span class="w"> </span>chmod<span class="o">(</span>const<span class="w"> </span>char<span class="w"> </span>*pathname,<span class="w"> </span>mode_t<span class="w"> </span>mode<span class="o">)</span><span class="p">;</span>
+<span class="w">       </span>int<span class="w"> </span>fchmod<span class="o">(</span>int<span class="w"> </span>fd,<span class="w"> </span>mode_t<span class="w"> </span>mode<span class="o">)</span><span class="p">;</span>
+
+<span class="w">       </span><span class="c1">#include &lt;fcntl.h&gt;           /* Definition of AT_* constants */</span>
+<span class="w">       </span><span class="c1">#include &lt;sys/stat.h&gt;</span>
+
+<span class="w">       </span>int<span class="w"> </span>fchmodat<span class="o">(</span>int<span class="w"> </span>dirfd,<span class="w"> </span>const<span class="w"> </span>char<span class="w"> </span>*pathname,<span class="w"> </span>mode_t<span class="w"> </span>mode,<span class="w"> </span>int<span class="w"> </span>flags<span class="o">)</span><span class="p">;</span>
+...
+</pre></div>
+</div><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://www.man7.org/linux/man-pages/man1/man.1.html' target='_blank'>man(1) — Linux manual page</a></p></li></ul><h2 id='5fe4e2' class='view-h5'><a class='view-text-miku' href='#5fe4e2'>#</a> 手册</h2><div class='view-monofont'><div class="highlight"><pre><span></span>MAN(1)                        Manual pager utils                        MAN(1)
+
+NAME
+       man - an interface to the system reference manuals
+
+SYNOPSIS
+       man [man options] [[section] page ...] ...
+       man -k [apropos options] regexp ...
+       man -K [man options] [section] term ...
+       man -f [whatis options] page ...
+       man -l [man options] file ...
+       man -w|-W [man options] page ...
+
+DESCRIPTION
+       man  is  the system&#39;s manual pager.  Each page argument given to man is
+       normally the name of a program, utility or function.  The  manual  page
+       associated with each of these arguments is then found and displayed.  A
+       section,  if  provided, will direct man to look only in that section of
+       the manual.  The default action is to search in all  of  the  available
+       sections following a pre-defined order (see DEFAULTS), and to show only
+       the first page found, even if page exists in several sections.
+
+       The table below shows the section numbers of the manual followed by the
+       types of pages they contain.
+
+       1   Executable programs or shell commands
+       2   System calls (functions provided by the kernel)
+       3   Library calls (functions within program libraries)
+       4   Special files (usually found in /dev)
+       5   File formats and conventions, e.g. /etc/passwd
+       6   Games
+       7   Miscellaneous  (including  macro  packages  and  conventions), e.g.
+           man(7), groff(7), man-pages(7)
+       8   System administration commands (usually only for root)
+       9   Kernel routines [Non standard]
+
+       A manual page consists of several sections.
+
+       Conventional section names include NAME, SYNOPSIS,  CONFIGURATION,  DE‐
+       SCRIPTION,  OPTIONS,  EXIT STATUS,  RETURN VALUE,  ERRORS, ENVIRONMENT,
+       FILES,  VERSIONS,  STANDARDS,  NOTES,  BUGS,  EXAMPLE,   AUTHORS,   and
+       SEE ALSO.
+
+       The following conventions apply to the SYNOPSIS section and can be used
+       as a guide in other sections.
+
+       bold text          type exactly as shown.
+       italic text        replace with appropriate argument.
+       [-abc]             any or all arguments within [ ] are optional.
+       -a|-b              options delimited by | cannot be used together.
+       argument ...       argument is repeatable.
+       [expression] ...   entire expression within [ ] is repeatable.
+
+       Exact rendering may vary depending on the output device.  For instance,
+       man will usually not be able to render italics when running in a termi‐
+       nal, and will typically use underlined or coloured text instead.
+
+       The command or function illustration is a pattern that should match all
+       possible invocations.  In some cases it is advisable to illustrate sev‐
+       eral  exclusive invocations as is shown in the SYNOPSIS section of this
+       manual page.
+
+EXAMPLES
+       man ls
+           Display the manual page for the item (program) ls.
+
+       man man.7
+           Display the manual page for  macro  package  man  from  section  7.
+           (This is an alternative spelling of &quot;man 7 man&quot;.)
+
+       man &#39;man(7)&#39;
+           Display  the  manual  page  for  macro  package man from section 7.
+           (This is another alternative spelling of &quot;man 7 man&quot;.   It  may  be
+           more convenient when copying and pasting cross-references to manual
+           pages.   Note  that the parentheses must normally be quoted to pro‐
+           tect them from the shell.)
+
+       man -a intro
+           Display, in succession, all of the  available  intro  manual  pages
+           contained  within  the manual.  It is possible to quit between suc‐
+           cessive displays or skip any of them.
+
+       man -t bash | lpr -Pps
+           Format the manual page for bash into the  default  troff  or  groff
+           format and pipe it to the printer named ps.  The default output for
+           groff  is usually PostScript.  man --help should advise as to which
+           processor is bound to the -t option.
+
+       man -l -Tdvi ./foo.1x.gz &gt; ./foo.1x.dvi
+           This command will decompress and format  the  nroff  source  manual
+           page  ./foo.1x.gz  into a device independent (dvi) file.  The redi‐
+           rection is necessary as the -T flag causes output to be directed to
+           stdout with no pager.  The output could be viewed  with  a  program
+           such  as  xdvi or further processed into PostScript using a program
+           such as dvips.
+
+       man -k printf
+           Search the short descriptions and manual page names for the keyword
+           printf as regular expression.  Print out any  matches.   Equivalent
+           to apropos printf.
+
+       man -f smail
+           Lookup the manual pages referenced by smail and print out the short
+           descriptions of any found.  Equivalent to whatis smail.
+
+OVERVIEW
+       Many  options are available to man in order to give as much flexibility
+       as possible to the user.  Changes can be made to the search path,  sec‐
+       tion  order,  output processor, and other behaviours and operations de‐
+       tailed below.
+
+       If set, various environment variables are interrogated to determine the
+       operation of man.  It is  possible  to  set  the  &quot;catch-all&quot;  variable
+       $MANOPT  to  any string in command line format, with the exception that
+       any spaces used as part of an option&#39;s argument must be  escaped  (pre‐
+       ceded by a backslash).  man will parse $MANOPT prior to parsing its own
+       command  line.   Those options requiring an argument will be overridden
+       by the same options found on the command line.  To reset all of the op‐
+       tions set in $MANOPT, -D can be specified as the initial  command  line
+       option.  This will allow man to &quot;forget&quot; about the options specified in
+       $MANOPT, although they must still have been valid.
+
+       Manual  pages  are normally stored in nroff(1) format under a directory
+       such as /usr/share/man.  In some installations, there may also be  pre‐
+       formatted cat pages to improve performance.  See manpath(5) for details
+       of where these files are stored.
+
+       This package supports manual pages in multiple languages, controlled by
+       your locale.  If your system did not set this up for you automatically,
+       then  you may need to set $LC_MESSAGES, $LANG, or another system-depen‐
+       dent environment variable to indicate your  preferred  locale,  usually
+       specified in the POSIX format:
+
+       &lt;language&gt;[_&lt;territory&gt;[.&lt;character-set&gt;[,&lt;version&gt;]]]
+
+       If  the  desired page is available in your locale, it will be displayed
+       in lieu of the standard (usually American English) page.
+
+       If you find that the translations supplied with this  package  are  not
+       available  in  your  native language and you would like to supply them,
+       please contact the maintainer who will be coordinating such activity.
+
+       Individual manual pages are normally  written  and  maintained  by  the
+       maintainers  of  the  program, function, or other topic that they docu‐
+       ment, and are not included with this package.  If you find that a  man‐
+       ual  page is missing or inadequate, please report that to the maintain‐
+       ers of the package in question.
+
+       For information regarding other features and extensions available  with
+       this manual pager, please read the documents supplied with the package.
+
+DEFAULTS
+       The  order  of  sections to search may be overridden by the environment
+       variable $MANSECT or by the SECTION directive  in  /etc/manpath.config.
+       By default it is as follows:
+
+              1 n l 8 3 0 2 3type 3posix 3pm 3perl 3am 5 4 9 6 7
+
+       The  formatted  manual  page  is  displayed using a pager.  This can be
+       specified in a number of ways, or else will fall back to a default (see
+       option -P for details).
+
+       The filters are deciphered by a number of means.  Firstly, the  command
+       line option -p or the environment variable $MANROFFSEQ is interrogated.
+       If  -p  was not used and the environment variable was not set, the ini‐
+       tial line of the nroff file is parsed for a  preprocessor  string.   To
+       contain a valid preprocessor string, the first line must resemble
+
+       &#39;\&quot; &lt;string&gt;
+
+       where  string  can be any combination of letters described by option -p
+       below.
+
+       If none of the above methods provide any filter information, a  default
+       set is used.
+
+       A  formatting  pipeline is formed from the filters and the primary for‐
+       matter (nroff or [tg]roff with -t) and executed.  Alternatively, if  an
+       executable program mandb_nfmt (or mandb_tfmt with -t) exists in the man
+       tree  root,  it  is executed instead.  It gets passed the manual source
+       file, the preprocessor string, and optionally the device specified with
+       -T or -E as arguments.
+
+OPTIONS
+       Non-argument options that are duplicated either on the command line, in
+       $MANOPT, or both, are not harmful.  For options that require  an  argu‐
+       ment, each duplication will override the previous argument value.
+
+   General options
+       -C file, --config-file=file
+              Use  this  user  configuration  file  rather than the default of
+              ~/.manpath.
+
+       -d, --debug
+              Print debugging information.
+
+       -D, --default
+              This option is normally issued as the very first option and  re‐
+              sets  man&#39;s behaviour to its default.  Its use is to reset those
+              options that may have been set in  $MANOPT.   Any  options  that
+              follow -D will have their usual effect.
+
+       --warnings[=warnings]
+              Enable  warnings from groff.  This may be used to perform sanity
+              checks on the source text of manual pages.  warnings is a comma-
+              separated list of warning names; if it is not supplied, the  de‐
+              fault is &quot;mac&quot;.  To disable a groff warning, prefix it with &quot;!&quot;:
+              for example, --warnings=mac,!break enables warnings in the &quot;mac&quot;
+              category and disables warnings in the &quot;break&quot; category.  See the
+              “Warnings”  node  in  info groff for a list of available warning
+              names.
+
+   Main modes of operation
+       -f, --whatis
+              Approximately equivalent to whatis.  Display a short description
+              from the manual page, if available.  See whatis(1) for details.
+
+       -k, --apropos
+              Approximately equivalent to apropos.  Search  the  short  manual
+              page  descriptions  for  keywords  and display any matches.  See
+              apropos(1) for details.
+
+       -K, --global-apropos
+              Search for text in all manual  pages.   This  is  a  brute-force
+              search,  and is likely to take some time; if you can, you should
+              specify a section to reduce the number of pages that need to  be
+              searched.   Search terms may be simple strings (the default), or
+              regular expressions if the --regex option is used.
+
+              Note that this searches the sources of the manual pages, not the
+              rendered text, and so may include false positives due to  things
+              like  comments in source files, or false negatives due to things
+              like hyphens being written as &quot;\-&quot; in source  files.   Searching
+              the rendered text would be much slower.
+
+       -l, --local-file
+              Activate  &quot;local&quot;  mode.   Format and display local manual files
+              instead of searching through  the  system&#39;s  manual  collection.
+              Each manual page argument will be interpreted as an nroff source
+              file in the correct format.  No cat file is produced.  If &#39;-&#39; is
+              listed as one of the arguments, input will be taken from stdin.
+
+              If  this option is not used, then man will also fall back to in‐
+              terpreting manual page arguments as local file names if the  ar‐
+              gument contains a &quot;/&quot; character, since that is a good indication
+              that the argument refers to a path on the file system.
+
+       -w, --where, --path, --location
+              Don&#39;t  actually  display the manual page, but do print the loca‐
+              tion of the source nroff file that would be formatted.   If  the
+              -a  option  is also used, then print the locations of all source
+              files that match the search criteria.
+
+       -W, --where-cat, --location-cat
+              Don&#39;t actually display the manual page, but do print  the  loca‐
+              tion  of  the preformatted cat file that would be displayed.  If
+              the -a option is also used, then print the locations of all pre‐
+              formatted cat files that match the search criteria.
+
+              If -w and -W are both used, then print both source file and  cat
+              file  separated  by a space.  If all of -w, -W, and -a are used,
+              then do this for each possible match.
+
+       -c, --catman
+              This option is not for general use and should only  be  used  by
+              the catman program.
+
+       -R encoding, --recode=encoding
+              Instead  of  formatting the manual page in the usual way, output
+              its source converted to the specified encoding.  If you  already
+              know  the  encoding  of  the  source file, you can also use man‐
+              conv(1) directly.  However, this option allows  you  to  convert
+              several  manual pages to a single encoding without having to ex‐
+              plicitly state the encoding of each, provided that they were al‐
+              ready installed in a structure similar to a manual page  hierar‐
+              chy.
+
+              Consider  using  man-recode(1)  instead  for converting multiple
+              manual pages, since it has an interface designed for  bulk  con‐
+              version and so can be much faster.
+
+   Finding manual pages
+       -L locale, --locale=locale
+              man will normally determine your current locale by a call to the
+              C  function  setlocale(3) which interrogates various environment
+              variables, possibly including $LC_MESSAGES and $LANG.   To  tem‐
+              porarily  override the determined value, use this option to sup‐
+              ply a locale string directly to man.  Note that it will not take
+              effect until the search for pages actually begins.  Output  such
+              as  the  help  message will always be displayed in the initially
+              determined locale.
+
+       -m system[,...], --systems=system[,...]
+              If this system has access to  other  operating  systems&#39;  manual
+              pages,  they can be accessed using this option.  To search for a
+              manual page from NewOS&#39;s manual page collection, use the  option
+              -m NewOS.
+
+              The system specified can be a combination of comma delimited op‐
+              erating system names.  To include a search of the native operat‐
+              ing  system&#39;s  manual  pages, include the system name man in the
+              argument string.  This option will override the $SYSTEM environ‐
+              ment variable.
+
+       -M path, --manpath=path
+              Specify an alternate manpath to use.  By default, man uses  man‐
+              path  derived code to determine the path to search.  This option
+              overrides the $MANPATH environment variable and causes option -m
+              to be ignored.
+
+              A path specified as a manpath must be the root of a manual  page
+              hierarchy  structured  into  sections as described in the man-db
+              manual (under &quot;The manual page system&quot;).  To view  manual  pages
+              outside such hierarchies, see the -l option.
+
+       -S list, -s list, --sections=list
+              The  given list is a colon- or comma-separated list of sections,
+              used to determine which manual sections to search  and  in  what
+              order.  This option overrides the $MANSECT environment variable.
+              (The -s spelling is for compatibility with System V.)
+
+       -e sub-extension, --extension=sub-extension
+              Some systems incorporate large packages of manual pages, such as
+              those  that accompany the Tcl package, into the main manual page
+              hierarchy.  To get around the problem of having two manual pages
+              with the same name such as exit(3), the Tcl pages  were  usually
+              all  assigned  to  section l.  As this is unfortunate, it is now
+              possible to put the pages in the correct section, and to  assign
+              a specific &quot;extension&quot; to them, in this case, exit(3tcl).  Under
+              normal  operation,  man  will  display  exit(3) in preference to
+              exit(3tcl).  To negotiate this situation and to avoid having  to
+              know  which  section  the page you require resides in, it is now
+              possible to give man a  sub-extension  string  indicating  which
+              package  the page must belong to.  Using the above example, sup‐
+              plying the option -e tcl to man  will  restrict  the  search  to
+              pages having an extension of *tcl.
+
+       -i, --ignore-case
+              Ignore  case  when  searching for manual pages.  This is the de‐
+              fault.
+
+       -I, --match-case
+              Search for manual pages case-sensitively.
+
+       --regex
+              Show all pages with any part of either their names or their  de‐
+              scriptions  matching each page argument as a regular expression,
+              as with apropos(1).  Since there is usually no reasonable way to
+              pick a &quot;best&quot; page when searching for a regular expression, this
+              option implies -a.
+
+       --wildcard
+              Show all pages with any part of either their names or their  de‐
+              scriptions  matching  each page argument using shell-style wild‐
+              cards, as with apropos(1) --wildcard.  The  page  argument  must
+              match  the  entire  name or description, or match on word bound‐
+              aries in the description.  Since there is usually no  reasonable
+              way  to  pick  a &quot;best&quot; page when searching for a wildcard, this
+              option implies -a.
+
+       --names-only
+              If the --regex or --wildcard option is  used,  match  only  page
+              names,  not page descriptions, as with whatis(1).  Otherwise, no
+              effect.
+
+       -a, --all
+              By default, man will exit after  displaying  the  most  suitable
+              manual  page  it finds.  Using this option forces man to display
+              all the manual pages with names that match the search criteria.
+
+       -u, --update
+              This option causes man to update  its  database  caches  of  in‐
+              stalled  manual  pages.  This is only needed in rare situations,
+              and it is normally better to run mandb(8) instead.
+
+       --no-subpages
+              By default, man will try to interpret pairs of manual page names
+              given on the command line as equivalent to a single manual  page
+              name  containing  a  hyphen or an underscore.  This supports the
+              common pattern of programs that implement a  number  of  subcom‐
+              mands,  allowing  them to provide manual pages for each that can
+              be accessed using similar syntax as would be used to invoke  the
+              subcommands themselves.  For example:
+
+                $ man -aw git diff
+                /usr/share/man/man1/git-diff.1.gz
+
+              To disable this behaviour, use the --no-subpages option.
+
+                $ man -aw --no-subpages git diff
+                /usr/share/man/man1/git.1.gz
+                /usr/share/man/man3/Git.3pm.gz
+                /usr/share/man/man1/diff.1.gz
+
+   Controlling formatted output
+       -P pager, --pager=pager
+              Specify  which output pager to use.  By default, man uses pager,
+              falling back to cat if pager is not found or is not  executable.
+              This  option overrides the $MANPAGER environment variable, which
+              in turn overrides the $PAGER environment variable.   It  is  not
+              used in conjunction with -f or -k.
+
+              The  value  may be a simple command name or a command with argu‐
+              ments, and may use shell quoting (backslashes, single quotes, or
+              double quotes).  It may not use pipes to connect  multiple  com‐
+              mands;  if  you  need that, use a wrapper script, which may take
+              the file to display either as an argument or on standard input.
+
+       -r prompt, --prompt=prompt
+              If a recent version of less is used as the pager, man  will  at‐
+              tempt  to set its prompt and some sensible options.  The default
+              prompt looks like
+
+               Manual page name(sec) line x
+
+              where name denotes the manual page name, sec denotes the section
+              it was found under and x  the  current  line  number.   This  is
+              achieved by using the $LESS environment variable.
+
+              Supplying  -r  with  a  string  will override this default.  The
+              string may contain the text $MAN_PN which will  be  expanded  to
+              the  name  of  the current manual page and its section name sur‐
+              rounded by &quot;(&quot; and &quot;)&quot;.  The string used to produce the  default
+              could be expressed as
+
+              \ Manual\ page\ \$MAN_PN\ ?ltline\ %lt?L/%L.:
+              byte\ %bB?s/%s..?\ (END):?pB\ %pB\\%..
+              (press h for help or q to quit)
+
+              It  is  broken into three lines here for the sake of readability
+              only.  For its meaning see the less(1) manual page.  The  prompt
+              string  is  first  evaluated  by  the shell.  All double quotes,
+              back-quotes and backslashes in the prompt must be escaped  by  a
+              preceding  backslash.  The prompt string may end in an escaped $
+              which may be followed by further options for less.   By  default
+              man sets the -ix8 options.
+
+              The $MANLESS environment variable described below may be used to
+              set  a  default prompt string if none is supplied on the command
+              line.
+
+       -7, --ascii
+              When viewing a pure ascii(7) manual page on a 7 bit terminal  or
+              terminal  emulator,  some  characters  may not display correctly
+              when using the latin1(7)  device  description  with  GNU  nroff.
+              This  option  allows  pure ascii manual pages to be displayed in
+              ascii with the latin1 device.  It will not translate any  latin1
+              text.   The  following  table  shows the translations performed:
+              some parts of it may only be displayed properly when  using  GNU
+              nroff&#39;s latin1(7) device.
+
+              Description        Octal   latin1   ascii
+              ──────────────────────────────────────────
+              continuation hy‐    255      ‐        -
+              phen
+              bullet (middle      267      •        o
+              dot)
+              acute accent        264      ´        &#39;
+              multiplication      327      ×        x
+              sign
+
+              If  the  latin1  column displays correctly, your terminal may be
+              set up for latin1 characters and this option is  not  necessary.
+              If  the  latin1 and ascii columns are identical, you are reading
+              this page using this option or man did not format this page  us‐
+              ing  the  latin1  device  description.   If the latin1 column is
+              missing or corrupt, you may need to view manual pages with  this
+              option.
+
+              This  option is ignored when using options -t, -H, -T, or -Z and
+              may be useless for nroff other than GNU&#39;s.
+
+       -E encoding, --encoding=encoding
+              Generate output for a character encoding other than the default.
+              For backward compatibility, encoding may be an nroff device such
+              as ascii, latin1, or utf8 as well as a true  character  encoding
+              such as UTF-8.
+
+       --no-hyphenation, --nh
+              Normally, nroff will automatically hyphenate text at line breaks
+              even in words that do not contain hyphens, if it is necessary to
+              do  so  to  lay  out  words on a line without excessive spacing.
+              This option disables automatic hyphenation, so words  will  only
+              be hyphenated if they already contain hyphens.
+
+              If  you  are  writing  a  manual page and simply want to prevent
+              nroff from hyphenating a word at an inappropriate point, do  not
+              use  this  option,  but consult the nroff documentation instead;
+              for instance, you can put &quot;\%&quot; inside a word to indicate that it
+              may be hyphenated at that point, or put &quot;\%&quot; at the start  of  a
+              word to prevent it from being hyphenated.
+
+       --no-justification, --nj
+              Normally, nroff will automatically justify text to both margins.
+              This  option disables full justification, leaving justified only
+              to the left margin, sometimes called &quot;ragged-right&quot; text.
+
+              If you are writing a manual page  and  simply  want  to  prevent
+              nroff  from  justifying  certain paragraphs, do not use this op‐
+              tion, but consult the nroff documentation instead; for instance,
+              you can use the &quot;.na&quot;, &quot;.nf&quot;, &quot;.fi&quot;, and &quot;.ad&quot; requests to  tem‐
+              porarily disable adjusting and filling.
+
+       -p string, --preprocessor=string
+              Specify  the  sequence  of  preprocessors to run before nroff or
+              troff/groff.  Not all installations will have a full set of pre‐
+              processors.  Some of the preprocessors and the letters  used  to
+              designate  them are: eqn (e), grap (g), pic (p), tbl (t), vgrind
+              (v), refer (r).  This option overrides the $MANROFFSEQ  environ‐
+              ment  variable.   zsoelim  is  always run as the very first pre‐
+              processor.
+
+       -t, --troff
+              Use groff -mandoc to format the manual page to stdout.  This op‐
+              tion is not required in conjunction with -H, -T, or -Z.
+
+       -T[device], --troff-device[=device]
+              This option is used to change groff (or possibly troff&#39;s) output
+              to be suitable for a device other than the default.  It  implies
+              -t.   Examples  (provided  with Groff-1.17) include dvi, latin1,
+              ps, utf8, X75 and X100.
+
+       -H[browser], --html[=browser]
+              This option will cause groff to produce HTML  output,  and  will
+              display  that output in a web browser.  The choice of browser is
+              determined by the optional browser argument if one is  provided,
+              by  the  $BROWSER environment variable, or by a compile-time de‐
+              fault if that is unset (usually lynx).  This option implies  -t,
+              and will only work with GNU troff.
+
+       -X[dpi], --gxditview[=dpi]
+              This  option  displays the output of groff in a graphical window
+              using the gxditview program.  The dpi (dots per inch) may be 75,
+              75-12, 100, or 100-12, defaulting to 75; the -12 variants use  a
+              12-point  base  font.   This  option  implies  -T  with the X75,
+              X75-12, X100, or X100-12 device respectively.
+
+       -Z, --ditroff
+              groff will run troff and then use an appropriate  post-processor
+              to  produce  output  suitable  for  the chosen device.  If groff
+              -mandoc is groff, this option is passed to groff and  will  sup‐
+              press the use of a post-processor.  It implies -t.
+
+   Getting help
+       -?, --help
+              Print a help message and exit.
+
+       --usage
+              Print a short usage message and exit.
+
+       -V, --version
+              Display version information.
+
+EXIT STATUS
+       0      Successful program execution.
+
+       1      Usage, syntax or configuration file error.
+
+       2      Operational error.
+
+       3      A child process returned a non-zero exit status.
+
+       16     At  least one of the pages/files/keywords didn&#39;t exist or wasn&#39;t
+              matched.
+
+ENVIRONMENT
+       MANPATH
+              If $MANPATH is set, its value is used as the path to search  for
+              manual pages.
+
+              See the SEARCH PATH section of manpath(5) for the default behav‐
+              iour and details of how this environment variable is handled.
+
+       MANROFFOPT
+              Every  time  man invokes the formatter (nroff, troff, or groff),
+              it adds the contents of $MANROFFOPT to the  formatter&#39;s  command
+              line.
+
+       MANROFFSEQ
+              If $MANROFFSEQ is set, its value is used to determine the set of
+              preprocessors  to  pass  each  manual page through.  The default
+              preprocessor list is system dependent.
+
+       MANSECT
+              If $MANSECT is set, its value is a colon-delimited list of  sec‐
+              tions  and  it  is  used  to  determine which manual sections to
+              search and in what order.  The default is &quot;1 n l 8 3 0  2  3type
+              3posix  3pm  3perl 3am 5 4 9 6 7&quot;, unless overridden by the SEC‐
+              TION directive in /etc/manpath.config.
+
+       MANPAGER, PAGER
+              If $MANPAGER or $PAGER is set ($MANPAGER is used in preference),
+              its value is used as the name of the program used to display the
+              manual page.  By default, pager is used, falling back to cat  if
+              pager is not found or is not executable.
+
+              The  value  may be a simple command name or a command with argu‐
+              ments, and may use shell quoting (backslashes, single quotes, or
+              double quotes).  It may not use pipes to connect  multiple  com‐
+              mands;  if  you  need that, use a wrapper script, which may take
+              the file to display either as an argument or on standard input.
+
+       MANLESS
+              If $MANLESS is set, its value will be used as the default prompt
+              string for the less pager, as if it had been passed using the -r
+              option (so any occurrences of the text $MAN_PN will be  expanded
+              in  the  same  way).  For example, if you want to set the prompt
+              string unconditionally to “my prompt string”,  set  $MANLESS  to
+              ‘-Psmy prompt string’.  Using the -r option overrides this envi‐
+              ronment variable.
+
+       BROWSER
+              If  $BROWSER is set, its value is a colon-delimited list of com‐
+              mands, each of which in turn is used  to  try  to  start  a  web
+              browser  for  man  --html.  In each command, %s is replaced by a
+              filename containing the HTML output from groff, %%  is  replaced
+              by a single percent sign (%), and %c is replaced by a colon (:).
+
+       SYSTEM If  $SYSTEM  is  set,  it will have the same effect as if it had
+              been specified as the argument to the -m option.
+
+       MANOPT If $MANOPT is set, it will be parsed prior to man&#39;s command line
+              and is expected to be in a similar format.  As all of the  other
+              man  specific  environment variables can be expressed as command
+              line options, and are thus  candidates  for  being  included  in
+              $MANOPT  it  is  expected  that they will become obsolete.  N.B.
+              All spaces that should be interpreted as part of an option&#39;s ar‐
+              gument must be escaped.
+
+       MANWIDTH
+              If $MANWIDTH is set, its value is used as the  line  length  for
+              which  manual pages should be formatted.  If it is not set, man‐
+              ual pages will be formatted with a line  length  appropriate  to
+              the  current terminal (using the value of $COLUMNS, and ioctl(2)
+              if available, or falling back to 80  characters  if  neither  is
+              available).   Cat pages will only be saved when the default for‐
+              matting can be used, that is when the terminal  line  length  is
+              between 66 and 80 characters.
+
+       MAN_KEEP_FORMATTING
+              Normally,  when output is not being directed to a terminal (such
+              as to a file or a pipe), formatting characters are discarded  to
+              make  it  easier to read the result without special tools.  How‐
+              ever, if $MAN_KEEP_FORMATTING is set  to  any  non-empty  value,
+              these  formatting  characters  are retained.  This may be useful
+              for wrappers around man that can  interpret  formatting  charac‐
+              ters.
+
+       MAN_KEEP_STDERR
+              Normally,  when  output is being directed to a terminal (usually
+              to a pager), any error output from the command used  to  produce
+              formatted  versions of manual pages is discarded to avoid inter‐
+              fering with the pager&#39;s display.  Programs such as  groff  often
+              produce  relatively  minor  error  messages  about typographical
+              problems such as poor alignment, which are unsightly and  gener‐
+              ally  confusing when displayed along with the manual page.  How‐
+              ever,  some  users   want   to   see   them   anyway,   so,   if
+              $MAN_KEEP_STDERR  is  set  to  any non-empty value, error output
+              will be displayed as usual.
+
+       MAN_DISABLE_SECCOMP
+              On Linux, man normally confines  subprocesses  that  handle  un‐
+              trusted data using a seccomp(2) sandbox.  This makes it safer to
+              run  complex  parsing code over arbitrary manual pages.  If this
+              goes wrong for some reason unrelated to the content of the  page
+              being  displayed,  you  can set $MAN_DISABLE_SECCOMP to any non-
+              empty value to disable the sandbox.
+
+       PIPELINE_DEBUG
+              If the $PIPELINE_DEBUG environment variable is set to &quot;1&quot;,  then
+              man  will  print debugging messages to standard error describing
+              each subprocess it runs.
+
+       LANG, LC_MESSAGES
+              Depending on system and implementation, either or both of  $LANG
+              and  $LC_MESSAGES  will  be interrogated for the current message
+              locale.  man will display its messages in that locale (if avail‐
+              able).  See setlocale(3) for precise details.
+
+FILES
+       /etc/manpath.config
+              man-db configuration file.
+
+       /usr/share/man
+              A global manual page hierarchy.
+
+STANDARDS
+       POSIX.1-2001, POSIX.1-2008, POSIX.1-2017.
+
+SEE ALSO
+       apropos(1),  groff(1),   less(1),   manpath(1),   nroff(1),   troff(1),
+       whatis(1), zsoelim(1), manpath(5), man(7), catman(8), mandb(8)
+
+       Documentation for some packages may be available in other formats, such
+       as info(1) or HTML.
+
+HISTORY
+       1990, 1991 – Originally written by John W. Eaton (jwe@che.utexas.edu).
+
+       Dec 23 1992: Rik Faith (faith@cs.unc.edu) applied bug fixes supplied by
+       Willem Kasdorp (wkasdo@nikhefk.nikef.nl).
+
+       30th April 1994 – 23rd February 2000: Wilf. (G.Wilford@ee.surrey.ac.uk)
+       has been developing and maintaining this package with the help of a few
+       dedicated people.
+
+       30th  October  1996  –  30th March 2001: Fabrizio Polacco &lt;fpolacco@de‐
+       bian.org&gt; maintained and enhanced this package for the Debian  project,
+       with the help of all the community.
+
+       31st  March  2001  – present day: Colin Watson &lt;cjwatson@debian.org&gt; is
+       now developing and maintaining man-db.
+
+BUGS
+       https://gitlab.com/man-db/man-db/-/issues
+       https://savannah.nongnu.org/bugs/?group=man-db
+
+2.12.0                            2023-09-23                            MAN(1)
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:12 创建于: 2025-11-27 09:33:12
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

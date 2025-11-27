@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - C - 预处理指令 - 说明</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" />
+    <meta name="description" content="C语言的预处理指令C语言的预处理指令是在编译器的预处理阶段对代价进行加工的特殊的特殊命令。预处理命令全部以井号（``）开头，并且由于不是C语言本身的语句，因此不以分号（；）结尾。目前包含以下指令：|名称">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/C%20%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="C 语言的简介与环境配置">C 语言的简介与环境配置</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/Hello%20World.html" title="Hello World">Hello World</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html" title="显示输出">显示输出</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%8C%87%E9%92%88.html" title="指针">指针</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5.html" title="获取输入">获取输入</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/switch%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="switch 分支语句">switch 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%BB%93%E6%9E%84%E4%BD%93%20struct.html" title="结构体 struct">结构体 struct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%9E%9A%E4%B8%BE%20enum.html" title="枚举 enum">枚举 enum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%85%B1%E7%94%A8%E4%BD%93%20union.html" title="共用体 union">共用体 union</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20typedef.html" title="类型别名 typedef">类型别名 typedef</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进阶</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E8%BF%9B%E9%98%B6/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.html" title="动态内存管理">动态内存管理</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预处理指令</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html" title="文件包含指令">文件包含指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html" title="宏定义指令">宏定义指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html" title="条件编译指令">条件编译指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html" title="行号修改指令">行号修改指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html" title="错误和警告指令">错误和警告指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html" title="文件嵌入指令">文件嵌入指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html" title="编译器指令">编译器指令</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html" title="标准库">标准库</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/assert.h.html" title="assert.h">assert.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/complex.h.html" title="complex.h">complex.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html" title="ctype.h">ctype.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" title="errno.h">errno.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html" title="fenv.h">fenv.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html" title="float.h">float.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html" title="inttypes.h">inttypes.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/iso646.h.html" title="iso646.h">iso646.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/limits.h.html" title="limits.h">limits.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html" title="locale.h">locale.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" title="math.h">math.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/setjmp.h.html" title="setjmp.h">setjmp.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/signal.h.html" title="signal.h">signal.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdalign.h.html" title="stdalign.h">stdalign.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdarg.h.html" title="stdarg.h">stdarg.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdatomic.h.html" title="stdatomic.h">stdatomic.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbit.h.html" title="stdbit.h">stdbit.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbool.h.html" title="stdbool.h">stdbool.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdckdint.h.html" title="stdckdint.h">stdckdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stddef.h.html" title="stddef.h">stddef.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html" title="stdint.h">stdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html" title="stdio.h">stdio.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdlib.h.html" title="stdlib.h">stdlib.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdnoreturn.h.html" title="stdnoreturn.h">stdnoreturn.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html" title="string.h">string.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/threads.h.html" title="threads.h">threads.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/time.h.html" title="time.h">time.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wchar.h.html" title="wchar.h">wchar.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wctype.h.html" title="wctype.h">wctype.h</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C" rel="nofollow">
+                                    C 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C/90.预处理指令/00.说明.md" rel="nofollow">
+                                    说明
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='d07b0d' class='view-h4'><a class='view-text-miku' href='#d07b0d'>#</a> C 语言的预处理指令</h1><p class='view-p'>C 语言的预处理指令是在编译器的预处理阶段对代价进行加工的特殊的特殊命令。</p><p class='view-p'>预处理命令全部以井号（<code class='view-text-secondary view-border-1 view-border-secondary'>#</code>）开头，并且由于不是 C 语言本身的语句，因此不以分号（；）结尾。</p><p class='view-p'>目前包含以下指令：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">名称</th>
+  <th style="text-align:left">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html'>文件包含指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#include</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html'>宏定义指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#define</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#undef</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html'>条件编译指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#if</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#elif</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#else</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#endif</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#ifdef</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#ifndef</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#elifdef</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#elifndef</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html'>行号修改指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#line</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html'>错误和警告指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#error</code> <code class='view-text-secondary view-border-1 view-border-secondary'>#warning</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html'>文件嵌入指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#embed</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html'>编译器指令</a></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#pragma</code></td>
+</tr>
+</tbody>
+</table><blockquote><p class='view-p'>其中 <code class='view-text-secondary view-border-1 view-border-secondary'>#elifdef</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>#elifndef</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>#warning</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>#embed</code> 是 C23 标准新增的指令，低版本编译器可能无法编译。</p></blockquote><p class='view-p'>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>gcc</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>-E</code> 选项可以查看预处理的结果。例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div><p class='view-p'>执行 <code class='view-text-secondary view-border-1 view-border-secondary'>gcc -E -P main.c</code> 得到：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-E</code> 表示只执行预处理</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-P</code> 表示不显示行号等额外信息</p></li></ul><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="kt">size_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__builtin_va_list</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">__u_char</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__u_short</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__u_int</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__u_long</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">__int8_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">__uint8_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__int16_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__uint16_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__int32_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__uint32_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__int64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__uint64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__int8_t</span><span class="w"> </span><span class="n">__int_least8_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__uint8_t</span><span class="w"> </span><span class="n">__uint_least8_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__int16_t</span><span class="w"> </span><span class="n">__int_least16_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__uint16_t</span><span class="w"> </span><span class="n">__uint_least16_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__int32_t</span><span class="w"> </span><span class="n">__int_least32_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__uint32_t</span><span class="w"> </span><span class="n">__uint_least32_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__int64_t</span><span class="w"> </span><span class="n">__int_least64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__uint64_t</span><span class="w"> </span><span class="n">__uint_least64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__quad_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__u_quad_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__intmax_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__uintmax_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__dev_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__uid_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__gid_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__ino_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__ino64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__mode_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__nlink_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__off_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__off64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__pid_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__val</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">__fsid_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__clock_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__rlim_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__rlim64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__id_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__time_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__useconds_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__suseconds_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__suseconds64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__daddr_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__key_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__clockid_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">__timer_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__blksize_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__blkcnt_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__blkcnt64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__fsblkcnt_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__fsblkcnt64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__fsfilcnt_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__fsfilcnt64_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__fsword_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__ssize_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__syscall_slong_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__syscall_ulong_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__off64_t</span><span class="w"> </span><span class="n">__loff_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__caddr_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__intptr_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__socklen_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__sig_atomic_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">__count</span><span class="p">;</span>
+<span class="w">  </span><span class="k">union</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__wch</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">__wchb</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">__value</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">__mbstate_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_G_fpos_t</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">__off_t</span><span class="w"> </span><span class="n">__pos</span><span class="p">;</span>
+<span class="w">  </span><span class="n">__mbstate_t</span><span class="w"> </span><span class="n">__state</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">__fpos_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_G_fpos64_t</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">__off64_t</span><span class="w"> </span><span class="n">__pos</span><span class="p">;</span>
+<span class="w">  </span><span class="n">__mbstate_t</span><span class="w"> </span><span class="n">__state</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">__fpos64_t</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="w"> </span><span class="n">__FILE</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="w"> </span><span class="kt">FILE</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_marker</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_codecvt</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_wide_data</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">_IO_lock_t</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">_flags</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_read_ptr</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_read_end</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_read_base</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_write_base</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_write_ptr</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_write_end</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_buf_base</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_buf_end</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_save_base</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_backup_base</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">_IO_save_end</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_marker</span><span class="w"> </span><span class="o">*</span><span class="n">_markers</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="w"> </span><span class="o">*</span><span class="n">_chain</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">_fileno</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">_flags2</span><span class="p">;</span>
+<span class="w">  </span><span class="n">__off_t</span><span class="w"> </span><span class="n">_old_offset</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">_cur_column</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">_vtable_offset</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">_shortbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="n">_IO_lock_t</span><span class="w"> </span><span class="o">*</span><span class="n">_lock</span><span class="p">;</span>
+<span class="w">  </span><span class="n">__off64_t</span><span class="w"> </span><span class="n">_offset</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_codecvt</span><span class="w"> </span><span class="o">*</span><span class="n">_codecvt</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_wide_data</span><span class="w"> </span><span class="o">*</span><span class="n">_wide_data</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_FILE</span><span class="w"> </span><span class="o">*</span><span class="n">_freeres_list</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">_freeres_buf</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__pad5</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">_mode</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">_unused2</span><span class="p">[</span><span class="mi">15</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)];</span>
+<span class="p">};</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="nf">cookie_read_function_t</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__cookie</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__buf</span><span class="p">,</span>
+<span class="w">                                          </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__nbytes</span><span class="p">);</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="nf">cookie_write_function_t</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__cookie</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__buf</span><span class="p">,</span>
+<span class="w">                                           </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__nbytes</span><span class="p">);</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">cookie_seek_function_t</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__cookie</span><span class="p">,</span><span class="w"> </span><span class="n">__off64_t</span><span class="w"> </span><span class="o">*</span><span class="n">__pos</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__w</span><span class="p">);</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">cookie_close_function_t</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__cookie</span><span class="p">);</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_IO_cookie_io_functions_t</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">cookie_read_function_t</span><span class="w"> </span><span class="o">*</span><span class="n">read</span><span class="p">;</span>
+<span class="w">  </span><span class="n">cookie_write_function_t</span><span class="w"> </span><span class="o">*</span><span class="n">write</span><span class="p">;</span>
+<span class="w">  </span><span class="n">cookie_seek_function_t</span><span class="w"> </span><span class="o">*</span><span class="n">seek</span><span class="p">;</span>
+<span class="w">  </span><span class="n">cookie_close_function_t</span><span class="w"> </span><span class="o">*</span><span class="n">close</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">cookie_io_functions_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="kt">va_list</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__off_t</span><span class="w"> </span><span class="kt">off_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="kt">ssize_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__fpos_t</span><span class="w"> </span><span class="kt">fpos_t</span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">stdin</span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">stdout</span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">stderr</span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">remove</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__filename</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">rename</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__old</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__new</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">renameat</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__oldfd</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__old</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__newfd</span><span class="p">,</span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__new</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fclose</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">tmpfile</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">tmpnam</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">tmpnam_r</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">__s</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">tempnam</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__dir</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__pfx</span><span class="p">)</span>
+<span class="w">   </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">__builtin_free</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fflush</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fflush_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">fopen</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__filename</span><span class="p">,</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__modes</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">freopen</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__filename</span><span class="p">,</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__modes</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">fdopen</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__fd</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__modes</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">fopencookie</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__magic_cookie</span><span class="p">,</span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__modes</span><span class="p">,</span>
+<span class="w">     </span><span class="n">cookie_io_functions_t</span><span class="w"> </span><span class="n">__io_funcs</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">fmemopen</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__len</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__modes</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">open_memstream</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__bufloc</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">__sizeloc</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">fclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setbuf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__buf</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">setvbuf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__buf</span><span class="p">,</span>
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">__modes</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__n</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setbuffer</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__buf</span><span class="p">,</span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__size</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setlinebuf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">printf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">sprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vfprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span>
+<span class="w">       </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vprintf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vsprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span>
+<span class="w">       </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">snprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__maxlen</span><span class="p">,</span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vsnprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__maxlen</span><span class="p">,</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vasprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__f</span><span class="p">,</span>
+<span class="w">        </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">__asprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span>
+<span class="w">         </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__fmt</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">asprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__fmt</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vdprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__fd</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__fmt</span><span class="p">,</span>
+<span class="w">       </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">dprintf</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__fd</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__fmt</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__printf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fscanf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">sscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fscanf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_fscanf&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_scanf&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_sscanf&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vfscanf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span>
+<span class="w">      </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">vsscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">vfscanf</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_vfscanf&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">vscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_vscanf&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">vsscanf</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__format</span><span class="p">,</span><span class="w"> </span><span class="n">__gnuc_va_list</span><span class="w"> </span><span class="n">__arg</span><span class="p">)</span><span class="w"> </span><span class="n">__asm__</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="s">&quot;__isoc99_vsscanf&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__format__</span><span class="w"> </span><span class="p">(</span><span class="n">__scanf__</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fgetc</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getc</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getchar</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getc_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getchar_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fgetc_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fputc</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">putc</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">putchar</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fputc_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">putc_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">putchar_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getw</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">putw</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__w</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">fgets</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span>
+<span class="w">     </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__access__</span><span class="w"> </span><span class="p">(</span><span class="n">__write_only__</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="nf">__getdelim</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__lineptr</span><span class="p">,</span>
+<span class="w">                             </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__delimiter</span><span class="p">,</span>
+<span class="w">                             </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="nf">getdelim</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__lineptr</span><span class="p">,</span>
+<span class="w">                           </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__delimiter</span><span class="p">,</span>
+<span class="w">                           </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">__ssize_t</span><span class="w"> </span><span class="nf">getline</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__lineptr</span><span class="p">,</span>
+<span class="w">                          </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span>
+<span class="w">                          </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fputs</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">puts</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__s</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ungetc</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">__c</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">fread</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__size</span><span class="p">,</span>
+<span class="w">       </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">fwrite</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__size</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__s</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">fread_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__size</span><span class="p">,</span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">fwrite_unlocked</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__size</span><span class="p">,</span>
+<span class="w">          </span><span class="kt">size_t</span><span class="w"> </span><span class="n">__n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fseek</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__off</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__whence</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ftell</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">rewind</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fseeko</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="n">__off_t</span><span class="w"> </span><span class="n">__off</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__whence</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">__off_t</span><span class="w"> </span><span class="nf">ftello</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fgetpos</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="kt">fpos_t</span><span class="w"> </span><span class="o">*</span><span class="n">__restrict</span><span class="w"> </span><span class="n">__pos</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fsetpos</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">fpos_t</span><span class="w"> </span><span class="o">*</span><span class="n">__pos</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">clearerr</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">feof</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ferror</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">clearerr_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">feof_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ferror_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">perror</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__s</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__cold__</span><span class="p">));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fileno</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fileno_unlocked</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">pclose</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="nf">popen</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__command</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__modes</span><span class="p">)</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__malloc__</span><span class="w"> </span><span class="p">(</span><span class="n">pclose</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">ctermid</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">__s</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__access__</span><span class="w"> </span><span class="p">(</span><span class="n">__write_only__</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">flockfile</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ftrylockfile</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">funlockfile</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">__stream</span><span class="p">)</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nothrow__</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">__leaf__</span><span class="p">))</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">__nonnull__</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">__uflow</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">__overflow</span><span class="w"> </span><span class="p">(</span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:03 创建于: 2025-11-27 09:33:03
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

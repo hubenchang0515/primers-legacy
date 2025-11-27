@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - 通识基础 - Linux - 配置环境变量</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" />
+    <meta name="description" content="配置环境变量环境变量(EnvironmentVariables)是操作系统或程序运行环境中存储的键值对(key-value)数据，用于配置系统和应用程序的行为。例如：|环境变量|作用||:-">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Windows</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Linux</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">字符编码</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/ASCII%20%E7%BC%96%E7%A0%81.html" title="ASCII 编码">ASCII 编码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">文件格式</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/PPM%20%E5%9B%BE%E7%89%87.html" title="PPM 图片">PPM 图片</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">其它</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%85%B6%E5%AE%83/BCP%2047%20%E5%8C%BA%E5%9F%9F%E5%90%8D%E7%A7%B0%E5%88%97%E8%A1%A8.html" title="BCP 47 区域名称列表">BCP 47 区域名称列表</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础" rel="nofollow">
+                                    通识基础 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础/02.Linux/02.配置环境变量.md" rel="nofollow">
+                                    配置环境变量
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='b14350' class='view-h4'><a class='view-text-miku' href='#b14350'>#</a> 配置环境变量</h1><p class='view-p'>环境变量(Environment Variables)是操作系统或程序运行环境中存储的键值对(key-value)数据，用于配置系统和应用程序的行为。</p><p class='view-p'>例如：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">环境变量</th>
+  <th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PATH</code></td>
+  <td style="text-align:left">可执行文件的搜索路径</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>C_INCLUDE_PATH</code></td>
+  <td style="text-align:left">GCC 搜索 C 语言头文件的路径</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>CPLUS_INCLUDE_PATH</code></td>
+  <td style="text-align:left">GCC 搜索 C++ 头文件的路径</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>LIBRARY_PATH</code></td>
+  <td style="text-align:left">GCC 搜索库文件的路径</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>LD_LIBRARY_PATH</code></td>
+  <td style="text-align:left">Linux 运行时加载动态库的路径</td>
+</tr>
+</tbody>
+</table><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>echo</code> 命令可以查看环境变量的值：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span><span class="w">      </span><span class="c1"># 查看 PATH 环境变量的值</span>
+</pre></div>
+</div><p class='view-p'>通过 <code class='view-text-secondary view-border-1 view-border-secondary'>env</code> 命令可以查看全部环境变量:</p><code class='hljs' style="background:#000;">
+<span style='color:green;'>planc@raspberrypi:~ $</span> env
+<pre>
+SHELL=/bin/bash
+NO_AT_BRIDGE=1
+PWD=/home/planc
+LOGNAME=planc
+XDG_SESSION_TYPE=tty
+MOTD_SHOWN=pam
+HOME=/home/planc
+LANG=en_GB.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:
+SSH_CONNECTION=192.168.1.100 60897 192.168.1.102 22
+XDG_SESSION_CLASS=user
+TERM=xterm
+USER=planc
+DISPLAY=localhost:10.0
+SHLVL=1
+XDG_SESSION_ID=2477
+XDG_RUNTIME_DIR=/run/user/1000
+SSH_CLIENT=192.168.1.100 60897 22
+PATH=/home/planc/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+SSH_TTY=/dev/pts/1
+TEXTDOMAIN=Linux-PAM
+_=/usr/bin/env
+</pre>
+</code>
+<p class='view-p'>临时设置环境变量可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>export</code> 命令：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+</pre></div>
+</div><p class='view-p'>例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:路径&quot;</span><span class="w">      </span><span class="c1"># 向 PATH 环境变量追加路径，使用冒号分隔</span>
+</pre></div>
+</div><h2 id='1b93e0' class='view-h5'><a class='view-text-miku' href='#1b93e0'>#</a> 用户级配置</h2><p class='view-p'>持久化设置用户级环境变量通常通配置 <code class='view-text-secondary view-border-1 view-border-secondary'>~/.bashrc</code> 文件实现：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1"># .bashrc 原本的内容</span>
+<span class="c1"># ....</span>
+
+<span class="c1"># 通过 export 配置环境变量</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+</pre></div>
+</div><p class='view-p'>修改后不会立刻生效，需要重启终端，或者通过 <code class='view-text-secondary view-border-1 view-border-secondary'>source ~/.bashrc</code> 加载配置。</p><h2 id='1d699a' class='view-h5'><a class='view-text-miku' href='#1d699a'>#</a> 系统级配置</h2><p class='view-p'>持久化设置系统级环境变量通常在 <code class='view-text-secondary view-border-1 view-border-secondary'>/etc/profile.d/</code> 目录中添加配置文件实现：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1"># 通过 export 配置环境变量</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nb">export</span><span class="w"> </span><span class="nv">变量名</span><span class="o">=</span>变量值
+</pre></div>
+</div><p class='view-p'>修改后不会立刻生效，需要重启终端，或者通过 <code class='view-text-secondary view-border-1 view-border-secondary'>source /etc/profile.d/xxx.sh</code> 加载配置。</p><p class='view-p'>也可以通过编辑 <code class='view-text-secondary view-border-1 view-border-secondary'>/etc/environment</code> 文件配置系统级环境变量，该配置文件中直接写键值对，而不使用 <code class='view-text-secondary view-border-1 view-border-secondary'>export</code>：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nv">变量名</span><span class="o">=</span>变量值
+<span class="nv">变量名</span><span class="o">=</span>变量值
+</pre></div>
+</div><div class='custom warning'><code class='view-text-secondary view-border-1 view-border-secondary'>/etc/environment</code> 由 PAM 管理，如果用户不使用 PAM，则此配置不会生效。</div><h2 id='24e5e1' class='view-h5'><a class='view-text-miku' href='#24e5e1'>#</a> sudo</h2><p class='view-p'>通过 sudo 执行命令时，环境变量会被重置为 root 用户的配置，可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>-E</code> 选项保留当前用户的环境变量：</p><div class='view-monofont'><div class="highlight"><pre><span></span>sudo<span class="w"> </span>-E<span class="w"> </span><span class="nb">command</span><span class="w">                         </span><span class="c1"># 保留全部环境变量</span>
+sudo<span class="w"> </span>--preserve-env<span class="o">=</span>VAR1,VAR2<span class="w"> </span><span class="nb">command</span><span class="w">   </span><span class="c1"># 保留指定变量</span>
+</pre></div>
+</div><p class='view-p'>也可以修改配置 <code class='view-text-secondary view-border-1 view-border-secondary'>/etc/sudoers</code> 保留用户环境变量：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1"># 此行表示重置环境变量，改为 !env_reset 即可不重置环境变量</span>
+<span class="na">Defaults        env_reset</span>
+</pre></div>
+</div><p class='view-p'>或者针对性的保留环境变量：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1"># 保留所有环境变量（安全风险较高）</span>
+<span class="na">Defaults env_keep +</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
+
+<span class="c1"># 保留特定环境变量（推荐）</span>
+<span class="na">Defaults env_keep +</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;PATH HOME JAVA_HOME&quot;</span>
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:14 创建于: 2025-11-27 09:33:14
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

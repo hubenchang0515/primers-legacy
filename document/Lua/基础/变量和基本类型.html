@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 基础 - 变量和基本类型</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" />
+    <meta name="description" content="Lua的变量和基本类型Lua中定义变量的语法如下：```lualocal变量名=初始值```其中`local`表示定义局部变量，若删去`local`则表示定义全局变量。例如：```lualocalx=10--定义局部变量x，初始值为10">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/02.基础/01.变量和基本类型.md" rel="nofollow">
+                                    变量和基本类型
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='d2390a' class='view-h4'><a class='view-text-miku' href='#d2390a'>#</a> Lua 的变量和基本类型</h1><p class='view-p'>Lua 中定义变量的语法如下：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="err">变量名</span> <span class="o">=</span> <span class="err">初始值</span>
+</pre></div>
+</div><p class='view-p'>其中 <code class='view-text-secondary view-border-1 view-border-secondary'>local</code> 表示定义局部变量，若删去 <code class='view-text-secondary view-border-1 view-border-secondary'>local</code> 则表示定义全局变量。</p><p class='view-p'>例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">-- 定义局部变量 x，初始值为 10</span>
+</pre></div>
+</div><ul><li><p>定义局部变量 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code>，初始值是 10</p></li></ul><blockquote><p class='view-p'>示例代码中的两个短横线（<code class='view-text-secondary view-border-1 view-border-secondary'>--</code>）表示单行注释，用于对代码进行解释说明，运行时会被解释器忽略。</p></blockquote><h2 id='ba4001' class='view-h5'><a class='view-text-miku' href='#ba4001'>#</a> 类型</h2><p class='view-p'>Lua 有 8 种基本数据类型，分别是： <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>boolean</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>number</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>string</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>table</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>function</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>userdata</code>。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">数据类型</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></td>
+  <td style="text-align:left">只有 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 值的类型是 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 值表示数据的无效值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>boolean</code></td>
+  <td style="text-align:left">布尔类型，包含真（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）和假（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）两个值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>number</code></td>
+  <td style="text-align:left">数值类型，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>2025</code>，<code class='view-text-secondary view-border-1 view-border-secondary'>3.1415926</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>string</code></td>
+  <td style="text-align:left">字符串类型，通过一对双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&quot;</code>）或单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>''</code>）包裹，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;hello&quot;</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>table</code></td>
+  <td style="text-align:left">表类型，是 Lua 中唯一的数据结构机制，键和值可以是 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 以外的任何类型</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>function</code></td>
+  <td style="text-align:left">函数类型</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code></td>
+  <td style="text-align:left">协程类型</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>userdata</code></td>
+  <td style="text-align:left">用户数据类型，主要是通过 C API 创建的数据</td>
+</tr>
+</tbody>
+</table><p class='view-p'>使用 <code class='view-text-secondary view-border-1 view-border-secondary'>type</code> 函数可以判断值的类型，返回值是一个字符串：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;nil&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;boolean&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;number&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>true
+true
+true
+true
+</pre></div>
+</div><h3 id='00773e' class='view-h6'><a class='view-text-miku' href='#00773e'>#</a> nil 类型</h3><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 类型仅有 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 一个值，是用于表示无效的空值。</p><p class='view-p'>如果读取一个没有被初始赋值的变量，就会得到 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code>：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>            <span class="c1">-- 得到值 nil</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>      <span class="c1">-- type(a) 返回字符串的 &quot;nil&quot;</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>nil
+nil
+</pre></div>
+</div><h3 id='394e73' class='view-h6'><a class='view-text-miku' href='#394e73'>#</a> boolean 类型</h3><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>boolean</code> 类型用于表示逻辑值：真（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）或假（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）。</p><p class='view-p'>逻辑运算的真值表：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>X</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>Y</code></th>
+  <th style="text-align:center">与运算 <code class='view-text-secondary view-border-1 view-border-secondary'>X and Y</code></th>
+  <th style="text-align:center">或运算 <code class='view-text-secondary view-border-1 view-border-secondary'>X or Y</code></th>
+  <th style="text-align:center">非运算 <code class='view-text-secondary view-border-1 view-border-secondary'>not X </code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+</tr>
+<tr>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+</tr>
+<tr>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+</tr>
+<tr>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>false</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>true</code></td>
+</tr>
+</tbody>
+</table><ul><li><p>与运算符 <code class='view-text-secondary view-border-1 view-border-secondary'>and</code>：X 和 Y 都是 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code>；任意一个为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code></p></li><li><p>或运算符 <code class='view-text-secondary view-border-1 view-border-secondary'>or</code>：X 或 Y 任意一个是 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code>；都是 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code> 时结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code></p></li><li><p>非运算符 <code class='view-text-secondary view-border-1 view-border-secondary'>not</code>：<code class='view-text-secondary view-border-1 view-border-secondary'>not true</code> 结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code>；<code class='view-text-secondary view-border-1 view-border-secondary'>not false</code> 结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>boolean</code> 类型以外的值在逻辑运算中，<code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 被视作假，其它值均被视为真。</p><div class='custom info'>Lua 没有逻辑异或运算符</div><p class='view-p'>示例：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="kc">true</span> <span class="ow">and</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">true</span> <span class="ow">and</span> <span class="kc">false</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">true</span> <span class="ow">or</span> <span class="kc">false</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="ow">not</span> <span class="kc">true</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>true
+false
+true
+false
+</pre></div>
+</div><h3 id='c2bc96' class='view-h6'><a class='view-text-miku' href='#c2bc96'>#</a> number 类型</h3><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>number</code> 类型表示数值；在 Lua 中不区分整数和小数类型，默认使用双精度浮点数表示。</p><p class='view-p'>Lua 支持以下数学运算符：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>+</code>: 加法</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-</code>: 减法</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>*</code>: 乘法</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>/</code>: 浮点除法</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>//</code>: 向下取整除法</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>%</code>: 取模（除法取余数）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>^</code>: 乘方</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>-</code>: 负号</p></li></ul><p class='view-p'>示例：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">9</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">9</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="c1">-- 9 除以 2，向下取整</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">9</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span>  <span class="c1">-- 9 除以 2 的余数</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">10</span><span class="p">)</span> <span class="c1">-- 2 的 10 次方</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>2
+21
+4.5
+4
+1
+1024.0
+</pre></div>
+</div><p class='view-p'>Lua 支持以下位运算：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&</code>: 按位与</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>|</code>: 按位或</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>~</code>: 按位异或</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&gt;&gt;</code>: 右移</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&lt;&lt;</code>: 左移</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>~</code>: 按位非</p></li></ul><p class='view-p'>所有的位操作都将操作数先转换为整数，然后按照二进制位进行操作，其结果是一个整数。</p><p class='view-p'>对于右移和左移，均用零来填补空位。移动的位数若为负，则向反方向位移；若移动的位数的绝对值大于等于整数本身的位数，其结果为零 （所有位都被移出）。</p><p class='view-p'>示例：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mh">0xf8</span> <span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">)</span>  <span class="c1">-- 按位与</span>
+<span class="nb">print</span><span class="p">(</span><span class="mh">0xf8</span> <span class="o">|</span> <span class="mh">0x1f</span><span class="p">)</span>  <span class="c1">-- 按位或</span>
+<span class="nb">print</span><span class="p">(</span><span class="mh">0xf8</span> <span class="o">~</span> <span class="mh">0x1f</span><span class="p">)</span>  <span class="c1">-- 按位异或</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span><span class="p">)</span>        <span class="c1">-- 左移 10 位</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="mh">0xf0</span><span class="p">)</span>        <span class="c1">-- 按位非</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>24
+255
+231
+1024
+-241
+</pre></div>
+</div><h3 id='7c50d7' class='view-h6'><a class='view-text-miku' href='#7c50d7'>#</a> string 类型</h3><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>string</code> 类型表示文本内容，值使用成对的双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&quot;</code>）或单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>''</code>）包裹。</p><p class='view-p'>示例：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Tom&quot;</span>
+<span class="kd">local</span> <span class="n">sex</span> <span class="o">=</span> <span class="s2">&quot;male&quot;</span>
+</pre></div>
+</div><p class='view-p'>对于一些无法直接表示的字符（例如换行）可以使用转义字符表示，以下是转义字符表：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">转义字符</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\\</code></td>
+  <td style="text-align:left">表示反斜杠（<code class='view-text-secondary view-border-1 view-border-secondary'>\</code>）本身</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\'</code></td>
+  <td style="text-align:left">表示单引号（<code class='view-text-secondary view-border-1 view-border-secondary'>'</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\&quot;</code></td>
+  <td style="text-align:left">表示双引号（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\a</code></td>
+  <td style="text-align:left">（用于让蜂鸣器发出响声，通常不可用）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\b</code></td>
+  <td style="text-align:left">退格（Backspace）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\n</code></td>
+  <td style="text-align:left">换行符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\v</code></td>
+  <td style="text-align:left">纵向制表符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\t</code></td>
+  <td style="text-align:left">横向制表符（Tab）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\r</code></td>
+  <td style="text-align:left">回车（Return）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>\f</code></td>
+  <td style="text-align:left">换页符号</td>
+</tr>
+</tbody>
+</table><p class='view-p'>Lua 支持多行字符，以两对方括号（<code class='view-text-secondary view-border-1 view-border-secondary'>[[]]</code>）包裹。</p><p class='view-p'>例如：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 多行字符串</span>
+<span class="kd">local</span> <span class="n">sql_query</span> <span class="o">=</span> <span class="s">[[</span>
+<span class="s">SELECT name, age, email </span>
+<span class="s">FROM users </span>
+<span class="s">WHERE age &gt; 18 </span>
+<span class="s">    AND status = &#39;active&#39;</span>
+<span class="s">ORDER BY name</span>
+<span class="s">]]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sql_query</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>SELECT name, age, email 
+FROM users 
+WHERE age &gt; 18 
+    AND status = &#39;active&#39;
+ORDER BY name
+</pre></div>
+</div><ul><li><p>多行字符串中会保留所有空格、缩进以及换行</p></li></ul><p class='view-p'>Lua 可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>..</code> 运算符进行字符串拼接操作：</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span> <span class="o">..</span> <span class="s2">&quot;world&quot;</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><div class='view-monofont'><div class="highlight"><pre><span></span>helloworld
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:09 创建于: 2025-11-27 09:33:09
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

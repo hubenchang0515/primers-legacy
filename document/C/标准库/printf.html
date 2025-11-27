@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - C - 标准库 - printf</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/C/%E6%A0%87%E5%87%86%E5%BA%93/printf.html" />
+    <meta name="description" content="C语言标准库函数printf!class:info在头文件[stdio.h](/document/zh/06.C/99.API%20帮助手册/EX.stdio.h.md)中定义。```c/****************************************">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/C%20%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="C 语言的简介与环境配置">C 语言的简介与环境配置</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/Hello%20World.html" title="Hello World">Hello World</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html" title="显示输出">显示输出</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%8C%87%E9%92%88.html" title="指针">指针</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5.html" title="获取输入">获取输入</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/switch%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="switch 分支语句">switch 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%BB%93%E6%9E%84%E4%BD%93%20struct.html" title="结构体 struct">结构体 struct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%9E%9A%E4%B8%BE%20enum.html" title="枚举 enum">枚举 enum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%85%B1%E7%94%A8%E4%BD%93%20union.html" title="共用体 union">共用体 union</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20typedef.html" title="类型别名 typedef">类型别名 typedef</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进阶</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E8%BF%9B%E9%98%B6/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.html" title="动态内存管理">动态内存管理</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预处理指令</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html" title="文件包含指令">文件包含指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html" title="宏定义指令">宏定义指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html" title="条件编译指令">条件编译指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html" title="行号修改指令">行号修改指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html" title="错误和警告指令">错误和警告指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html" title="文件嵌入指令">文件嵌入指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html" title="编译器指令">编译器指令</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html" title="标准库">标准库</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/assert.h.html" title="assert.h">assert.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/complex.h.html" title="complex.h">complex.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html" title="ctype.h">ctype.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" title="errno.h">errno.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html" title="fenv.h">fenv.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html" title="float.h">float.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html" title="inttypes.h">inttypes.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/iso646.h.html" title="iso646.h">iso646.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/limits.h.html" title="limits.h">limits.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html" title="locale.h">locale.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" title="math.h">math.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/setjmp.h.html" title="setjmp.h">setjmp.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/signal.h.html" title="signal.h">signal.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdalign.h.html" title="stdalign.h">stdalign.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdarg.h.html" title="stdarg.h">stdarg.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdatomic.h.html" title="stdatomic.h">stdatomic.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbit.h.html" title="stdbit.h">stdbit.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbool.h.html" title="stdbool.h">stdbool.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdckdint.h.html" title="stdckdint.h">stdckdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stddef.h.html" title="stddef.h">stddef.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html" title="stdint.h">stdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html" title="stdio.h">stdio.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdlib.h.html" title="stdlib.h">stdlib.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdnoreturn.h.html" title="stdnoreturn.h">stdnoreturn.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html" title="string.h">string.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/threads.h.html" title="threads.h">threads.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/time.h.html" title="time.h">time.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wchar.h.html" title="wchar.h">wchar.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wctype.h.html" title="wctype.h">wctype.h</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C" rel="nofollow">
+                                    C 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C/EX.标准库.hide/EX.printf.md" rel="nofollow">
+                                    printf
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='1f1eb6' class='view-h4'><a class='view-text-miku' href='#1f1eb6'>#</a> C 语言标准库函数 printf</h1><div class='custom info'>在头文件 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html'>stdio.h</a> 中定义。</div><div class='view-monofont'><div class="highlight"><pre><span></span><span class="cm">/*********************************************</span>
+<span class="cm"> * @brief 向标准输出中进行输出</span>
+<span class="cm"> * @param format 格式字符串</span>
+<span class="cm"> * @param ... 可变长度参数，要打印的变量</span>
+<span class="cm"> * @return 打印的字符数量</span>
+<span class="cm"> ********************************************/</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">printf</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="kr">restrict</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>向标准输出中进行输出。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>format</code> - 格式化字符串，指向以空字符（<code class='view-text-secondary view-border-1 view-border-secondary'>\0</code>）结尾的字符串指针，指定如何解释数据<ul><li><p>普通字符直接打印</p></li><li><p><a class='view-text-primary' href='#!hash(%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6' target='_blank'>转义字符</a>) 按照转义打印</p></li><li><p>以 <code class='view-text-secondary view-border-1 view-border-secondary'>%</code> 开头的 <a class='view-text-primary' href='#cf01b6' target='_blank'>格式占位符</a>，按照指定格式打印后续相应位置的参数</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 可变长度参数，为要打印的变量，需要与 <code class='view-text-secondary view-border-1 view-border-secondary'>format</code> 参数中的格式占位符一一对应</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回打印的字符数量</p></li><li><p>失败时返回负值</p></li></ul><h2 id='0d53f0' class='view-h5'><a class='view-text-miku' href='#0d53f0'>#</a> 示例</h2><div class='view-monofont'><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.1415926</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;@&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;x=%d, y=%f, ch=%c, text=%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">ch</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><code class='hljs' style="background:#000;">
+<pre>
+x=1024, y=3.141593, ch=@, text=hello
+</pre>
+</code>
+<h2 id='a6fc35' class='view-h5'><a class='view-text-miku' href='#a6fc35'>#</a> 转义字符</h2><p class='view-p'>转义字符用于表示一些无法直接表示的字符，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>\n</code> 表示换行，以下是转义字符表：</p><table class='view-width-100'><thead>
+<tr>
+  <th>转义字符</th>
+  <th>名称说明</th>
+  <th>ASCII 值（十进制）</th>
+  <th>说明举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\\</code></td>
+  <td>反斜杠</td>
+  <td>92</td>
+  <td>表示 <code class='view-text-secondary view-border-1 view-border-secondary'>\</code> 字符本身</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\'</code></td>
+  <td>单引号</td>
+  <td>39</td>
+  <td>表示 <code class='view-text-secondary view-border-1 view-border-secondary'>'</code> 字符本身，而非语法的一部分</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\&quot;</code></td>
+  <td>双引号</td>
+  <td>34</td>
+  <td>表示 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;</code> 字符本身，而非语法的一部分</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\n</code></td>
+  <td>换行符（Line Feed）</td>
+  <td>10</td>
+  <td>输出换行，UNIX 系统行结束符</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\r</code></td>
+  <td>回车符（Carriage Return）</td>
+  <td>13</td>
+  <td>Windows 系统行结束中的一部分</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\t</code></td>
+  <td>水平制表符（Tab）</td>
+  <td>9</td>
+  <td>插入一个 tab 间隔</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\v</code></td>
+  <td>垂直制表符</td>
+  <td>11</td>
+  <td>少用，控制打印机换行</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\b</code></td>
+  <td>退格（Backspace）</td>
+  <td>8</td>
+  <td>删除上一个字符（视终端而定）</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\a</code></td>
+  <td>响铃（Alert）</td>
+  <td>7</td>
+  <td>终端响铃或提示音</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\f</code></td>
+  <td>换页符（Form Feed）</td>
+  <td>12</td>
+  <td>少用，用于分页打印机</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\?</code></td>
+  <td>问号（避免 <code class='view-text-secondary view-border-1 view-border-secondary'>??</code> 被解释）</td>
+  <td>63</td>
+  <td>预处理器中防止三字母替换</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\0</code></td>
+  <td>空字符（Null）</td>
+  <td>0</td>
+  <td>字符串结尾标志</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\nnn</code></td>
+  <td>八进制字符</td>
+  <td>0~255</td>
+  <td>如 <code class='view-text-secondary view-border-1 view-border-secondary'>\141</code> 为 <code class='view-text-secondary view-border-1 view-border-secondary'>'a'</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>\xhh</code></td>
+  <td>十六进制字符</td>
+  <td>0~255</td>
+  <td>如 <code class='view-text-secondary view-border-1 view-border-secondary'>\x61</code> 为 <code class='view-text-secondary view-border-1 view-border-secondary'>'a'</code></td>
+</tr>
+</tbody>
+</table><h2 id='cf01b6' class='view-h5'><a class='view-text-miku' href='#cf01b6'>#</a> 格式占位符</h2><p class='view-p'>格式占位符以 <code class='view-text-secondary view-border-1 view-border-secondary'>%[标识][最小宽度][.精度][长度修饰]说明符</code> 的形式出现。</p><ul><li><p>最小宽度：打印的最小宽度，内容不足时使用空格或 0 补全<ul><li><p>如果使用一个星号（<code class='view-text-secondary view-border-1 view-border-secondary'>*</code>），则消耗一个 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 型参数作为最小宽度</p></li></ul></p></li><li><p>精度：指定转换的精度<ul><li><p>如果使用一个星号（<code class='view-text-secondary view-border-1 view-border-secondary'>*</code>），则消耗一个 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 型参数作为精度</p></li><li><p>对于正数数（<code class='view-text-secondary view-border-1 view-border-secondary'>%d</code> 等），表示最小位数</p></li><li><p>对于浮点数（<code class='view-text-secondary view-border-1 view-border-secondary'>%f</code> 等），表示小数点后的位数</p></li><li><p>对于字符串（<code class='view-text-secondary view-border-1 view-border-secondary'>%s</code>），表示最大宽度</p></li></ul></p></li><li><p>长度修饰：表示类型长度，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>%d</code> 是 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code>，而 <code class='view-text-secondary view-border-1 view-border-secondary'>%ld</code> 是 <code class='view-text-secondary view-border-1 view-border-secondary'>long</code></p></li></ul><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">标识</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>-</code></td>
+  <td style="text-align:left">左对齐（默认是右对齐）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>+</code></td>
+  <td style="text-align:left">有符号数始终显示符号（默认仅负数显示负号）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'> </code>（空格）</td>
+  <td style="text-align:left">有符号数非负时开头添加空格</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>#</code></td>
+  <td style="text-align:left">使用替代转换，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>%#x</code> 会打印 <code class='view-text-secondary view-border-1 view-border-secondary'>0x</code> 前缀</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>0</code></td>
+  <td style="text-align:left">前导 0 补全宽度</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">说明符</th>
+  <th style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>!embed:&lt;div style='min-width:12em'&gt;说明&lt;/div&gt;</code></th>
+  <th style="text-align:center">参数类型</th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>hh</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>h</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>l</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>ll</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>j</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>z</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>t</code></th>
+  <th style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>L</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>%</code></td>
+  <td style="text-align:left">百分号（<code class='view-text-secondary view-border-1 view-border-secondary'>%</code>）本身</td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>c</code></td>
+  <td style="text-align:left">单个字符</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>int</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>wint_t</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>s</code></td>
+  <td style="text-align:left">字符串，以空字符（<code class='view-text-secondary view-border-1 view-border-secondary'>\0</code>）结尾</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>char*</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>wchar_t*</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>d</code></td>
+  <td style="text-align:left">有符号十进制整数</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>signed char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>intmax_t</code></td>
+  <td style="text-align:center">※</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>i</code></td>
+  <td style="text-align:left">有符号十进制整数，同 <code class='view-text-secondary view-border-1 view-border-secondary'>%d</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>signed char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>intmax_t</code></td>
+  <td style="text-align:center">※</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>u</code></td>
+  <td style="text-align:left">无符号十进制整数</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>size_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>o</code></td>
+  <td style="text-align:left">无符号八进制整数</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>size_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>x</code></td>
+  <td style="text-align:left">无符号十六进制整数，字母小写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>size_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>X</code></td>
+  <td style="text-align:left">无符号十六进制整数，字母大写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned int</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned char</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned short</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned long long</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>size_t</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>unsigned ptrdiff_t</code></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>f</code></td>
+  <td style="text-align:left">浮点数，字母小写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>F</code></td>
+  <td style="text-align:left">浮点数，同 <code class='view-text-secondary view-border-1 view-border-secondary'>%f</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>e</code></td>
+  <td style="text-align:left">浮点数，科学计数法，字母小写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>E</code></td>
+  <td style="text-align:left">浮点数，科学计数法，字母大写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>g</code></td>
+  <td style="text-align:left">浮点数，省略小数末尾的 0，值较大时使用科学计数法，字母小写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>G</code></td>
+  <td style="text-align:left">浮点数，省略小数末尾的 0，值较大时使用科学计数法，字母大写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>a</code></td>
+  <td style="text-align:left">浮点数，十六进制，科学计数法，字母小写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>A</code></td>
+  <td style="text-align:left">浮点数，十六进制，科学计数法，字母大写</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>p</code></td>
+  <td style="text-align:left">指针地址</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>void*</code></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+  <td style="text-align:center"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>n</code></td>
+  <td style="text-align:left">将当前已打印的字符数量写入参数中</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>int*</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>siged char*</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>short*</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long*</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>long long*</code></td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>intmax_t*</code></td>
+  <td style="text-align:center">※</td>
+  <td style="text-align:center"><code class='view-text-secondary view-border-1 view-border-secondary'>ptrdiff_t*</code></td>
+  <td style="text-align:center"></td>
+</tr>
+</tbody>
+</table><h2 id='b8c007' class='view-h5'><a class='view-text-miku' href='#b8c007'>#</a> 特殊格式宏</h2><p class='view-p'>由于 C 语言中类型的长度不是固定的。反过来说，固定长度的类型，其原始类型是不确定的。</p><p class='view-p'>例如 <code class='view-text-secondary view-border-1 view-border-secondary'>int32_t</code> 在某些环境下是 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code>，另外某些环境下是 <code class='view-text-secondary view-border-1 view-border-secondary'>long</code>；前者使用 <code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 打印时应使用 <code class='view-text-secondary view-border-1 view-border-secondary'>%d</code>，而后者应使用 <code class='view-text-secondary view-border-1 view-border-secondary'>%ld</code>。</p><p class='view-p'>为了方便，可以使用以下宏来标识格式。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 格式</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRId8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式（有符号十进制）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRId16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRId32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRId64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>intptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>intmax_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIdLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>d</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIi8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式（有符号十进制）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIi16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIi32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIi64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>intptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>intmax_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIiLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>int_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>i</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIu8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式（无符号十进制）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIu16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIu32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIu64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIuLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIo8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式（有符号八进制）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIo16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIo32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIo64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIoLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>o</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIx8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式（有符号十六进制，小写）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIx16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIx32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIx64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintmax_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIxLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIX8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式（有符号十六进制，大写）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIX16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIX32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIX64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXPTR</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintptr_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXMAX</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uintmaX_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXFAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXFAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXFAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXFAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_fast64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXLEAST8</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least8_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXLEAST16</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least16_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXLEAST32</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least32_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>PRIXLEAST64</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>printf</code> 中用于打印 <code class='view-text-secondary view-border-1 view-border-secondary'>uint_least64_t</code> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>X</code> 格式</td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/scanf.html'>C 语言标准库函数 scanf</a></p></li><li><p><a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html'>stdint.h</a></p></li><li><p><a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html'>inttypes.h</a></p></li><li><p><a class='view-text-primary' href='https://en.cppreference.com/w/c/io/fprintf.html' target='_blank'>File input/output - printf</a></p></li></ul><h2 id='f1f7c7' class='view-h5'><a class='view-text-miku' href='#f1f7c7'>#</a> 参考标准</h2><ul><li><p>C23 standard (ISO/IEC 9899:2024):<ul><li><p>7.21.6.3 The printf function (p: TBD)</p></li></ul></p></li><li><p>C17 standard (ISO/IEC 9899:2018):<ul><li><p>7.21.6.3 The printf function (p: 236)</p></li></ul></p></li><li><p>C11 standard (ISO/IEC 9899:2011):<ul><li><p>7.21.6.3 The printf function (p: 324)</p></li></ul></p></li><li><p>C99 standard (ISO/IEC 9899:1999):<ul><li><p>7.19.6.3 The printf function (p: 290)</p></li></ul></p></li><li><p>C89/C90 standard (ISO/IEC 9899:1990):<ul><li><p>4.9.6.3 The printf function</p></li></ul></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:07 创建于: 2025-11-27 09:33:07
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

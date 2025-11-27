@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - 通识基础 - Linux - 安装软件</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" />
+    <meta name="description" content="安装软件Linux的软件安装方式主要使用包管理器，不通的发行版拥有不同的内置包管理器，例如deb、rpm、aur包。APT和DPKGAPT和DPKG是基于Debian/Ubuntu的发行版使用的默认包管理器。其中DPKG是底层工具，直接操作本地`.de">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Windows</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Linux</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">字符编码</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/ASCII%20%E7%BC%96%E7%A0%81.html" title="ASCII 编码">ASCII 编码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">文件格式</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/PPM%20%E5%9B%BE%E7%89%87.html" title="PPM 图片">PPM 图片</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">其它</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%85%B6%E5%AE%83/BCP%2047%20%E5%8C%BA%E5%9F%9F%E5%90%8D%E7%A7%B0%E5%88%97%E8%A1%A8.html" title="BCP 47 区域名称列表">BCP 47 区域名称列表</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础" rel="nofollow">
+                                    通识基础 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础/02.Linux/00.安装软件.md" rel="nofollow">
+                                    安装软件
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='5e4f4d' class='view-h4'><a class='view-text-miku' href='#5e4f4d'>#</a> 安装软件</h1><p class='view-p'>Linux 的软件安装方式主要使用包管理器，不通的发行版拥有不同的内置包管理器，例如 deb、rpm、aur 包。</p><h2 id='5e8d1a' class='view-h5'><a class='view-text-miku' href='#5e8d1a'>#</a> APT 和 DPKG</h2><p class='view-p'>APT 和 DPKG 是基于 Debian/Ubuntu 的发行版使用的默认包管理器。其中 DPKG 是底层工具，直接操作本地 <code class='view-text-secondary view-border-1 view-border-secondary'>.deb</code> 包， APT 可以通过网络下载包并自动处理依赖问题。</p><p class='view-p'>一些常用命令：</p><div class='view-monofont'><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w">             </span><span class="c1"># 更新软件包索引</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>policy<span class="w"> </span>包名<span class="w">        </span><span class="c1"># 查看软件包的信息</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>search<span class="w"> </span>关键词<span class="w">      </span><span class="c1"># 搜索软件包</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>包名<span class="w">       </span><span class="c1"># 安装软件包</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w">  </span>包名<span class="w">       </span><span class="c1"># 卸载软件包，只删除包，但会保留包缓存（下次安装时不用重新下载包）和配置文件</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w">   </span>包名<span class="w">       </span><span class="c1"># 完全清除软件包</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w">            </span><span class="c1"># 升级所有可升级的软件包</span>
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>xxx.deb<span class="w">        </span><span class="c1"># 安装软件包</span>
+sudo<span class="w"> </span>dpkg<span class="w"> </span>-r<span class="w"> </span>xxx<span class="w">            </span><span class="c1"># 卸载软件包</span>
+</pre></div>
+</div><h2 id='ddd2f9' class='view-h5'><a class='view-text-miku' href='#ddd2f9'>#</a> YUM 和 RPM</h2><p class='view-p'>YUM 和 RPM 是基于 Red Hat/CentOS 的发行版使用的默认包管理器。其中 RPM 是底层工具，直接操作本地 <code class='view-text-secondary view-border-1 view-border-secondary'>.rpm</code> 包， YUM 可以通过网络下载包并自动处理依赖问题。</p><blockquote><p class='view-p'>建议使用新版本的 DNF（Dandified YUM）替代 YUM，性能更好。直接将下述命令中的 <code class='view-text-secondary view-border-1 view-border-secondary'>yum</code> 替换为 <code class='view-text-secondary view-border-1 view-border-secondary'>dnf</code> 即可。</p></blockquote><p class='view-p'>一些常用命令：</p><div class='view-monofont'><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>check-update<span class="w">       </span><span class="c1"># 更新软件包索引</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>info<span class="w"> </span>包名<span class="w">          </span><span class="c1"># 查看软件包信息</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>search<span class="w"> </span>关键词<span class="w">      </span><span class="c1"># 搜索软件包</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>包名<span class="w">       </span><span class="c1"># 安装软件包</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>remove<span class="w"> </span>包名<span class="w">        </span><span class="c1"># 卸载软件包</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>update<span class="w">             </span><span class="c1"># 更新所有软件包</span>
+</pre></div>
+</div><h2 id='ddd873' class='view-h5'><a class='view-text-miku' href='#ddd873'>#</a> Pacman</h2><p class='view-p'>Pacman 是基于 Arch/Manjaro 的发行版使用的默认包管理器。</p><p class='view-p'>一些常用命令：</p><div class='view-monofont'><div class="highlight"><pre><span></span>sudo<span class="w"> </span>pacman<span class="w"> </span>-Sy<span class="w">             </span><span class="c1"># 更新软件包索引</span>
+sudo<span class="w"> </span>pacman<span class="w"> </span>-Si<span class="w"> </span>包名<span class="w">        </span><span class="c1"># 查看软件包信息</span>
+sudo<span class="w"> </span>pacman<span class="w"> </span>-Ss<span class="w"> </span>关键词<span class="w">      </span><span class="c1"># 搜索软件包</span>
+sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>包名<span class="w">         </span><span class="c1"># 安装软件包</span>
+sudo<span class="w"> </span>pacman<span class="w"> </span>-R<span class="w"> </span>包名<span class="w">         </span><span class="c1"># 卸载软件包</span>
+sudo<span class="w"> </span>pacman<span class="w"> </span>-Syu<span class="w">            </span><span class="c1"># 更新系统和所有软件包</span>
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:14 创建于: 2025-11-27 09:33:14
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

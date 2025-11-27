@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 内置模块 - table-module</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" />
+    <meta name="description" content="Lua的Table模块!class:info请查看[Lua标准库模块列表](/document/zh/09.Lua/90.API%20帮助手册.md/01.目录.mdb07e50)了解更多相关API。|函数|">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/92.内置模块/EX.table-module.md" rel="nofollow">
+                                    table-module
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='7b90c2' class='view-h4'><a class='view-text-miku' href='#7b90c2'>#</a> Lua 的 Table 模块</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html'>Lua 标准库模块列表</a> 了解更多相关 API。</div><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#a00b65' target='_blank'>table.concat</a></td>
+  <td style="text-align:left">将表中的元素进行拼接</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#a90e1e' target='_blank'>table.insert</a></td>
+  <td style="text-align:left">向表中插入元素</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#8ab324' target='_blank'>table.move</a></td>
+  <td style="text-align:left">将表中的元素移动到另一个表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#d3a17f' target='_blank'>table.pack</a></td>
+  <td style="text-align:left">将一组数据打包成一个表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#cd1849' target='_blank'>table.remove</a></td>
+  <td style="text-align:left">从表中删除一个数据</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#b3bc49' target='_blank'>table.sort</a></td>
+  <td style="text-align:left">排序</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#b63fa6' target='_blank'>table.unpack</a></td>
+  <td style="text-align:left">将表中的元素解包</td>
+</tr>
+</tbody>
+</table><h2 id='a00b65' class='view-h5'><a class='view-text-miku' href='#a00b65'>#</a> table.concat</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.concat (list [, sep [, i [, j]]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将表中的元素进行拼接，返回字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>list[i]..sep..list[i+1] ··· sep..list[j]</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>list</code> - 要进行拼接的表，元素的值必须全是数值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>sep</code> - 拼接时相邻元素之间插入的字符串，默认值是空串</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>i</code> - 拼接元素的起始索引；默认值是 1，即表的第一个元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>j</code> - 拼接元素的终止索引；默认值是 <code class='view-text-secondary view-border-1 view-border-secondary'>#list</code>，即表的最后一个元素</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBhcnJheSUyMCUzRCUyMCU3QiUyMm5ldmVyJTIyJTJDJTIwJTIyZ29ubmElMjIlMkMlMjAlMjJnaXZlJTIyJTJDJTIwJTIyeW91JTIyJTJDJTIwJTIydXAlMjIlN0QlMEFwcmludCUyOHRhYmxlLmNvbmNhdCUyOGFycmF5JTI5JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTclOUIlQjQlRTYlOEUlQTUlRTYlOEIlQkMlRTYlOEUlQTUlMEFwcmludCUyOHRhYmxlLmNvbmNhdCUyOGFycmF5JTJDJTIwJTIyJTIwJTIyJTI5JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlODMlRTclQjQlQTAlRTQlQjklOEIlRTklOTclQjQlRTYlOEYlOTIlRTUlODUlQTUlRTclQTklQkElRTYlQTAlQkMlMEFwcmludCUyOHRhYmxlLmNvbmNhdCUyOGFycmF5JTJDJTIwJTIyJTIwJTIyJTJDJTIwMyUyQyUyMDQlMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOSU4MCU4OSVFNSU4RiU5NiVFOSU4MyVBOCVFNSU4OCU4NiVFNSU4NSU4MyVFNyVCNCVBMCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;never&quot;</span><span class="p">,</span> <span class="s2">&quot;gonna&quot;</span><span class="p">,</span> <span class="s2">&quot;give&quot;</span><span class="p">,</span> <span class="s2">&quot;you&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>                  <span class="c1">-- 直接拼接</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>             <span class="c1">-- 元素之间插入空格</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>       <span class="c1">-- 选取部分元素</span>
+</pre></div>
+</div><h2 id='a90e1e' class='view-h5'><a class='view-text-miku' href='#a90e1e'>#</a> table.insert</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.insert (list, [pos,] value)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>在表中索引为 <code class='view-text-secondary view-border-1 view-border-secondary'>pos</code> 的位置插入值为 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code> 的元素。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>list</code> - 要进行插入的表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pos</code> - 要插入的位置索引；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>#list+1</code>，即在表的末尾追加元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要插入的值</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBhcnJheSUyMCUzRCUyMCU3QjElMkMlMjAyJTJDJTIwMyUyQyUyMDQlMkMlMjA1JTdEJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlQUUlOUElRTQlQjklODklRTYlOTUlQjAlRTclQkIlODQlMEFwcmludCUyOHRhYmxlLmNvbmNhdCUyOGFycmF5JTJDJTIwJTIyJTJDJTIyJTI5JTI5JTIwJTIwJTIwJTIwJTIwLS0lMjAlRTYlOUYlQTUlRTclOUMlOEIlRTYlOTUlQjAlRTclQkIlODQlMEElMEF0YWJsZS5pbnNlcnQlMjhhcnJheSUyQyUyMDYlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNSU5QyVBOCVFNiU5QyVBQiVFNSVCMCVCRSVFOCVCRiVCRCVFNSU4QSVBMCVFNSU4NSU4MyVFNyVCNCVBMCUwQXByaW50JTI4dGFibGUuY29uY2F0JTI4YXJyYXklMkMlMjAlMjIlMkMlMjIlMjklMjklMjAlMjAlMjAlMjAlMjAtLSUyMCVFNiU5RiVBNSVFNyU5QyU4QiVFNiU5NSVCMCVFNyVCQiU4NCUwQSUwQXRhYmxlLmluc2VydCUyOGFycmF5JTJDJTIwMyUyQyUyMDEwJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlOUMlQTglRTclQjQlQTIlRTUlQkMlOTUlMjAzJTIwJUU2JThGJTkyJUU1JTg1JUE1JUU1JTg1JTgzJUU3JUI0JUEwJTBBcHJpbnQlMjh0YWJsZS5jb25jYXQlMjhhcnJheSUyQyUyMCUyMiUyQyUyMiUyOSUyOSUyMCUyMCUyMCUyMCUyMC0tJTIwJUU2JTlGJUE1JUU3JTlDJThCJUU2JTk1JUIwJUU3JUJCJTg0JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>       <span class="c1">-- 定义数组</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>     <span class="c1">-- 查看数组</span>
+
+<span class="nb">table.insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>              <span class="c1">-- 在末尾追加元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>     <span class="c1">-- 查看数组</span>
+
+<span class="nb">table.insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>          <span class="c1">-- 在索引 3 插入元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>     <span class="c1">-- 查看数组</span>
+</pre></div>
+</div><h2 id='8ab324' class='view-h5'><a class='view-text-miku' href='#8ab324'>#</a> table.move</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.move (a1, f, e, t [,a2])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将表 <code class='view-text-secondary view-border-1 view-border-secondary'>a1</code> 中的元素移动到表 <code class='view-text-secondary view-border-1 view-border-secondary'>a2</code> 中，相当于 <code class='view-text-secondary view-border-1 view-border-secondary'>a2[t],··· = a1[f],···,a1[e]</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>a1</code> - 源表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 要移动的第一个元素的索引</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>e</code> - 要移动的最后一个元素的索引</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>t</code> - 接收第一个元素的索引</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>a2</code> - 目标表；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>a1</code>，即在 <code class='view-text-secondary view-border-1 view-border-secondary'>a1</code> 表内进行移动</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBzcmMlMjAlM0QlMjAlN0IxJTJDJTIwMiUyQyUyMDMlMkMlMjA0JTJDJTIwNSU3RCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JUFFJTlBJUU0JUI5JTg5JUU2JUJBJTkwJUU2JTk1JUIwJUU3JUJCJTg0JTBBbG9jYWwlMjBkc3QlMjAlM0QlMjAlN0IxMCUyQyUyMDIwJTJDJTIwMzAlMkMlMjA0MCUyQyUyMDUwJTdEJTIwJTIwJTIwJTIwLS0lMjAlRTUlQUUlOUElRTQlQjklODklRTclOUIlQUUlRTYlQTAlODclRTYlOTUlQjAlRTclQkIlODQlMEElMEF0YWJsZS5tb3ZlJTI4c3JjJTJDJTIwMiUyQyUyMDQlMkMlMjAyJTJDJTIwZHN0JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlQjAlODYlMjBzcmMlMjAlRTYlOTUlQjAlRTclQkIlODQlRTclOUElODQlMjAyJTIwJUU4JTg3JUIzJTIwNCUyMCVFNSU4NSU4MyVFNyVCNCVBMCVFNyVBNyVCQiVFNSU4QSVBOCVFNSU4OCVCMCUyMGRzdCUyMCVFNiU5NSVCMCVFNyVCQiU4NCVFNyU5QSU4NCVFNyVCNCVBMiVFNSVCQyU5NSUyMDIlMjAlRTQlQkQlOEQlRTclQkQlQUUlMEFwcmludCUyOHRhYmxlLmNvbmNhdCUyOGRzdCUyQyUyMCUyMiUyQyUyMiUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU2JTlGJUE1JUU3JTlDJThCJUU2JTk1JUIwJUU3JUJCJTg0JTBBJTBBdGFibGUubW92ZSUyOHNyYyUyQyUyMDIlMkMlMjA0JTJDJTIwMyUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JUIwJTg2JTIwc3JjJTIwJUU3JTlBJTg0JTIwMiUyMCVFOCU4NyVCMyUyMDQlMjAlRTUlODUlODMlRTclQjQlQTAlRTclQTclQkIlRTUlOEElQTglRTUlODglQjAlRTglODclQUElRTglQkElQUIlRTclOUElODQlRTclQjQlQTIlRTUlQkMlOTUlMjAzJTIwJUU0JUJEJThEJUU3JUJEJUFFJTBBcHJpbnQlMjh0YWJsZS5jb25jYXQlMjhzcmMlMkMlMjAlMjIlMkMlMjIlMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNiU5RiVBNSVFNyU5QyU4QiVFNiU5NSVCMCVFNyVCQiU4NCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">src</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>         <span class="c1">-- 定义源数组</span>
+<span class="kd">local</span> <span class="n">dst</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">}</span>    <span class="c1">-- 定义目标数组</span>
+
+<span class="nb">table.move</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>       <span class="c1">-- 将 src 数组的 2 至 4 元素移动到 dst 数组的索引 2 位置</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>       <span class="c1">-- 查看数组</span>
+
+<span class="nb">table.move</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>            <span class="c1">-- 将 src 的 2 至 4 元素移动到自身的索引 3 位置</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>       <span class="c1">-- 查看数组</span>
+</pre></div>
+</div><h2 id='d3a17f' class='view-h5'><a class='view-text-miku' href='#d3a17f'>#</a> table.pack</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.pack (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将参数打包成一个表，并将表的 <code class='view-text-secondary view-border-1 view-border-secondary'>n</code> 字段设为参数的数量。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjByZXN1bHQlMjAlM0QlMjB0YWJsZS5wYWNrJTI4JTI3YSUyNyUyQyUyMCUyN2IlMjclMkMlMjAlMjdjJTI3JTJDJTIwJTI3ZCUyNyUyQyUyMCUyN2UlMjclMjklMEFwcmludCUyOHJlc3VsdC5uJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTYlOUYlQTUlRTclOUMlOEIlRTglQTElQTglRTclOUElODQlRTUlQUQlOTclRTYlQUUlQjUlMjBuJTBBcHJpbnQlMjh0YWJsZS5jb25jYXQlMjhyZXN1bHQlMkMlMjAlMjIlMkMlMjIlMjklMjklMjAlMjAlMjAlMjAtLSUyMCVFNiU5RiVBNSVFNyU5QyU4QiVFNiU5NSVCMCVFNyVCQiU4NCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">table.pack</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">n</span><span class="p">)</span>                     <span class="c1">-- 查看表的字段 n</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>    <span class="c1">-- 查看数组</span>
+</pre></div>
+</div><h2 id='cd1849' class='view-h5'><a class='view-text-miku' href='#cd1849'>#</a> table.remove</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.remove (list [, pos])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>从表 <code class='view-text-secondary view-border-1 view-border-secondary'>list</code> 中删除索引为 <code class='view-text-secondary view-border-1 view-border-secondary'>pos</code> 的元素，之后的元素向前移动。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>list</code> - 要进行删除的表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>pos</code> - 要插入的位置索引；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>#list</code>，即删除最后一个元素</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBhcnJheSUyMCUzRCUyMCU3QjElMkMlMjAyJTJDJTIwMyUyQyUyMDQlMkMlMjA1JTdEJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlQUUlOUElRTQlQjklODklRTYlOTUlQjAlRTclQkIlODQlMEF0YWJsZS5yZW1vdmUlMjhhcnJheSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg4JUEwJUU5JTk5JUE0JUU2JTlDJTgwJUU1JTkwJThFJUU0JUI4JTgwJUU0JUI4JUFBJUU1JTg1JTgzJUU3JUI0JUEwJTBBcHJpbnQlMjh0YWJsZS5jb25jYXQlMjhyZXN1bHQlMkMlMjAlMjIlMkMlMjIlMjklMjklMjAlMjAlMjAlMjAtLSUyMCVFNiU5RiVBNSVFNyU5QyU4QiVFNiU5NSVCMCVFNyVCQiU4NCUwQXRhYmxlLnJlbW92ZSUyOGFycmF5JTJDJTIwMiUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg4JUEwJUU5JTk5JUE0JUU3JUI0JUEyJUU1JUJDJTk1JUU0JUI4JUJBJTIwMiUyMCVFNyU5QSU4NCVFNSU4NSU4MyVFNyVCNCVBMCUwQXByaW50JTI4dGFibGUuY29uY2F0JTI4cmVzdWx0JTJDJTIwJTIyJTJDJTIyJTI5JTI5JTIwJTIwJTIwJTIwLS0lMjAlRTYlOUYlQTUlRTclOUMlOEIlRTYlOTUlQjAlRTclQkIlODQlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>       <span class="c1">-- 定义数组</span>
+<span class="nb">table.remove</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>                 <span class="c1">-- 删除最后一个元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>    <span class="c1">-- 查看数组</span>
+<span class="nb">table.remove</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>              <span class="c1">-- 删除索引为 2 的元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>    <span class="c1">-- 查看数组</span>
+</pre></div>
+</div><h2 id='b3bc49' class='view-h5'><a class='view-text-miku' href='#b3bc49'>#</a> table.sort</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.sort (list [, comp])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将表 <code class='view-text-secondary view-border-1 view-border-secondary'>list</code> 进行排序，会修改 <code class='view-text-secondary view-border-1 view-border-secondary'>list</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>list</code> - 要进行排序的表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>comp</code> - 用于元素比较的函数，必须接收两个参数，第一个参数排在第二个参数之前时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code>，反之返回 <code class='view-text-secondary view-border-1 view-border-secondary'>false</code>；默认为升序排序</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBhcnJheSUyMCUzRCUyMCU3QjMlMkMlMjA3JTJDJTIwMiUyQyUyMDQlMkMlMjA2JTJDJTIwMSUyQyUyMDUlN0QlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNSVBRSU5QSVFNCVCOSU4OSVFNiU5NSVCMCVFNyVCQiU4NCUwQXRhYmxlLnNvcnQlMjhhcnJheSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU5JUJCJTk4JUU4JUFFJUE0JUVGJUJDJTg4JUU1JThEJTg3JUU1JUJBJThGJUVGJUJDJTg5JUU2JThFJTkyJUU1JUJBJThGJTBBcHJpbnQlMjh0YWJsZS5jb25jYXQlMjhhcnJheSUyQyUyMCUyMiUyQyUyMiUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU2JTlGJUE1JUU3JTlDJThCJUU2JTk1JUIwJUU3JUJCJTg0JTBBJTBBZnVuY3Rpb24lMjBndCUyOHglMkMlMjB5JTI5JTBBJTIwJTIwJTIwJTIwaWYlMjB4JTIwJTNFJTIweSUyMHRoZW4lMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjByZXR1cm4lMjB0cnVlJTBBJTIwJTIwJTIwJTIwZWxzZSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHJldHVybiUyMGZhbHNlJTBBJTIwJTIwJTIwJTIwZW5kJTBBZW5kJTBBJTBBdGFibGUuc29ydCUyOGFycmF5JTJDJTIwZ3QlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOSU5OSU4RCVFNSVCQSU4RiVFNiU4RSU5MiVFNSVCQSU4RiUwQXByaW50JTI4dGFibGUuY29uY2F0JTI4YXJyYXklMkMlMjAlMjIlMkMlMjIlMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNiU5RiVBNSVFNyU5QyU4QiVFNiU5NSVCMCVFNyVCQiU4NCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>     <span class="c1">-- 定义数组</span>
+<span class="nb">table.sort</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>                       <span class="c1">-- 默认（升序）排序</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>         <span class="c1">-- 查看数组</span>
+
+<span class="kr">function</span> <span class="nf">gt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="kc">true</span>
+    <span class="kr">else</span>
+        <span class="kr">return</span> <span class="kc">false</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+
+<span class="nb">table.sort</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">gt</span><span class="p">)</span>                   <span class="c1">-- 降序排序</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">table.concat</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>         <span class="c1">-- 查看数组</span>
+</pre></div>
+</div><h2 id='b63fa6' class='view-h5'><a class='view-text-miku' href='#b63fa6'>#</a> table.unpack</h2><div class='view-monofont'><div class="highlight"><pre><span></span>table.unpack (list [, i [, j]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将表 <code class='view-text-secondary view-border-1 view-border-secondary'>list</code> 的元素进行解包，相当于 <code class='view-text-secondary view-border-1 view-border-secondary'>return list[i], list[i+1], ···, list[j]</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>list</code> - 要解包的表</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>i</code> - 要解包的第一个元素；默认为 1，即第一个元素</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>j</code> - 要解包的最后一个元素；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>#list</code>，即最后一个元素</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBhcnJheSUyMCUzRCUyMCU3QjElMkMlMjAyJTJDJTIwMyUyQyUyMDQlMkMlMjA1JTdEJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlQUUlOUElRTQlQjklODklRTYlOTUlQjAlRTclQkIlODQlMEFsb2NhbCUyMHglMkN5JTJDeiUyMCUzRCUyMHRhYmxlLnVucGFjayUyOGFycmF5JTJDJTIwMiUyQyUyMDQlMjklMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVBNyVBMyVFNSU4QyU4NSUyMDIlMjAlRTglODclQjMlMjA0JTIwJUU1JTg1JTgzJUU3JUI0JUEwJTBBcHJpbnQlMjh4JTJDJTIweSUyQyUyMHolMjklMjAlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>               <span class="c1">-- 定义数组</span>
+<span class="kd">local</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="nb">table.unpack</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>     <span class="c1">-- 解包 2 至 4 元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><p class='view-p'><a class='view-text-primary' href='https://www.lua.org/manual/5.4/manual.html#6.6' target='_blank'>Table Manipulation - Lua 5.4 Reference Manual</a></p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:10 创建于: 2025-11-27 09:33:10
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

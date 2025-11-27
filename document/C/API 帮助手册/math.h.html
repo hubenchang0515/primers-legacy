@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - C - API 帮助手册 - math.h</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" />
+    <meta name="description" content="C语言标准库头文件math.h!class:info请查看[C语言标准库头文件列表](/document/zh/06.C/99.API%20帮助手册/01.标准库.md)了解更多相关API。这个头文件提供**数学**的相关功能，例如计算指数，对数，三角函数以及近">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/C%20%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="C 语言的简介与环境配置">C 语言的简介与环境配置</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/Hello%20World.html" title="Hello World">Hello World</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html" title="显示输出">显示输出</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%8C%87%E9%92%88.html" title="指针">指针</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5.html" title="获取输入">获取输入</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/switch%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="switch 分支语句">switch 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%BB%93%E6%9E%84%E4%BD%93%20struct.html" title="结构体 struct">结构体 struct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%9E%9A%E4%B8%BE%20enum.html" title="枚举 enum">枚举 enum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%85%B1%E7%94%A8%E4%BD%93%20union.html" title="共用体 union">共用体 union</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20typedef.html" title="类型别名 typedef">类型别名 typedef</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进阶</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E8%BF%9B%E9%98%B6/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.html" title="动态内存管理">动态内存管理</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预处理指令</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html" title="文件包含指令">文件包含指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html" title="宏定义指令">宏定义指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html" title="条件编译指令">条件编译指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html" title="行号修改指令">行号修改指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html" title="错误和警告指令">错误和警告指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html" title="文件嵌入指令">文件嵌入指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html" title="编译器指令">编译器指令</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html" title="标准库">标准库</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/assert.h.html" title="assert.h">assert.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/complex.h.html" title="complex.h">complex.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html" title="ctype.h">ctype.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" title="errno.h">errno.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html" title="fenv.h">fenv.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html" title="float.h">float.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html" title="inttypes.h">inttypes.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/iso646.h.html" title="iso646.h">iso646.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/limits.h.html" title="limits.h">limits.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html" title="locale.h">locale.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" title="math.h">math.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/setjmp.h.html" title="setjmp.h">setjmp.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/signal.h.html" title="signal.h">signal.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdalign.h.html" title="stdalign.h">stdalign.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdarg.h.html" title="stdarg.h">stdarg.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdatomic.h.html" title="stdatomic.h">stdatomic.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbit.h.html" title="stdbit.h">stdbit.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbool.h.html" title="stdbool.h">stdbool.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdckdint.h.html" title="stdckdint.h">stdckdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stddef.h.html" title="stddef.h">stddef.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html" title="stdint.h">stdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html" title="stdio.h">stdio.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdlib.h.html" title="stdlib.h">stdlib.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdnoreturn.h.html" title="stdnoreturn.h">stdnoreturn.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html" title="string.h">string.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/threads.h.html" title="threads.h">threads.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/time.h.html" title="time.h">time.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wchar.h.html" title="wchar.h">wchar.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wctype.h.html" title="wctype.h">wctype.h</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C" rel="nofollow">
+                                    C 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C/99.API 帮助手册/EX.math.h.md" rel="nofollow">
+                                    math.h
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='e72c23' class='view-h4'><a class='view-text-miku' href='#e72c23'>#</a> C 语言标准库头文件 math.h</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html'>C 语言标准库头文件列表</a> 了解更多相关 API。</div><p class='view-p'>这个头文件提供 <strong>数学</strong> 的相关功能，例如计算指数，对数，三角函数以及近似取整等。</p><blockquote><p class='view-p'>需要链接数学库，例如在 gcc 中需要添加 <code class='view-text-secondary view-border-1 view-border-secondary'>-lm</code> 链接选项。</p></blockquote><h2 id='0d53f0' class='view-h5'><a class='view-text-miku' href='#0d53f0'>#</a> 示例</h2><div class='view-monofont'><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span><span class="c1">   // 包含数学函数声明</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;float.h&gt;</span><span class="c1">  // 用于获取浮点数特性</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 1. 基本数学运算</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;sqrt(16.0) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">16.0</span><span class="p">));</span><span class="w">      </span><span class="c1">// 平方根</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;pow(2, 5) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">));</span><span class="w">        </span><span class="c1">// 幂运算</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;fabs(-3.14) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fabs</span><span class="p">(</span><span class="mf">-3.14</span><span class="p">));</span><span class="w">    </span><span class="c1">// 绝对值</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 2. 三角函数（使用弧度制）</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">45.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// 将45度转换为弧度</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;sin(45°) = %.4f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">));</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;cos(45°) = %.4f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">));</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;tan(45°) = %.4f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tan</span><span class="p">(</span><span class="n">angle</span><span class="p">));</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 3. 指数和对数函数</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;exp(1.0) = %.4f (e^1)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">));</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;log(10.0) = %.4f (自然对数)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mf">10.0</span><span class="p">));</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;log10(100.0) = %.4f (常用对数)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log10</span><span class="p">(</span><span class="mf">100.0</span><span class="p">));</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 4. 取整函数</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ceil(3.2) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="mf">3.2</span><span class="p">));</span><span class="w">    </span><span class="c1">// 向上取整</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;floor(3.8) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="mf">3.8</span><span class="p">));</span><span class="w">  </span><span class="c1">// 向下取整</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;round(3.5) = %.2f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">round</span><span class="p">(</span><span class="mf">3.5</span><span class="p">));</span><span class="w">  </span><span class="c1">// 四舍五入</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 5. 其他常用函数</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;fmod(10.3, 3.0) = %.2f (浮点余数)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fmod</span><span class="p">(</span><span class="mf">10.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">));</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hypot(3, 4) = %.2f (直角三角形斜边)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hypot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 6. 数学常量</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;M_PI = %.10f (圆周率π)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">M_PI</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;M_E = %.10f (自然对数底数e)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">M_E</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><code class='hljs' style="background:#000;">
+<span style='color:green;'>user@host:~ $</span> gcc main.c -lm
+<br/>
+<span style='color:green;'>user@host:~ $</span> ./a.out
+<pre>
+sqrt(16.0) = 4.00
+pow(2, 5) = 32.00
+fabs(-3.14) = 3.14
+sin(45°) = 0.7071
+cos(45°) = 0.7071
+tan(45°) = 1.0000
+exp(1.0) = 2.7183 (e^1)
+log(10.0) = 2.3026 (自然对数)
+log10(100.0) = 2.0000 (常用对数)
+ceil(3.2) = 4.00
+floor(3.8) = 3.00
+round(3.5) = 4.00
+fmod(10.3, 3.0) = 1.30 (浮点余数)
+hypot(3, 4) = 5.00 (直角三角形斜边)
+M_PI = 3.1415926536 (圆周率π)
+M_E = 2.7182818285 (自然对数底数e)
+</pre>
+</code>
+<h2 id='ba4001' class='view-h5'><a class='view-text-miku' href='#ba4001'>#</a> 类型</h2><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">类型</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float_t</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">至少和 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 宽度一样的，最高效的单精度浮点类型</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double_t</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">至少和 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 宽度一样的，最高效的双精度浮点类型</td>
+</tr>
+</tbody>
+</table><h2 id='7dc406' class='view-h5'><a class='view-text-miku' href='#7dc406'>#</a> 常量</h2><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">常量</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>HUGE_VALF</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">表示数值太大而无法被 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 表示</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>HUGE_VAL</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">表示数值太大而无法被 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 表示</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>HUGE_VALL</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">表示数值太大而无法被 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 表示</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>INFINITY</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">表示正无穷大，注意两个 <code class='view-text-secondary view-border-1 view-border-secondary'>INFINITY</code> 之间可能不相等，应当使用 <code class='view-text-secondary view-border-1 view-border-secondary'>isinf</code> 判断</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">表示不是一个数值（Not A Number），注意两个 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code> 之间永远不相等，应当使用 <code class='view-text-secondary view-border-1 view-border-secondary'>isnan</code> 判断</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_FAST_FMAF</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">指示是否支持 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的快速乘加操作，即 <code class='view-text-secondary view-border-1 view-border-secondary'>fmaf</code> 函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_FAST_FMA</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">指示是否支持 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的快速乘加操作，即 <code class='view-text-secondary view-border-1 view-border-secondary'>fma</code> 函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_FAST_FMAL</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">指示是否支持 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的快速乘加操作，即 <code class='view-text-secondary view-border-1 view-border-secondary'>fmal</code> 函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_ILOGB0</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ilogb</code> 函数在参数为 0 时的结果</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_ILOGBNAN</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ilogb</code> 函数在参数为 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code> 时的结果</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>math_errhandling</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">定义数学函数使用的错误处理机制</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>MATH_ERRNO</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">使用 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html'>errno</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>MATH_ERREXCEPT</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">使用 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>浮点异常</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_NORMAL</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">作为 <code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code> 的返回值，表示正规浮点值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_SUBNORMAL</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">作为 <code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code> 的返回值，表示 <a class='view-text-primary' href='https://en.wikipedia.org/wiki/Subnormal_number' target='_blank'>次正规数</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_ZERO</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">作为 <code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code> 的返回值，表示正零或负零</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_INFINITE</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">作为 <code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code> 的返回值，表示正无穷或负无穷</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>FP_NAN</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">作为 <code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code> 的返回值，表示不是一个数值（Not A Number）</td>
+</tr>
+</tbody>
+</table><p class='view-p'>以下常量不在标准定义中。在 GCC 中可以直接使用；在 MSVC 中使用是，需要在 <code class='view-text-secondary view-border-1 view-border-secondary'>#include &lt;math.h&gt;</code> 之前定义宏 <code class='view-text-secondary view-border-1 view-border-secondary'>_USE_MATH_DEFINES </code>：</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">常量</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_PI</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">圆周率 <span class="math">\(\pi\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_E</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">自然常数 <span class="math">\(e\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_LOG2E</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(log_2{e}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_LOG10E</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(log_{10}{e}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_LN2</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(ln{2}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_LN10</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(ln{10}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_PI_2</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(\pi/2\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_PI_4</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(\pi/4\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_1_PI</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(1/\pi\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_2_PI</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(2/\pi\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_2_SQRTPI</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(2/\sqrt{\pi}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_SQRT2</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(\sqrt{2}\)</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>M_SQRT1_2</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left"><span class="math">\(1/\sqrt{2}\)</span></td>
+</tr>
+</tbody>
+</table><h2 id='183299' class='view-h5'><a class='view-text-miku' href='#183299'>#</a> 函数</h2><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">基本函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-basic-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fabs</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的绝对值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fabsf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的绝对值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fabsl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的绝对值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmod</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的除法取余，商向 0 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmodf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的除法取余，商向 0 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmodl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的除法取余，商向 0 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remainder</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的除法取余，商四舍六入五成双取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remainderf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的除法取余，商四舍六入五成双取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remainderl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的除法取余，商四舍六入五成双取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remquo</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的除法取余，商四舍六入五成双取整，同时返回有效数字的位数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remquof</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的除法取余，商四舍六入五成双取整，同时返回有效数字的位数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>remquol</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的除法取余，商四舍六入五成双取整，同时返回有效数字的位数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fma</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的快速乘加运算（<code class='view-text-secondary view-border-1 view-border-secondary'>x * y + z</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmaf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的快速乘加运算（<code class='view-text-secondary view-border-1 view-border-secondary'>x * y + z</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmal</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的快速乘加运算（<code class='view-text-secondary view-border-1 view-border-secondary'>x * y + z</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmax</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型取最大值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmaxf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型取最大值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmaxl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型取最大值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fmin</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型取最小值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fminf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型取最小值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fminl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型取最小值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fdim</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算两个 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 值的正差（<code class='view-text-secondary view-border-1 view-border-secondary'>max(0, x-y)</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fdimf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算两个 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 值的正差（<code class='view-text-secondary view-border-1 view-border-secondary'>max(0, x-y)</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fdiml</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算两个 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 值的正差（<code class='view-text-secondary view-border-1 view-border-secondary'>max(0, x-y)</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nan</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">返回一个 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nanf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">返回一个 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nanl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">返回一个 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code></td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">指数函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-exponential-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>exp</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算自然常数 e 的幂（<span class="math">\(e^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>expf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算自然常数 e 的幂（<span class="math">\(e^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>expl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算自然常数 e 的幂（<span class="math">\(e^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>exp2</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 2 的幂（<span class="math">\(2^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>exp2f</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 2 的幂（<span class="math">\(2^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>exp2l</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 2 的幂（<span class="math">\(2^x\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>expm1</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算自然常数 e 的幂减一（<span class="math">\(e^x-1\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>expm1f</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算自然常数 e 的幂减一（<span class="math">\(e^x-1\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>expm1l</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算自然常数 e 的幂减一（<span class="math">\(e^x-1\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算底为自然常数 e 的对数（<span class="math">\(\ln(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>logf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为自然常数 e 的对数（<span class="math">\(\ln(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>logl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为自然常数 e 的对数（<span class="math">\(\ln(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log10</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 10 的对数（<span class="math">\(\log_{10}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log10f</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 10 的对数（<span class="math">\(\log_{10}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log10l</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 10 的对数（<span class="math">\(\log_{10}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log2</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 2 的对数（<span class="math">\(\log_{2}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log2f</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 2 的对数（<span class="math">\(\log_{2}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log2l</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为 2 的对数（<span class="math">\(\log_{2}(x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log1p</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为自然常数 e，幂为 1 + x 的对数（<span class="math">\(\log_{2}(1+x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log1pf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为自然常数 e，幂为 1 + x 的对数的对数（<span class="math">\(\log_{2}(1+x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>log1pl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算底为自然常数 e，幂为 1 + x 的对数的对数（<span class="math">\(\log_{2}(1+x)\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">幂函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-power-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>pow</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算乘方（<span class="math">\(x^y\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>powf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算乘方（<span class="math">\(x^y\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>powl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算乘方（<span class="math">\(x^y\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sqrt</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算平方根（<span class="math">\(\sqrt{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sqrtf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算平方根（<span class="math">\(\sqrt{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sqrtl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算平方根（<span class="math">\(\sqrt{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cbrt</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算三次方根（<span class="math">\(\sqrt[3]{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cbrtf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算三次方根（<span class="math">\(\sqrt[3]{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cbrtl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算三次方根（<span class="math">\(\sqrt[3]{x}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>hypot</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算平方和的根（<span class="math">\(\sqrt{x^2 + y^2}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>hypotf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算平方和的根（<span class="math">\(\sqrt{x^2 + y^2}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>flaot</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>hypotl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算平方和的根（<span class="math">\(\sqrt{x^2 + y^2}\)</span>），类型为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">三级函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-trigonometric-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sin</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的正弦（<span class="math">\(\sin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sinf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的正弦（<span class="math">\(\sin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sinl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的正弦（<span class="math">\(\sin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cos</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的余弦（<span class="math">\(\cos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cosf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的余弦（<span class="math">\(\cos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cosl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的余弦（<span class="math">\(\cos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tan</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的正切（<span class="math">\(\tan(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tanf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的正切（<span class="math">\(\tan(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tanl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的正切（<span class="math">\(\tan(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asin</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反正弦（<span class="math">\(\arcsin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asinf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反正弦（<span class="math">\(\arcsin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asinl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反正弦（<span class="math">\(\arcsin(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acos</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反余弦（<span class="math">\(\arccos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acosf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反余弦（<span class="math">\(\arccos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acosl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反余弦（<span class="math">\(\arccos(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atan</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反正切（<span class="math">\(\arctan(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atanf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反正切（<span class="math">\(\arctan(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atanl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反正切（<span class="math">\(\arctan(x)\)</span>）</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">双曲函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-hyperbolic-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sinh</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的双曲正弦（<span class="math">\(\sinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sinhf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的双曲正弦（<span class="math">\(\sinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>sinhl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的双曲正弦（<span class="math">\(\sinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>cosh</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的双曲余弦（<span class="math">\(\cosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>coshf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的双曲余弦（<span class="math">\(\cosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>coshl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的双曲余弦（<span class="math">\(\cosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tanh</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的双曲正切（<span class="math">\(\tanh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tanhf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的双曲正切（<span class="math">\(\tanh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tanhf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的双曲正切（<span class="math">\(\tanh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asinh</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反双曲正弦（<span class="math">\(arcsinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asinhf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反双曲正弦（<span class="math">\(arcsinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>asinhl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反双曲正弦（<span class="math">\(arcsinh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acosh</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反双曲余弦（<span class="math">\(arccosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acoshf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反双曲余弦（<span class="math">\(arccosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>acoshl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反双曲余弦（<span class="math">\(arccosh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atanh</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的反双曲正切（<span class="math">\(arctanh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atanhf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的反双曲正切（<span class="math">\(arctanh(x)\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>atanhl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的反双曲正切（<span class="math">\(arctanh(x)\)</span>）</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">误差与 Gamma 函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-error-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erff</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erfl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erfc</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的互补误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erfcf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的互补误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>erfcl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的互补误差函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tgamma</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的 Gamma 函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tgammaf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的 Gamma函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>tgammal</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的 Gamma 函数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lgamma</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型 Gamma 函数的自然对数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lgammaf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型 Gamma 函数的自然对数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lgammal</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">计算 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型 Gamma 函数的自然对数</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">近似取整函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-nearest-integer-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ceil</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型向上取整（<span class="math">\(\lceil x \rceil\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ceilf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型向上取整（<span class="math">\(\lceil x \rceil\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ceill</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型向上取整（<span class="math">\(\lceil x \rceil\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>floor</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型向下取整（<span class="math">\(\lfloor x \rfloor\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>floorf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型向下取整（<span class="math">\(\lfloor x \rfloor\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>floorl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型向下取整（<span class="math">\(\lfloor x \rfloor\)</span>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>trunc</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型向零取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>truncf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型向零取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>truncl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型向零取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>round</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>roundf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>roundl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lround</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lroundf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lroundl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llround</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llroundf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llroundl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 的四舍五入取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nearbyint</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nearbyintf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nearbyintl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>rint</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>rintf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>rintl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lrint</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lrintf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>lrintl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llrint</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llrintf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>llrintl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 到 <code class='view-text-secondary view-border-1 view-border-secondary'>long long int</code> 类型按照 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html'>当前舍入模式</a> 取整</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">浮点操作函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-float-manipulation-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>frexp</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 分解为有效数字和 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>frexpf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 分解为有效数字和 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>frexpl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 分解为有效数字和 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ldexp</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 乘以 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ldexpf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 乘以 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ldexpl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 乘以 2 的幂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>modf</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 分解为整数部分和小数部分</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>modff</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 分解为整数部分和小数部分</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>modfl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">将 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 分解为整数部分和小数部分</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalbn</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalbnf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalbnl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalbln</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalblnf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>scalblnl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">高效计算 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html'>FLT_RADIX</a> 的 <code class='view-text-secondary view-border-1 view-border-secondary'>long int</code> 次幂，结果为 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ilogb</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ilogbf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ilogbl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>int</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>logb</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>logbf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>logbl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">从 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 中提取 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的指数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nextafter</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nextafterf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nextafterl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nexttoward</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nexttowardf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>nexttowardl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的下一个可表示的浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>copysign</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">拷贝 <code class='view-text-secondary view-border-1 view-border-secondary'>double</code> 类型的符号位</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>copysignf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">拷贝 <code class='view-text-secondary view-border-1 view-border-secondary'>float</code> 类型的符号位</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>copysignl</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">拷贝 <code class='view-text-secondary view-border-1 view-border-secondary'>long double</code> 类型的符号位</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">判断函数 <code class='view-text-secondary view-border-1 view-border-secondary'>!id:custom-anchor-check-functions</code></th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>fpclassify</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">获得浮点数的分类</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isfinite</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断浮点数是否有一个有限值(<code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>INFINITY</code> 均不是)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isinf</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断浮点数是否是无限</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isnan</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断浮点数是否不是数值（Not A Number）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>signbit</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断浮点数是否为负</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isgreater</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断大于</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isgreaterequal</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断大于等于</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isless</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断小于</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>islessequal</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断小于等于</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>islessgreater</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断大于或小于</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>isunordered</code></td>
+  <td style="text-align:left">C99</td>
+  <td style="text-align:left">判断无序，即至少一个是 <code class='view-text-secondary view-border-1 view-border-secondary'>NAN</code></td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://en.cppreference.com/w/c/header/math.html' target='_blank'>Standard library header &lt;math.h&gt;</a></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:04 创建于: 2025-11-27 09:33:04
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

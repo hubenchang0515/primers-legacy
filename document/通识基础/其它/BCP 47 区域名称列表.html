@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - 通识基础 - 其它 - BCP 47 区域名称列表</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%85%B6%E5%AE%83/BCP%2047%20%E5%8C%BA%E5%9F%9F%E5%90%8D%E7%A7%B0%E5%88%97%E8%A1%A8.html" />
+    <meta name="description" content="BCP47区域名称列表|LanguageTag|Language||:-|:-||af|Afrikaans||af-NA|Afrikaans(Namibia)||af-ZA|Afrikaans(SouthAfrica)||ak|Akan||ak-GH|Akan(Gh">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Windows</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Windows/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">Linux</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6.html" title="安装软件">安装软件</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%8A%E5%85%B6%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html" title="命令行及其基本操作">命令行及其基本操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/Linux/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.html" title="配置环境变量">配置环境变量</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">字符编码</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/ASCII%20%E7%BC%96%E7%A0%81.html" title="ASCII 编码">ASCII 编码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">文件格式</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/PPM%20%E5%9B%BE%E7%89%87.html" title="PPM 图片">PPM 图片</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">其它</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/%E5%85%B6%E5%AE%83/BCP%2047%20%E5%8C%BA%E5%9F%9F%E5%90%8D%E7%A7%B0%E5%88%97%E8%A1%A8.html" title="BCP 47 区域名称列表">BCP 47 区域名称列表</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础" rel="nofollow">
+                                    通识基础 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/99.通识基础/EX.其它/EX.BCP 47 区域名称列表.md" rel="nofollow">
+                                    BCP 47 区域名称列表
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='03bff3' class='view-h4'><a class='view-text-miku' href='#03bff3'>#</a> BCP 47 区域名称列表</h1><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">Language Tag</th>
+  <th style="text-align:left">Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">af</td>
+  <td style="text-align:left">Afrikaans</td>
+</tr>
+<tr>
+  <td style="text-align:left">af-NA</td>
+  <td style="text-align:left">Afrikaans (Namibia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">af-ZA</td>
+  <td style="text-align:left">Afrikaans (South Africa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ak</td>
+  <td style="text-align:left">Akan</td>
+</tr>
+<tr>
+  <td style="text-align:left">ak-GH</td>
+  <td style="text-align:left">Akan (Ghana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sq</td>
+  <td style="text-align:left">Albanian</td>
+</tr>
+<tr>
+  <td style="text-align:left">sq-AL</td>
+  <td style="text-align:left">Albanian (Albania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sq-XK</td>
+  <td style="text-align:left">Albanian (Kosovo)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sq-MK</td>
+  <td style="text-align:left">Albanian (Macedonia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">am</td>
+  <td style="text-align:left">Amharic</td>
+</tr>
+<tr>
+  <td style="text-align:left">am-ET</td>
+  <td style="text-align:left">Amharic (Ethiopia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar</td>
+  <td style="text-align:left">Arabic</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-DZ</td>
+  <td style="text-align:left">Arabic (Algeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-BH</td>
+  <td style="text-align:left">Arabic (Bahrain)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-TD</td>
+  <td style="text-align:left">Arabic (Chad)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-KM</td>
+  <td style="text-align:left">Arabic (Comoros)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-DJ</td>
+  <td style="text-align:left">Arabic (Djibouti)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-EG</td>
+  <td style="text-align:left">Arabic (Egypt)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-ER</td>
+  <td style="text-align:left">Arabic (Eritrea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-IQ</td>
+  <td style="text-align:left">Arabic (Iraq)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-IL</td>
+  <td style="text-align:left">Arabic (Israel)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-JO</td>
+  <td style="text-align:left">Arabic (Jordan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-KW</td>
+  <td style="text-align:left">Arabic (Kuwait)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-LB</td>
+  <td style="text-align:left">Arabic (Lebanon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-LY</td>
+  <td style="text-align:left">Arabic (Libya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-MR</td>
+  <td style="text-align:left">Arabic (Mauritania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-MA</td>
+  <td style="text-align:left">Arabic (Morocco)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-OM</td>
+  <td style="text-align:left">Arabic (Oman)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-PS</td>
+  <td style="text-align:left">Arabic (Palestinian Territories)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-QA</td>
+  <td style="text-align:left">Arabic (Qatar)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-SA</td>
+  <td style="text-align:left">Arabic (Saudi Arabia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-SO</td>
+  <td style="text-align:left">Arabic (Somalia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-SS</td>
+  <td style="text-align:left">Arabic (South Sudan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-SD</td>
+  <td style="text-align:left">Arabic (Sudan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-SY</td>
+  <td style="text-align:left">Arabic (Syria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-TN</td>
+  <td style="text-align:left">Arabic (Tunisia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-AE</td>
+  <td style="text-align:left">Arabic (United Arab Emirates)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-EH</td>
+  <td style="text-align:left">Arabic (Western Sahara)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ar-YE</td>
+  <td style="text-align:left">Arabic (Yemen)</td>
+</tr>
+<tr>
+  <td style="text-align:left">hy</td>
+  <td style="text-align:left">Armenian</td>
+</tr>
+<tr>
+  <td style="text-align:left">hy-AM</td>
+  <td style="text-align:left">Armenian (Armenia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">as</td>
+  <td style="text-align:left">Assamese</td>
+</tr>
+<tr>
+  <td style="text-align:left">as-IN</td>
+  <td style="text-align:left">Assamese (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">az</td>
+  <td style="text-align:left">Azerbaijani</td>
+</tr>
+<tr>
+  <td style="text-align:left">az-AZ</td>
+  <td style="text-align:left">Azerbaijani (Azerbaijan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">az-Cyrl</td>
+  <td style="text-align:left">Azerbaijani (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">az-Latn</td>
+  <td style="text-align:left">Azerbaijani (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bm</td>
+  <td style="text-align:left">Bambara</td>
+</tr>
+<tr>
+  <td style="text-align:left">bm-Latn</td>
+  <td style="text-align:left">Bambara (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">eu</td>
+  <td style="text-align:left">Basque</td>
+</tr>
+<tr>
+  <td style="text-align:left">eu-ES</td>
+  <td style="text-align:left">Basque (Spain)</td>
+</tr>
+<tr>
+  <td style="text-align:left">be</td>
+  <td style="text-align:left">Belarusian</td>
+</tr>
+<tr>
+  <td style="text-align:left">be-BY</td>
+  <td style="text-align:left">Belarusian (Belarus)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bn</td>
+  <td style="text-align:left">Bengali</td>
+</tr>
+<tr>
+  <td style="text-align:left">bn-BD</td>
+  <td style="text-align:left">Bengali (Bangladesh)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bn-IN</td>
+  <td style="text-align:left">Bengali (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bs</td>
+  <td style="text-align:left">Bosnian</td>
+</tr>
+<tr>
+  <td style="text-align:left">bs-BA</td>
+  <td style="text-align:left">Bosnian (Bosnia &amp; Herzegovina)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bs-Cyrl</td>
+  <td style="text-align:left">Bosnian (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bs-Latn</td>
+  <td style="text-align:left">Bosnian (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">br</td>
+  <td style="text-align:left">Breton</td>
+</tr>
+<tr>
+  <td style="text-align:left">br-FR</td>
+  <td style="text-align:left">Breton (France)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bg</td>
+  <td style="text-align:left">Bulgarian</td>
+</tr>
+<tr>
+  <td style="text-align:left">bg-BG</td>
+  <td style="text-align:left">Bulgarian (Bulgaria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">my</td>
+  <td style="text-align:left">Burmese</td>
+</tr>
+<tr>
+  <td style="text-align:left">my-MM</td>
+  <td style="text-align:left">Burmese (Myanmar (Burma))</td>
+</tr>
+<tr>
+  <td style="text-align:left">ca</td>
+  <td style="text-align:left">Catalan</td>
+</tr>
+<tr>
+  <td style="text-align:left">ca-AD</td>
+  <td style="text-align:left">Catalan (Andorra)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ca-FR</td>
+  <td style="text-align:left">Catalan (France)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ca-IT</td>
+  <td style="text-align:left">Catalan (Italy)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ca-ES</td>
+  <td style="text-align:left">Catalan (Spain)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh</td>
+  <td style="text-align:left">Chinese</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-CN</td>
+  <td style="text-align:left">Chinese (China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-HK</td>
+  <td style="text-align:left">Chinese (Hong Kong SAR China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-MO</td>
+  <td style="text-align:left">Chinese (Macau SAR China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-Hans</td>
+  <td style="text-align:left">Chinese (Simplified)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-SG</td>
+  <td style="text-align:left">Chinese (Singapore)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-TW</td>
+  <td style="text-align:left">Chinese (Taiwan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zh-Hant</td>
+  <td style="text-align:left">Chinese (Traditional)</td>
+</tr>
+<tr>
+  <td style="text-align:left">kw</td>
+  <td style="text-align:left">Cornish</td>
+</tr>
+<tr>
+  <td style="text-align:left">kw-GB</td>
+  <td style="text-align:left">Cornish (United Kingdom)</td>
+</tr>
+<tr>
+  <td style="text-align:left">hr</td>
+  <td style="text-align:left">Croatian</td>
+</tr>
+<tr>
+  <td style="text-align:left">hr-BA</td>
+  <td style="text-align:left">Croatian (Bosnia &amp; Herzegovina)</td>
+</tr>
+<tr>
+  <td style="text-align:left">hr-HR</td>
+  <td style="text-align:left">Croatian (Croatia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">cs</td>
+  <td style="text-align:left">Czech</td>
+</tr>
+<tr>
+  <td style="text-align:left">cs-CZ</td>
+  <td style="text-align:left">Czech (Czech Republic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">da</td>
+  <td style="text-align:left">Danish</td>
+</tr>
+<tr>
+  <td style="text-align:left">da-DK</td>
+  <td style="text-align:left">Danish (Denmark)</td>
+</tr>
+<tr>
+  <td style="text-align:left">da-GL</td>
+  <td style="text-align:left">Danish (Greenland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl</td>
+  <td style="text-align:left">Dutch</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-AW</td>
+  <td style="text-align:left">Dutch (Aruba)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-BE</td>
+  <td style="text-align:left">Dutch (Belgium)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-BQ</td>
+  <td style="text-align:left">Dutch (Caribbean Netherlands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-CW</td>
+  <td style="text-align:left">Dutch (Curaçao)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-NL</td>
+  <td style="text-align:left">Dutch (Netherlands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-SX</td>
+  <td style="text-align:left">Dutch (Sint Maarten)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nl-SR</td>
+  <td style="text-align:left">Dutch (Suriname)</td>
+</tr>
+<tr>
+  <td style="text-align:left">dz</td>
+  <td style="text-align:left">Dzongkha</td>
+</tr>
+<tr>
+  <td style="text-align:left">dz-BT</td>
+  <td style="text-align:left">Dzongkha (Bhutan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en</td>
+  <td style="text-align:left">English</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-AS</td>
+  <td style="text-align:left">English (American Samoa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-AI</td>
+  <td style="text-align:left">English (Anguilla)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-AG</td>
+  <td style="text-align:left">English (Antigua &amp; Barbuda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-AU</td>
+  <td style="text-align:left">English (Australia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BS</td>
+  <td style="text-align:left">English (Bahamas)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BB</td>
+  <td style="text-align:left">English (Barbados)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BE</td>
+  <td style="text-align:left">English (Belgium)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BZ</td>
+  <td style="text-align:left">English (Belize)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BM</td>
+  <td style="text-align:left">English (Bermuda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-BW</td>
+  <td style="text-align:left">English (Botswana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-IO</td>
+  <td style="text-align:left">English (British Indian Ocean Territory)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-VG</td>
+  <td style="text-align:left">English (British Virgin Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-CM</td>
+  <td style="text-align:left">English (Cameroon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-CA</td>
+  <td style="text-align:left">English (Canada)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-KY</td>
+  <td style="text-align:left">English (Cayman Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-CX</td>
+  <td style="text-align:left">English (Christmas Island)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-CC</td>
+  <td style="text-align:left">English (Cocos (Keeling) Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-CK</td>
+  <td style="text-align:left">English (Cook Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-DG</td>
+  <td style="text-align:left">English (Diego Garcia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-DM</td>
+  <td style="text-align:left">English (Dominica)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-ER</td>
+  <td style="text-align:left">English (Eritrea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-FK</td>
+  <td style="text-align:left">English (Falkland Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-FJ</td>
+  <td style="text-align:left">English (Fiji)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GM</td>
+  <td style="text-align:left">English (Gambia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GH</td>
+  <td style="text-align:left">English (Ghana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GI</td>
+  <td style="text-align:left">English (Gibraltar)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GD</td>
+  <td style="text-align:left">English (Grenada)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GU</td>
+  <td style="text-align:left">English (Guam)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GG</td>
+  <td style="text-align:left">English (Guernsey)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GY</td>
+  <td style="text-align:left">English (Guyana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-HK</td>
+  <td style="text-align:left">English (Hong Kong SAR China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-IN</td>
+  <td style="text-align:left">English (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-IE</td>
+  <td style="text-align:left">English (Ireland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-IM</td>
+  <td style="text-align:left">English (Isle of Man)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-JM</td>
+  <td style="text-align:left">English (Jamaica)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-JE</td>
+  <td style="text-align:left">English (Jersey)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-KE</td>
+  <td style="text-align:left">English (Kenya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-KI</td>
+  <td style="text-align:left">English (Kiribati)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-LS</td>
+  <td style="text-align:left">English (Lesotho)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-LR</td>
+  <td style="text-align:left">English (Liberia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MO</td>
+  <td style="text-align:left">English (Macau SAR China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MG</td>
+  <td style="text-align:left">English (Madagascar)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MW</td>
+  <td style="text-align:left">English (Malawi)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MY</td>
+  <td style="text-align:left">English (Malaysia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MT</td>
+  <td style="text-align:left">English (Malta)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MH</td>
+  <td style="text-align:left">English (Marshall Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MU</td>
+  <td style="text-align:left">English (Mauritius)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-FM</td>
+  <td style="text-align:left">English (Micronesia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MS</td>
+  <td style="text-align:left">English (Montserrat)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NA</td>
+  <td style="text-align:left">English (Namibia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NR</td>
+  <td style="text-align:left">English (Nauru)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NZ</td>
+  <td style="text-align:left">English (New Zealand)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NG</td>
+  <td style="text-align:left">English (Nigeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NU</td>
+  <td style="text-align:left">English (Niue)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-NF</td>
+  <td style="text-align:left">English (Norfolk Island)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-MP</td>
+  <td style="text-align:left">English (Northern Mariana Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PK</td>
+  <td style="text-align:left">English (Pakistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PW</td>
+  <td style="text-align:left">English (Palau)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PG</td>
+  <td style="text-align:left">English (Papua New Guinea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PH</td>
+  <td style="text-align:left">English (Philippines)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PN</td>
+  <td style="text-align:left">English (Pitcairn Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-PR</td>
+  <td style="text-align:left">English (Puerto Rico)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-RW</td>
+  <td style="text-align:left">English (Rwanda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-WS</td>
+  <td style="text-align:left">English (Samoa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SC</td>
+  <td style="text-align:left">English (Seychelles)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SL</td>
+  <td style="text-align:left">English (Sierra Leone)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SG</td>
+  <td style="text-align:left">English (Singapore)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SX</td>
+  <td style="text-align:left">English (Sint Maarten)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SB</td>
+  <td style="text-align:left">English (Solomon Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-ZA</td>
+  <td style="text-align:left">English (South Africa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SS</td>
+  <td style="text-align:left">English (South Sudan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SH</td>
+  <td style="text-align:left">English (St. Helena)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-KN</td>
+  <td style="text-align:left">English (St. Kitts &amp; Nevis)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-LC</td>
+  <td style="text-align:left">English (St. Lucia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-VC</td>
+  <td style="text-align:left">English (St. Vincent &amp; Grenadines)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SD</td>
+  <td style="text-align:left">English (Sudan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-SZ</td>
+  <td style="text-align:left">English (Swaziland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TZ</td>
+  <td style="text-align:left">English (Tanzania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TK</td>
+  <td style="text-align:left">English (Tokelau)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TO</td>
+  <td style="text-align:left">English (Tonga)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TT</td>
+  <td style="text-align:left">English (Trinidad &amp; Tobago)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TC</td>
+  <td style="text-align:left">English (Turks &amp; Caicos Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-TV</td>
+  <td style="text-align:left">English (Tuvalu)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-UM</td>
+  <td style="text-align:left">English (U.S. Outlying Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-VI</td>
+  <td style="text-align:left">English (U.S. Virgin Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-UG</td>
+  <td style="text-align:left">English (Uganda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-GB</td>
+  <td style="text-align:left">English (United Kingdom)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-US</td>
+  <td style="text-align:left">English (United States)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-VU</td>
+  <td style="text-align:left">English (Vanuatu)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-ZM</td>
+  <td style="text-align:left">English (Zambia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">en-ZW</td>
+  <td style="text-align:left">English (Zimbabwe)</td>
+</tr>
+<tr>
+  <td style="text-align:left">eo</td>
+  <td style="text-align:left">Esperanto</td>
+</tr>
+<tr>
+  <td style="text-align:left">et</td>
+  <td style="text-align:left">Estonian</td>
+</tr>
+<tr>
+  <td style="text-align:left">et-EE</td>
+  <td style="text-align:left">Estonian (Estonia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ee</td>
+  <td style="text-align:left">Ewe</td>
+</tr>
+<tr>
+  <td style="text-align:left">ee-GH</td>
+  <td style="text-align:left">Ewe (Ghana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ee-TG</td>
+  <td style="text-align:left">Ewe (Togo)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fo</td>
+  <td style="text-align:left">Faroese</td>
+</tr>
+<tr>
+  <td style="text-align:left">fo-FO</td>
+  <td style="text-align:left">Faroese (Faroe Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fi</td>
+  <td style="text-align:left">Finnish</td>
+</tr>
+<tr>
+  <td style="text-align:left">fi-FI</td>
+  <td style="text-align:left">Finnish (Finland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr</td>
+  <td style="text-align:left">French</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-DZ</td>
+  <td style="text-align:left">French (Algeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-BE</td>
+  <td style="text-align:left">French (Belgium)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-BJ</td>
+  <td style="text-align:left">French (Benin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-BF</td>
+  <td style="text-align:left">French (Burkina Faso)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-BI</td>
+  <td style="text-align:left">French (Burundi)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CM</td>
+  <td style="text-align:left">French (Cameroon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CA</td>
+  <td style="text-align:left">French (Canada)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CF</td>
+  <td style="text-align:left">French (Central African Republic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-TD</td>
+  <td style="text-align:left">French (Chad)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-KM</td>
+  <td style="text-align:left">French (Comoros)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CG</td>
+  <td style="text-align:left">French (Congo-Brazzaville)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CD</td>
+  <td style="text-align:left">French (Congo-Kinshasa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CI</td>
+  <td style="text-align:left">French (Côte d’Ivoire)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-DJ</td>
+  <td style="text-align:left">French (Djibouti)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-GQ</td>
+  <td style="text-align:left">French (Equatorial Guinea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-FR</td>
+  <td style="text-align:left">French (France)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-GF</td>
+  <td style="text-align:left">French (French Guiana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-PF</td>
+  <td style="text-align:left">French (French Polynesia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-GA</td>
+  <td style="text-align:left">French (Gabon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-GP</td>
+  <td style="text-align:left">French (Guadeloupe)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-GN</td>
+  <td style="text-align:left">French (Guinea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-HT</td>
+  <td style="text-align:left">French (Haiti)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-LU</td>
+  <td style="text-align:left">French (Luxembourg)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MG</td>
+  <td style="text-align:left">French (Madagascar)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-ML</td>
+  <td style="text-align:left">French (Mali)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MQ</td>
+  <td style="text-align:left">French (Martinique)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MR</td>
+  <td style="text-align:left">French (Mauritania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MU</td>
+  <td style="text-align:left">French (Mauritius)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-YT</td>
+  <td style="text-align:left">French (Mayotte)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MC</td>
+  <td style="text-align:left">French (Monaco)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MA</td>
+  <td style="text-align:left">French (Morocco)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-NC</td>
+  <td style="text-align:left">French (New Caledonia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-NE</td>
+  <td style="text-align:left">French (Niger)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-RE</td>
+  <td style="text-align:left">French (Réunion)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-RW</td>
+  <td style="text-align:left">French (Rwanda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-SN</td>
+  <td style="text-align:left">French (Senegal)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-SC</td>
+  <td style="text-align:left">French (Seychelles)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-BL</td>
+  <td style="text-align:left">French (St. Barthélemy)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-MF</td>
+  <td style="text-align:left">French (St. Martin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-PM</td>
+  <td style="text-align:left">French (St. Pierre &amp; Miquelon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-CH</td>
+  <td style="text-align:left">French (Switzerland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-SY</td>
+  <td style="text-align:left">French (Syria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-TG</td>
+  <td style="text-align:left">French (Togo)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-TN</td>
+  <td style="text-align:left">French (Tunisia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-VU</td>
+  <td style="text-align:left">French (Vanuatu)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fr-WF</td>
+  <td style="text-align:left">French (Wallis &amp; Futuna)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ff</td>
+  <td style="text-align:left">Fulah</td>
+</tr>
+<tr>
+  <td style="text-align:left">ff-CM</td>
+  <td style="text-align:left">Fulah (Cameroon)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ff-GN</td>
+  <td style="text-align:left">Fulah (Guinea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ff-MR</td>
+  <td style="text-align:left">Fulah (Mauritania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ff-SN</td>
+  <td style="text-align:left">Fulah (Senegal)</td>
+</tr>
+<tr>
+  <td style="text-align:left">gl</td>
+  <td style="text-align:left">Galician</td>
+</tr>
+<tr>
+  <td style="text-align:left">gl-ES</td>
+  <td style="text-align:left">Galician (Spain)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lg</td>
+  <td style="text-align:left">Ganda</td>
+</tr>
+<tr>
+  <td style="text-align:left">lg-UG</td>
+  <td style="text-align:left">Ganda (Uganda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ka</td>
+  <td style="text-align:left">Georgian</td>
+</tr>
+<tr>
+  <td style="text-align:left">ka-GE</td>
+  <td style="text-align:left">Georgian (Georgia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de</td>
+  <td style="text-align:left">German</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-AT</td>
+  <td style="text-align:left">German (Austria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-BE</td>
+  <td style="text-align:left">German (Belgium)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-DE</td>
+  <td style="text-align:left">German (Germany)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-LI</td>
+  <td style="text-align:left">German (Liechtenstein)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-LU</td>
+  <td style="text-align:left">German (Luxembourg)</td>
+</tr>
+<tr>
+  <td style="text-align:left">de-CH</td>
+  <td style="text-align:left">German (Switzerland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">el</td>
+  <td style="text-align:left">Greek</td>
+</tr>
+<tr>
+  <td style="text-align:left">el-CY</td>
+  <td style="text-align:left">Greek (Cyprus)</td>
+</tr>
+<tr>
+  <td style="text-align:left">el-GR</td>
+  <td style="text-align:left">Greek (Greece)</td>
+</tr>
+<tr>
+  <td style="text-align:left">gu</td>
+  <td style="text-align:left">Gujarati</td>
+</tr>
+<tr>
+  <td style="text-align:left">gu-IN</td>
+  <td style="text-align:left">Gujarati (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ha</td>
+  <td style="text-align:left">Hausa</td>
+</tr>
+<tr>
+  <td style="text-align:left">ha-GH</td>
+  <td style="text-align:left">Hausa (Ghana)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ha-Latn</td>
+  <td style="text-align:left">Hausa (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ha-NE</td>
+  <td style="text-align:left">Hausa (Niger)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ha-NG</td>
+  <td style="text-align:left">Hausa (Nigeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">he</td>
+  <td style="text-align:left">Hebrew</td>
+</tr>
+<tr>
+  <td style="text-align:left">he-IL</td>
+  <td style="text-align:left">Hebrew (Israel)</td>
+</tr>
+<tr>
+  <td style="text-align:left">hi</td>
+  <td style="text-align:left">Hindi</td>
+</tr>
+<tr>
+  <td style="text-align:left">hi-IN</td>
+  <td style="text-align:left">Hindi (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">hu</td>
+  <td style="text-align:left">Hungarian</td>
+</tr>
+<tr>
+  <td style="text-align:left">hu-HU</td>
+  <td style="text-align:left">Hungarian (Hungary)</td>
+</tr>
+<tr>
+  <td style="text-align:left">is</td>
+  <td style="text-align:left">Icelandic</td>
+</tr>
+<tr>
+  <td style="text-align:left">is-IS</td>
+  <td style="text-align:left">Icelandic (Iceland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ig</td>
+  <td style="text-align:left">Igbo</td>
+</tr>
+<tr>
+  <td style="text-align:left">ig-NG</td>
+  <td style="text-align:left">Igbo (Nigeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">id</td>
+  <td style="text-align:left">Indonesian</td>
+</tr>
+<tr>
+  <td style="text-align:left">id-ID</td>
+  <td style="text-align:left">Indonesian (Indonesia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ga</td>
+  <td style="text-align:left">Irish</td>
+</tr>
+<tr>
+  <td style="text-align:left">ga-IE</td>
+  <td style="text-align:left">Irish (Ireland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">it</td>
+  <td style="text-align:left">Italian</td>
+</tr>
+<tr>
+  <td style="text-align:left">it-IT</td>
+  <td style="text-align:left">Italian (Italy)</td>
+</tr>
+<tr>
+  <td style="text-align:left">it-SM</td>
+  <td style="text-align:left">Italian (San Marino)</td>
+</tr>
+<tr>
+  <td style="text-align:left">it-CH</td>
+  <td style="text-align:left">Italian (Switzerland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ja</td>
+  <td style="text-align:left">Japanese</td>
+</tr>
+<tr>
+  <td style="text-align:left">ja-JP</td>
+  <td style="text-align:left">Japanese (Japan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">kl</td>
+  <td style="text-align:left">Kalaallisut</td>
+</tr>
+<tr>
+  <td style="text-align:left">kl-GL</td>
+  <td style="text-align:left">Kalaallisut (Greenland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">kn</td>
+  <td style="text-align:left">Kannada</td>
+</tr>
+<tr>
+  <td style="text-align:left">kn-IN</td>
+  <td style="text-align:left">Kannada (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ks</td>
+  <td style="text-align:left">Kashmiri</td>
+</tr>
+<tr>
+  <td style="text-align:left">ks-Arab</td>
+  <td style="text-align:left">Kashmiri (Arabic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ks-IN</td>
+  <td style="text-align:left">Kashmiri (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">kk</td>
+  <td style="text-align:left">Kazakh</td>
+</tr>
+<tr>
+  <td style="text-align:left">kk-Cyrl</td>
+  <td style="text-align:left">Kazakh (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">kk-KZ</td>
+  <td style="text-align:left">Kazakh (Kazakhstan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">km</td>
+  <td style="text-align:left">Khmer</td>
+</tr>
+<tr>
+  <td style="text-align:left">km-KH</td>
+  <td style="text-align:left">Khmer (Cambodia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ki</td>
+  <td style="text-align:left">Kikuyu</td>
+</tr>
+<tr>
+  <td style="text-align:left">ki-KE</td>
+  <td style="text-align:left">Kikuyu (Kenya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">rw</td>
+  <td style="text-align:left">Kinyarwanda</td>
+</tr>
+<tr>
+  <td style="text-align:left">rw-RW</td>
+  <td style="text-align:left">Kinyarwanda (Rwanda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ko</td>
+  <td style="text-align:left">Korean</td>
+</tr>
+<tr>
+  <td style="text-align:left">ko-KP</td>
+  <td style="text-align:left">Korean (North Korea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ko-KR</td>
+  <td style="text-align:left">Korean (South Korea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ky</td>
+  <td style="text-align:left">Kyrgyz</td>
+</tr>
+<tr>
+  <td style="text-align:left">ky-Cyrl</td>
+  <td style="text-align:left">Kyrgyz (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ky-KG</td>
+  <td style="text-align:left">Kyrgyz (Kyrgyzstan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lo</td>
+  <td style="text-align:left">Lao</td>
+</tr>
+<tr>
+  <td style="text-align:left">lo-LA</td>
+  <td style="text-align:left">Lao (Laos)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lv</td>
+  <td style="text-align:left">Latvian</td>
+</tr>
+<tr>
+  <td style="text-align:left">lv-LV</td>
+  <td style="text-align:left">Latvian (Latvia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ln</td>
+  <td style="text-align:left">Lingala</td>
+</tr>
+<tr>
+  <td style="text-align:left">ln-AO</td>
+  <td style="text-align:left">Lingala (Angola)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ln-CF</td>
+  <td style="text-align:left">Lingala (Central African Republic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ln-CG</td>
+  <td style="text-align:left">Lingala (Congo-Brazzaville)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ln-CD</td>
+  <td style="text-align:left">Lingala (Congo-Kinshasa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lt</td>
+  <td style="text-align:left">Lithuanian</td>
+</tr>
+<tr>
+  <td style="text-align:left">lt-LT</td>
+  <td style="text-align:left">Lithuanian (Lithuania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lu</td>
+  <td style="text-align:left">Luba-Katanga</td>
+</tr>
+<tr>
+  <td style="text-align:left">lu-CD</td>
+  <td style="text-align:left">Luba-Katanga (Congo-Kinshasa)</td>
+</tr>
+<tr>
+  <td style="text-align:left">lb</td>
+  <td style="text-align:left">Luxembourgish</td>
+</tr>
+<tr>
+  <td style="text-align:left">lb-LU</td>
+  <td style="text-align:left">Luxembourgish (Luxembourg)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mk</td>
+  <td style="text-align:left">Macedonian</td>
+</tr>
+<tr>
+  <td style="text-align:left">mk-MK</td>
+  <td style="text-align:left">Macedonian (Macedonia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mg</td>
+  <td style="text-align:left">Malagasy</td>
+</tr>
+<tr>
+  <td style="text-align:left">mg-MG</td>
+  <td style="text-align:left">Malagasy (Madagascar)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ms</td>
+  <td style="text-align:left">Malay</td>
+</tr>
+<tr>
+  <td style="text-align:left">ms-BN</td>
+  <td style="text-align:left">Malay (Brunei)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ms-Latn</td>
+  <td style="text-align:left">Malay (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ms-MY</td>
+  <td style="text-align:left">Malay (Malaysia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ms-SG</td>
+  <td style="text-align:left">Malay (Singapore)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ml</td>
+  <td style="text-align:left">Malayalam</td>
+</tr>
+<tr>
+  <td style="text-align:left">ml-IN</td>
+  <td style="text-align:left">Malayalam (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mt</td>
+  <td style="text-align:left">Maltese</td>
+</tr>
+<tr>
+  <td style="text-align:left">mt-MT</td>
+  <td style="text-align:left">Maltese (Malta)</td>
+</tr>
+<tr>
+  <td style="text-align:left">gv</td>
+  <td style="text-align:left">Manx</td>
+</tr>
+<tr>
+  <td style="text-align:left">gv-IM</td>
+  <td style="text-align:left">Manx (Isle of Man)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mr</td>
+  <td style="text-align:left">Marathi</td>
+</tr>
+<tr>
+  <td style="text-align:left">mr-IN</td>
+  <td style="text-align:left">Marathi (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mn</td>
+  <td style="text-align:left">Mongolian</td>
+</tr>
+<tr>
+  <td style="text-align:left">mn-Cyrl</td>
+  <td style="text-align:left">Mongolian (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">mn-MN</td>
+  <td style="text-align:left">Mongolian (Mongolia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ne</td>
+  <td style="text-align:left">Nepali</td>
+</tr>
+<tr>
+  <td style="text-align:left">ne-IN</td>
+  <td style="text-align:left">Nepali (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ne-NP</td>
+  <td style="text-align:left">Nepali (Nepal)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nd</td>
+  <td style="text-align:left">North Ndebele</td>
+</tr>
+<tr>
+  <td style="text-align:left">nd-ZW</td>
+  <td style="text-align:left">North Ndebele (Zimbabwe)</td>
+</tr>
+<tr>
+  <td style="text-align:left">se</td>
+  <td style="text-align:left">Northern Sami</td>
+</tr>
+<tr>
+  <td style="text-align:left">se-FI</td>
+  <td style="text-align:left">Northern Sami (Finland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">se-NO</td>
+  <td style="text-align:left">Northern Sami (Norway)</td>
+</tr>
+<tr>
+  <td style="text-align:left">se-SE</td>
+  <td style="text-align:left">Northern Sami (Sweden)</td>
+</tr>
+<tr>
+  <td style="text-align:left">no</td>
+  <td style="text-align:left">Norwegian</td>
+</tr>
+<tr>
+  <td style="text-align:left">no-NO</td>
+  <td style="text-align:left">Norwegian (Norway)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nb</td>
+  <td style="text-align:left">Norwegian Bokmål</td>
+</tr>
+<tr>
+  <td style="text-align:left">nb-NO</td>
+  <td style="text-align:left">Norwegian Bokmål (Norway)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nb-SJ</td>
+  <td style="text-align:left">Norwegian Bokmål (Svalbard &amp; Jan Mayen)</td>
+</tr>
+<tr>
+  <td style="text-align:left">nn</td>
+  <td style="text-align:left">Norwegian Nynorsk</td>
+</tr>
+<tr>
+  <td style="text-align:left">nn-NO</td>
+  <td style="text-align:left">Norwegian Nynorsk (Norway)</td>
+</tr>
+<tr>
+  <td style="text-align:left">or</td>
+  <td style="text-align:left">Oriya</td>
+</tr>
+<tr>
+  <td style="text-align:left">or-IN</td>
+  <td style="text-align:left">Oriya (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">om</td>
+  <td style="text-align:left">Oromo</td>
+</tr>
+<tr>
+  <td style="text-align:left">om-ET</td>
+  <td style="text-align:left">Oromo (Ethiopia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">om-KE</td>
+  <td style="text-align:left">Oromo (Kenya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">os</td>
+  <td style="text-align:left">Ossetic</td>
+</tr>
+<tr>
+  <td style="text-align:left">os-GE</td>
+  <td style="text-align:left">Ossetic (Georgia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">os-RU</td>
+  <td style="text-align:left">Ossetic (Russia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ps</td>
+  <td style="text-align:left">Pashto</td>
+</tr>
+<tr>
+  <td style="text-align:left">ps-AF</td>
+  <td style="text-align:left">Pashto (Afghanistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fa</td>
+  <td style="text-align:left">Persian</td>
+</tr>
+<tr>
+  <td style="text-align:left">fa-AF</td>
+  <td style="text-align:left">Persian (Afghanistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fa-IR</td>
+  <td style="text-align:left">Persian (Iran)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pl</td>
+  <td style="text-align:left">Polish</td>
+</tr>
+<tr>
+  <td style="text-align:left">pl-PL</td>
+  <td style="text-align:left">Polish (Poland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt</td>
+  <td style="text-align:left">Portuguese</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-AO</td>
+  <td style="text-align:left">Portuguese (Angola)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-BR</td>
+  <td style="text-align:left">Portuguese (Brazil)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-CV</td>
+  <td style="text-align:left">Portuguese (Cape Verde)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-GW</td>
+  <td style="text-align:left">Portuguese (Guinea-Bissau)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-MO</td>
+  <td style="text-align:left">Portuguese (Macau SAR China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-MZ</td>
+  <td style="text-align:left">Portuguese (Mozambique)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-PT</td>
+  <td style="text-align:left">Portuguese (Portugal)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-ST</td>
+  <td style="text-align:left">Portuguese (São Tomé &amp; Príncipe)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pt-TL</td>
+  <td style="text-align:left">Portuguese (Timor-Leste)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pa</td>
+  <td style="text-align:left">Punjabi</td>
+</tr>
+<tr>
+  <td style="text-align:left">pa-Arab</td>
+  <td style="text-align:left">Punjabi (Arabic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pa-Guru</td>
+  <td style="text-align:left">Punjabi (Gurmukhi)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pa-IN</td>
+  <td style="text-align:left">Punjabi (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">pa-PK</td>
+  <td style="text-align:left">Punjabi (Pakistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">qu</td>
+  <td style="text-align:left">Quechua</td>
+</tr>
+<tr>
+  <td style="text-align:left">qu-BO</td>
+  <td style="text-align:left">Quechua (Bolivia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">qu-EC</td>
+  <td style="text-align:left">Quechua (Ecuador)</td>
+</tr>
+<tr>
+  <td style="text-align:left">qu-PE</td>
+  <td style="text-align:left">Quechua (Peru)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ro</td>
+  <td style="text-align:left">Romanian</td>
+</tr>
+<tr>
+  <td style="text-align:left">ro-MD</td>
+  <td style="text-align:left">Romanian (Moldova)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ro-RO</td>
+  <td style="text-align:left">Romanian (Romania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">rm</td>
+  <td style="text-align:left">Romansh</td>
+</tr>
+<tr>
+  <td style="text-align:left">rm-CH</td>
+  <td style="text-align:left">Romansh (Switzerland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">rn</td>
+  <td style="text-align:left">Rundi</td>
+</tr>
+<tr>
+  <td style="text-align:left">rn-BI</td>
+  <td style="text-align:left">Rundi (Burundi)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru</td>
+  <td style="text-align:left">Russian</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-BY</td>
+  <td style="text-align:left">Russian (Belarus)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-KZ</td>
+  <td style="text-align:left">Russian (Kazakhstan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-KG</td>
+  <td style="text-align:left">Russian (Kyrgyzstan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-MD</td>
+  <td style="text-align:left">Russian (Moldova)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-RU</td>
+  <td style="text-align:left">Russian (Russia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ru-UA</td>
+  <td style="text-align:left">Russian (Ukraine)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sg</td>
+  <td style="text-align:left">Sango</td>
+</tr>
+<tr>
+  <td style="text-align:left">sg-CF</td>
+  <td style="text-align:left">Sango (Central African Republic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">gd</td>
+  <td style="text-align:left">Scottish Gaelic</td>
+</tr>
+<tr>
+  <td style="text-align:left">gd-GB</td>
+  <td style="text-align:left">Scottish Gaelic (United Kingdom)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr</td>
+  <td style="text-align:left">Serbian</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-BA</td>
+  <td style="text-align:left">Serbian (Bosnia &amp; Herzegovina)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-Cyrl</td>
+  <td style="text-align:left">Serbian (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-XK</td>
+  <td style="text-align:left">Serbian (Kosovo)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-Latn</td>
+  <td style="text-align:left">Serbian (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-ME</td>
+  <td style="text-align:left">Serbian (Montenegro)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sr-RS</td>
+  <td style="text-align:left">Serbian (Serbia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sh</td>
+  <td style="text-align:left">Serbo-Croatian</td>
+</tr>
+<tr>
+  <td style="text-align:left">sh-BA</td>
+  <td style="text-align:left">Serbo-Croatian (Bosnia &amp; Herzegovina)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sn</td>
+  <td style="text-align:left">Shona</td>
+</tr>
+<tr>
+  <td style="text-align:left">sn-ZW</td>
+  <td style="text-align:left">Shona (Zimbabwe)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ii</td>
+  <td style="text-align:left">Sichuan Yi</td>
+</tr>
+<tr>
+  <td style="text-align:left">ii-CN</td>
+  <td style="text-align:left">Sichuan Yi (China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">si</td>
+  <td style="text-align:left">Sinhala</td>
+</tr>
+<tr>
+  <td style="text-align:left">si-LK</td>
+  <td style="text-align:left">Sinhala (Sri Lanka)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sk</td>
+  <td style="text-align:left">Slovak</td>
+</tr>
+<tr>
+  <td style="text-align:left">sk-SK</td>
+  <td style="text-align:left">Slovak (Slovakia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sl</td>
+  <td style="text-align:left">Slovenian</td>
+</tr>
+<tr>
+  <td style="text-align:left">sl-SI</td>
+  <td style="text-align:left">Slovenian (Slovenia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">so</td>
+  <td style="text-align:left">Somali</td>
+</tr>
+<tr>
+  <td style="text-align:left">so-DJ</td>
+  <td style="text-align:left">Somali (Djibouti)</td>
+</tr>
+<tr>
+  <td style="text-align:left">so-ET</td>
+  <td style="text-align:left">Somali (Ethiopia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">so-KE</td>
+  <td style="text-align:left">Somali (Kenya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">so-SO</td>
+  <td style="text-align:left">Somali (Somalia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es</td>
+  <td style="text-align:left">Spanish</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-AR</td>
+  <td style="text-align:left">Spanish (Argentina)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-BO</td>
+  <td style="text-align:left">Spanish (Bolivia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-IC</td>
+  <td style="text-align:left">Spanish (Canary Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-EA</td>
+  <td style="text-align:left">Spanish (Ceuta &amp; Melilla)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-CL</td>
+  <td style="text-align:left">Spanish (Chile)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-CO</td>
+  <td style="text-align:left">Spanish (Colombia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-CR</td>
+  <td style="text-align:left">Spanish (Costa Rica)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-CU</td>
+  <td style="text-align:left">Spanish (Cuba)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-DO</td>
+  <td style="text-align:left">Spanish (Dominican Republic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-EC</td>
+  <td style="text-align:left">Spanish (Ecuador)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-SV</td>
+  <td style="text-align:left">Spanish (El Salvador)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-GQ</td>
+  <td style="text-align:left">Spanish (Equatorial Guinea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-GT</td>
+  <td style="text-align:left">Spanish (Guatemala)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-HN</td>
+  <td style="text-align:left">Spanish (Honduras)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-MX</td>
+  <td style="text-align:left">Spanish (Mexico)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-NI</td>
+  <td style="text-align:left">Spanish (Nicaragua)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-PA</td>
+  <td style="text-align:left">Spanish (Panama)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-PY</td>
+  <td style="text-align:left">Spanish (Paraguay)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-PE</td>
+  <td style="text-align:left">Spanish (Peru)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-PH</td>
+  <td style="text-align:left">Spanish (Philippines)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-PR</td>
+  <td style="text-align:left">Spanish (Puerto Rico)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-ES</td>
+  <td style="text-align:left">Spanish (Spain)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-US</td>
+  <td style="text-align:left">Spanish (United States)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-UY</td>
+  <td style="text-align:left">Spanish (Uruguay)</td>
+</tr>
+<tr>
+  <td style="text-align:left">es-VE</td>
+  <td style="text-align:left">Spanish (Venezuela)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sw</td>
+  <td style="text-align:left">Swahili</td>
+</tr>
+<tr>
+  <td style="text-align:left">sw-KE</td>
+  <td style="text-align:left">Swahili (Kenya)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sw-TZ</td>
+  <td style="text-align:left">Swahili (Tanzania)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sw-UG</td>
+  <td style="text-align:left">Swahili (Uganda)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sv</td>
+  <td style="text-align:left">Swedish</td>
+</tr>
+<tr>
+  <td style="text-align:left">sv-AX</td>
+  <td style="text-align:left">Swedish (Åland Islands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sv-FI</td>
+  <td style="text-align:left">Swedish (Finland)</td>
+</tr>
+<tr>
+  <td style="text-align:left">sv-SE</td>
+  <td style="text-align:left">Swedish (Sweden)</td>
+</tr>
+<tr>
+  <td style="text-align:left">tl</td>
+  <td style="text-align:left">Tagalog</td>
+</tr>
+<tr>
+  <td style="text-align:left">tl-PH</td>
+  <td style="text-align:left">Tagalog (Philippines)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ta</td>
+  <td style="text-align:left">Tamil</td>
+</tr>
+<tr>
+  <td style="text-align:left">ta-IN</td>
+  <td style="text-align:left">Tamil (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ta-MY</td>
+  <td style="text-align:left">Tamil (Malaysia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ta-SG</td>
+  <td style="text-align:left">Tamil (Singapore)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ta-LK</td>
+  <td style="text-align:left">Tamil (Sri Lanka)</td>
+</tr>
+<tr>
+  <td style="text-align:left">te</td>
+  <td style="text-align:left">Telugu</td>
+</tr>
+<tr>
+  <td style="text-align:left">te-IN</td>
+  <td style="text-align:left">Telugu (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">th</td>
+  <td style="text-align:left">Thai</td>
+</tr>
+<tr>
+  <td style="text-align:left">th-TH</td>
+  <td style="text-align:left">Thai (Thailand)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bo</td>
+  <td style="text-align:left">Tibetan</td>
+</tr>
+<tr>
+  <td style="text-align:left">bo-CN</td>
+  <td style="text-align:left">Tibetan (China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">bo-IN</td>
+  <td style="text-align:left">Tibetan (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ti</td>
+  <td style="text-align:left">Tigrinya</td>
+</tr>
+<tr>
+  <td style="text-align:left">ti-ER</td>
+  <td style="text-align:left">Tigrinya (Eritrea)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ti-ET</td>
+  <td style="text-align:left">Tigrinya (Ethiopia)</td>
+</tr>
+<tr>
+  <td style="text-align:left">to</td>
+  <td style="text-align:left">Tongan</td>
+</tr>
+<tr>
+  <td style="text-align:left">to-TO</td>
+  <td style="text-align:left">Tongan (Tonga)</td>
+</tr>
+<tr>
+  <td style="text-align:left">tr</td>
+  <td style="text-align:left">Turkish</td>
+</tr>
+<tr>
+  <td style="text-align:left">tr-CY</td>
+  <td style="text-align:left">Turkish (Cyprus)</td>
+</tr>
+<tr>
+  <td style="text-align:left">tr-TR</td>
+  <td style="text-align:left">Turkish (Turkey)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uk</td>
+  <td style="text-align:left">Ukrainian</td>
+</tr>
+<tr>
+  <td style="text-align:left">uk-UA</td>
+  <td style="text-align:left">Ukrainian (Ukraine)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ur</td>
+  <td style="text-align:left">Urdu</td>
+</tr>
+<tr>
+  <td style="text-align:left">ur-IN</td>
+  <td style="text-align:left">Urdu (India)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ur-PK</td>
+  <td style="text-align:left">Urdu (Pakistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ug</td>
+  <td style="text-align:left">Uyghur</td>
+</tr>
+<tr>
+  <td style="text-align:left">ug-Arab</td>
+  <td style="text-align:left">Uyghur (Arabic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ug-CN</td>
+  <td style="text-align:left">Uyghur (China)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz</td>
+  <td style="text-align:left">Uzbek</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz-AF</td>
+  <td style="text-align:left">Uzbek (Afghanistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz-Arab</td>
+  <td style="text-align:left">Uzbek (Arabic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz-Cyrl</td>
+  <td style="text-align:left">Uzbek (Cyrillic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz-Latn</td>
+  <td style="text-align:left">Uzbek (Latin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">uz-UZ</td>
+  <td style="text-align:left">Uzbek (Uzbekistan)</td>
+</tr>
+<tr>
+  <td style="text-align:left">vi</td>
+  <td style="text-align:left">Vietnamese</td>
+</tr>
+<tr>
+  <td style="text-align:left">vi-VN</td>
+  <td style="text-align:left">Vietnamese (Vietnam)</td>
+</tr>
+<tr>
+  <td style="text-align:left">cy</td>
+  <td style="text-align:left">Welsh</td>
+</tr>
+<tr>
+  <td style="text-align:left">cy-GB</td>
+  <td style="text-align:left">Welsh (United Kingdom)</td>
+</tr>
+<tr>
+  <td style="text-align:left">fy</td>
+  <td style="text-align:left">Western Frisian</td>
+</tr>
+<tr>
+  <td style="text-align:left">fy-NL</td>
+  <td style="text-align:left">Western Frisian (Netherlands)</td>
+</tr>
+<tr>
+  <td style="text-align:left">yi</td>
+  <td style="text-align:left">Yiddish</td>
+</tr>
+<tr>
+  <td style="text-align:left">yo</td>
+  <td style="text-align:left">Yoruba</td>
+</tr>
+<tr>
+  <td style="text-align:left">yo-BJ</td>
+  <td style="text-align:left">Yoruba (Benin)</td>
+</tr>
+<tr>
+  <td style="text-align:left">yo-NG</td>
+  <td style="text-align:left">Yoruba (Nigeria)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zu</td>
+  <td style="text-align:left">Zulu</td>
+</tr>
+<tr>
+  <td style="text-align:left">zu-ZA</td>
+  <td style="text-align:left">Zulu (South Africa)</td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://www.rfc-editor.org/rfc/bcp/bcp47.txt' target='_blank'>BCP 47</a></p></li><li><p><a class='view-text-primary' href='https://ss64.com/locale.html' target='_blank'>Windows 区域设置名称列表</a></p></li><li><p><a class='view-text-primary' href='https://lh.2xlibre.net/locales/' target='_blank'>Linux 区域设置名称列表</a></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:14 创建于: 2025-11-27 09:33:14
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Bash - 帮助手册 - dd</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dd.html" />
+    <meta name="description" content="Bash的dd命令```bashdd[OPERAND]...````!subtitle:功能`复制文件并进行格式转换。`!subtitle:类型`可执行文件（`/usr/bin/dd`），属于[coreutils](https://www.gnu.org/sof">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%9F%BA%E7%A1%80/%E5%BC%80%E5%A7%8B.html" title="开始">开始</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F.html" title="变量">变量</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/until%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="until 循环语句">until 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/case%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="case 分支语句">case 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E8%AF%AD%E6%B3%95/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/alias.html" title="alias">alias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/arch.html" title="arch">arch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/b2sum.html" title="b2sum">b2sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base32.html" title="base32">base32</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/base64.html" title="base64">base64</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basename.html" title="basename">basename</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/basenc.html" title="basenc">basenc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/break.html" title="break">break</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cat.html" title="cat">cat</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cd.html" title="cd">cd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chcon.html" title="chcon">chcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chgrp.html" title="chgrp">chgrp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chmod.html" title="chmod">chmod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/chown.html" title="chown">chown</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cksum.html" title="cksum">cksum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/clear.html" title="clear">clear</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/comm.html" title="comm">comm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/continue.html" title="continue">continue</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cp.html" title="cp">cp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/csplit.html" title="csplit">csplit</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/cut.html" title="cut">cut</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/date.html" title="date">date</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dd.html" title="dd">dd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/df.html" title="df">df</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dir.html" title="dir">dir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dircolors.html" title="dircolors">dircolors</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirname.html" title="dirname">dirname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/dirs.html" title="dirs">dirs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/du.html" title="du">du</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/echo.html" title="echo">echo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/env.html" title="env">env</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expand.html" title="expand">expand</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/export.html" title="export">export</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/expr.html" title="expr">expr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/factor.html" title="factor">factor</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/false.html" title="false">false</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/finger.html" title="finger">finger</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fmt.html" title="fmt">fmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fold.html" title="fold">fold</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/function.html" title="function">function</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/groups.html" title="groups">groups</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/head.html" title="head">head</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/hostid.html" title="hostid">hostid</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/id.html" title="id">id</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/install.html" title="install">install</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/join.html" title="join">join</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/less.html" title="less">less</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/link.html" title="link">link</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ln.html" title="ln">ln</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/logname.html" title="logname">logname</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ls.html" title="ls">ls</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/man.html" title="man">man</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/md5sum.html" title="md5sum">md5sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkdir.html" title="mkdir">mkdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mkfifo.html" title="mkfifo">mkfifo</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mknod.html" title="mknod">mknod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mktemp.html" title="mktemp">mktemp</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/more.html" title="more">more</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/mv.html" title="mv">mv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nice.html" title="nice">nice</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nl.html" title="nl">nl</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nohup.html" title="nohup">nohup</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/nproc.html" title="nproc">nproc</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/numfmt.html" title="numfmt">numfmt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/od.html" title="od">od</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/paste.html" title="paste">paste</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pathchk.html" title="pathchk">pathchk</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pinky.html" title="pinky">pinky</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/popd.html" title="popd">popd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pr.html" title="pr">pr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printenv.html" title="printenv">printenv</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/printf.html" title="printf">printf</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ptx.html" title="ptx">ptx</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pushd.html" title="pushd">pushd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/pwd.html" title="pwd">pwd</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/readlink.html" title="readlink">readlink</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/realpath.html" title="realpath">realpath</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rm.html" title="rm">rm</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/rmdir.html" title="rmdir">rmdir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/runcon.html" title="runcon">runcon</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/seq.html" title="seq">seq</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha1sum.html" title="sha1sum">sha1sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha224sum.html" title="sha224sum">sha224sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha256sum.html" title="sha256sum">sha256sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha384sum.html" title="sha384sum">sha384sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sha512sum.html" title="sha512sum">sha512sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/source.html" title="source">source</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/sync.html" title="sync">sync</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/tail.html" title="tail">tail</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/test.html" title="test">test</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/touch.html" title="touch">touch</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/true.html" title="true">true</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/unalias.html" title="unalias">unalias</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Bash/%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/yes.html" title="yes">yes</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash" rel="nofollow">
+                                    Bash 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/10.Bash/90.帮助手册/EX.dd.md" rel="nofollow">
+                                    dd
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='bb1087' class='view-h4'><a class='view-text-miku' href='#bb1087'>#</a> Bash 的 dd 命令</h1><div class='view-monofont'><div class="highlight"><pre><span></span>dd<span class="w"> </span><span class="o">[</span>OPERAND<span class="o">]</span>...
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:功能</code></p><p class='view-p'>复制文件并进行格式转换。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:类型</code></p><p class='view-p'>可执行文件（<code class='view-text-secondary view-border-1 view-border-secondary'>/usr/bin/dd</code>），属于 <a class='view-text-primary' href='https://www.gnu.org/software/coreutils/' target='_blank'>coreutils</a>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>OPERAND</code> 操作数</p></li></ul><h2 id='4b19f0' class='view-h5'><a class='view-text-miku' href='#4b19f0'>#</a> 操作数</h2><table class='view-width-100'><thead>
+<tr>
+  <th>操作数</th>
+  <th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>bs=BYTES</code></td>
+  <td>每次读写最多 BYTES 字节（默认 512）。会覆盖 <code class='view-text-secondary view-border-1 view-border-secondary'>ibs</code> 与 <code class='view-text-secondary view-border-1 view-border-secondary'>obs</code> 的设置。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>cbs=BYTES</code></td>
+  <td>每次转换 BYTES 字节。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>conv=CONVS</code></td>
+  <td>根据逗号分隔的符号列表对文件进行<a class='view-text-primary' href='#1d5478' target='_blank'>转换</a>。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>count=N</code></td>
+  <td>只复制 N 个输入块。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>ibs=BYTES</code></td>
+  <td>每次读取最多 BYTES 字节（默认 512）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>if=FILE</code></td>
+  <td>从 FILE 读取，而不是从标准输入读取。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>iflag=FLAGS</code></td>
+  <td>按逗号分隔的<a class='view-text-primary' href='#fe39ec' target='_blank'>标志</a>列表控制读取行为。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>obs=BYTES</code></td>
+  <td>每次写入 BYTES 字节（默认 512）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>of=FILE</code></td>
+  <td>写入到 FILE，而不是标准输出。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>oflag=FLAGS</code></td>
+  <td>按逗号分隔的<a class='view-text-primary' href='#fe39ec' target='_blank'>标志</a>列表控制写入行为。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>seek=N</code>（或 <code class='view-text-secondary view-border-1 view-border-secondary'>oseek=N</code>）</td>
+  <td>跳过 N 个 obs 大小的输出块。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>skip=N</code>（或 <code class='view-text-secondary view-border-1 view-border-secondary'>iseek=N</code>）</td>
+  <td>跳过 N 个 ibs 大小的输入块。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>status=LEVEL</code></td>
+  <td>输出到 stderr 的信息级别：<code class='view-text-secondary view-border-1 view-border-secondary'>none</code> 只显示错误；<code class='view-text-secondary view-border-1 view-border-secondary'>noxfer</code> 隐藏最终传输统计；<code class='view-text-secondary view-border-1 view-border-secondary'>progress</code> 显示周期性传输统计。</td>
+</tr>
+</tbody>
+</table><blockquote><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>N</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>BYTES</code> 可用使用以下单位：c=1, w=2, b=512, kB=1000, K=1024, MB=1000*1000, M=1024*1024, xM=M 以及 G, T, P, E, Z, Y, R, Q 等二进制单位前缀.</p></blockquote><h2 id='1d5478' class='view-h5'><a class='view-text-miku' href='#1d5478'>#</a> 转换参数</h2><table class='view-width-100'><thead>
+<tr>
+  <th>转换参数（<code class='view-text-secondary view-border-1 view-border-secondary'>CONV</code>）</th>
+  <th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>ascii</code></td>
+  <td>从 <strong>EBCDIC 转换为 ASCII</strong>。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>ebcdic</code></td>
+  <td>从 <strong>ASCII 转换为 EBCDIC</strong>。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>ibm</code></td>
+  <td>从 <strong>ASCII 转换为另一种 IBM EBCDIC 变体</strong>。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>block</code></td>
+  <td>将以换行符结尾的记录填充空格，使其达到 <code class='view-text-secondary view-border-1 view-border-secondary'>cbs</code> 指定大小。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>unblock</code></td>
+  <td>将 <code class='view-text-secondary view-border-1 view-border-secondary'>cbs</code> 大小记录中的尾随空格替换为换行符。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>lcase</code></td>
+  <td>将大写字母转换为小写字母。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>ucase</code></td>
+  <td>将小写字母转换为大写字母。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>sparse</code></td>
+  <td>遇到全 NUL 的输出块时尝试使用 seek，而不是实际写入。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>swab</code></td>
+  <td>每两个字节交换顺序（字节对调）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>sync</code></td>
+  <td>将每个输入块填充 NUL，使其达到 ibs 大小；与 <code class='view-text-secondary view-border-1 view-border-secondary'>block</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>unblock</code> 一起使用时填充空格而非 NUL。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>excl</code></td>
+  <td>如果输出文件已存在则失败。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>nocreat</code></td>
+  <td>不创建输出文件。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>notrunc</code></td>
+  <td>不截断输出文件。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>noerror</code></td>
+  <td>读取出错后继续。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>fdatasync</code></td>
+  <td>结束前将输出文件的数据物理写入磁盘。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>fsync</code></td>
+  <td>行为类似，但同时写入文件元数据。</td>
+</tr>
+</tbody>
+</table><h2 id='fe39ec' class='view-h5'><a class='view-text-miku' href='#fe39ec'>#</a> Flag 参数</h2><table class='view-width-100'><thead>
+<tr>
+  <th>Flag</th>
+  <th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>append</code></td>
+  <td>追加模式（仅对输出有意义，建议搭配 <code class='view-text-secondary view-border-1 view-border-secondary'>conv=notrunc</code>）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>direct</code></td>
+  <td>使用直接 I/O（跳过缓存）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>directory</code></td>
+  <td>失败，除非目标是目录。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>dsync</code></td>
+  <td>数据使用同步 I/O。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>sync</code></td>
+  <td>同上，但也同步元数据。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>fullblock</code></td>
+  <td>累积完整的输入块（仅适用于 iflag）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>nonblock</code></td>
+  <td>使用非阻塞 I/O。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>noatime</code></td>
+  <td>不更新访问时间。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>nocache</code></td>
+  <td>请求丢弃缓存（同时可参考 <code class='view-text-secondary view-border-1 view-border-secondary'>oflag=sync</code>）。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>noctty</code></td>
+  <td>不从文件获取控制终端。</td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>nofollow</code></td>
+  <td>不跟随符号链接。</td>
+</tr>
+</tbody>
+</table><h2 id='0d53f0' class='view-h5'><a class='view-text-miku' href='#0d53f0'>#</a> 示例</h2><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>file.bin<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1M<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">100</span>
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>file.bin<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1M<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">seek</span><span class="o">=</span>10G
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/sda<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/path/disk.img<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/sda<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/null<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M<span class="w"> </span><span class="nv">status</span><span class="o">=</span>progress
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/sdb<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1M
+</pre></div>
+</div><div class='view-monofont'><div class="highlight"><pre><span></span>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>ubuntu.iso<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/sdb<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M<span class="w"> </span><span class="nv">status</span><span class="o">=</span>progress<span class="w"> </span><span class="nv">oflag</span><span class="o">=</span>sync
+</pre></div>
+</div><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://www.gnu.org/software/coreutils/manual/html_node/dd-invocation.html' target='_blank'>Convert and copy a file - GNU Coreutils</a></p></li><li><p><a class='view-text-primary' href='https://www.man7.org/linux/man-pages/man1/dd.1.html' target='_blank'>dd(1) — Linux manual page</a></p></li></ul><h2 id='5fe4e2' class='view-h5'><a class='view-text-miku' href='#5fe4e2'>#</a> 手册</h2><div class='view-monofont'><div class="highlight"><pre><span></span>DD(1)                            User Commands                           DD(1)
+
+NAME
+       dd - convert and copy a file
+
+SYNOPSIS
+       dd [OPERAND]...
+       dd OPTION
+
+DESCRIPTION
+       Copy a file, converting and formatting according to the operands.
+
+       bs=BYTES
+              read and write up to BYTES bytes at a time (default: 512); over‐
+              rides ibs and obs
+
+       cbs=BYTES
+              convert BYTES bytes at a time
+
+       conv=CONVS
+              convert the file as per the comma separated symbol list
+
+       count=N
+              copy only N input blocks
+
+       ibs=BYTES
+              read up to BYTES bytes at a time (default: 512)
+
+       if=FILE
+              read from FILE instead of stdin
+
+       iflag=FLAGS
+              read as per the comma separated symbol list
+
+       obs=BYTES
+              write BYTES bytes at a time (default: 512)
+
+       of=FILE
+              write to FILE instead of stdout
+
+       oflag=FLAGS
+              write as per the comma separated symbol list
+
+       seek=N (or oseek=N) skip N obs-sized output blocks
+
+       skip=N (or iseek=N) skip N ibs-sized input blocks
+
+       status=LEVEL
+              The  LEVEL  of information to print to stderr; &#39;none&#39; suppresses
+              everything but error messages,  &#39;noxfer&#39;  suppresses  the  final
+              transfer  statistics, &#39;progress&#39; shows periodic transfer statis‐
+              tics
+
+       N and BYTES may be followed by the following  multiplicative  suffixes:
+       c=1,  w=2,  b=512,  kB=1000,  K=1024,  MB=1000*1000, M=1024*1024, xM=M,
+       GB=1000*1000*1000, G=1024*1024*1024, and so on for T, P, E, Z, Y, R, Q.
+       Binary prefixes can be used, too: KiB=K, MiB=M, and so on.  If  N  ends
+       in &#39;B&#39;, it counts bytes not blocks.
+
+       Each CONV symbol may be:
+
+       ascii  from EBCDIC to ASCII
+
+       ebcdic from ASCII to EBCDIC
+
+       ibm    from ASCII to alternate EBCDIC
+
+       block  pad newline-terminated records with spaces to cbs-size
+
+       unblock
+              replace trailing spaces in cbs-size records with newline
+
+       lcase  change upper case to lower case
+
+       ucase  change lower case to upper case
+
+       sparse try to seek rather than write all-NUL output blocks
+
+       swab   swap every pair of input bytes
+
+       sync   pad  every  input  block  with  NULs to ibs-size; when used with
+              block or unblock, pad with spaces rather than NULs
+
+       excl   fail if the output file already exists
+
+       nocreat
+              do not create the output file
+
+       notrunc
+              do not truncate the output file
+
+       noerror
+              continue after read errors
+
+       fdatasync
+              physically write output file data before finishing
+
+       fsync  likewise, but also write metadata
+
+       Each FLAG symbol may be:
+
+       append append mode (makes sense  only  for  output;  conv=notrunc  sug‐
+              gested)
+
+       direct use direct I/O for data
+
+       directory
+              fail unless a directory
+
+       dsync  use synchronized I/O for data
+
+       sync   likewise, but also for metadata
+
+       fullblock
+              accumulate full blocks of input (iflag only)
+
+       nonblock
+              use non-blocking I/O
+
+       noatime
+              do not update access time
+
+       nocache
+              Request to drop cache.  See also oflag=sync
+
+       noctty do not assign controlling terminal from file
+
+       nofollow
+              do not follow symlinks
+
+       Sending a USR1 signal to a running &#39;dd&#39; process makes it print I/O sta‐
+       tistics to standard error and then resume copying.
+
+       Options are:
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+AUTHOR
+       Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
+
+REPORTING BUGS
+       GNU coreutils online help: &lt;https://www.gnu.org/software/coreutils/&gt;
+       Report any translation bugs to &lt;https://translationproject.org/team/&gt;
+
+COPYRIGHT
+       Copyright  ©  2023  Free Software Foundation, Inc.  License GPLv3+: GNU
+       GPL version 3 or later &lt;https://gnu.org/licenses/gpl.html&gt;.
+       This is free software: you are free  to  change  and  redistribute  it.
+       There is NO WARRANTY, to the extent permitted by law.
+
+SEE ALSO
+       Full documentation &lt;https://www.gnu.org/software/coreutils/dd&gt;
+       or available locally via: info &#39;(coreutils) dd invocation&#39;
+
+GNU coreutils 9.4                 April 2024                             DD(1)
+</pre></div>
+</div>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:11 创建于: 2025-11-27 09:33:11
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

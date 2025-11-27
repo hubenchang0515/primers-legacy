@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 内置模块 - os-module</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" />
+    <meta name="description" content="Lua的OS模块!class:info请查看[Lua标准库模块列表](/document/zh/09.Lua/90.API%20帮助手册.md/01.目录.mdb07e50)了解更多相关API。|函数">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/92.内置模块/EX.os-module.md" rel="nofollow">
+                                    os-module
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='d740db' class='view-h4'><a class='view-text-miku' href='#d740db'>#</a> Lua 的 OS 模块</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html'>Lua 标准库模块列表</a> 了解更多相关 API。</div><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#ea807a' target='_blank'>os.clock</a></td>
+  <td style="text-align:left">获取程序使用的 CPU 时间（单位为秒）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#ca0020' target='_blank'>os.date</a></td>
+  <td style="text-align:left">获取日期和时间</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#e34bc6' target='_blank'>os.difftime</a></td>
+  <td style="text-align:left">计算时间差</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#e34bc6' target='_blank'>os.execute</a></td>
+  <td style="text-align:left">执行命令</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#f42156' target='_blank'>os.exit</a></td>
+  <td style="text-align:left">终止主机程序</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#0ac98e' target='_blank'>os.getenv</a></td>
+  <td style="text-align:left">获取环境变量</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#f99958' target='_blank'>os.remove</a></td>
+  <td style="text-align:left">删除文件</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#62b846' target='_blank'>os.rename</a></td>
+  <td style="text-align:left">修改文件名</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#82cf4e' target='_blank'>os.setlocale</a></td>
+  <td style="text-align:left">修改区域设置</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#6fe6cb' target='_blank'>os.time</a></td>
+  <td style="text-align:left">获取时间</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#7cdf15' target='_blank'>os.titmpnameme</a></td>
+  <td style="text-align:left">生成一个临时文件名</td>
+</tr>
+</tbody>
+</table><h2 id='ea807a' class='view-h5'><a class='view-text-miku' href='#ea807a'>#</a> os.clock</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.clock ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取程序使用的 CPU 时间的近似值（以秒为单位），通过 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/clock.html'>C 语言标准库函数 clock</a> 实现。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回程序使用的 CPU 时间（秒）</p></li></ul><h2 id='ca0020' class='view-h5'><a class='view-text-miku' href='#ca0020'>#</a> os.date</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.date ([format [, time]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>格式化日期和时间。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>format</code> - 格式；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;%c&quot;</code>，返回当前语言环境提供人类可读的日期和时间表示<ul><li><p>以 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;!&quot;</code> 开头时采用协调世界时间 (UTC) ，否则采用本地时间</p></li><li><p>在可选的 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;!&quot;</code> 之后，以 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;*t&quot;</code> 开头时返回表，否则返回字符串</p></li><li><p>此后格式和 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/strftime.html'>C 语言标准库函数 strftime</a> 保持一致</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>time</code> - 时间（以秒为单位的时间戳）；默认不带时间</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>日期和时间的表或字符串</p></li></ul><blockquote><p class='view-p'>表的字段为：<code class='view-text-secondary view-border-1 view-border-secondary'>year</code>(年)，<code class='view-text-secondary view-border-1 view-border-secondary'>month</code>(月，1–12)，<code class='view-text-secondary view-border-1 view-border-secondary'>day</code>(日，1–31)，<code class='view-text-secondary view-border-1 view-border-secondary'>hour</code>(时，0–23)，<code class='view-text-secondary view-border-1 view-border-secondary'>min</code>(分，0–59)，<code class='view-text-secondary view-border-1 view-border-secondary'>sec</code>(秒，0–61，含闰秒)，<code class='view-text-secondary view-border-1 view-border-secondary'>wday</code>(星期几，1–7，星期日为 1)，<code class='view-text-secondary view-border-1 view-border-secondary'>yday</code>(一年中的第几天，1–366) 和 <code class='view-text-secondary view-border-1 view-border-secondary'>isdst</code>(夏令时标志，布尔值)。</p></blockquote><h2 id='03e6cf' class='view-h5'><a class='view-text-miku' href='#03e6cf'>#</a> os.difftime</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.difftime (t2, t1)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>计算时间差 <span class="math">\(t2 - t1\)</span>，结果以秒为单位。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>t2</code> - 结束时间</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>t1</code> - 开始时间</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>时间相差的秒数</p></li></ul><h2 id='e34bc6' class='view-h5'><a class='view-text-miku' href='#e34bc6'>#</a> os.execute</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.execute ([command])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>执行命令 <code class='view-text-secondary view-border-1 view-border-secondary'>command</code>，等效于 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/system.html'>C 语言标准库函数 system</a></p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>command</code> - 要执行的命令</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>第一个返回值是一个布尔值，表示命令是（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）否（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）执行成功</p></li><li><p>第二个返回值是一个字符串：<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;exit&quot;</code> - 命令正常退出，下一个返回值是命令的返回值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;signal&quot;</code> - 命令被信号终止，下一个返回值是终止该命令的信号</p></li></ul></p></li><li><p>第三个返回值是一个整数，表示命令的返回值或终止该命令的信号</p></li></ul><h2 id='f42156' class='view-h5'><a class='view-text-miku' href='#f42156'>#</a> os.exit</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.exit ([code [, close]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>调用 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/exit.html'>C 语言标准库函数 exit</a> 退出程序。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>code</code> - 结束状态；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>true</code> 时返回值为 <code class='view-text-secondary view-border-1 view-border-secondary'>EXIT_SUCCESS</code></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>false</code> 时返回值为 <code class='view-text-secondary view-border-1 view-border-secondary'>EXIT_FAILURE</code>；</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>close</code> - 是否关闭 Lua 状态</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><h2 id='0ac98e' class='view-h5'><a class='view-text-miku' href='#0ac98e'>#</a> os.getenv</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.getenv (varname)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取环境变量 <code class='view-text-secondary view-border-1 view-border-secondary'>varname</code> 的值。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>varname</code> - 环境变量的名称</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回环境变量 <code class='view-text-secondary view-border-1 view-border-secondary'>varname</code> 的值</p></li><li><p>如果环境变量 <code class='view-text-secondary view-border-1 view-border-secondary'>varname</code> 不存在则返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><h2 id='f99958' class='view-h5'><a class='view-text-miku' href='#f99958'>#</a> os.remove</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.remove (filename)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>删除文件 <code class='view-text-secondary view-border-1 view-border-secondary'>filename</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>filename</code> - 要删除的文件</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code></p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code>、错误信息以及错误码</p></li></ul><h2 id='62b846' class='view-h5'><a class='view-text-miku' href='#62b846'>#</a> os.rename</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.rename (oldname, newname)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将文件 <code class='view-text-secondary view-border-1 view-border-secondary'>oldname</code> 重命名为 <code class='view-text-secondary view-border-1 view-border-secondary'>newname</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>oldname</code> - 要重命名的文件</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>newname</code> - 新的文件名</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>true</code></p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code>、错误信息以及错误码</p></li></ul><h2 id='82cf4e' class='view-h5'><a class='view-text-miku' href='#82cf4e'>#</a> os.setlocale</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.setlocale (locale [, category])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>设置程序的区域配置，参考 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/setlocale.html'>C 语言标准库函数 setlocale</a>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>locale</code> - 要设为的区域<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> - 不改变配置，仅返回给定类别的当前的区域</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&quot;</code> - 本机区域</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;C&quot;</code> - 标准 C 区域设置</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>category</code> - 要设置的区域配置类别；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;all&quot;</code><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;all&quot;</code> - 全部</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;collate&quot;</code> - 排序规则</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;ctype&quot;</code> - 字符类型</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;monetary&quot;</code> - 货币格式</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;numeric&quot;</code> - 数值格式</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;time&quot;</code> - 时间格式</p></li></ul></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回设置后的区域</p></li></ul><h2 id='6fe6cb' class='view-h5'><a class='view-text-miku' href='#6fe6cb'>#</a> os.time</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.time ([table])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取时间。</p><ul><li><p>不带参数时返回当前时间</p></li><li><p>带参数时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>table</code> 中指定的本地日期和时间</p></li></ul><p class='view-p'>表的有效字段为：</p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>year</code>(年)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>month</code>(月，1–12)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>day</code>(日，1–31)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>hour</code>(时，0–23)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>min</code>(分，0–59)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>sec</code>(秒，0–61，含闰秒)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>wday</code>(星期几，1–7，星期日为 1)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>yday</code>(一年中的第几天，1–366)</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>isdst</code>(夏令时标志，布尔值)。</p></li></ul><p class='view-p'>表中的字段可以超出有效范围，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>sec</code> 为 -10 时表示比其他字段指定的时间早 10 秒。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>table</code> - 本地日期和时间</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>不带参数时返回当前时间</p></li><li><p>带参数时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>table</code> 中指定的本地日期和时间</p></li></ul><h2 id='7cdf15' class='view-h5'><a class='view-text-miku' href='#7cdf15'>#</a> os.titmpnameme</h2><div class='view-monofont'><div class="highlight"><pre><span></span>os.tmpname ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>生成一个临时文件名。需要显式打开才能使用，并且需要手动删除。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回临时文件名</p></li></ul><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><p class='view-p'><a class='view-text-primary' href='https://www.lua.org/manual/5.4/manual.html#6.9' target='_blank'>Operating System Facilities - Lua 5.4 Reference Manual</a></p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:10 创建于: 2025-11-27 09:33:10
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

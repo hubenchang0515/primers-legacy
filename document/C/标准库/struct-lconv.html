@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - C - 标准库 - struct-lconv</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/C/%E6%A0%87%E5%87%86%E5%BA%93/struct-lconv.html" />
+    <meta name="description" content="C语言的structlconv!class:info在头文件[locale.h](/document/zh/06.C/99.API%20帮助手册/EX.locale.h.md)中定义。这个字段用于保存环境定义的数字和货币格式规则。```cstructlconv">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/C%20%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="C 语言的简介与环境配置">C 语言的简介与环境配置</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/Hello%20World.html" title="Hello World">Hello World</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html" title="显示输出">显示输出</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%8C%87%E9%92%88.html" title="指针">指针</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5.html" title="获取输入">获取输入</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/switch%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="switch 分支语句">switch 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%BB%93%E6%9E%84%E4%BD%93%20struct.html" title="结构体 struct">结构体 struct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%9E%9A%E4%B8%BE%20enum.html" title="枚举 enum">枚举 enum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%85%B1%E7%94%A8%E4%BD%93%20union.html" title="共用体 union">共用体 union</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20typedef.html" title="类型别名 typedef">类型别名 typedef</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进阶</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E8%BF%9B%E9%98%B6/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.html" title="动态内存管理">动态内存管理</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预处理指令</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html" title="文件包含指令">文件包含指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html" title="宏定义指令">宏定义指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html" title="条件编译指令">条件编译指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html" title="行号修改指令">行号修改指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html" title="错误和警告指令">错误和警告指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html" title="文件嵌入指令">文件嵌入指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html" title="编译器指令">编译器指令</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html" title="标准库">标准库</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/assert.h.html" title="assert.h">assert.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/complex.h.html" title="complex.h">complex.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html" title="ctype.h">ctype.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" title="errno.h">errno.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html" title="fenv.h">fenv.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html" title="float.h">float.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html" title="inttypes.h">inttypes.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/iso646.h.html" title="iso646.h">iso646.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/limits.h.html" title="limits.h">limits.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html" title="locale.h">locale.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" title="math.h">math.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/setjmp.h.html" title="setjmp.h">setjmp.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/signal.h.html" title="signal.h">signal.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdalign.h.html" title="stdalign.h">stdalign.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdarg.h.html" title="stdarg.h">stdarg.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdatomic.h.html" title="stdatomic.h">stdatomic.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbit.h.html" title="stdbit.h">stdbit.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbool.h.html" title="stdbool.h">stdbool.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdckdint.h.html" title="stdckdint.h">stdckdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stddef.h.html" title="stddef.h">stddef.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html" title="stdint.h">stdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html" title="stdio.h">stdio.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdlib.h.html" title="stdlib.h">stdlib.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdnoreturn.h.html" title="stdnoreturn.h">stdnoreturn.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html" title="string.h">string.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/threads.h.html" title="threads.h">threads.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/time.h.html" title="time.h">time.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wchar.h.html" title="wchar.h">wchar.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wctype.h.html" title="wctype.h">wctype.h</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C" rel="nofollow">
+                                    C 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C/EX.标准库.hide/EX.struct-lconv.md" rel="nofollow">
+                                    struct-lconv
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='066bff' class='view-h4'><a class='view-text-miku' href='#066bff'>#</a> C 语言的 struct lconv</h1><div class='custom info'>在头文件 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html'>locale.h</a> 中定义。</div><p class='view-p'>这个字段用于保存环境定义的数字和货币格式规则。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">lconv</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">decimal_point</span><span class="p">;</span><span class="w">        </span><span class="c1">// &quot;.&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">thousands_sep</span><span class="p">;</span><span class="w">        </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">grouping</span><span class="p">;</span><span class="w">             </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">mon_decimal_point</span><span class="p">;</span><span class="w">    </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">mon_thousands_sep</span><span class="p">;</span><span class="w">    </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">mon_grouping</span><span class="p">;</span><span class="w">         </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">positive_sign</span><span class="p">;</span><span class="w">        </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">negative_sign</span><span class="p">;</span><span class="w">        </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">currency_symbol</span><span class="p">;</span><span class="w">      </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">frac_digits</span><span class="p">;</span><span class="w">          </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">p_cs_precedes</span><span class="p">;</span><span class="w">        </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">n_cs_precedes</span><span class="p">;</span><span class="w">        </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">p_sep_by_space</span><span class="p">;</span><span class="w">       </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">n_sep_by_space</span><span class="p">;</span><span class="w">       </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">p_sign_posn</span><span class="p">;</span><span class="w">          </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">n_sign_posn</span><span class="p">;</span><span class="w">          </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">int_curr_symbol</span><span class="p">;</span><span class="w">      </span><span class="c1">// &quot;&quot;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_frac_digits</span><span class="p">;</span><span class="w">      </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_p_cs_precedes</span><span class="p">;</span><span class="w">    </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_n_cs_precedes</span><span class="p">;</span><span class="w">    </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_p_sep_by_space</span><span class="p">;</span><span class="w">   </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_n_sep_by_space</span><span class="p">;</span><span class="w">   </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_p_sign_posn</span><span class="p">;</span><span class="w">      </span><span class="c1">// CHAR_MAX</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">  </span><span class="n">int_n_sign_posn</span><span class="p">;</span><span class="w">      </span><span class="c1">// CHAR_MAX</span>
+<span class="p">};</span>
+</pre></div>
+</div><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">字段（数值）</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>decimal_point</code></td>
+  <td style="text-align:left">小数点</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>thousands_sep</code></td>
+  <td style="text-align:left">数字分隔符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>grouping</code></td>
+  <td style="text-align:left">数字分组规则：例如 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;\3&quot;</code> 表示每 3 位分组；<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;\3\2&quot;</code> 表示最右 3 位一组，之后每 2 位一组</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">字段（货币值）</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>mon_decimal_point</code></td>
+  <td style="text-align:left">用于货币值的小数点</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>mon_thousands_sep</code></td>
+  <td style="text-align:left">用于货币值的数字分隔符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>mon_grouping</code></td>
+  <td style="text-align:left">用于货币值的数字分组规则</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>positive_sign</code></td>
+  <td style="text-align:left">用于货币值的正号</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>negative_sign</code></td>
+  <td style="text-align:left">用于货币值的负号</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">字段（本地货币格式）</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>currency_symbol</code></td>
+  <td style="text-align:left">货币符号：例如 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;$&quot;</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>frac_digits</code></td>
+  <td style="text-align:left">货币格式的小数位数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>p_cs_precedes</code></td>
+  <td style="text-align:left">货币符号显示在负值之前（1）还是之后（0）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>n_cs_precedes</code></td>
+  <td style="text-align:left">货币符号显示在正值之前（1）还是之后（0）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>p_sep_by_space</code></td>
+  <td style="text-align:left">正值中货币符号与值之间是否有空格</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>n_sep_by_space</code></td>
+  <td style="text-align:left">负值中货币符号与值之间是否有空格</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>p_sign_posn</code></td>
+  <td style="text-align:left">货币中正号的位置：0 - <code class='view-text-secondary view-border-1 view-border-secondary'>($100)</code>，1 - <code class='view-text-secondary view-border-1 view-border-secondary'>+$100</code>，2 - <code class='view-text-secondary view-border-1 view-border-secondary'>$100+</code>，3 - <code class='view-text-secondary view-border-1 view-border-secondary'>+$100</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>100+$</code>，4 - <code class='view-text-secondary view-border-1 view-border-secondary'>$+100</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>n_sign_posn</code></td>
+  <td style="text-align:left">货币中负号的位置：0 - <code class='view-text-secondary view-border-1 view-border-secondary'>($100)</code>，1 - <code class='view-text-secondary view-border-1 view-border-secondary'>-$100</code>，2 - <code class='view-text-secondary view-border-1 view-border-secondary'>$100-</code>，3 - <code class='view-text-secondary view-border-1 view-border-secondary'>-$100</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>100-$</code>，4 - <code class='view-text-secondary view-border-1 view-border-secondary'>$-100</code></td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">字段（国际货币格式）</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_curr_symbol</code></td>
+  <td style="text-align:left">货币符号：例如 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;USD&quot;</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_frac_digits</code></td>
+  <td style="text-align:left">货币格式的小数位数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_p_cs_precedes</code></td>
+  <td style="text-align:left">货币符号显示在负值之前（1）还是之后（0）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_n_cs_precedes</code></td>
+  <td style="text-align:left">货币符号显示在正值之前（1）还是之后（0）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_p_sep_by_space</code></td>
+  <td style="text-align:left">正值中货币符号与值之间是否有空格</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_n_sep_by_space</code></td>
+  <td style="text-align:left">负值中货币符号与值之间是否有空格</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_p_sign_posn</code></td>
+  <td style="text-align:left">货币中正号的位置：0 - <code class='view-text-secondary view-border-1 view-border-secondary'>($100)</code>，1 - <code class='view-text-secondary view-border-1 view-border-secondary'>+$100</code>，2 - <code class='view-text-secondary view-border-1 view-border-secondary'>$100+</code>，3 - <code class='view-text-secondary view-border-1 view-border-secondary'>+$100</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>100+$</code>，4 - <code class='view-text-secondary view-border-1 view-border-secondary'>$+100</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>int_n_sign_posn</code></td>
+  <td style="text-align:left">货币中负号的位置：0 - <code class='view-text-secondary view-border-1 view-border-secondary'>($100)</code>，1 - <code class='view-text-secondary view-border-1 view-border-secondary'>-$100</code>，2 - <code class='view-text-secondary view-border-1 view-border-secondary'>$100-</code>，3 - <code class='view-text-secondary view-border-1 view-border-secondary'>-$100</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>100-$</code>，4 - <code class='view-text-secondary view-border-1 view-border-secondary'>$-100</code></td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://en.cppreference.com/w/c/header/locale.html' target='_blank'>locale - cppreference</a></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:08 创建于: 2025-11-27 09:33:08
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

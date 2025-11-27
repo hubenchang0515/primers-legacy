@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 内置模块 - debug-module</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" />
+    <meta name="description" content="Lua的Debug模块!class:info请查看[Lua标准库模块列表](/document/zh/09.Lua/90.API%20帮助手册.md/01.目录.mdb07e50)了解更多相关API。Debug模块为Lua程序提供了调试接口。使用此模块时应">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/92.内置模块/EX.debug-module.md" rel="nofollow">
+                                    debug-module
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='74c845' class='view-h4'><a class='view-text-miku' href='#74c845'>#</a> Lua 的 Debug 模块</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html'>Lua 标准库模块列表</a> 了解更多相关 API。</div><p class='view-p'>Debug 模块为 Lua 程序提供了调试接口。使用此模块时应格外小心，其中的一些函数违反了 Lua 代码的基本假设（例如，函数内部的变量不能从外部访问；用户数据元表不能被 Lua 代码修改；Lua 程序不会崩溃），因此可能会危及原本安全的代码。并且某些函数可能运行缓慢。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.debug' target='_blank'>debug.debug</a>)</td>
+  <td style="text-align:left">启动调试模式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getinfo' target='_blank'>debug.getinfo</a>)</td>
+  <td style="text-align:left">获取函数信息</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.gethook' target='_blank'>debug.gethook</a>)</td>
+  <td style="text-align:left">获取调试钩子</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.sethook' target='_blank'>debug.sethook</a>)</td>
+  <td style="text-align:left">设置调试钩子</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getlocal' target='_blank'>debug.getlocal</a>)</td>
+  <td style="text-align:left">获取栈上局部变量</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.setlocal' target='_blank'>debug.setlocal</a>)</td>
+  <td style="text-align:left">设置栈上局部变量</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getmetatable' target='_blank'>debug.getmetatable</a>)</td>
+  <td style="text-align:left">获取元表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.setmetatable' target='_blank'>debug.setmetatable</a>)</td>
+  <td style="text-align:left">设置元表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getregistry' target='_blank'>debug.getregistry</a>)</td>
+  <td style="text-align:left">获取注册表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getupvalue' target='_blank'>debug.getupvalue</a>)</td>
+  <td style="text-align:left">获取闭包上值表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.setupvalue' target='_blank'>debug.setupvalue</a>)</td>
+  <td style="text-align:left">设置闭包上值表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.upvalueid' target='_blank'>debug.upvalueid</a>)</td>
+  <td style="text-align:left">获取闭包上值 ID</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.upvaluejoin' target='_blank'>debug.upvaluejoin</a>)</td>
+  <td style="text-align:left">使闭包引用另一个闭包的上值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.getuservalue' target='_blank'>debug.getuservalue</a>)</td>
+  <td style="text-align:left">获取用户值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.setuservalue' target='_blank'>debug.setuservalue</a>)</td>
+  <td style="text-align:left">设置用户值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#!hash(debug.traceback' target='_blank'>debug.traceback</a>)</td>
+  <td style="text-align:left">获取栈的回溯信息</td>
+</tr>
+</tbody>
+</table><h2 id='4b0a66' class='view-h5'><a class='view-text-miku' href='#4b0a66'>#</a> debug.debug</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.debug ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>进入调试模式的交互式命令行，将用户输入的字符串作为 Lua 代码运行，输入 <code class='view-text-secondary view-border-1 view-border-secondary'>cont</code> 即可退出调试模式继续运行程序。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&input=cHJpbnQlMjhuJTJD&code=bG9jYWwlMjBuJTIwJTNEJTIwMTAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNCVCOCU4RCVFOCU4MyVCRCVFOCVBRSVCRiVFOSU5NyVBRSVFNSVCMSU4MCVFOSU4MyVBOCVFNSU4RiU5OCVFOSU4NyU4RiUwQXRleHQlMjAlM0QlMjAlMjJodHRwcyUzQS8veHBsYW5jLm9yZy8lMjIlMjAlMjAlMjAlMjAtLSUyMCVFNSU4RiVBRiVFNCVCQiVBNSVFOCVBRSVCRiVFOSU5NyVBRSVFNSU4NSVBOCVFNSVCMSU4MCVFNSU4RiU5OCVFOSU4NyU4RiUwQWRlYnVnLmRlYnVnJTIwJTI4JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>                    <span class="c1">-- 不能访问局部变量</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;https://xplanc.org/&quot;</span>    <span class="c1">-- 可以访问全局变量</span>
+<span class="nb">debug.debug</span> <span class="p">()</span>
+</pre></div>
+</div><h2 id='f35822' class='view-h5'><a class='view-text-miku' href='#f35822'>#</a> debug.gethook</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.gethook ([thread])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取线程 <code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> 的调试钩子函数。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回调试钩子函数</p></li></ul><h2 id='d682d0' class='view-h5'><a class='view-text-miku' href='#d682d0'>#</a> debug.getinfo</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getinfo ([thread,] f [, what])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取函数信息的表。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 函数或函数在栈上的层级</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>what</code> - 指定想要的信息；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;nSluf&quot;</code></p></li></ul><table class='view-width-100'><thead>
+<tr>
+  <th><code class='view-text-secondary view-border-1 view-border-secondary'>what</code> 接受的值</th>
+  <th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>n</strong></td>
+  <td>函数名及调用方式（<code class='view-text-secondary view-border-1 view-border-secondary'>name</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>namewhat</code>）</td>
+</tr>
+<tr>
+  <td><strong>S</strong></td>
+  <td>源代码信息（<code class='view-text-secondary view-border-1 view-border-secondary'>short_src</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>linedefined</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>lastlinedefined</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>what</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>source</code>）</td>
+</tr>
+<tr>
+  <td><strong>l</strong></td>
+  <td>当前行号（<code class='view-text-secondary view-border-1 view-border-secondary'>currentline</code>）</td>
+</tr>
+<tr>
+  <td><strong>u</strong></td>
+  <td>函数的上值与参数信息（<code class='view-text-secondary view-border-1 view-border-secondary'>nups</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>nparams</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>isvararg</code>）</td>
+</tr>
+<tr>
+  <td><strong>f</strong></td>
+  <td>返回实际的函数本身（<code class='view-text-secondary view-border-1 view-border-secondary'>func</code>）</td>
+</tr>
+<tr>
+  <td><strong>L</strong></td>
+  <td>包含该函数中哪些行有可执行代码（<code class='view-text-secondary view-border-1 view-border-secondary'>activelines</code> 表）</td>
+</tr>
+</tbody>
+</table><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回函数信息表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBsZXZlbDElMjglMjklMEElMjAlMjAlMjAlMjBwcmludCUyOGRlYnVnLmdldGluZm8lMjgwJTI5JTVCJTI3bmFtZSUyNyU1RCUyOSUyMCUyMCUyMCUyMCUyMC0tJTIwJUU2JThDJTg5JUU2JUEwJTg4JUU0JUI4JThBJUU0JUJEJThEJUU3JUJEJUFFJUU4JThFJUI3JUU1JThGJTk2JUU0JUJGJUExJUU2JTgxJUFGJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhkZWJ1Zy5nZXRpbmZvJTI4MSUyOSU1QiUyN25hbWUlMjclNUQlMjklMEElMjAlMjAlMjAlMjBwcmludCUyOGRlYnVnLmdldGluZm8lMjgyJTI5JTVCJTI3bmFtZSUyNyU1RCUyOSUwQSUyMCUyMCUyMCUyMHByaW50JTI4ZGVidWcuZ2V0aW5mbyUyODMlMjklNUIlMjduYW1lJTI3JTVEJTI5JTBBZW5kJTBBJTBBZnVuY3Rpb24lMjBsZXZlbDIlMjglMjklMEElMjAlMjAlMjAlMjBsZXZlbDElMjglMjklMEFlbmQlMEElMEFmdW5jdGlvbiUyMGxldmVsMyUyOCUyOSUwQSUyMCUyMCUyMCUyMGxldmVsMiUyOCUyOSUwQWVuZCUwQSUwQWZ1bmN0aW9uJTIwbWFpbiUyOCUyOSUwQSUyMCUyMCUyMCUyMGxldmVsMyUyOCUyOSUwQWVuZCUwQSUwQW1haW4lMjglMjklMEElMEFsb2NhbCUyMGluZm8lMjAlM0QlMjBkZWJ1Zy5nZXRpbmZvJTI4bWFpbiUyQyUyMCUyN25sJTI3JTI5JTIwJTIwLS0lMjAlRTglOEUlQjclRTUlOEYlOTYlRTYlOEMlODclRTUlQUUlOUElRTUlODclQkQlRTYlOTUlQjAlRTQlQkYlQTElRTYlODElQUYlMEFmb3IlMjBrJTJDdiUyMGluJTIwcGFpcnMlMjhpbmZvJTI5JTIwZG8lMEElMjAlMjAlMjAlMjBwcmludCUyOGslMkMlMjB2JTI5JTBBZW5kJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">level1</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getinfo</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>     <span class="c1">-- 按栈上位置获取信息</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getinfo</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getinfo</span><span class="p">(</span><span class="mi">2</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getinfo</span><span class="p">(</span><span class="mi">3</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">level2</span><span class="p">()</span>
+    <span class="n">level1</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">level3</span><span class="p">()</span>
+    <span class="n">level2</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">main</span><span class="p">()</span>
+    <span class="n">level3</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="n">main</span><span class="p">()</span>
+
+<span class="kd">local</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">debug.getinfo</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="s1">&#39;nl&#39;</span><span class="p">)</span>  <span class="c1">-- 获取指定函数信息</span>
+<span class="kr">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='48341c' class='view-h5'><a class='view-text-miku' href='#48341c'>#</a> debug.getlocal</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getlocal ([thread,] f, local)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取栈上 <code class='view-text-secondary view-border-1 view-border-secondary'>f</code> 层级中第 <code class='view-text-secondary view-border-1 view-border-secondary'>local</code> 个局部变量。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 栈上层级</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>local</code> - 局部变量的序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回局部变量的名称和值</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBkZW1vJTI4JTI5JTBBJTIwJTIwJTIwJTIwbG9jYWwlMjB4JTIwJTNEJTIwMTAlMEElMjAlMjAlMjAlMjBsb2NhbCUyMHklMjAlM0QlMjAyMCUwQSUyMCUyMCUyMCUyMGxvY2FsJTIweiUyMCUzRCUyMDMwJTBBJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhkZWJ1Zy5nZXRsb2NhbCUyODElMkMlMjAxJTI5JTI5JTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhkZWJ1Zy5nZXRsb2NhbCUyODElMkMlMjAyJTI5JTI5JTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhkZWJ1Zy5nZXRsb2NhbCUyODElMkMlMjAzJTI5JTI5JTBBZW5kJTBBJTBBZGVtbyUyOCUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">demo</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="kd">local</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="kd">local</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">30</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getlocal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getlocal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.getlocal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="kr">end</span>
+
+<span class="n">demo</span><span class="p">()</span>
+</pre></div>
+</div><h2 id='310355' class='view-h5'><a class='view-text-miku' href='#310355'>#</a> debug.getmetatable</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getmetatable (value)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code> 的元表。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要获取元表的对象</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回对象的元表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBtZXRhdGFibGUlMjAlM0QlMjBkZWJ1Zy5nZXRtZXRhdGFibGUlMjglMjIlMjIlMjklMjAtLSUyMCVFOCU4RSVCNyVFNSU4RiU5NiVFNSVBRCU5NyVFNyVBQyVBNiVFNCVCOCVCMiVFNyU5QSU4NCVFNSU4NSU4MyVFOCVBMSVBOCUwQWZvciUyMGslMkN2JTIwaW4lMjBwYWlycyUyOG1ldGF0YWJsZSUyOSUyMGRvJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjhrJTJDJTIwdiUyOSUwQWVuZCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">metatable</span> <span class="o">=</span> <span class="nb">debug.getmetatable</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1">-- 获取字符串的元表</span>
+<span class="kr">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">metatable</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='3dda41' class='view-h5'><a class='view-text-miku' href='#3dda41'>#</a> debug.getregistry</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getregistry ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取注册表。</p><p class='view-p'>Lua 的注册表是一个由 C API 维护的全局表，用于在 C 和 Lua 之间安全地交换和保存数据，始终可以通过伪索引 <code class='view-text-secondary view-border-1 view-border-secondary'>LUA_REGISTRYINDEX</code> 进行访问。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回 Lua 的注册表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=Zm9yJTIwayUyQ3YlMjBpbiUyMHBhaXJzJTI4ZGVidWcuZ2V0cmVnaXN0cnklMjglMjklMjklMjBkbyUwQSUyMCUyMCUyMCUyMHByaW50JTI4ayUyQyUyMHYlMjklMEFlbmQlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="nb">debug.getregistry</span><span class="p">())</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='91f844' class='view-h5'><a class='view-text-miku' href='#91f844'>#</a> debug.getupvalue</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getupvalue (f, up)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取闭包 <code class='view-text-secondary view-border-1 view-border-secondary'>f</code> 的第 <code class='view-text-secondary view-border-1 view-border-secondary'>up</code> 个上值。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 闭包</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>up</code> - 上值的序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回上值的的名称和值</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBkZW1vJTI4JTI5JTBBJTIwJTIwJTIwJTIwbG9jYWwlMjB4JTIwJTNEJTIwMTAlMjAlMjAlMjAlMjAtLSUyMCVFNSVBNCU5NiVFNSVCMSU4MiVFNSVCMSU4MCVFOSU4MyVBOCVFNSU4RiU5OCVFOSU4NyU4RiVFRiVCQyU4QyVFNSU4RCVCMyVFNCVCOCU4QSVFNSU4MCVCQyUwQSUyMCUyMCUyMCUyMGxvY2FsJTIweSUyMCUzRCUyMDIwJTBBJTIwJTIwJTIwJTIwbG9jYWwlMjB6JTIwJTNEJTIwMzAlMEElMEElMjAlMjAlMjAlMjAtLSUyMCVFOCVCRiU5NCVFNSU5QiU5RSVFOSU5NyVBRCVFNSU4QyU4NSUwQSUyMCUyMCUyMCUyMHJldHVybiUyMGZ1bmN0aW9uJTI4JTI5JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcHJpbnQlMjh4JTJDJTIweiUyOSUyMC0tJTIwJUU1JThGJUFBJUU2JTlDJTg5JUU4JUEyJUFCJUU1JUJDJTk1JUU3JTk0JUE4JUU3JTlBJTg0JUU1JUE0JTk2JUU1JUIxJTgyJUU1JThGJTk4JUU5JTg3JThGJUU2JTg5JThEJUU0JUJDJTlBJUU4JUEyJUFCJUU2JThEJTk1JUU4JThFJUI3JUU0JUI4JUJBJUU0JUI4JThBJUU1JTgwJUJDJTBBJTIwJTIwJTIwJTIwZW5kJTBBZW5kJTBBJTBBLS0lMjAlRTUlODglOUIlRTUlQkIlQkElRTklOTclQUQlRTUlOEMlODUlMEFsb2NhbCUyMGNsb3N1cmUlMjAlM0QlMjBkZW1vJTI4JTI5JTBBJTBBcHJpbnQlMjhkZWJ1Zy5nZXR1cHZhbHVlJTI4Y2xvc3VyZSUyQyUyMDElMjklMjklMjAtLSUyMF9FTlYlRUYlQkMlOEMlRTglQjAlODMlRTclOTQlQTglRTUlODclQkQlRTYlOTUlQjAlRTYlOTclQjYlRTQlQkMlOUElRTUlODglOUIlRTUlQkIlQkElRTglQkYlOTklRTQlQjglQUElRTUlQjElODAlRTklODMlQTglRTUlOEYlOTglRTklODclOEYlMEFwcmludCUyOGRlYnVnLmdldHVwdmFsdWUlMjhjbG9zdXJlJTJDJTIwMiUyOSUyOSUyMC0tJTIweCUwQXByaW50JTI4ZGVidWcuZ2V0dXB2YWx1ZSUyOGNsb3N1cmUlMkMlMjAzJTI5JTI5JTIwLS0lMjB6JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">demo</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1">-- 外层局部变量，即上值</span>
+    <span class="kd">local</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="kd">local</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">30</span>
+
+    <span class="c1">-- 返回闭包</span>
+    <span class="kr">return</span> <span class="kr">function</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="c1">-- 只有被引用的外层变量才会被捕获为上值</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+
+<span class="c1">-- 创建闭包</span>
+<span class="kd">local</span> <span class="n">closure</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">debug.getupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1">-- _ENV，调用函数时会创建这个局部变量</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">debug.getupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="c1">-- x</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">debug.getupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1">-- z</span>
+</pre></div>
+</div><h2 id='25e8a0' class='view-h5'><a class='view-text-miku' href='#25e8a0'>#</a> debug.getuservalue</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.getuservalue (u, n)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取与用户数据 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 关联的第 <code class='view-text-secondary view-border-1 view-border-secondary'>n</code> 个用户值。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>u</code> - 用户数据</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n</code> - 用户值的序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回用户的的名称和值</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><h2 id='8a9693' class='view-h5'><a class='view-text-miku' href='#8a9693'>#</a> debug.sethook</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.sethook ([thread,] hook, mask [, count])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>设置调试钩子函数，钩子函数在特定事件发生时被调用。</p><p class='view-p'>只有最后一个钩子是有效的，无法为不同的事件同时设置钩子。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>hook</code> - 钩子函数</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>mask</code> - 事件掩码组合字符串<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>'c'</code> - 每次 Lua 调用函数时都会调用该钩子函数，参数为事件</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>'r'</code> - 每次 Lua 从函数返回时都会调用该钩子函数，参数为事件</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>'l'</code> - 每次 Lua 进入新行时该钩子函数，参数为事件和行号</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>count</code> - 除事件外，每执行 <code class='view-text-secondary view-border-1 view-border-secondary'>count</code> 条指令触发一次钩子函数；默认为 0 不触发</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBmdW5jdGlvbiUyMGhvb2slMjhldmVudCUyQyUyMGxpbmUlMjklMEElMjAlMjAlMjAlMjBwcmludCUyOGV2ZW50JTJDJTIwbGluZSUyOSUwQWVuZCUwQSUwQWRlYnVnLnNldGhvb2slMjhob29rJTJDJTIwJTIybCUyMiUyOSUyMCUyMCUyMCUyMC0tJTIwJUU2JUFGJThGJUU4JUExJThDJUU4JUE3JUE2JUU1JThGJTkxJTBBJTBBLS0lMjAlRTclQTklQkElRTglQTElOEMlRTQlQjglOEQlRTQlQkMlOUElRTglQTclQTYlRTUlOEYlOTElRTklOTIlQTklRTUlQUQlOTAlMEElMEFwcmludCUyOCUyMk5PUCUyMiUyOSUwQXByaW50JTI4JTIyTk9QJTIyJTI5JTBBcHJpbnQlMjglMjJOT1AlMjIlMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="kr">function</span> <span class="nf">hook</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="nb">debug.sethook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">)</span>    <span class="c1">-- 每行触发</span>
+
+<span class="c1">-- 空行不会触发钩子</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOP&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOP&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOP&quot;</span><span class="p">)</span>
+</pre></div>
+</div><h2 id='8728e4' class='view-h5'><a class='view-text-miku' href='#8728e4'>#</a> debug.setlocal</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.setlocal ([thread,] level, local, value)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将栈上 <code class='view-text-secondary view-border-1 view-border-secondary'>level</code> 层级处的第 <code class='view-text-secondary view-border-1 view-border-secondary'>local</code> 个局部变量的值设为 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 栈上层级</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>local</code> - 局部变量的序号</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要设为的值</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回被修改的变量名</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBpbm5lciUyOCUyOSUwQSUyMCUyMCUyMCUyMGRlYnVnLnNldGxvY2FsJTI4MiUyQyUyMDElMkMlMjAlMjJIZWxsbyUyMiUyOSUwQSUyMCUyMCUyMCUyMGRlYnVnLnNldGxvY2FsJTI4MiUyQyUyMDIlMkMlMjAlMjJQcmltZXJzJTIyJTI5JTBBJTIwJTIwJTIwJTIwZGVidWcuc2V0bG9jYWwlMjgyJTJDJTIwMyUyQyUyMCUyMiVFNyVCQyU5NiVFNyVBOCU4QiVFNCVCQyU5OSVFNCVCQyVCNCUyMiUyOSUwQWVuZCUwQSUwQWZ1bmN0aW9uJTIwb3V0ZXIlMjglMjklMEElMjAlMjAlMjAlMjBsb2NhbCUyMHglMjAlM0QlMjAxMCUwQSUyMCUyMCUyMCUyMGxvY2FsJTIweSUyMCUzRCUyMDIwJTBBJTIwJTIwJTIwJTIwbG9jYWwlMjB6JTIwJTNEJTIwMzAlMEElMEElMjAlMjAlMjAlMjBpbm5lciUyOCUyOSUwQSUwQSUyMCUyMCUyMCUyMHByaW50JTI4eCUyQyUyMHklMkMlMjB6JTI5JTBBZW5kJTBBJTBBb3V0ZXIlMjglMjklMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">inner</span><span class="p">()</span>
+    <span class="nb">debug.setlocal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+    <span class="nb">debug.setlocal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Primers&quot;</span><span class="p">)</span>
+    <span class="nb">debug.setlocal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;编程伙伴&quot;</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">outer</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="kd">local</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="kd">local</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">30</span>
+
+    <span class="n">inner</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">outer</span><span class="p">()</span>
+</pre></div>
+</div><h2 id='557e37' class='view-h5'><a class='view-text-miku' href='#557e37'>#</a> debug.setmetatable</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.setmetatable (value, table)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将对象 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code> 的元表设为 <code class='view-text-secondary view-border-1 view-border-secondary'>metatable</code>；如果 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code> 已有的元表包含 <code class='view-text-secondary view-border-1 view-border-secondary'>__metatable</code> 字段则会引发错误。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要设置元表的对象，可以时表或用户数据</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>metatable</code> - 要设置的元表，如果是 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 则移除对象的元表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjB0MSUyMCUzRCUyMCU3QnZhbHVlJTIwJTNEJTIwMTAlN0QlMEFsb2NhbCUyMHQyJTIwJTNEJTIwJTdCdmFsdWUlMjAlM0QlMjAyMCU3RCUwQSUwQS0tJTIwJUU1JTg1JTgzJUU4JUExJUE4JUVGJUJDJThDJUU5JTg3JThEJUU4JUJEJUJEJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2JTBBbG9jYWwlMjBtZXRhdGFibGUlMjAlM0QlMjAlN0IlMEElMjAlMjAlMjAlMjBfX2FkZCUyMCUzRCUyMGZ1bmN0aW9uJTI4eCUyQyUyMHklMjklMjByZXR1cm4lMjAlN0J2YWx1ZSUyMCUzRCUyMHgudmFsdWUlMjAlMkIlMjB5LnZhbHVlJTdEJTIwZW5kJTJDJTBBJTIwJTIwJTIwJTIwX19zdWIlMjAlM0QlMjBmdW5jdGlvbiUyOHglMkMlMjB5JTI5JTIwcmV0dXJuJTIwJTdCdmFsdWUlMjAlM0QlMjB4LnZhbHVlJTIwLSUyMHkudmFsdWUlN0QlMjBlbmQlMkMlMEElMjAlMjAlMjAlMjBfX211bCUyMCUzRCUyMGZ1bmN0aW9uJTI4eCUyQyUyMHklMjklMjByZXR1cm4lMjAlN0J2YWx1ZSUyMCUzRCUyMHgudmFsdWUlMjAlMkElMjB5LnZhbHVlJTdEJTIwZW5kJTJDJTBBJTIwJTIwJTIwJTIwX19kaXYlMjAlM0QlMjBmdW5jdGlvbiUyOHglMkMlMjB5JTI5JTIwcmV0dXJuJTIwJTdCdmFsdWUlMjAlM0QlMjB4LnZhbHVlJTIwLyUyMHkudmFsdWUlN0QlMjBlbmQlMkMlMEElN0QlMEElMEEtLSUyMCVFOCVBRSVCRSVFNyVCRCVBRSVFNSU4NSU4MyVFOCVBMSVBOCUwQWRlYnVnLnNldG1ldGF0YWJsZSUyOHQxJTJDJTIwbWV0YXRhYmxlJTI5JTBBZGVidWcuc2V0bWV0YXRhYmxlJTI4dDIlMkMlMjBtZXRhdGFibGUlMjklMEElMEEtLSUyMCVFNCVCRCVCRiVFNyU5NCVBOCUwQXByaW50JTI4JTI4dDElMjAlMkIlMjB0MiUyOS52YWx1ZSUyOSUwQXByaW50JTI4JTI4dDElMjAtJTIwdDIlMjkudmFsdWUlMjklMEFwcmludCUyOCUyOHQxJTIwJTJBJTIwdDIlMjkudmFsdWUlMjklMEFwcmludCUyOCUyOHQxJTIwLyUyMHQyJTI5LnZhbHVlJTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">t1</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">}</span>
+<span class="kd">local</span> <span class="n">t2</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="mi">20</span><span class="p">}</span>
+
+<span class="c1">-- 元表，重载运算符</span>
+<span class="kd">local</span> <span class="n">metatable</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">__add</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="kr">return</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">y</span><span class="p">.</span><span class="n">value</span><span class="p">}</span> <span class="kr">end</span><span class="p">,</span>
+    <span class="n">__sub</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="kr">return</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">y</span><span class="p">.</span><span class="n">value</span><span class="p">}</span> <span class="kr">end</span><span class="p">,</span>
+    <span class="n">__mul</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="kr">return</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">y</span><span class="p">.</span><span class="n">value</span><span class="p">}</span> <span class="kr">end</span><span class="p">,</span>
+    <span class="n">__div</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="kr">return</span> <span class="p">{</span><span class="n">value</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">y</span><span class="p">.</span><span class="n">value</span><span class="p">}</span> <span class="kr">end</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">-- 设置元表</span>
+<span class="nb">debug.setmetatable</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">metatable</span><span class="p">)</span>
+<span class="nb">debug.setmetatable</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">metatable</span><span class="p">)</span>
+
+<span class="c1">-- 使用</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">t1</span> <span class="o">+</span> <span class="n">t2</span><span class="p">).</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t2</span><span class="p">).</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">).</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">t1</span> <span class="o">/</span> <span class="n">t2</span><span class="p">).</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div><h2 id='8ef12e' class='view-h5'><a class='view-text-miku' href='#8ef12e'>#</a> debug.setupvalue</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.setupvalue (f, up, value)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将闭包 <code class='view-text-secondary view-border-1 view-border-secondary'>f</code> 的第 <code class='view-text-secondary view-border-1 view-border-secondary'>up</code> 个上值设为 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 闭包</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>up</code> - 上值的序号</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要设为的值</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>被修改的上值变量名</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlQTQlOTYlRTUlQjElODIlRTUlQjElODAlRTklODMlQTglRTUlOEYlOTglRTklODclOEYlRUYlQkMlOEMlRTUlOEQlQjMlRTQlQjglOEElRTUlODAlQkMlMEFsb2NhbCUyMHglMjAlM0QlMjAxMCUwQWxvY2FsJTIweSUyMCUzRCUyMDIwJTBBbG9jYWwlMjB6JTIwJTNEJTIwMzAlMEElMEEtLSUyMCVFNSU4OCU5QiVFNSVCQiVCQSVFOSU5NyVBRCVFNSU4QyU4NSUwQWxvY2FsJTIwY2xvc3VyZSUyMCUzRCUyMGZ1bmN0aW9uJTI4JTI5JTBBJTIwJTIwJTIwJTIwcHJpbnQlMjh4JTJDJTIweSUyQyUyMHolMjklMjAtLSUyMCVFNSU4RiVBQSVFNiU5QyU4OSVFOCVBMiVBQiVFNSVCQyU5NSVFNyU5NCVBOCVFNyU5QSU4NCVFNSVBNCU5NiVFNSVCMSU4MiVFNSU4RiU5OCVFOSU4NyU4RiVFNiU4OSU4RCVFNCVCQyU5QSVFOCVBMiVBQiVFNiU4RCU5NSVFOCU4RSVCNyVFNCVCOCVCQSVFNCVCOCU4QSVFNSU4MCVCQyUwQWVuZCUwQSUwQS0tJTIwJUU0JUJGJUFFJUU2JTk0JUI5JUU0JUI4JThBJUU1JTgwJUJDJTBBZGVidWcuc2V0dXB2YWx1ZSUyOGNsb3N1cmUlMkMlMjAyJTJDJTIwJTI3SGVsbG8lMjclMjklMEFkZWJ1Zy5zZXR1cHZhbHVlJTI4Y2xvc3VyZSUyQyUyMDMlMkMlMjAlMjdQcmltZXJzJTI3JTI5JTBBZGVidWcuc2V0dXB2YWx1ZSUyOGNsb3N1cmUlMkMlMjA0JTJDJTIwJTI3JUU3JUJDJTk2JUU3JUE4JThCJUU0JUJDJTk5JUU0JUJDJUI0JTI3JTI5JTBBJTBBLS0lMjAlRTglQjAlODMlRTclOTQlQTglRTklOTclQUQlRTUlOEMlODUlMEFjbG9zdXJlJTI4JTI5JTBBJTBBLS0lMjAlRTUlQTQlOTYlRTUlQjElODIlRTUlOEYlOTglRTklODclOEYlRTQlQjklOUYlRTglQTIlQUIlRTYlOTQlQjklRTUlOEYlOTglMEFwcmludCUyOHglMkMlMjB5JTJDJTIweiUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 外层局部变量，即上值</span>
+<span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="kd">local</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="kd">local</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="c1">-- 创建闭包</span>
+<span class="kd">local</span> <span class="n">closure</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="c1">-- 只有被引用的外层变量才会被捕获为上值</span>
+<span class="kr">end</span>
+
+<span class="c1">-- 修改上值</span>
+<span class="nb">debug.setupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Hello&#39;</span><span class="p">)</span>
+<span class="nb">debug.setupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Primers&#39;</span><span class="p">)</span>
+<span class="nb">debug.setupvalue</span><span class="p">(</span><span class="n">closure</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;编程伙伴&#39;</span><span class="p">)</span>
+
+<span class="c1">-- 调用闭包</span>
+<span class="n">closure</span><span class="p">()</span>
+
+<span class="c1">-- 外层变量也被改变</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div><h2 id='153343' class='view-h5'><a class='view-text-miku' href='#153343'>#</a> debug.setuservalue</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.setuservalue (u, value, n)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>将与用户数据 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code> 关联的第 <code class='view-text-secondary view-border-1 view-border-secondary'>n</code> 个用户值设置 <code class='view-text-secondary view-border-1 view-border-secondary'>value</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>u</code> - 用户数据</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>value</code> - 要设为的值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n</code> - 用户数据的序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回 <code class='view-text-secondary view-border-1 view-border-secondary'>u</code></p></li></ul><h2 id='11deb7' class='view-h5'><a class='view-text-miku' href='#11deb7'>#</a> debug.traceback</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.traceback ([thread,] [message [, level]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>生成调用栈回溯信息。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>thread</code> - 线程；默认为当前线程</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>message</code> - 附加信息；如果这个参数不是字符串或 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 则直接返回这个参数</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>level</code> - 从调用栈的第几层开始记录</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回生成的信息</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=ZnVuY3Rpb24lMjBsZXZlbDElMjglMjklMEElMjAlMjAlMjAlMjBwcmludCUyOGRlYnVnLnRyYWNlYmFjayUyOCUyMiVFOSU5OSU4NCVFNSU4QSVBMCVFNCVCRiVBMSVFNiU4MSVBRiUyMGh0dHBzJTNBLy94cGxhbmMub3JnLyUyMiUyOSUyOSUwQWVuZCUwQSUwQWZ1bmN0aW9uJTIwbGV2ZWwyJTI4JTI5JTBBJTIwJTIwJTIwJTIwbGV2ZWwxJTI4JTI5JTBBZW5kJTBBJTBBZnVuY3Rpb24lMjBsZXZlbDMlMjglMjklMEElMjAlMjAlMjAlMjBsZXZlbDIlMjglMjklMEFlbmQlMEElMEFmdW5jdGlvbiUyMG1haW4lMjglMjklMEElMjAlMjAlMjAlMjBsZXZlbDMlMjglMjklMEFlbmQlMEElMEFtYWluJTI4JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">level1</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">debug.traceback</span><span class="p">(</span><span class="s2">&quot;附加信息 https://xplanc.org/&quot;</span><span class="p">))</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">level2</span><span class="p">()</span>
+    <span class="n">level1</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">level3</span><span class="p">()</span>
+    <span class="n">level2</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">main</span><span class="p">()</span>
+    <span class="n">level3</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div><h2 id='28fc0f' class='view-h5'><a class='view-text-miku' href='#28fc0f'>#</a> debug.upvalueid</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.upvalueid (f, n)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>获取闭包 <code class='view-text-secondary view-border-1 view-border-secondary'>f</code> 的第 <code class='view-text-secondary view-border-1 view-border-secondary'>up</code> 个上值的唯一 ID（类型为轻量用户数据）。</p><p class='view-p'>通过返回的 ID 可以检测不同的闭包是否引用同一个上值。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f</code> - 闭包</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>up</code> - 上值的序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回上值的唯一 ID（轻量用户数据）</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBmdW5jdGlvbiUyMG91dGVyJTI4JTI5JTBBJTIwJTIwJTIwJTIwbG9jYWwlMjBhJTIwJTNEJTIwMTAlMEElMjAlMjAlMjAlMjBsb2NhbCUyMGIlMjAlM0QlMjAyMCUwQSUwQSUyMCUyMCUyMCUyMGxvY2FsJTIwZnVuY3Rpb24lMjBmMSUyOCUyOSUyMHJldHVybiUyMGElMjBlbmQlMEElMjAlMjAlMjAlMjBsb2NhbCUyMGZ1bmN0aW9uJTIwZjIlMjglMjklMjByZXR1cm4lMjBhJTIwZW5kJTBBJTIwJTIwJTIwJTIwbG9jYWwlMjBmdW5jdGlvbiUyMGYzJTI4JTI5JTIwcmV0dXJuJTIwYiUyMGVuZCUwQSUwQSUyMCUyMCUyMCUyMHJldHVybiUyMGYxJTJDJTIwZjIlMkMlMjBmMyUwQWVuZCUwQSUwQWxvY2FsJTIwZjElMkMlMjBmMiUyQyUyMGYzJTIwJTNEJTIwb3V0ZXIlMjglMjklMEElMEFsb2NhbCUyMGlkMSUyMCUzRCUyMGRlYnVnLnVwdmFsdWVpZCUyOGYxJTJDJTIwMSUyOSUwQWxvY2FsJTIwaWQyJTIwJTNEJTIwZGVidWcudXB2YWx1ZWlkJTI4ZjIlMkMlMjAxJTI5JTBBbG9jYWwlMjBpZDMlMjAlM0QlMjBkZWJ1Zy51cHZhbHVlaWQlMjhmMyUyQyUyMDElMjklMEElMEFwcmludCUyOGlkMSUyMCUzRCUzRCUyMGlkMiUyOSUyMCUyMC0tJTNFJTIwdHJ1ZSUyMCUyMCUyMCVFRiVCQyU4OGYxJTIwJUU1JTkyJThDJTIwZjIlMjAlRTclOUElODQlRTQlQjglOEElRTUlODAlQkMlMjBhJTIwJUU2JTk4JUFGJUU1JTkwJThDJUU0JUI4JTgwJUU0JUI4JUFBJUVGJUJDJTg5JTBBcHJpbnQlMjhpZDElMjAlM0QlM0QlMjBpZDMlMjklMjAlMjAtLSUzRSUyMGZhbHNlJTIwJTIwJUVGJUJDJTg4ZjElMjAlRTclOUElODQlMjBhJTIwJUU1JTkyJThDJTIwZjMlMjAlRTclOUElODQlMjBiJTIwJUU0JUI4JThEJUU1JTkwJThDJUVGJUJDJTg5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="kr">function</span> <span class="nf">outer</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="kd">local</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">f1</span><span class="p">()</span> <span class="kr">return</span> <span class="n">a</span> <span class="kr">end</span>
+    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">f2</span><span class="p">()</span> <span class="kr">return</span> <span class="n">a</span> <span class="kr">end</span>
+    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">f3</span><span class="p">()</span> <span class="kr">return</span> <span class="n">b</span> <span class="kr">end</span>
+
+    <span class="kr">return</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span> <span class="o">=</span> <span class="n">outer</span><span class="p">()</span>
+
+<span class="kd">local</span> <span class="n">id1</span> <span class="o">=</span> <span class="nb">debug.upvalueid</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">id2</span> <span class="o">=</span> <span class="nb">debug.upvalueid</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">id3</span> <span class="o">=</span> <span class="nb">debug.upvalueid</span><span class="p">(</span><span class="n">f3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">id1</span> <span class="o">==</span> <span class="n">id2</span><span class="p">)</span>  <span class="c1">--&gt; true   （f1 和 f2 的上值 a 是同一个）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">id1</span> <span class="o">==</span> <span class="n">id3</span><span class="p">)</span>  <span class="c1">--&gt; false  （f1 的 a 和 f3 的 b 不同）</span>
+</pre></div>
+</div><h2 id='81519f' class='view-h5'><a class='view-text-miku' href='#81519f'>#</a> debug.upvaluejoin</h2><div class='view-monofont'><div class="highlight"><pre><span></span>debug.upvaluejoin (f1, n1, f2, n2)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>让闭包 <code class='view-text-secondary view-border-1 view-border-secondary'>f1</code> 的第 <code class='view-text-secondary view-border-1 view-border-secondary'>n1</code> 个上值引用闭包 <code class='view-text-secondary view-border-1 view-border-secondary'>f2</code> 的第 <code class='view-text-secondary view-border-1 view-border-secondary'>n2</code> 个上值。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f1</code> - 目标闭包</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n1</code> - 目标上值序号</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>f2</code> - 源闭包</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>n2</code> - 源上值序号</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBmdW5jdGlvbiUyMG91dGVyJTI4JTI5JTBBJTIwJTIwJTIwJTIwbG9jYWwlMjBhJTIwJTNEJTIwMTAlMEElMjAlMjAlMjAlMjBsb2NhbCUyMGIlMjAlM0QlMjAyMCUwQSUwQSUyMCUyMCUyMCUyMGxvY2FsJTIwZnVuY3Rpb24lMjBmMSUyOCUyOSUyMHJldHVybiUyMGElMjBlbmQlMjAtLSUyMCVFNSVCQyU5NSVFNyU5NCVBOCUyMGElMEElMjAlMjAlMjAlMjBsb2NhbCUyMGZ1bmN0aW9uJTIwZjIlMjglMjklMjByZXR1cm4lMjBiJTIwZW5kJTIwLS0lMjAlRTUlQkMlOTUlRTclOTQlQTglMjBiJTBBJTBBJTIwJTIwJTIwJTIwcmV0dXJuJTIwZjElMkMlMjBmMiUwQWVuZCUwQSUwQWxvY2FsJTIwZjElMkMlMjBmMiUyMCUzRCUyMG91dGVyJTI4JTI5JTBBJTBBLS0lMjAlRTYlODklOTMlRTUlOEQlQjAlRTUlOEUlOUYlRTUlQTclOEIlRTUlODAlQkMlMEFwcmludCUyOGYxJTI4JTI5JTJDJTIwZjIlMjglMjklMjklMjAlMjAtLSUzRSUyMDEwJTIwMjAlMEElMEEtLSUyMCVFOCVBRSVBOSUyMGYyJTIwJUU3JTlBJTg0JUU0JUI4JThBJUU1JTgwJUJDJUU2JThDJTg3JUU1JTkwJTkxJTIwZjElMjAlRTclOUElODQlRTQlQjglOEElRTUlODAlQkMlMEFkZWJ1Zy51cHZhbHVlam9pbiUyOGYyJTJDJTIwMSUyQyUyMGYxJTJDJTIwMSUyOSUwQSUwQXByaW50JTI4ZjElMjglMjklMkMlMjBmMiUyOCUyOSUyOSUyMCUyMC0tJTNFJTIwMTAlMjAxMCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="kr">function</span> <span class="nf">outer</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="kd">local</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">f1</span><span class="p">()</span> <span class="kr">return</span> <span class="n">a</span> <span class="kr">end</span> <span class="c1">-- 引用 a</span>
+    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">f2</span><span class="p">()</span> <span class="kr">return</span> <span class="n">b</span> <span class="kr">end</span> <span class="c1">-- 引用 b</span>
+
+    <span class="kr">return</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">outer</span><span class="p">()</span>
+
+<span class="c1">-- 打印原始值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f1</span><span class="p">(),</span> <span class="n">f2</span><span class="p">())</span>  <span class="c1">--&gt; 10 20</span>
+
+<span class="c1">-- 让 f2 的上值指向 f1 的上值</span>
+<span class="nb">debug.upvaluejoin</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f1</span><span class="p">(),</span> <span class="n">f2</span><span class="p">())</span>  <span class="c1">--&gt; 10 10</span>
+</pre></div>
+</div><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><p class='view-p'><a class='view-text-primary' href='https://www.lua.org/manual/5.4/manual.html#6.10' target='_blank'>The Debug Library - Lua 5.4 Reference Manual</a></p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:10 创建于: 2025-11-27 09:33:10
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

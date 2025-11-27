@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Lua - 内置模块 - io-module</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" />
+    <meta name="description" content="Lua的IO模块!class:info请查看[Lua标准库模块列表](/document/zh/09.Lua/90.API%20帮助手册.md/01.目录.mdb07e50)了解更多相关API。|函数">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E9%A2%84%E5%A4%87/Lua%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="Lua 的简介与环境配置">Lua 的简介与环境配置</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量和基本类型">变量和基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/repeat%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="repeat 循环语句">repeat 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E8%A1%A8%EF%BC%88table%EF%BC%89.html" title="表（table）">表（table）</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%9F%BA%E7%A1%80/for...in%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for...in 循环语句">for...in 循环语句</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.3%20%E4%B8%AD%E6%96%87%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.3 中文参考手册">Lua 5.3 中文参考手册</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/Lua%205.4%20%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C.html" title="Lua 5.4 参考手册">Lua 5.4 参考手册</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/assert.html" title="assert">assert</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/collectgarbage.html" title="collectgarbage">collectgarbage</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/dofile.html" title="dofile">dofile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/error.html" title="error">error</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/getmetatable.html" title="getmetatable">getmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/ipairs.html" title="ipairs">ipairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/load.html" title="load">load</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/loadfile.html" title="loadfile">loadfile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pairs.html" title="pairs">pairs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/pcall.html" title="pcall">pcall</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawequal.html" title="rawequal">rawequal</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawget.html" title="rawget">rawget</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawlen.html" title="rawlen">rawlen</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/rawset.html" title="rawset">rawset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/require.html" title="require">require</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/select.html" title="select">select</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/setmetatable.html" title="setmetatable">setmetatable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tonumber.html" title="tonumber">tonumber</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/tostring.html" title="tostring">tostring</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/warn.html" title="warn">warn</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/xpcall.html" title="xpcall">xpcall</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/%E7%9B%AE%E5%BD%95.html" title="目录">目录</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/coroutine-module.html" title="coroutine-module">coroutine-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/debug-module.html" title="debug-module">debug-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/io-module.html" title="io-module">io-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/math-module.html" title="math-module">math-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/os-module.html" title="os-module">os-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/package-module.html" title="package-module">package-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/string-module.html" title="string-module">string-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/table-module.html" title="table-module">table-module</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Lua/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/utf8-module.html" title="utf8-module">utf8-module</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua" rel="nofollow">
+                                    Lua 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/09.Lua/92.内置模块/EX.io-module.md" rel="nofollow">
+                                    io-module
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='dce5b9' class='view-h4'><a class='view-text-miku' href='#dce5b9'>#</a> Lua 的 IO 模块</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/Lua/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E7%9B%AE%E5%BD%95.html'>Lua 标准库模块列表</a> 了解更多相关 API。</div><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>io.stderr</code></td>
+  <td style="text-align:left">标准错误流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>io.stdin</code></td>
+  <td style="text-align:left">标准输入流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>io.stdout</code></td>
+  <td style="text-align:left">标准输出流</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">函数</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#b842f5' target='_blank'>io.close</a></td>
+  <td style="text-align:left">关闭 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#5888ba' target='_blank'>io.flush</a></td>
+  <td style="text-align:left">冲洗 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#af7893' target='_blank'>io.input</a></td>
+  <td style="text-align:left">设置默认输入流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#8f689a' target='_blank'>io.lines</a></td>
+  <td style="text-align:left">逐行迭代 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#001cf1' target='_blank'>io.open</a></td>
+  <td style="text-align:left">打开文件</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#f6d474' target='_blank'>io.output</a></td>
+  <td style="text-align:left">设置默认输出流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#46ba9d' target='_blank'>io.popen</a></td>
+  <td style="text-align:left">运行一个程序并绑定管道</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#158aef' target='_blank'>io.read</a></td>
+  <td style="text-align:left">读取默认输入流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#9cc9e0' target='_blank'>io.tmpfile</a></td>
+  <td style="text-align:left">打开临时文件</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#11d24f' target='_blank'>io.type</a></td>
+  <td style="text-align:left">检查 IO 流是否有效</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#82c803' target='_blank'>io.write</a></td>
+  <td style="text-align:left">写默认输出流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#7689a4' target='_blank'>file:close</a></td>
+  <td style="text-align:left">关闭 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#c3b24b' target='_blank'>file:flush</a></td>
+  <td style="text-align:left">冲洗 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#553273' target='_blank'>file:lines</a></td>
+  <td style="text-align:left">逐行迭代 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#cf9459' target='_blank'>file:read</a></td>
+  <td style="text-align:left">读取 IO 流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#a42a84' target='_blank'>file:seek</a></td>
+  <td style="text-align:left">设置 IO 流的位置指示器</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#e305be' target='_blank'>file:setvbuf</a></td>
+  <td style="text-align:left">设置 IO 流的缓冲模式</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a class='view-text-primary' href='#05b829' target='_blank'>file:write</a></td>
+  <td style="text-align:left">写 IO 流</td>
+</tr>
+</tbody>
+</table><h2 id='b842f5' class='view-h5'><a class='view-text-miku' href='#b842f5'>#</a> io.close</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.close ([file])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>关闭 IO 流，等价于 <code class='view-text-secondary view-border-1 view-border-secondary'>file:close</code>。如果不带 <code class='view-text-secondary view-border-1 view-border-secondary'>file</code> 参数，则关闭默认输出流（<a class='view-text-primary' href='#f6d474' target='_blank'>io.output</a>），等价于 <code class='view-text-secondary view-border-1 view-border-secondary'>io.output():close()</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>file</code> - 要关闭的 IO 流；默认为 <a class='view-text-primary' href='#f6d474' target='_blank'>io.output</a></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQXdyaXRlJTI4JTIySGVsbG8lNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFpby5jbG9zZSUyOGZwJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlQjMlRTklOTclQUQlRTYlOTYlODclRTQlQkIlQjYlMEElMEEtLSUyMCVFOCVBRiVCQiVFNiU5NiU4NyVFNCVCQiVCNiUwQWZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjdyJTI3JTI5JTIwJTIwJTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFwcmludCUyOGZwJTNBcmVhZCUyOCUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFGJUJCJUU2JTk2JTg3JUU0JUJCJUI2JTBBaW8uY2xvc2UlMjhmcCUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg1JUIzJUU5JTk3JUFEJUU2JTk2JTg3JUU0JUJCJUI2JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 写文件</span>
+<span class="nb">io.close</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>                            <span class="c1">-- 关闭文件</span>
+
+<span class="c1">-- 读文件</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>     <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">())</span>                    <span class="c1">-- 读文件</span>
+<span class="nb">io.close</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>                        <span class="c1">-- 关闭文件</span>
+</pre></div>
+</div><h2 id='5888ba' class='view-h5'><a class='view-text-miku' href='#5888ba'>#</a> io.flush</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.flush ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>冲洗默认输出流（<a class='view-text-primary' href='#f6d474' target='_blank'>io.output</a>），等价于 <code class='view-text-secondary view-border-1 view-border-secondary'>io.output():flush()</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=aW8ud3JpdGUlMjglMjJoZWxsbyUyMHdvcmxkJTIyJTI5JTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODYlOTklRTklQkIlOTglRTglQUUlQTQlRTglQkUlOTMlRTUlODclQkElRTYlQjUlODElMEFpby5mbHVzaCUyOCUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg2JUIyJUU2JUI0JTk3JUU5JUJCJTk4JUU4JUFFJUE0JUU4JUJFJTkzJUU1JTg3JUJBJUU2JUI1JTgxJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">)</span>     <span class="c1">-- 写默认输出流</span>
+<span class="nb">io.flush</span><span class="p">()</span>                  <span class="c1">-- 冲洗默认输出流</span>
+</pre></div>
+</div><h2 id='af7893' class='view-h5'><a class='view-text-miku' href='#af7893'>#</a> io.input</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.input ([filename])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>以文本模式打开文件 <code class='view-text-secondary view-border-1 view-border-secondary'>filename</code>，并将其设为默认输入流，返回该输入流。</p><p class='view-p'>如果不带参数，则返回当前的默认输入流。</p><p class='view-p'>初始的默认输入流是 <code class='view-text-secondary view-border-1 view-border-secondary'>io.stdin</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>filename</code> - 要设为默认输入流的文件路径</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回新的默认输入流</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTYlOUYlQTUlRTclOUMlOEIlRTklQkIlOTglRTglQUUlQTQlRTglQkUlOTMlRTUlODUlQTUlRTYlQjUlODElMEFwcmludCUyOGlvLmlucHV0JTI4JTI5JTI5JTBBJTBBLS0lMjAlRTglQUUlQkUlRTclQkQlQUUlRTklQkIlOTglRTglQUUlQTQlRTglQkUlOTMlRTUlODUlQTUlRTYlQjUlODElMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODglOUIlRTUlQkIlQkElRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQWNsb3NlJTI4JTI5JTBBcHJpbnQlMjhpby5pbnB1dCUyOCUyNy90bXAvMS50eHQlMjclMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVBRSVCRSVFNyVCRCVBRSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 查看默认输入流</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.input</span><span class="p">())</span>
+
+<span class="c1">-- 设置默认输入流</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>       <span class="c1">-- 创建文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.input</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">))</span>               <span class="c1">-- 设置</span>
+</pre></div>
+</div><h2 id='8f689a' class='view-h5'><a class='view-text-miku' href='#8f689a'>#</a> io.lines</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.lines ([filename, ···])
+</pre></div>
+</div><p class='view-p'>以读模式打开指定的文件 <code class='view-text-secondary view-border-1 view-border-secondary'>filename</code>，并返回一个迭代器函数，该迭代器函数每次调用时按照指定格式读取一次文件并返回。</p><p class='view-p'>迭代到文件结束时，迭代器返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 并自动关闭文件。</p><p class='view-p'>不带参数时迭代默认输入流（<code class='view-text-secondary view-border-1 view-border-secondary'>io.input()</code>）。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>filename</code> - 要迭代的文件路径</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 迭代的读取格式，参考 <a class='view-text-primary' href='#158aef' target='_blank'>io.read</a>；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code>，即读取一行</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回迭代器函数</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTBBZnAlM0F3cml0ZSUyOCUyMkFBQSU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyQkJCJTVDbiUyMiUyOSUwQWZwJTNBd3JpdGUlMjglMjJDQ0MlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkRERCU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyRUVFJTVDbiUyMiUyOSUwQWZwJTNBY2xvc2UlMjglMjklMEElMEEtLSUyMCVFOCVCRiVBRCVFNCVCQiVBMyUwQWZvciUyMHYlMjBpbiUyMGlvLmxpbmVzJTI4JTI3L3RtcC8xLnR4dCUyNyUyOSUyMGRvJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjh2JTI5JTBBZW5kJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;AAA</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;BBB</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CCC</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DDD</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;EEE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1">-- 迭代</span>
+<span class="kr">for</span> <span class="n">v</span> <span class="kr">in</span> <span class="nb">io.lines</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='001cf1' class='view-h5'><a class='view-text-miku' href='#001cf1'>#</a> io.open</h2><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><div class='view-monofont'><div class="highlight"><pre><span></span>io.open (filename [, mode])
+</pre></div>
+</div><p class='view-p'>以 <code class='view-text-secondary view-border-1 view-border-secondary'>mode</code> 模式打开文件 <code class='view-text-secondary view-border-1 view-border-secondary'>filename</code>，返回打开的文件流。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">模式说明符</th>
+  <th style="text-align:left">意义</th>
+  <th style="text-align:left">说明</th>
+  <th style="text-align:left">操作权限</th>
+  <th style="text-align:left">如果文件存在</th>
+  <th style="text-align:left">如果文件不存在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;r&quot;</code></td>
+  <td style="text-align:left">读模式</td>
+  <td style="text-align:left">打开文件进行读取</td>
+  <td style="text-align:left">读</td>
+  <td style="text-align:left">从文件开头进行操作</td>
+  <td style="text-align:left">打开失败</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w&quot;</code></td>
+  <td style="text-align:left">写模式</td>
+  <td style="text-align:left">创建用于写入的文件</td>
+  <td style="text-align:left">写</td>
+  <td style="text-align:left">清空原文件</td>
+  <td style="text-align:left">新建文件</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code></td>
+  <td style="text-align:left">追加模式</td>
+  <td style="text-align:left">追加写入文件</td>
+  <td style="text-align:left">写</td>
+  <td style="text-align:left">从文件末尾进行操作</td>
+  <td style="text-align:left">新建文件</td>
+</tr>
+</tbody>
+</table><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">补充说明符</th>
+  <th style="text-align:left">意义</th>
+  <th style="text-align:left">说明</th>
+  <th style="text-align:left">操作权限</th>
+  <th style="text-align:left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;+&quot;</code></td>
+  <td style="text-align:left">更新模式</td>
+  <td style="text-align:left">文件既可读也可写</td>
+  <td style="text-align:left">可读可写</td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;r+&quot;</code> <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w+&quot;</code> <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a+&quot;</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;b&quot;</code></td>
+  <td style="text-align:left">二进制模式</td>
+  <td style="text-align:left">以二进制模式打开文件</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;rb&quot;</code> <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;wb&quot;</code> <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;ab&quot;</code> <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w+b&quot;</code></td>
+</tr>
+</tbody>
+</table><ul><li><p>文本模式下（即不含 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;b&quot;</code>），读写文件时会跳过不可打印字符，参考 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html'>isprint</a>。但在类 POSIX 系统上无效，类 POSIX 系统始终以二进制模式打开</p></li><li><p>追加模式（<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code>）下，无论文件位置指示器的当前位置如何，进行写操作时都会向文件末尾写入。</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>filename</code> - 要打开的文件路径</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>mode</code> - 文件的打开模式</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回打开的文件流</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQXdyaXRlJTI4JTIySGVsbG8lNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQWNsb3NlJTI4JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlQjMlRTklOTclQUQlRTYlOTYlODclRTQlQkIlQjYlMEElMEEtLSUyMCVFOCVBRiVCQiVFNiU5NiU4NyVFNCVCQiVCNiUwQWZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjdyJTI3JTI5JTIwJTIwJTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFwcmludCUyOGZwJTNBcmVhZCUyOCUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFGJUJCJUU2JTk2JTg3JUU0JUJCJUI2JTBBZnAlM0FjbG9zZSUyOCUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg1JUIzJUU5JTk3JUFEJUU2JTk2JTg3JUU0JUJCJUI2JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 写文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                              <span class="c1">-- 关闭文件</span>
+
+<span class="c1">-- 读文件</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>     <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">())</span>                    <span class="c1">-- 读文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                          <span class="c1">-- 关闭文件</span>
+</pre></div>
+</div><h2 id='f6d474' class='view-h5'><a class='view-text-miku' href='#f6d474'>#</a> io.output</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.output ([filename])
+</pre></div>
+</div><p class='view-p'>以文本模式打开文件 <code class='view-text-secondary view-border-1 view-border-secondary'>filename</code>，并将其设为默认输出流，返回该输出流。</p><p class='view-p'>如果不带参数，则返回当前的默认输出流。</p><p class='view-p'>初始的默认输出流是 <code class='view-text-secondary view-border-1 view-border-secondary'>io.stdout</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>filename</code> - 要设为默认输出流的文件路径</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回新的默认输出流</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTYlOUYlQTUlRTclOUMlOEIlRTklQkIlOTglRTglQUUlQTQlRTglQkUlOTMlRTUlODclQkElRTYlQjUlODElMEFwcmludCUyOGlvLm91dHB1dCUyOCUyOSUyOSUwQSUwQS0tJTIwJUU4JUFFJUJFJUU3JUJEJUFFJUU5JUJCJTk4JUU4JUFFJUE0JUU4JUJFJTkzJUU1JTg3JUJBJUU2JUI1JTgxJTBBbG9jYWwlMjBmcCUyMCUzRCUyMGlvLm9wZW4lMjglMjcvdG1wLzEudHh0JTI3JTJDJTIwJTI3dyUyNyUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg4JTlCJUU1JUJCJUJBJUU2JTk2JTg3JUU0JUJCJUI2JTBBZnAlM0FjbG9zZSUyOCUyOSUwQXByaW50JTI4aW8ub3V0cHV0JTI4JTI3L3RtcC8xLnR4dCUyNyUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFFJUJFJUU3JUJEJUFFJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 查看默认输出流</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.output</span><span class="p">())</span>
+
+<span class="c1">-- 设置默认输出流</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>       <span class="c1">-- 创建文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.output</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">))</span>              <span class="c1">-- 设置</span>
+</pre></div>
+</div><h2 id='46ba9d' class='view-h5'><a class='view-text-miku' href='#46ba9d'>#</a> io.popen</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.popen (prog [, mode])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>在单独的进程中启动程序 <code class='view-text-secondary view-border-1 view-border-secondary'>prog</code>，并返回一个 IO 流：</p><ul><li><p>读取该 IO 流时相当于读取 <code class='view-text-secondary view-border-1 view-border-secondary'>prog</code> 的标准输出</p></li><li><p>写入该 IO 流时相当于写入 <code class='view-text-secondary view-border-1 view-border-secondary'>prog</code> 的标准输入</p></li></ul><p class='view-p'>仅支持以 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;r&quot;</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w&quot;</code> 模式打开，即只读或只写。</p><p class='view-p'>此功能依赖于系统，并且并非在所有平台上都可用。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>prog</code> - 要运行的程序</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>mode</code> - IO 流的打开模式，仅支持 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;r&quot;</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w&quot;</code> 模式</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回 IO liu</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 向 grep 输入数据并过滤包含 &quot;error&quot; 的行</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.popen</span><span class="p">(</span><span class="s2">&quot;grep -i error&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="kr">if</span> <span class="n">fp</span> <span class="kr">then</span>
+    <span class="kd">local</span> <span class="n">logs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;INFO: System started&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ERROR: Database connection failed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;WARNING: High memory usage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ERROR: File not found&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DEBUG: Processing complete&quot;</span>
+    <span class="p">}</span>
+    
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">log</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span> <span class="kr">do</span>
+        <span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="n">log</span> <span class="o">..</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>       <span class="c1">-- 写数据</span>
+    <span class="kr">end</span>
+    <span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                      <span class="c1">-- 关闭流</span>
+<span class="kr">end</span>
+</pre></div>
+</div><p class='view-p'>运行结果</p><div class='view-monofont'><div class="highlight"><pre><span></span>ERROR: Database connection failed
+ERROR: File not found
+</pre></div>
+</div><h2 id='158aef' class='view-h5'><a class='view-text-miku' href='#158aef'>#</a> io.read</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.read (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>读取默认输入流（<code class='view-text-secondary view-border-1 view-border-secondary'>io.input()</code>），相当于 <code class='view-text-secondary view-border-1 view-border-secondary'>io.input():read(···)</code>。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">格式</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;n&quot;</code></td>
+  <td style="text-align:left">读取一个数值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code></td>
+  <td style="text-align:left">读取剩余的全部文本</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code></td>
+  <td style="text-align:left">读取一行，丢弃换行符（默认）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;L&quot;</code></td>
+  <td style="text-align:left">读取一行，保留换行符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>整数</code></td>
+  <td style="text-align:left">读取相应字节的字符串</td>
+</tr>
+</tbody>
+</table><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 读取格式，每个格式对应一个返回值<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;n&quot;</code> - 读取一个数值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code> - 读取剩余的全部文本</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code> - 读取一行，丢弃换行符（默认）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;L&quot;</code> - 读取一行，保留换行符</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>整数</code> - 读取相应字节的字符串</p></li></ul></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时格式对应位置返回读取到的值</p></li><li><p>失败时格式对应位置返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&input=My4xNDE1OTI2&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMHBpJTIwJTNEJTIwaW8ucmVhZCUyOCUyMm4lMjIlMjklMEFwcmludCUyOHR5cGUlMjhwaSUyOSUyQyUyMHBpJTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">pi</span> <span class="o">=</span> <span class="nb">io.read</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">pi</span><span class="p">)</span>
+</pre></div>
+</div><h2 id='9cc9e0' class='view-h5'><a class='view-text-miku' href='#9cc9e0'>#</a> io.tmpfile</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.tmpfile ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>以 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;w+&quot;</code> 模式打开一个临时文件，返回该文件流。</p><p class='view-p'>程序退出时临时文件会自动删除。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时返回文件流</p></li><li><p>失败时返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8udG1wZmlsZSUyOCUyOSUyMC0tJTIwJUU2JTg5JTkzJUU1JUJDJTgwJUU0JUI4JUI0JUU2JTk3JUI2JUU2JTk2JTg3JUU0JUJCJUI2JTBBZnAlM0F3cml0ZSUyOCUyMkhlbGxvJTVDbiUyMiUyOSUyMCUyMCUyMCUyMCUyMC0tJTIwJUU1JTg2JTk5JTBBZnAlM0F3cml0ZSUyOCUyMldvcmxkJTVDbiUyMiUyOSUwQSUwQWZwJTNBc2VlayUyOCUyMnNldCUyMiUyOSUwQXByaW50JTI4ZnAlM0FyZWFkJTI4JTIyYSUyMiUyOSUyOSUwQWZwJTNBY2xvc2UlMjglMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.tmpfile</span><span class="p">()</span> <span class="c1">-- 打开临时文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>     <span class="c1">-- 写</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">fp</span><span class="p">:</span><span class="n">seek</span><span class="p">(</span><span class="s2">&quot;set&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div><h2 id='11d24f' class='view-h5'><a class='view-text-miku' href='#11d24f'>#</a> io.type</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.type (obj)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>检查参数 <code class='view-text-secondary view-border-1 view-border-secondary'>obj</code> 是否是有效的 IO 流。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>obj</code> - 要检查的对象</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>如果 <code class='view-text-secondary view-border-1 view-border-secondary'>obj</code> 是有效的 IO 流则返回字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;file&quot;</code></p></li><li><p>如果 <code class='view-text-secondary view-border-1 view-border-secondary'>obj</code> 是关闭的 IO 流则返回字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;closed file&quot;</code></p></li><li><p>如果 <code class='view-text-secondary view-border-1 view-border-secondary'>obj</code> 不是 IO 流则返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=cHJpbnQlMjhpby50eXBlJTI4MTAlMjklMjklMEElMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8udG1wZmlsZSUyOCUyOSUwQXByaW50JTI4aW8udHlwZSUyOGZwJTI5JTI5JTBBJTBBZnAlM0FjbG9zZSUyOCUyOSUwQXByaW50JTI4aW8udHlwZSUyOGZwJTI5JTI5JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">io.type</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.tmpfile</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.type</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
+
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">io.type</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='82c803' class='view-h5'><a class='view-text-miku' href='#82c803'>#</a> io.write</h2><div class='view-monofont'><div class="highlight"><pre><span></span>io.write (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>写入默认输出流（<code class='view-text-secondary view-border-1 view-border-secondary'>io.output()</code>），相当于 <code class='view-text-secondary view-border-1 view-border-secondary'>io.output():write(···)</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 要写的参数列表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回默认输出流 <code class='view-text-secondary view-border-1 view-border-secondary'>io.output()</code></p></li></ul><h2 id='7689a4' class='view-h5'><a class='view-text-miku' href='#7689a4'>#</a> file:close</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:close ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>关闭 IO 流 <code class='view-text-secondary view-border-1 view-border-secondary'>file</code>。</p><p class='view-p'>IO 流可以被垃圾收集器自动关闭，因此手动调用这个函数并不是必须的。</p><p class='view-p'>但是垃圾收集的实际不可预测，因此手动关闭更加及时。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>是（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）否（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）成功</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div><h2 id='c3b24b' class='view-h5'><a class='view-text-miku' href='#c3b24b'>#</a> file:flush</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:flush ()
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>冲洗 IO 流，将缓冲区中的数据实际写入文件。</p><p class='view-p'>文件关闭时会自动冲洗。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><p class='view-p'>无</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>是（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）否（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）成功</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQXdyaXRlJTI4JTIySGVsbG8lNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODYlOTklMEFmcCUzQXdyaXRlJTI4JTIyMjAyNSU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyV29ybGQlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkNyZWVwZXIlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMk9oJTIwTWFuJTVDbiUyMiUyOSUwQSUwQS0tJTIwJUU4JUFGJUJCJUU2JTk2JTg3JUU0JUJCJUI2JTBBbG9jYWwlMjBmcDIlMjAlM0QlMjBpby5vcGVuJTI4JTI3L3RtcC8xLnR4dCUyNyUyQyUyMCUyN3IlMjclMjklMjAlMjAlMjAtLSUyMCVFNiU4OSU5MyVFNSVCQyU4MCVFNiU5NiU4NyVFNCVCQiVCNiUwQXByaW50JTI4JTI3JUU1JTg2JUIyJUU2JUI0JTk3JUU1JTg5JThEJTI3JTJDJTIwZnAyJTNBcmVhZCUyOCUyMmElMjIlMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVBRiVCQiUwQWZwMiUzQWNsb3NlJTI4JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlQjMlRTklOTclQUQlMEElMEEtLSUyMCVFNSU4NiVCMiVFNiVCNCU5NyUwQWZwJTNBZmx1c2glMjglMjklMEElMEEtLSUyMCVFOCVBRiVCQiVFNiU5NiU4NyVFNCVCQiVCNiUwQWZwMiUyMCUzRCUyMGlvLm9wZW4lMjglMjcvdG1wLzEudHh0JTI3JTJDJTIwJTI3ciUyNyUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU2JTg5JTkzJUU1JUJDJTgwJUU2JTk2JTg3JUU0JUJCJUI2JTBBcHJpbnQlMjglMjclRTUlODYlQjIlRTYlQjQlOTclRTUlOTAlOEUlMjclMkMlMjBmcDIlM0FyZWFkJTI4JTIyYSUyMiUyOSUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFGJUJCJTBBZnAyJTNBY2xvc2UlMjglMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNSU4NSVCMyVFOSU5NyVBRCUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 写</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2025</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Creeper</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Oh Man</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1">-- 读文件</span>
+<span class="kd">local</span> <span class="n">fp2</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;冲洗前&#39;</span><span class="p">,</span> <span class="n">fp2</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>           <span class="c1">-- 读</span>
+<span class="n">fp2</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                              <span class="c1">-- 关闭</span>
+
+<span class="c1">-- 冲洗</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="c1">-- 读文件</span>
+<span class="n">fp2</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>         <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;冲洗后&#39;</span><span class="p">,</span> <span class="n">fp2</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>           <span class="c1">-- 读</span>
+<span class="n">fp2</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                              <span class="c1">-- 关闭</span>
+</pre></div>
+</div><h2 id='553273' class='view-h5'><a class='view-text-miku' href='#553273'>#</a> file:lines</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:lines (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>返回一个迭代器函数，该迭代器函数每次调用时按照指定格式读取 IO 流 <code class='view-text-secondary view-border-1 view-border-secondary'>file</code> 并返回。</p><p class='view-p'>迭代到文件结束时，迭代器返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code> 并自动关闭文件。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 迭代的读取格式，参考 <a class='view-text-primary' href='#cf9459' target='_blank'>file.read</a>；默认为 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code>，即读取一行</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回迭代器函数</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTJCJTI3JTI5JTBBZnAlM0F3cml0ZSUyOCUyMkFBQSU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyQkJCJTVDbiUyMiUyOSUwQWZwJTNBd3JpdGUlMjglMjJDQ0MlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkRERCU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyRUVFJTVDbiUyMiUyOSUwQWZwJTNBc2VlayUyOCUyMnNldCUyMiUyOSUwQSUwQS0tJTIwJUU4JUJGJUFEJUU0JUJCJUEzJTBBZm9yJTIwdiUyMGluJTIwZnAlM0FsaW5lcyUyOCUyOSUyMGRvJTBBJTIwJTIwJTIwJTIwcHJpbnQlMjh2JTI5JTBBZW5kJTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;AAA</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;BBB</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CCC</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DDD</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;EEE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">seek</span><span class="p">(</span><span class="s2">&quot;set&quot;</span><span class="p">)</span>
+
+<span class="c1">-- 迭代</span>
+<span class="kr">for</span> <span class="n">v</span> <span class="kr">in</span> <span class="n">fp</span><span class="p">:</span><span class="n">lines</span><span class="p">()</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div><h2 id='cf9459' class='view-h5'><a class='view-text-miku' href='#cf9459'>#</a> file:read</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:read (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>读取文件内容。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">格式</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;n&quot;</code></td>
+  <td style="text-align:left">读取一个数值</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code></td>
+  <td style="text-align:left">读取剩余的全部文本</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code></td>
+  <td style="text-align:left">读取一行，丢弃换行符（默认）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;L&quot;</code></td>
+  <td style="text-align:left">读取一行，保留换行符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>整数</code></td>
+  <td style="text-align:left">读取相应字节的字符串</td>
+</tr>
+</tbody>
+</table><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 读取格式，每个格式对应一个返回值<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;n&quot;</code> - 读取一个数值</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;a&quot;</code> - 读取剩余的全部文本</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;l&quot;</code> - 读取一行，丢弃换行符（默认）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;L&quot;</code> - 读取一行，保留换行符</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>整数</code> - 读取相应字节的字符串</p></li></ul></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>成功时格式对应位置返回读取到的值</p></li><li><p>失败时格式对应位置返回 <code class='view-text-secondary view-border-1 view-border-secondary'>nil</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQXdyaXRlJTI4JTIySGVsbG8lNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFmcCUzQXdyaXRlJTI4JTIyMjAyNSU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyV29ybGQlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkNyZWVwZXIlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMk9oJTIwTWFuJTVDbiUyMiUyOSUwQWZwJTNBY2xvc2UlMjglMjklMEElMEEtLSUyMCVFOCVBRiVCQiVFNiU5NiU4NyVFNCVCQiVCNiUwQWZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjdyJTI3JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEFpby53cml0ZSUyOCUyMiUyNyUyMiUyQyUyMGZwJTNBcmVhZCUyOCUyOSUyQyUyMCUyMiUyNyU1Q24lMjIlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOSVCQiU5OCVFOCVBRSVBNCUyMCUyMmwlMjIlRUYlQkMlOEMlRTglQUYlQkIlRTUlOEYlOTYlRTQlQjglODAlRTglQTElOEMlRUYlQkMlOEMlRTQlQjglQTIlRTUlQkMlODMlRTYlOEQlQTIlRTglQTElOEMlRTclQUMlQTYlMEFpby53cml0ZSUyOCUyMiUyNyUyMiUyQyUyMGZwJTNBcmVhZCUyOCUyMm4lMjIlMjklMkMlMjAlMjIlMjclNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTglQUYlQkIlRTUlOEYlOTYlRTQlQjglODAlRTQlQjglQUElRTYlOTUlQjAlRTUlODAlQkMlMEFpby53cml0ZSUyOCUyMiUyNyUyMiUyQyUyMGZwJTNBcmVhZCUyOCUyMmwlMjIlMjklMkMlMjAlMjIlMjclNUNuJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTglQUYlQkIlRTUlOEYlOTYlRTQlQjglODAlRTglQTElOEMlRUYlQkMlOEMlRTQlQjglQTIlRTUlQkMlODMlRTYlOEQlQTIlRTglQTElOEMlRTclQUMlQTYlRUYlQkMlODglRTglQUYlQkIlRTUlOEYlOTYlRTUlQjklQjYlRTQlQjglQTIlRTUlQkMlODMlMjAyMDI1JTIwJUU1JTkwJThFJUU5JTlEJUEyJUU3JTlBJTg0JUU2JThEJUEyJUU4JUExJThDJUVGJUJDJTg5JTBBaW8ud3JpdGUlMjglMjIlMjclMjIlMkMlMjBmcCUzQXJlYWQlMjglMjJMJTIyJTI5JTJDJTIwJTIyJTI3JTVDbiUyMiUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFGJUJCJUU1JThGJTk2JUU0JUI4JTgwJUU4JUExJThDJUVGJUJDJThDJUU0JUJGJTlEJUU3JTk1JTk5JUU2JThEJUEyJUU4JUExJThDJUU3JUFDJUE2JTBBaW8ud3JpdGUlMjglMjIlMjclMjIlMkMlMjBmcCUzQXJlYWQlMjglMjJhJTIyJTI5JTJDJTIwJTIyJTI3JTVDbiUyMiUyOSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMC0tJTIwJUU4JUFGJUJCJUU1JThGJTk2JUU1JTg1JUE4JUU5JTgzJUE4JUU1JTg5JUE5JUU0JUJEJTk5JUU2JTk2JTg3JUU0JUJCJUI2JTBB'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 写文件</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2025</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Creeper</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Oh Man</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1">-- 读文件</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>         <span class="c1">-- 打开文件</span>
+<span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(),</span> <span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                        <span class="c1">-- 默认 &quot;l&quot;，读取一行，丢弃换行符</span>
+<span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">),</span> <span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 读取一个数值</span>
+<span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;l&quot;</span><span class="p">),</span> <span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 读取一行，丢弃换行符（读取并丢弃 2025 后面的换行）</span>
+<span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">),</span> <span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 读取一行，保留换行符</span>
+<span class="nb">io.write</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> <span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                     <span class="c1">-- 读取全部剩余文件</span>
+</pre></div>
+</div><h2 id='a42a84' class='view-h5'><a class='view-text-miku' href='#a42a84'>#</a> file:seek</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:seek ([whence [, offset]])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>设置文件当前位置，返回设置后的位置。</p><p class='view-p'>不带参数时当前位置不变，直接返回当前位置。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">原点</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;set&quot;</code></td>
+  <td style="text-align:left">相对于文件开头</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;cur&quot;</code></td>
+  <td style="text-align:left">相对于当前位置</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;end&quot;</code></td>
+  <td style="text-align:left">相对于文件末尾</td>
+</tr>
+</tbody>
+</table><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>whence</code> - 相对原点<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;set&quot;</code> - 相对于文件开头</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;cur&quot;</code> - 相对于当前位置（默认值）</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;end&quot;</code> - 相对于文件末尾</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>offset</code> - 相对于原点 <code class='view-text-secondary view-border-1 view-border-secondary'>whence</code> 的偏移量，默认为 0</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>设置后的当前位置</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=bG9jYWwlMjBmcCUyMCUzRCUyMGlvLm9wZW4lMjglMjcvdG1wLzEudHh0JTI3JTJDJTIwJTI3dyUyQiUyNyUyOSUwQXByaW50JTI4JTI3JUU1JUJEJTkzJUU1JTg5JThEJUU0JUJEJThEJUU3JUJEJUFFJTI3JTJDJTIwZnAlM0FzZWVrJTI4JTI5JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTglQUYlQkIlRTUlOEYlOTYlRTUlQkQlOTMlRTUlODklOEQlRTQlQkQlOEQlRTclQkQlQUUlMEFmcCUzQXdyaXRlJTI4JTIyQUFBJTVDbiUyMiUyOSUwQWZwJTNBd3JpdGUlMjglMjJCQkIlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkNDQyU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyREREJTVDbiUyMiUyOSUwQWZwJTNBd3JpdGUlMjglMjJFRUUlNUNuJTIyJTI5JTBBcHJpbnQlMjglMjclRTUlQkQlOTMlRTUlODklOEQlRTQlQkQlOEQlRTclQkQlQUUlMjclMkMlMjBmcCUzQXNlZWslMjglMjklMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVBRiVCQiVFNSU4RiU5NiVFNSVCRCU5MyVFNSU4OSU4RCVFNCVCRCU4RCVFNyVCRCVBRSUwQSUwQXByaW50JTI4JTI3JUU4JUFFJUJFJUU3JUJEJUFFJUU1JUJEJTkzJUU1JTg5JThEJUU0JUJEJThEJUU3JUJEJUFFJTI3JTJDJTIwZnAlM0FzZWVrJTI4JTIyc2V0JTIyJTI5JTI5JTIwJTIwJTIwLS0lMjAlRTklODclOEQlRTglQUUlQkUlRTUlODglQjAlRTYlOTYlODclRTQlQkIlQjYlRTUlQkMlODAlRTUlQTQlQjQlMEFwcmludCUyOGZwJTNBcmVhZCUyOCUyMmElMjIlMjklMjklMjAlMjAlMjAlMjAlMjAtLSUyMCVFOCVBRiVCQiVFNSU4RiU5NiVFNiU5NSVCNCVFNCVCOCVBQSVFNiU5NiU4NyVFNCVCQiVCNiUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;当前位置&#39;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">seek</span><span class="p">())</span>        <span class="c1">-- 读取当前位置</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;AAA</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;BBB</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CCC</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DDD</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;EEE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;当前位置&#39;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">seek</span><span class="p">())</span>        <span class="c1">-- 读取当前位置</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;设置当前位置&#39;</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span><span class="n">seek</span><span class="p">(</span><span class="s2">&quot;set&quot;</span><span class="p">))</span>   <span class="c1">-- 重设到文件开头</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fp</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>     <span class="c1">-- 读取整个文件</span>
+</pre></div>
+</div><h2 id='e305be' class='view-h5'><a class='view-text-miku' href='#e305be'>#</a> file:setvbuf</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:setvbuf (mode [, size])
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>设置 IO 流的缓冲模式和缓冲区大小。</p><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">宏</th>
+  <th style="text-align:left">名称</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;full&quot;</code></td>
+  <td style="text-align:left">全缓冲</td>
+  <td style="text-align:left">缓冲区满时写入目标设备</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;line&quot;</code></td>
+  <td style="text-align:left">行缓冲</td>
+  <td style="text-align:left">缓冲区满或遇到换行符（<code class='view-text-secondary view-border-1 view-border-secondary'>\n</code>）时写入目标设备</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;no&quot;</code></td>
+  <td style="text-align:left">无缓冲</td>
+  <td style="text-align:left">数据直接写入目标设备</td>
+</tr>
+</tbody>
+</table><p class='view-p'>每种模式的特定行为都是不可移植的；请检查平台中底层的 ISO C 函数以获取更多详细信息；参考 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/setvbuf.html'>setvbuf</a>。</p><p class='view-p'>通常情况下：</p><ul><li><p>标准输出（<code class='view-text-secondary view-border-1 view-border-secondary'>stdout</code>）默认使用行缓冲</p></li><li><p>标准输入（<code class='view-text-secondary view-border-1 view-border-secondary'>stdin</code>）默认使用行缓冲</p></li><li><p>标准错误（<code class='view-text-secondary view-border-1 view-border-secondary'>stderr</code>）默认使用无缓冲</p></li><li><p>文件默认使用全缓冲</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>mode</code> - 缓冲模式<ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;full&quot;</code> - 全缓冲</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;line&quot;</code>- 行缓冲</p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>&quot;no&quot;</code> - 无缓冲</p></li></ul></p></li><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>size</code> - 缓冲区大小</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>是（<code class='view-text-secondary view-border-1 view-border-secondary'>true</code>）否（<code class='view-text-secondary view-border-1 view-border-secondary'>false</code>）成功</p></li></ul><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMHcxJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTIwJTIwJTIwLS0lMjAlRTYlODklOTMlRTUlQkMlODAlRTYlOTYlODclRTQlQkIlQjYlMEF3MSUzQXdyaXRlJTI4JTIySGVsbG8lMjBXb3JsZCU1Q24lMjIlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNSU4NiU5OSUwQSUwQS0tJTIwJUU4JUFGJUJCJUU2JTk2JTg3JUU0JUJCJUI2JTBBbG9jYWwlMjByMSUyMCUzRCUyMGlvLm9wZW4lMjglMjcvdG1wLzEudHh0JTI3JTJDJTIwJTI3ciUyNyUyOSUyMCUyMCUyMC0tJTIwJUU2JTg5JTkzJUU1JUJDJTgwJUU2JTk2JTg3JUU0JUJCJUI2JTBBcHJpbnQlMjglMjclRTklQkIlOTglRTglQUUlQTQlRUYlQkMlODglRTUlODUlQTglRTclQkMlOTMlRTUlODYlQjIlRUYlQkMlODklMjclMkMlMjByMSUzQXJlYWQlMjglMjJhJTIyJTI5JTI5JTIwJTIwJTIwLS0lMjAlRTglQUYlQkIlMEFyMSUzQWNsb3NlJTI4JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlQjMlRTklOTclQUQlMEElMEEtLSUyMCVFNSU4NiU5OSVFNiU5NiU4NyVFNCVCQiVCNiUwQWxvY2FsJTIwdzIlMjAlM0QlMjBpby5vcGVuJTI4JTI3L3RtcC8yLnR4dCUyNyUyQyUyMCUyN3clMjclMjklMjAlMjAlMjAtLSUyMCVFNiU4OSU5MyVFNSVCQyU4MCVFNiU5NiU4NyVFNCVCQiVCNiUwQXcyJTNBc2V0dmJ1ZiUyOCUyMm5vJTIyJTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTglQUUlQkUlRTQlQjglQkElRTYlOTclQTAlRTclQkMlOTMlRTUlODYlQjIlMEF3MiUzQXdyaXRlJTI4JTIySGVsbG8lMjBXb3JsZCU1Q24lMjIlMjklMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAtLSUyMCVFNSU4NiU5OSUwQSUwQS0tJTIwJUU4JUFGJUJCJUU2JTk2JTg3JUU0JUJCJUI2JTBBbG9jYWwlMjByMiUyMCUzRCUyMGlvLm9wZW4lMjglMjcvdG1wLzIudHh0JTI3JTJDJTIwJTI3ciUyNyUyOSUyMCUyMCUyMC0tJTIwJUU2JTg5JTkzJUU1JUJDJTgwJUU2JTk2JTg3JUU0JUJCJUI2JTBBcHJpbnQlMjglMjclRTYlOTclQTAlRTclQkMlOTMlRTUlODYlQjIlMjclMkMlMjByMiUzQXJlYWQlMjglMjJhJTIyJTI5JTI5JTIwJTIwJTIwLS0lMjAlRTglQUYlQkIlMEFyMiUzQWNsb3NlJTI4JTI5JTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwLS0lMjAlRTUlODUlQjMlRTklOTclQUQlMEE%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">w1</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">w1</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>               <span class="c1">-- 写</span>
+
+<span class="c1">-- 读文件</span>
+<span class="kd">local</span> <span class="n">r1</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;默认（全缓冲）&#39;</span><span class="p">,</span> <span class="n">r1</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>   <span class="c1">-- 读</span>
+<span class="n">r1</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                              <span class="c1">-- 关闭</span>
+
+<span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">w2</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="n">w2</span><span class="p">:</span><span class="n">setvbuf</span><span class="p">(</span><span class="s2">&quot;no&quot;</span><span class="p">)</span>                        <span class="c1">-- 设为无缓冲</span>
+<span class="n">w2</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>               <span class="c1">-- 写</span>
+
+<span class="c1">-- 读文件</span>
+<span class="kd">local</span> <span class="n">r2</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>   <span class="c1">-- 打开文件</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;无缓冲&#39;</span><span class="p">,</span> <span class="n">r2</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>   <span class="c1">-- 读</span>
+<span class="n">r2</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>                              <span class="c1">-- 关闭</span>
+</pre></div>
+</div><h2 id='05b829' class='view-h5'><a class='view-text-miku' href='#05b829'>#</a> file:write</h2><div class='view-monofont'><div class="highlight"><pre><span></span>file:write (···)
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:说明</code></p><p class='view-p'>写入 IO 流 <code class='view-text-secondary view-border-1 view-border-secondary'>file</code>。</p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:参数</code></p><ul><li><p><code class='view-text-secondary view-border-1 view-border-secondary'>...</code> - 要写的参数列表</p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:返回值</code></p><ul><li><p>返回 <code class='view-text-secondary view-border-1 view-border-secondary'>file</code></p></li></ul><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>!subtitle:示例</code></p><p><a class='view-message-success view-text-light' target='_blank' rel='nofollow' href='https://xplanc.org/shift/index.html#lang=lua&code=LS0lMjAlRTUlODYlOTklRTYlOTYlODclRTQlQkIlQjYlMEFsb2NhbCUyMGZwJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjd3JTI3JTI5JTBBZnAlM0F3cml0ZSUyOCUyMkFBQSU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyQkJCJTVDbiUyMiUyOSUwQWZwJTNBd3JpdGUlMjglMjJDQ0MlNUNuJTIyJTI5JTBBZnAlM0F3cml0ZSUyOCUyMkRERCU1Q24lMjIlMjklMEFmcCUzQXdyaXRlJTI4JTIyRUVFJTVDbiUyMiUyOSUwQWZwJTNBY2xvc2UlMjglMjklMEElMEEtLSUyMCVFOCVBRiVCQiVFNiU5NiU4NyVFNCVCQiVCNiUwQWxvY2FsJTIwZnAyJTIwJTNEJTIwaW8ub3BlbiUyOCUyNy90bXAvMS50eHQlMjclMkMlMjAlMjdyJTI3JTI5JTBBcHJpbnQlMjhmcDIlM0FyZWFkJTI4JTIyYSUyMiUyOSUyOSUwQQ%3D%3D'>运行示例</a></p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1">-- 写文件</span>
+<span class="kd">local</span> <span class="n">fp</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;AAA</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;BBB</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CCC</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DDD</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;EEE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1">-- 读文件</span>
+<span class="kd">local</span> <span class="n">fp2</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="s1">&#39;/tmp/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fp2</span><span class="p">:</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>
+</pre></div>
+</div><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><p class='view-p'><a class='view-text-primary' href='https://www.lua.org/manual/5.4/manual.html#6.8' target='_blank'>Input and Output Facilities - Lua 5.4 Reference Manual</a></p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:10 创建于: 2025-11-27 09:33:10
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

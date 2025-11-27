@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - Python - 日志 - Python2.1更新说明</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.1%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" />
+    <meta name="description" content="Python2.1有什么新变化¶==================转载：[Python2.1有什么新变化](https://docs.python.org/zh-cn/3/whatsnew/2.1.html)作者：A.M.Kuchling概述¶---本文介绍了Py">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/Python%20%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.html" title="Python 的简介与安装">Python 的简介与安装</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%A2%84%E5%A4%87/%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81.html" title="第一行代码">第一行代码</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础语法</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html" title="标准输入与类型转换">标准输入与类型转换</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6.html" title="条件控制">条件控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6.html" title="循环控制">循环控制</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.html" title="异常处理">异常处理</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%A8%A1%E5%9D%97.html" title="模块">模块</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0.html" title="课后练习">课后练习</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">容器类型</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%85%83%E7%BB%84%20tuple.html" title="元组 tuple">元组 tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%97%E8%A1%A8%20list.html" title="列表 list">列表 list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.html" title="切片操作">切片操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E5%85%B8%20dict.html" title="字典 dict">字典 dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E9%9B%86%E5%90%88%20set.html" title="集合 set">集合 set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AE%B9%E5%99%A8%E8%BF%AD%E4%BB%A3.html" title="容器迭代">容器迭代</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E8%A7%A3%E5%8C%85%E6%93%8D%E4%BD%9C.html" title="解包操作">解包操作</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D.html" title="模式匹配">模式匹配</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E6%8E%A8%E5%AF%BC%E5%BC%8F.html" title="推导式">推导式</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%AF%E5%8F%98%E6%80%A7.html" title="类型的可变性">类型的可变性</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%88%9B%E5%BB%BA%E5%92%8C%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0.html" title="创建和调用函数">创建和调用函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8.html" title="函数的递归调用">函数的递归调用</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%87%BD%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0.html" title="函数的默认参数">函数的默认参数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%87%BD%E6%95%B0%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0.html" title="函数的关键字参数">函数的关键字参数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0.html" title="函数的可变参数">函数的可变参数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0.html" title="匿名函数">匿名函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%87%BD%E6%95%B0/%E8%A3%85%E9%A5%B0%E5%99%A8.html" title="装饰器">装饰器</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">面向对象</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AF%B4%E6%98%8E.html" title="面向对象的说明">面向对象的说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1.html" title="创建类和对象">创建类和对象</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E6%88%90%E5%91%98%E7%9A%84%E5%8F%AF%E8%A7%81%E6%80%A7.html" title="成员的可见性">成员的可见性</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%B1%BB%E7%9A%84%E5%85%AC%E5%85%B1%E6%88%90%E5%91%98.html" title="类的公共成员">类的公共成员</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81.html" title="继承和多态">继承和多态</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1.html" title="迭代器和可迭代对象">迭代器和可迭代对象</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%94%9F%E6%88%90%E5%99%A8.html" title="生成器">生成器</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">输入输出</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%96%87%E4%BB%B6%20IO.html" title="文件 IO">文件 IO</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E5%86%85%E5%AD%98%20IO.html" title="内存 IO">内存 IO</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96.html" title="数据持久化">数据持久化</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/JSON.html" title="JSON">JSON</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进程控制</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B.html" title="创建进程">创建进程</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1.html" title="进程间通信">进程间通信</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6/%E8%BF%9B%E7%A8%8B%E6%B1%A0.html" title="进程池">进程池</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">线程控制</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B.html" title="创建线程">创建线程</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5.html" title="线程同步">线程同步</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6/%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81.html" title="可重入锁">可重入锁</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6/%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F.html" title="条件变量">条件变量</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6/%E7%BA%BF%E7%A8%8B%E6%B1%A0.html" title="线程池">线程池</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">正则表达式</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E4%BD%BF%E7%94%A8.html" title="使用">使用</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html" title="常用的正则表达式">常用的正则表达式</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">网络编程</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/TCP.html" title="TCP">TCP</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/UDP.html" title="UDP">UDP</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">图形界面</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2/%E7%AE%80%E4%BB%8B.html" title="简介">简介</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2/Qt.html" title="Qt">Qt</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2/Qt%20Theme.html" title="Qt Theme">Qt Theme</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">异步</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%BC%82%E6%AD%A5/%E5%BC%82%E6%AD%A5%E5%9F%BA%E7%A1%80.html" title="异步基础">异步基础</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">常见问题</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%9C%A8%E7%BA%BF%E7%8E%AF%E5%A2%83.html" title="在线环境">在线环境</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%9C%A8%20nohup%20%E4%B8%AD%E6%B2%A1%E6%9C%89%E6%89%93%E5%8D%B0.html" title="在 nohup 中没有打印">在 nohup 中没有打印</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0.html" title="内建函数">内建函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97.html" title="内置模块">内置模块</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E5%86%85%E7%BD%AE%E5%BC%82%E5%B8%B8.html" title="内置异常">内置异常</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内建函数</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/__import__.html" title="__import__">__import__</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/abs.html" title="abs">abs</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/aiter.html" title="aiter">aiter</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/all.html" title="all">all</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/anext.html" title="anext">anext</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/any.html" title="any">any</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/ascii.html" title="ascii">ascii</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/bin.html" title="bin">bin</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/bool.html" title="bool">bool</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/breakpoint.html" title="breakpoint">breakpoint</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/bytearray.html" title="bytearray">bytearray</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/bytes.html" title="bytes">bytes</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/callable.html" title="callable">callable</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/chr.html" title="chr">chr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/classmethod.html" title="classmethod">classmethod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/compile.html" title="compile">compile</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/complex.html" title="complex">complex</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/delattr.html" title="delattr">delattr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/dict.html" title="dict">dict</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/dir.html" title="dir">dir</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/divmod.html" title="divmod">divmod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/enumerate.html" title="enumerate">enumerate</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/eval.html" title="eval">eval</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/exec.html" title="exec">exec</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/filter.html" title="filter">filter</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/float.html" title="float">float</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/format.html" title="format">format</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/frozenset.html" title="frozenset">frozenset</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/getattr.html" title="getattr">getattr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/globals.html" title="globals">globals</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/hasattr.html" title="hasattr">hasattr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/hash.html" title="hash">hash</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/help.html" title="help">help</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/hex.html" title="hex">hex</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/id.html" title="id">id</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/input.html" title="input">input</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/int.html" title="int">int</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/isinstance.html" title="isinstance">isinstance</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/issubclass.html" title="issubclass">issubclass</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/iter.html" title="iter">iter</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/len.html" title="len">len</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/list.html" title="list">list</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/locals.html" title="locals">locals</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/map.html" title="map">map</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/max.html" title="max">max</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/memoryview.html" title="memoryview">memoryview</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/min.html" title="min">min</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/next.html" title="next">next</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/object.html" title="object">object</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/oct.html" title="oct">oct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/open.html" title="open">open</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/ord.html" title="ord">ord</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/pow.html" title="pow">pow</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/print.html" title="print">print</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/property.html" title="property">property</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/range.html" title="range">range</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/repr.html" title="repr">repr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/reversed.html" title="reversed">reversed</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/round.html" title="round">round</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/set.html" title="set">set</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/setattr.html" title="setattr">setattr</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/slice.html" title="slice">slice</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/sorted.html" title="sorted">sorted</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/staticmethod.html" title="staticmethod">staticmethod</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/str.html" title="str">str</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/sum.html" title="sum">sum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/super.html" title="super">super</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/tuple.html" title="tuple">tuple</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/type.html" title="type">type</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/vars.html" title="vars">vars</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0/zip.html" title="zip">zip</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">内置模块</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97/typing.html" title="typing">typing</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">日志</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.14%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.14更新说明">Python3.14更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.13%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.13更新说明">Python3.13更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.12%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.12更新说明">Python3.12更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.11%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.11更新说明">Python3.11更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.10%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.10更新说明">Python3.10更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.9%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.9更新说明">Python3.9更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.8%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.8更新说明">Python3.8更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.7%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.7更新说明">Python3.7更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.6%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.6更新说明">Python3.6更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.5%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.5更新说明">Python3.5更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.4%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.4更新说明">Python3.4更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.3%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.3更新说明">Python3.3更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.2%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.2更新说明">Python3.2更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.1%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.1更新说明">Python3.1更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python3.0%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python3.0更新说明">Python3.0更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.7%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.7更新说明">Python2.7更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.6%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.6更新说明">Python2.6更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.5%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.5更新说明">Python2.5更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.4%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.4更新说明">Python2.4更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.3%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.3更新说明">Python2.3更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.2%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.2更新说明">Python2.2更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.1%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.1更新说明">Python2.1更新说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/Python/%E6%97%A5%E5%BF%97/Python2.0%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E.html" title="Python2.0更新说明">Python2.0更新说明</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/02.Python" rel="nofollow">
+                                    Python 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/02.Python/EX.日志/998.Python2.1更新说明.md" rel="nofollow">
+                                    Python2.1更新说明
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='317c01' class='view-h4'><a class='view-text-miku' href='#317c01'>#</a> Python 2.1 有什么新变化¶</h1><p class='view-p'>转载：<a class='view-text-primary' href='https://docs.python.org/zh-cn/3/whatsnew/2.1.html' target='_blank'>Python 2.1 有什么新变化</a><br />
+作者：A.M. Kuchling</p><h2 id='f3202b' class='view-h5'><a class='view-text-miku' href='#f3202b'>#</a> 概述¶</h2><p class='view-p'>本文介绍了 Python 2.1 的新增特性。 虽然 2.1 的改变没有 Python 2.0 那么多，但是仍然有一些令人惊喜的东西。 2.1 是第一个使用 Python 增强提议，即 PEP 来进行引导的发行版，因此大部分重要的改变都有相应的 PEP 来提供有关改变的更完整文档和设计思路。 本文并未试图完整记录所有的新特性，而是为 Python 程序员提供新特性的简单概览。 请参阅 Python 2.1 文档，或特定的 PEP，获取针对你感兴趣的任何新特性的更多细节。</p><p class='view-p'>Python 开发团队的一个近期目标是加速新发行版的步调，使得每 6 到 9 个月就有一个新发行版。 2.1 是基于这个新步调推出的第一个发行版，第一个内测版将于一月发布，即 2.0 最终版发布 3 个月之后。</p><p class='view-p'>Python 2.1 的最终版本于2001年4月17日发布。</p><h2 id='c2d4b7' class='view-h5'><a class='view-text-miku' href='#c2d4b7'>#</a> PEP 227: 嵌套的作用域¶</h2><p class='view-p'>Python 2.1 中的最大改变是 Python 的作用域规则。 在 Python 2.0 中，任意给定的时刻至多使用三个命名空间来查找变量名称：局部、模块和内置命名空间。 这往往会导致令人吃惊的结果因为它与人们直觉上的预期不相匹配。 例如，一个嵌套的递归函数将不起作用:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="n">g</span><span class="p">(</span><span class="n">value</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="o">...</span>
+</pre></div>
+</div><p class='view-p'>函数 <code class='view-text-secondary view-border-1 view-border-secondary'>g()</code> 总是会引发 <code class='view-text-secondary view-border-1 view-border-secondary'>NameError</code> 异常，因为名称 <code class='view-text-secondary view-border-1 view-border-secondary'>g</code> 的绑定既不在局部命名空间中也不在模块级命名空间中。 这在实践中不会有太大问题（你会经常这样递归地定义内部函数吗？），但是这也会让 <code class='view-text-secondary view-border-1 view-border-secondary'>lambda</code> 表达式的使用更为笨拙，这在实践中是有问题的。 在使用了 <code class='view-text-secondary view-border-1 view-border-secondary'>lambda</code> 的代码中你经常能发现局部变量通过作为参数的默认值被拷贝。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="s2">&quot;Return list of any entries equal to &#39;name&#39;&quot;</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">name</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">list_attribute</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span>
+</pre></div>
+</div><p class='view-p'>结果将会严重损害以高度函数式风格编写的 Python 代码的可读性。</p><p class='view-p'>Python 2.1 最显著的改变是增加了静态作用域这一语言特征来解决此问题。 作为它的第一项影响，在上述示例中的 <code class='view-text-secondary view-border-1 view-border-secondary'>name=name</code> 默认参数现在将不再必要。 简单地说，当一个函数内部的给定变量名没有被赋值时（通过赋值语句，或者 <code class='view-text-secondary view-border-1 view-border-secondary'>def</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>class</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>import</code> 语句），对该变量的引用将在外层作用域的局部命名空间中查找。 对于该规则的更详细解释，以及具体实现的分析，请参阅相应的 PEP。</p><p class='view-p'>对于同时在模块层级和包含下层函数定义的函数内部局部变量使用了相同变量名的代码来说这项改变可能会导致一些兼容性问题。 不过这看来不太可能发生，因为阅读这样的代码本来就会相当令人困惑。</p><p class='view-p'>此项改变的一个附带影响是在特定条件下函数作用域内部 <code class='view-text-secondary view-border-1 view-border-secondary'>from module import *</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>exec</code> 语句将不允许使用。 Python 参考手册已经写明 <code class='view-text-secondary view-border-1 view-border-secondary'>from module import *</code> 仅在模块最高层级上是可用的，但此前 CPython 解释器从未强制实施此规则。 作为嵌套作用域具体实现的一部分，将 Python 源码转为字节码的编译器会生成不同的代码来访问某个包含作用域内的变量。 <code class='view-text-secondary view-border-1 view-border-secondary'>from module import *</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>exec</code> 会使得编译器无法正确执行，因为它们会向局部命名空间添加在编译时还不存在的名称。 为此，如果一个函数包含带有自由变量的函数定义或 <code class='view-text-secondary view-border-1 view-border-secondary'>lambda</code> 表达式，编译器将通过引发 <code class='view-text-secondary view-border-1 view-border-secondary'>SyntaxError</code> 异常来提示。</p><p class='view-p'>为了使前面的解释更清楚，下面是一个例子:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="c1"># 下一行有语法错误</span>
+    <span class="n">exec</span> <span class="s1">&#39;x=2&#39;</span>
+    <span class="k">def</span> <span class="nf">g</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div><p class='view-p'>包含 <code class='view-text-secondary view-border-1 view-border-secondary'>exec</code> 语句的第 4 行有语法错误，因为 <code class='view-text-secondary view-border-1 view-border-secondary'>exec</code> 会定义一个名为 <code class='view-text-secondary view-border-1 view-border-secondary'>x</code> 的新局部变量，它的值应当被 <code class='view-text-secondary view-border-1 view-border-secondary'>g()</code> 所访问。</p><p class='view-p'>这应该不会是太大的限制，因为 <code class='view-text-secondary view-border-1 view-border-secondary'>exec</code> 在多数 Python 代码中都极少被使用（而当它被使用时，往往也是个存在糟糕设计的信号）。</p><p class='view-p'>由于兼容性问题，嵌套作用域被逐步引入；在 Python 2.1 中，它们默认未启用，但可以通过在模块中使用 future 语句来开启，如 <strong>PEP 236</strong> 所述。 （参见下一节对 <strong>PEP 236</strong> 的进一步讨论。） 在 Python 2.2 中，嵌套作用域将成为默认设置，并且无法关闭，但用户将有整个 2.1 版本的生命周期来修复因引入嵌套作用域而导致的任何问题。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 227</strong> - 静态嵌套作用域</dt>
+<dd>由 Jeremy Hylton 撰写并实现。</dd>
+</dl>
+<h2 id='6c4d8c' class='view-h5'><a class='view-text-miku' href='#6c4d8c'>#</a> PEP 236: __future__ 指令¶</h2><p class='view-p'>对嵌套作用域的反应引起了广泛关注，人们担心在 Python 2.1 版本发布时会破坏现有代码，强烈的反应促使 Python 开发者采取了更保守的策略。这个策略包括引入一种约定，在版本 N 中启用可选功能，该功能将在版本 N+1 中成为强制功能。</p><p class='view-p'>语法使用 <code class='view-text-secondary view-border-1 view-border-secondary'>from...import</code> 语句，使用保留模块名 <code class='view-text-secondary view-border-1 view-border-secondary'>__future__</code>。可以通过以下语句启用嵌套作用域:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">nested_scopes</span>
+</pre></div>
+</div><p class='view-p'>虽然它看起来像一个普通的 <code class='view-text-secondary view-border-1 view-border-secondary'>import</code> 语句，但实际上并不是；关于此类 future 语句的位置有严格的规定。它们只能放在模块的顶部，必须位于任何 Python 代码或常规 <code class='view-text-secondary view-border-1 view-border-secondary'>import</code> 语句之前。这是因为这样的语句会影响 Python 字节码编译器解析代码和生成字节码的方式，因此它们必须在任何会生成字节码的语句之前出现。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 236</strong> - 回到 <code class='view-text-secondary view-border-1 view-border-secondary'>__future__</code></dt>
+<dd>由 Tim Peters 撰写，主要由 Jeremy Hylton 实现。</dd>
+</dl>
+<h2 id='f2b6a0' class='view-h5'><a class='view-text-miku' href='#f2b6a0'>#</a> PEP 207: 富比较¶</h2><p class='view-p'>在早期版本中，Python 对用户定义类和扩展类型的比较操作支持相当简单。类可以实现一个 <code class='view-text-secondary view-border-1 view-border-secondary'>__cmp__()</code> 方法，该方法接收两个类实例，并且只能返回 0 表示相等，或 +1 或 -1 表示不相等；该方法不能引发异常或返回布尔值以外的任何内容。Numeric Python 的用户经常发现这种模型太弱且受限，因为在 Numeric Python 所用的数字运算程序中，能够对两个矩阵进行逐元素比较更为有用，返回一个包含每个元素比较结果的矩阵。如果两个矩阵的大小不同，则比较必须能够引发异常以表示错误。</p><p class='view-p'>在 Python 2.1 中增加了富比较操作以支持这一需求。 Python 类现在可以单独重载 <code class='view-text-secondary view-border-1 view-border-secondary'>&lt;</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>&lt;=</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>&gt;</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>&gt;=</code>, <code class='view-text-secondary view-border-1 view-border-secondary'>==</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>!=</code> 中的每个操作。 新的魔术方法名称如下：</p><table class='view-width-100'><thead>
+<tr>
+  <th>运算</th>
+  <th>方法名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>&lt;</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__lt__()</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>&lt;=</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__le__()</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>&gt;</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__gt__()</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>&gt;=</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__ge__()</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>==</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__eq__()</code></td>
+</tr>
+<tr>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>!=</code></td>
+  <td><code class='view-text-secondary view-border-1 view-border-secondary'>__ne__()</code></td>
+</tr>
+</tbody>
+</table><p class='view-p'>（这些魔术方法是以对应的 Fortran 操作符命名的，如 <code class='view-text-secondary view-border-1 view-border-secondary'>.LT.</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>.LE.</code> 等。 数值程序员几乎肯定对这些名称非常熟悉，并且会发现它们易于记忆。）</p><p class='view-p'>每个这样的魔术方法的形式都是 <code class='view-text-secondary view-border-1 view-border-secondary'>method(self, other)</code>，其中 <code class='view-text-secondary view-border-1 view-border-secondary'>self</code> 是操作符左侧的对象，而 <code class='view-text-secondary view-border-1 view-border-secondary'>other</code> 是操作符右侧的对象。 例如，表达式 <code class='view-text-secondary view-border-1 view-border-secondary'>A &lt; B</code> 会调用 <code class='view-text-secondary view-border-1 view-border-secondary'>A.__lt__(B)</code>。</p><p class='view-p'>这些魔术方法可以返回任何类型的值：布尔值、矩阵、列表或任何其他 Python 对象。或者，如果比较是不可能的、不一致的或没有意义的，它们也可以引发异常。</p><p class='view-p'>内置的 <code class='view-text-secondary view-border-1 view-border-secondary'>cmp(A,B)</code> 函数可以使用富比较机制，现在接受一个可选参数来指定要使用的比较操作；该参数可以是字符串 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&lt;&quot;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&lt;=&quot;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&gt;&quot;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;&gt;=&quot;</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>&quot;==&quot;</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>&quot;!=&quot;</code> 之一。 如果不带可选的第三个参数调用，<code class='view-text-secondary view-border-1 view-border-secondary'>cmp()</code> 函数将只返回 -1、0 或 +1，就像以前的 Python 版本一样；否则，它将调用适当的方法并可以返回任何 Python 对象。</p><p class='view-p'>对于 C 程序员来说，也有相应的变更；类型对象中有一个新的槽位 <code class='view-text-secondary view-border-1 view-border-secondary'>tp_richcmp</code> 以及一个用于执行指定富比较的 API。 这里我不会涉及 C API 的具体内容，完整的相关函数列表请参阅 <strong>PEP 207</strong> 或 2.1 的 C API 文档。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 207</strong> - 富比较</dt>
+<dd>由 Guido van Rossum 编写，大量参考 David Ascher 的先期工作，并由 Guido van Rossum 实现。</dd>
+</dl>
+<h2 id='de262d' class='view-h5'><a class='view-text-miku' href='#de262d'>#</a> PEP 230: 警告框架¶</h2><p class='view-p'>在过去的 10 年中，Python 积累了一定数量的过时模块和功能。 由于无法确切知道某个功能被使用的程度：可能没有程序依赖该功能，也可能有很多程序依赖，因此很难确定何时可以安全地移除某个功能，为了以更结构化的方式移除旧功能，添加了一个警告框架。 当 Python 开发者想要废弃某个功能时，它会在下一个 Python 版本中首先触发一个警告。 然后，在随后的Python版本中可以移除该功能，这样用户将有一个完整的发布周期来删除对旧功能的使用。</p><p class='view-p'>Python 2.1 增加了警告框架以用于此方案。 它增加了一个 <code class='view-text-secondary view-border-1 view-border-secondary'>warnings</code> 模块，该模块提供了发出警告的函数，以及过滤掉不想显示的警告的功能。 第三方模块也可以使用这个框架来弃用它们不再希望支持的旧功能。</p><p class='view-p'>例如，在 Python 2.1 中，<code class='view-text-secondary view-border-1 view-border-secondary'>regex</code> 模块已被弃用，因此导入它会打印出一个警告:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">regex</span>
+<span class="n">__main__</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span> <span class="ne">DeprecationWarning</span><span class="p">:</span> <span class="n">the</span> <span class="n">regex</span> <span class="n">module</span>
+         <span class="ow">is</span> <span class="n">deprecated</span><span class="p">;</span> <span class="n">please</span> <span class="n">use</span> <span class="n">the</span> <span class="n">re</span> <span class="n">module</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div><p class='view-p'>警告可以通过调用 <code class='view-text-secondary view-border-1 view-border-secondary'>warnings.warn()</code> 函数来发出:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;feature X no longer supported&quot;</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>第一个形参是警告消息；额外的可选形参可被用来指定一个专门的警告类别。</p><p class='view-p'>可以添加过滤器来禁用特定的警告；可以将某个正则表达式模式应用于消息或模块名称以抑制警告。 例如，你可能有一个使用 <code class='view-text-secondary view-border-1 view-border-secondary'>regex</code> 模块的程序但现在不想花时间将其转换为使用 <code class='view-text-secondary view-border-1 view-border-secondary'>re</code> 模块。 可以通过以下调用来抑制警告消息</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span> <span class="o">=</span> <span class="s1">&#39;ignore&#39;</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="s1">&#39;.*regex module is deprecated&#39;</span><span class="p">,</span>
+                        <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+                        <span class="n">module</span> <span class="o">=</span> <span class="s1">&#39;__main__&#39;</span><span class="p">)</span>
+</pre></div>
+</div><p class='view-p'>这添加了一个过滤器，该过滤器仅适用于在 <code class='view-text-secondary view-border-1 view-border-secondary'>__main__</code> 模块中触发的 <code class='view-text-secondary view-border-1 view-border-secondary'>DeprecationWarning</code> 类警告，并应用一个正则表达式来仅匹配有关 <code class='view-text-secondary view-border-1 view-border-secondary'>regex</code> 模块已被弃用的消息，这将导致忽略此类警告。警告还可以仅打印一次，每次执行违规代码时打印，或者转换为异常，从而导致程序停止（当然，除非以常规方式捕获这些异常）。</p><p class='view-p'>Python 的 C API 也增加了用于发出警告的函数；详情请参阅 PEP 230 或 Python 的 API 文档。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 5</strong> - 语言演化的准则</dt>
+<dd>该文档由 Paul Prescod 撰写，旨在规定移除 Python 旧功能时应遵循的程序。 尽管本文描述的政策尚未被正式采纳，但最终的政策可能不会与 Prescod 的提议有太大不同。</dd>
+<dt><strong>PEP 230</strong> - 警告框架</dt>
+<dd>由 Guido van Rossum 撰写并实现。</dd>
+</dl>
+<h2 id='cbc7d5' class='view-h5'><a class='view-text-miku' href='#cbc7d5'>#</a> PEP 229: 新的构建系统¶</h2><p class='view-p'>在编译 Python 时，用户必须进入并编辑 <code class='view-text-secondary view-border-1 view-border-secondary'>Modules/Setup</code> 文件以启用各种附加模块；默认集相对较小，并且仅限于在大多数 Unix 平台上编译的模块。这意味着在具有更多功能的 Unix 平台上，特别是 Linux，Python 安装通常不包含所有可能有用的模块。</p><p class='view-p'>Python 2.0 添加了 Distutils，一组用于分发和安装扩展模块的模块。在 Python 2.1 中，Distutils 被用于编译大部分标准库扩展模块，自动检测当前机器上支持哪些模块。希望这将使 Python 的安装更加容易并具有更多功能。</p><p class='view-p'>不再需要编辑 <code class='view-text-secondary view-border-1 view-border-secondary'>Modules/Setup</code> 文件来启用模块，而是在 Python 源代码分发包的顶层目录运行一个 <code class='view-text-secondary view-border-1 view-border-secondary'>setup.py</code> 脚本，该脚本在构建时尝试通过检查系统上的模块和头文件来发现可以启用那些模块。 如果某个模块已在 <code class='view-text-secondary view-border-1 view-border-secondary'>Modules/Setup</code> 中配置，则 <code class='view-text-secondary view-border-1 view-border-secondary'>setup.py</code> 脚本不会尝试编译该模块，并会遵从 <code class='view-text-secondary view-border-1 view-border-secondary'>Modules/Setup</code> 文件中的内容。 这提供了一种方式来指定特定平台所需的任何奇怪的命令行旗标或库。</p><p class='view-p'>在对构建机制的另一项重大更改中，Neil Schemenauer 对其进行了重组，现在 Python 使用单一的非递归 makefile，而不是在顶层目录和 <code class='view-text-secondary view-border-1 view-border-secondary'>Python/</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>Parser/</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>Objects/</code>和 :file:<code class='view-text-secondary view-border-1 view-border-secondary'>Modules/</code> 子目录中的多个 makefile。这使得构建 Python 更快，同时也使修改 Makefile 更加清晰和简单。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 229</strong> - 使用 Distutils 来构建 Python</dt>
+<dd>由 A.M. Kuchling 撰写并实现。</dd>
+</dl>
+<h2 id='2b75f4' class='view-h5'><a class='view-text-miku' href='#2b75f4'>#</a> PEP 205: 弱引用¶</h2><p class='view-p'>弱引用，通过 <code class='view-text-secondary view-border-1 view-border-secondary'>weakref</code> 模块提供，是 Python 程序员工具箱中一种较小但有用的新数据类型。</p><p class='view-p'>存储一个指向对象的引用（例如，在字典或列表中）会导致该对象永久存活。 在某些特定情况下，这种行为是不符合需要的，最常见的是对象缓存，另一个是像树这样的数据结构中的循环引用。</p><p class='view-p'>例如，考虑一个记忆化函数，它通过将函数的参数及其结果存储在字典中来缓存另一个函数 <code class='view-text-secondary view-border-1 view-border-secondary'>f(x)</code> 的结果:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_cache</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="n">retval</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># 缓存返回的对象</span>
+    <span class="n">_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">retval</span>
+
+    <span class="k">return</span> <span class="n">retval</span>
+</pre></div>
+</div><p class='view-p'>这个版本适用于诸如整数之类的简单对象，但它有一个副作用；<code class='view-text-secondary view-border-1 view-border-secondary'>_cache</code> 字典持有返回值的引用，因此这些值在 Python 进程退出并清理之前永远不会被释放。 对于整数来说这不是很明显，但如果 <code class='view-text-secondary view-border-1 view-border-secondary'>f()</code> 返回一个对象或占用大量内存的数据结构，这可能会成为一个问题。</p><p class='view-p'>弱引用提供了一种实现缓存的方法，不会让对象在其生命周期结束后仍然存活。 如果一个对象仅通过弱引用访问，该对象将被释放，并且弱引用将指示它所引用的对象不再存在。 通过调用 <code class='view-text-secondary view-border-1 view-border-secondary'>wr = weakref.ref(obj)</code> 来创建对对象 <em>obj</em> 的弱引用。 通过调用弱引用，就像调用函数一样，可以返回被引用的对象: <code class='view-text-secondary view-border-1 view-border-secondary'>wr()</code>。 如果对象仍然存在，它将返回被引用的对象；如果对象不再存在，则返回 <code class='view-text-secondary view-border-1 view-border-secondary'>None</code>。</p><p class='view-p'>这使得可以编写一个 <code class='view-text-secondary view-border-1 view-border-secondary'>memoize()</code> 函数，其缓存不会使对象保持存活状态，因为缓存中存储的是弱引用。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_cache</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]()</span>
+        <span class="c1"># 如果弱引用对象仍然存在，</span>
+        <span class="c1"># 则返回它</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="n">retval</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># 缓存一个弱引用</span>
+    <span class="n">_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">retval</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">retval</span>
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>weakref</code> 模块还允许创建代理对象，代理对象的行为类似于弱引用 -- 仅被代理对象引用的对象会被解分配，但只要对象仍然存在，代理就会透明地将所有操作转发给对象，而不需要显式调用来检索对象。 如果对象已被解分配，尝试使用代理将引发 <code class='view-text-secondary view-border-1 view-border-secondary'>weakref.ReferenceError</code> 异常。</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">proxy</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="n">proxy</span><span class="o">.</span><span class="n">attr</span>   <span class="c1"># 等同于 obj.attr</span>
+<span class="n">proxy</span><span class="o">.</span><span class="n">meth</span><span class="p">()</span> <span class="c1"># 等同于 obj.meth()</span>
+<span class="k">del</span> <span class="n">obj</span>
+<span class="n">proxy</span><span class="o">.</span><span class="n">attr</span>   <span class="c1"># 引发 weakref.ReferenceError</span>
+</pre></div>
+</div><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 205</strong> - 弱引用</dt>
+<dd>由 Fred L. Drake, Jr 撰写并实现。</dd>
+</dl>
+<h2 id='03461f' class='view-h5'><a class='view-text-miku' href='#03461f'>#</a> PEP 232: 函数属性¶</h2><p class='view-p'>在 Python 2.1 中，函数现在可以附加任意信息。人们经常使用文档字符串来保存有关函数和方法的信息，因为 <code class='view-text-secondary view-border-1 view-border-secondary'>__doc__</code> 属性是唯一可以将任何信息附加到函数上的方式。例如，在 Zope 网络应用服务器中，函数通过拥有文档字符串来标记为公共访问安全，在 John Aycock 的 SPARK 解析框架中，文档字符串包含要解析的 BNF 语法的部分。这种过载是不幸的，因为文档字符串实际上是用来保存函数文档的；例如，这意味着你不能正确地为 Zope 中预期用于私有用途的函数编写文档。</p><p class='view-p'>现在可以使用常规的 Python 语法在函数上设置和检索任意属性:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span> <span class="k">pass</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">publish</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">f</span><span class="o">.</span><span class="n">secure</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">f</span><span class="o">.</span><span class="n">grammar</span> <span class="o">=</span> <span class="s2">&quot;A ::= B (C D)*&quot;</span>
+</pre></div>
+</div><p class='view-p'>包含属性的字典可以作为函数的 <code class='view-text-secondary view-border-1 view-border-secondary'>__dict__</code> 来访问。 与类实例的 <code class='view-text-secondary view-border-1 view-border-secondary'>__dict__</code> 属性不同，在函数中你实际上可以为 <code class='view-text-secondary view-border-1 view-border-secondary'>__dict__</code> 分配一个新的字典，尽管新值仅限于常规的 Python 字典；你 <em>不能</em> 狡猾地将其设为 <code class='view-text-secondary view-border-1 view-border-secondary'>UserDict</code> 实例，或任何其他行为类似映射的随机对象。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 232</strong> - 函数属性</dt>
+<dd>由 Barry Warsaw 撰写并实现</dd>
+</dl>
+<h2 id='687ec8' class='view-h5'><a class='view-text-miku' href='#687ec8'>#</a> PEP 235: 在大小写不敏感的平台上导入模块¶</h2><p class='view-p'>一些操作系统的文件系统是大小写不敏感的，MacOS 和 Windows 是主要的例子；在这些系统上，无法区分文件名 <code class='view-text-secondary view-border-1 view-border-secondary'>FILE.PY</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>file.py</code>，尽管它们确实以原始大小写存储文件名（它们也是保留大小写的）。</p><p class='view-p'>在 Python 2.1 中，<code class='view-text-secondary view-border-1 view-border-secondary'>import</code> 语句可以在不区分大小写的平台上模拟大小写敏感性。 现在，Python 默认搜索第一个大小写敏感匹配的文件，如果找不到这样的文件，就会引发 <code class='view-text-secondary view-border-1 view-border-secondary'>ImportError</code>，因此 <code class='view-text-secondary view-border-1 view-border-secondary'>import file</code> 不会导入名为 <code class='view-text-secondary view-border-1 view-border-secondary'>FILE.PY</code> 的模块。 在启动 Python 解释器之前，可以通过设置 <code class='view-text-secondary view-border-1 view-border-secondary'>PYTHONCASEOK</code> 环境变量来请求大小写不敏感匹配。</p><h2 id='c68d41' class='view-h5'><a class='view-text-miku' href='#c68d41'>#</a> PEP 217: 交互模式显示钩子¶</h2><p class='view-p'>在交互模式下使用 Python 解释器时，命令的输出是通过内置的 <code class='view-text-secondary view-border-1 view-border-secondary'>repr()</code> 函数显示的。 在 Python 2.1 中，可以将变量 <code class='view-text-secondary view-border-1 view-border-secondary'>sys.displayhook()</code> 设置为一个可调用对象，该对象将在代替 <code class='view-text-secondary view-border-1 view-border-secondary'>repr()</code> 函数被调用。 例如，你可以将其设置为一个特殊的美化打印函数:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># 创建一个递归的数据结构</span>
+<span class="o">...</span> <span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">L</span> <span class="c1"># 显示 Python 的默认输出</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="o">...</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># 使用 pprint.pprint() 作为显示函数</span>
+<span class="o">...</span> <span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">pprint</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">L</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>  <span class="o">&lt;</span><span class="n">Recursion</span> <span class="n">on</span> <span class="nb">list</span> <span class="k">with</span> <span class="nb">id</span><span class="o">=</span><span class="mi">135143996</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 217</strong> - 用于交互模式的显示钩子</dt>
+<dd>由 Moshe Zadka 撰写并实现</dd>
+</dl>
+<h2 id='a0651e' class='view-h5'><a class='view-text-miku' href='#a0651e'>#</a> PEP 208: 新的强制转换模型¶</h2><p class='view-p'>在 C 级别上的数值类型转换方法进行了重大修改。 这只会影响编写 Python C 扩展的作者，使他们在编写支持数值运算的扩展类型时有更多的灵活性。</p><p class='view-p'>扩展类型现在可以在其 <code class='view-text-secondary view-border-1 view-border-secondary'>PyTypeObject</code> 结构中设置类型标志 <code class='view-text-secondary view-border-1 view-border-secondary'>Py_TPFLAGS_CHECKTYPES</code>，以表明它们支持新的强制模型。 在此类扩展类型中，数字槽函数不再假定它们将得到两个相同类型的参数；相反，它们可能会得到两个不同类型的参数，然后可以执行自己的内部强制。如果槽函数传递给它一个无法处理的类型，它可以通过返回一个指向 <code class='view-text-secondary view-border-1 view-border-secondary'>Py_NotImplemented</code> 单一值的引用来表示失败。 然后将尝试其他类型的数值函数，也许它们可以处理该操作；如果其他类型也返回 <code class='view-text-secondary view-border-1 view-border-secondary'>Py_NotImplemented</code>，那么将引发 <code class='view-text-secondary view-border-1 view-border-secondary'>TypeError</code>。 用 Python 写的数值方法也可以返回 <code class='view-text-secondary view-border-1 view-border-secondary'>Py_NotImplemented</code>，导致解释器当作该方法不存在（也许会引发 <code class='view-text-secondary view-border-1 view-border-secondary'>TypeError</code>，也许会尝试另一个对象的数值方法）。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 208</strong> - 改写强制转换模型</dt>
+<dd>由 Neil Schemenauer 编写和实现，基于 Marc-André Lemburg 的早期工作。阅读这部分内容可以了解数值运算在 C 级别上现在如何处理的细节。</dd>
+</dl>
+<h2 id='3829e9' class='view-h5'><a class='view-text-miku' href='#3829e9'>#</a> PEP 241: Python 包中的元数据¶</h2><p class='view-p'>Python 用户经常抱怨的一个问题是不存在包含所有 Python 模块的单一类目。 位于 <code class='view-text-secondary view-border-1 view-border-secondary'>www.vex.net/parnassus/</code> 上 T. Middleton 的 Vaults of Parnassus (2009 年 2 月已停用，可在 Internet Archive Wayback Machine 上查阅) 是最大的 Python 模块类目，但在 Vaults 上注册软件只是个可选项，很多人都懒得这样做。</p><p class='view-p'>作为解决这个问题的第一步，使用 Distutils <strong>sdist</strong> 命令打包的 Python 软件将包含一个名为 <code class='view-text-secondary view-border-1 view-border-secondary'>PKG-INFO</code> 的文件，其中包含有关包的信息，如名称、版本和作者（在目录编制术语中称为元数据）。<code class='view-text-secondary view-border-1 view-border-secondary'>PKG-INFO</code> 文件可以包含的字段的完整列表见 <strong>PEP 241</strong>。随着人们开始使用 Python 2.1 打包他们的软件，越来越多的包将包含元数据，从而使得构建自动化目录系统并进行实验成为可能。通过积累经验，也许有可能设计一个真正好的目录系统，然后在 Python 2.2 中支持它。例如，Distutils 的 <strong>sdist</strong> 和 <strong>bdist_*</strong> 命令可以支持一个 <code class='view-text-secondary view-border-1 view-border-secondary'>upload</code> 选项，自动将你的包上传到目录服务器。</p><p class='view-p'>即使你不使用 Python 2.1，你也可以开始创建包含 <code class='view-text-secondary view-border-1 view-border-secondary'>PKG-INFO</code> 的包，因为 Distutils 的新版本将为早期 Python 版本的用户发布。Distutils 1.0.2 版本包含了 <strong>PEP 241</strong> 所描述的更改，以及各种错误修复和增强功能。可以从 Distutils SIG 上获取该版本 <a class='view-text-primary' href='https://www.python.org/community/sigs/current/distutils-sig/' target='_blank'>https://www.python.org/community/sigs/current/distutils-sig/</a> 。</p><p class='view-p'>参见</p><dl>
+<dt><strong>PEP 241</strong> - 针对 Python 软件包的元数据</dt>
+<dd>由 A.M. Kuchling 撰写并实现。</dd>
+<dt><strong>PEP 243</strong> - 模块仓库上传机制</dt>
+<dd>由 Sean Reifschneider 撰写，这个 PEP 草案描述了用于将 Python 软件包上传到一个中心服务器的建议机制。</dd>
+</dl>
+<h2 id='ef82a3' class='view-h5'><a class='view-text-miku' href='#ef82a3'>#</a> 新增和改进的模块¶</h2><ul><li><p><p class='view-p'>Ka-Ping Yee 贡献了两个新模块: <code class='view-text-secondary view-border-1 view-border-secondary'>inspect.py</code>，用于获取有关正在运行的 Python 代码的信息，以及 <code class='view-text-secondary view-border-1 view-border-secondary'>pydoc.py</code>，用于交互式地将文档字符串转换为 HTML 或文本。 此外，作为一个额外的功能，<code class='view-text-secondary view-border-1 view-border-secondary'>Tools/scripts/pydoc</code> 现在会自动安装，并使用 <code class='view-text-secondary view-border-1 view-border-secondary'>pydoc.py</code> 来显示给定 Python 模块、包或类名的文档。例如，<code class='view-text-secondary view-border-1 view-border-secondary'>pydoc xml.dom</code> 会显示如下内容:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">Library</span> <span class="n">Documentation</span><span class="p">:</span> <span class="n">package</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span> <span class="ow">in</span> <span class="n">xml</span>
+
+<span class="n">NAME</span>
+    <span class="n">xml</span><span class="o">.</span><span class="n">dom</span> <span class="o">-</span> <span class="n">W3C</span> <span class="n">Document</span> <span class="n">Object</span> <span class="n">Model</span> <span class="n">implementation</span> <span class="k">for</span> <span class="n">Python</span><span class="o">.</span>
+
+<span class="n">FILE</span>
+    <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.1</span><span class="o">/</span><span class="n">xml</span><span class="o">/</span><span class="n">dom</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">pyc</span>
+
+<span class="n">DESCRIPTION</span>
+    <span class="n">The</span> <span class="n">Python</span> <span class="n">mapping</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Document</span> <span class="n">Object</span> <span class="n">Model</span> <span class="ow">is</span> <span class="n">documented</span> <span class="ow">in</span> <span class="n">the</span>
+    <span class="n">Python</span> <span class="n">Library</span> <span class="n">Reference</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">section</span> <span class="n">on</span> <span class="n">the</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span> <span class="n">package</span><span class="o">.</span>
+
+    <span class="n">This</span> <span class="n">package</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">following</span> <span class="n">modules</span><span class="p">:</span>
+      <span class="o">...</span>
+</pre></div>
+</div><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>pydoc</code> 还包括一个基于 Tk 的交互式帮助浏览器。<code class='view-text-secondary view-border-1 view-border-secondary'>pydoc</code> 很快会让人上瘾；试试看！</p></p></li><li><p><p class='view-p'>两个不同的单元测试模块被添加到标准库中。<code class='view-text-secondary view-border-1 view-border-secondary'>doctest</code> 模块，由 Tim Peters 贡献，提供了一个基于运行嵌入在文档字符串中的示例并将结果与预期输出进行比较的测试框架。PyUnit，由 Steve Purcell 贡献，是一个受到 JUnit 启发的单元测试框架，而 JUnit 则是对 Kent Beck 的 Smalltalk 测试框架的改编。更多关于 PyUnit 的信息，请参阅 <a class='view-text-primary' href='https://pyunit.sourceforge.net/' target='_blank'>https://pyunit.sourceforge.net/</a> 。</p></p></li><li><p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>difflib</code> 模块包含一个类，即 <code class='view-text-secondary view-border-1 view-border-secondary'>SequenceMatcher</code>，用于比较两个序列，并计算将一个序列转换为另一个序列所需的变化。 例如，该模块可用于编写与 Unix <strong>diff</strong> 程序类似的工具，事实上，示例程序 <code class='view-text-secondary view-border-1 view-border-secondary'>Tools/scripts/ndiff.py</code> 演示了如何编写这样的脚本。</p></p></li><li><p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>curses.panel</code>，是 ncurses 和 SYSV curses 一部分的 panel 库的包装器，由 Thomas Gellekum 贡献。panel 库为窗口提供了深度特性。窗口可以在深度顺序中向上或向下移动，panel 库会计算出面板的重叠位置和哪些部分是可见的。</p></p></li><li><p><p class='view-p'>PyXML 包自 Python 2.0 以来经历了几次发布，Python 2.1 包含了更新版本的 <code class='view-text-secondary view-border-1 view-border-secondary'>xml</code> 包。一些值得注意的更改包括支持 Expat 1.2 及更高版本，Expat 解析器能够处理 Python 支持的任何编码的文件，以及对 SAX、DOM 和 <code class='view-text-secondary view-border-1 view-border-secondary'>minidom</code> 模块的各种错误修复。</p></p></li><li><p><p class='view-p'>Ka-Ping Yee 还贡献了另一个用于处理未捕获异常的钩子。<code class='view-text-secondary view-border-1 view-border-secondary'>sys.excepthook()</code> 可以设置为一个可调用对象。当异常未被任何 <code class='view-text-secondary view-border-1 view-border-secondary'>try</code>...<code class='view-text-secondary view-border-1 view-border-secondary'>except</code> 块捕获时，异常将传递给 <code class='view-text-secondary view-border-1 view-border-secondary'>sys.excepthook()</code>，它可以执行任何需要的操作。在第九届 Python 会议上，他演示了这个钩子的一个应用：打印扩展的回溯信息，不仅列出堆栈帧，还列出每个帧的函数参数和局部变量。</p></p></li><li><p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>time</code> 模块中的各种函数，如 <code class='view-text-secondary view-border-1 view-border-secondary'>asctime()</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>localtime()</code>，需要一个包含自纪元以来的时间以秒为单位的浮点参数。这些函数最常见的用途是处理当前时间，因此浮点参数现在是可选的；当没有提供值时，将使用当前时间。例如，日志文件条目通常需要一个包含当前时间的字符串；在 Python 2.1 中，可以使用 <code class='view-text-secondary view-border-1 view-border-secondary'>time.asctime()</code>，而不是之前需要的较长的 <code class='view-text-secondary view-border-1 view-border-secondary'>time.asctime(time.localtime(time.time()))</code>。</p><p class='view-p'>此更改由 Thomas Wouters 提出并实现。</p></p></li><li><p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>ftplib</code> 模块现在默认以被动模式检索文件，因为被动模式在防火墙后面更可能正常工作。这一请求来自 Debian 错误跟踪系统，因为其他 Debian 包使用 <code class='view-text-secondary view-border-1 view-border-secondary'>ftplib</code> 来检索文件，但在防火墙后面无法正常工作。由于 Netscape 默认使用被动模式且几乎没有人抱怨，因此认为这不太可能会对任何人造成问题。但如果被动模式不适合你的应用程序或网络设置，可以调用 FTP 对象的 <code class='view-text-secondary view-border-1 view-border-secondary'>set_pasv(0)</code> 来禁用被动模式。</p></p></li><li><p><p class='view-p'>对原始套接字访问的支持已添加到 <code class='view-text-secondary view-border-1 view-border-secondary'>socket</code> 模块中，由 Grant Edwards 贡献。</p></p></li><li><p><p class='view-p'><code class='view-text-secondary view-border-1 view-border-secondary'>pstats</code> 模块现在包含一个简单的交互式统计浏览器，用于显示 Python 程序的时间分析结果，当该模块作为脚本运行时调用。此功能由 Eric S. Raymond 贡献。</p></p></li><li><p><p class='view-p'>新增了一个依赖于实现的函数 <code class='view-text-secondary view-border-1 view-border-secondary'>sys._getframe([depth])</code>，用于从当前调用堆栈中返回给定的帧对象。 <code class='view-text-secondary view-border-1 view-border-secondary'>sys._getframe()</code> 返回调用堆栈顶部的帧对象；如果提供了可选的整数参数 depth，则该函数返回堆栈顶部以下 depth 层的帧。例如，<code class='view-text-secondary view-border-1 view-border-secondary'>sys._getframe(1)</code> 返回调用者的帧对象。</p><p class='view-p'>这个函数仅存在于 CPython 中，不存在于 Jython 或 .NET 实现中。请将其用于调试，并避免将其放入生产代码中。</p></p></li></ul><h2 id='9d9ecb' class='view-h5'><a class='view-text-miku' href='#9d9ecb'>#</a> 其他的改变和修正¶</h2><p class='view-p'>由于较短的发布周期，Python 2.1 中的较小更改相对较少。通过搜索 CVS 更改日志，发现应用了 117 个补丁并修复了 136 个错误；这两个数字都可能是低估的。一些较为显著的更改包括：</p><ul><li><p><p class='view-p'>现在可以选择使用一个专门的对象分配器，该分配器应比系统的 <code class='view-text-secondary view-border-1 view-border-secondary'>malloc()</code> 更快且具有更少的内存开销。该分配器使用 C 语言的 <code class='view-text-secondary view-border-1 view-border-secondary'>malloc()</code> 函数来获取大型内存池，然后从这些池中满足较小的内存请求。可以通过向 <strong>configure</strong> 脚本提供 <code class='view-text-secondary view-border-1 view-border-secondary'>--with-pymalloc</code> 选项来启用该分配器；有关实现细节，请参阅 <code class='view-text-secondary view-border-1 view-border-secondary'>Objects/obmalloc.c</code>。</p><p class='view-p'>C 扩展模块的作者应该在启用对象分配器的情况下测试他们的代码，因为一些不正确的代码可能会被破坏，导致运行时的核心转储。 在 Python 的 C API 中有许多内存分配函数，它们以前只是 C 库的 <code class='view-text-secondary view-border-1 view-border-secondary'>malloc()</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>free()</code> 的别名，这意味着如果您不小心调用了不匹配的函数，错误是不会被注意到的。 启用对象分配器后，这些函数不再是 <code class='view-text-secondary view-border-1 view-border-secondary'>malloc()</code> 和 <code class='view-text-secondary view-border-1 view-border-secondary'>free()</code> 的别名，调用错误的函数释放内存将导致核心转储。 例如，如果使用 <code class='view-text-secondary view-border-1 view-border-secondary'>PyMem_New</code> 分配了内存，就必须使用 <code class='view-text-secondary view-border-1 view-border-secondary'>PyMem_Del()</code> 而不是 <code class='view-text-secondary view-border-1 view-border-secondary'>free()</code> 释放内存。 Python 附带的一些模块就有这样的问题，必须进行修复；毫无疑问，还有更多的第三方模块会有同样的问题。</p><p class='view-p'>对象分配器由 Vladimir Marangozov 贡献。</p></p></li><li><p><p class='view-p'>由于人们经常抱怨面向行的文件 I/O 速度缓慢，并且它经常被用作一个简单的基准测试，其速度已经得到了改进。 因此，文件对象的 <code class='view-text-secondary view-border-1 view-border-secondary'>readline()</code> 方法被重写，以实现更快的速度。 具体的速度提升因平台而异，取决于 C 库的 <code class='view-text-secondary view-border-1 view-border-secondary'>getc()</code> 有多慢，但大约提升了66%，在某些特定的操作系统上可能更快。 Tim Peters 在 comp.lang.python 的讨论中受到了启发，进行了许多基准测试和编码修改。</p><p class='view-p'>新增了一个模块和文件对象的方法，由 Jeff Epler 贡献。 新方法 <code class='view-text-secondary view-border-1 view-border-secondary'>xreadlines()</code> 类似于现有的内置方法 <code class='view-text-secondary view-border-1 view-border-secondary'>xrange()</code>。 <code class='view-text-secondary view-border-1 view-border-secondary'>xreadlines()</code> 返回一个不透明的序列对象，该对象仅支持迭代，每次迭代读取一行，而不像现有的 <code class='view-text-secondary view-border-1 view-border-secondary'>readlines()</code> 方法那样将整个文件读入内存。 你可以像这样使用它:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">xreadlines</span><span class="p">():</span>
+    <span class="c1"># ... 对每一行执行某些操作 ...</span>
+    <span class="o">...</span>
+</pre></div>
+</div><p class='view-p'>有关行 I/O 更改的更详细讨论，请参阅 2001 年 1 月 1 日至 15 日的 python-dev 摘要 <a class='view-text-primary' href='https://mail.python.org/pipermail/python-dev/2001-January/' target='_blank'>https://mail.python.org/pipermail/python-dev/2001-January/</a> 。</p></p></li><li><p><p class='view-p'>给字典添加了一个新方法 <code class='view-text-secondary view-border-1 view-border-secondary'>popitem()</code>，用于破坏性地迭代字典的内容；这对于大字典来说可能更快，因为不需要构建包含所有键或值的列表。 <code class='view-text-secondary view-border-1 view-border-secondary'>D.popitem()</code> 从字典 <code class='view-text-secondary view-border-1 view-border-secondary'>D</code> 中移除一个随机的 <code class='view-text-secondary view-border-1 view-border-secondary'>(key, value)</code> 键值对，并将其作为一个 2 元组返回。 此功能主要由 Tim Peters 和 Guido van Rossum 实现，基于 Moshe Zadka 的建议和初步补丁。</p></p></li><li><p><p class='view-p'>模块现在可以通过定义一个 <code class='view-text-secondary view-border-1 view-border-secondary'>__all__</code> 属性来控制使用 <code class='view-text-secondary view-border-1 view-border-secondary'>from module import *</code> 时导入的名称。 一个常见的抱怨是，如果模块导入了其他模块，例如 <code class='view-text-secondary view-border-1 view-border-secondary'>sys</code> 或 <code class='view-text-secondary view-border-1 view-border-secondary'>string</code>，使用 <code class='view-text-secondary view-border-1 view-border-secondary'>from module import *</code> 会将它们添加到导入模块的命名空间中。 为了解决这个问题，只需在 <code class='view-text-secondary view-border-1 view-border-secondary'>__all__</code> 模块中列出公共名称即可:</p><div class='view-monofont'><div class="highlight"><pre><span></span><span class="c1"># 列出公有名称</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Database&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">]</span>
+</pre></div>
+</div><p class='view-p'>此补丁的更严格版本最初由 Ben Wolfson 提出并实现，但在经过一些 python-dev 讨论后，最终版本被修改为较弱的版本并提交。</p></p></li><li><p><p class='view-p'>以前对字符串应用 <code class='view-text-secondary view-border-1 view-border-secondary'>repr()</code> 时，对于不可打印字符使用八进制转义符；例如，换行符表示为 <code class='view-text-secondary view-border-1 view-border-secondary'>'\012'</code>。这是 Python 从 C 语言继承而来的遗留特性，但如今八进制的实际用途非常有限。Ka-Ping Yee 建议使用十六进制转义符代替八进制，并使用 <code class='view-text-secondary view-border-1 view-border-secondary'>\n</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>\t</code>、<code class='view-text-secondary view-border-1 view-border-secondary'>\r</code> 等转义符表示适当的字符，并实现了这种新的格式。</p></p></li><li><p><p class='view-p'>在编译时检测到的语法错误现在可以引发包含错误文件名和行号的异常，这是 Jeremy Hylton 进行的编译器重组的一个令人愉快的副作用。</p></p></li><li><p><p class='view-p'>导入其他模块的 C 扩展已更改为使用 <code class='view-text-secondary view-border-1 view-border-secondary'>PyImport_ImportModule()</code>，这意味着它们将使用已安装的任何导入钩子。这对于需要从 C 代码导入其他模块的第三方扩展也同样鼓励使用。</p></p></li><li><p><p class='view-p'>由于 Fredrik Lundh 的努力，Unicode 字符数据库的大小又减少了 340K。</p></p></li><li><p><p class='view-p'>一些新移植版本被贡献：MacOS X（由 Steven Majewski 贡献），Cygwin（由 Jason Tishler 贡献），RISCOS（由 Dietmar Schwertberger 贡献），以及 Unixware 7（由 Billy G. Allie 贡献）。</p></p></li></ul><p class='view-p'>此外还有一份由次要的程序错误修复、次要的内存泄漏、文档字符串编辑和其他调整组成的常规清单，因过于冗长而不值得逐项列出；如果你想了解完整细节请参阅 CVS 日志。</p><h2 id='344b2f' class='view-h5'><a class='view-text-miku' href='#344b2f'>#</a> 致谢¶</h2><p class='view-p'>作者感谢以下人员对本文的各种草案提出建议： Graeme Cross、David Goodger、Jay Graves、Michael Hudson、Marc-André Lemburg、Fredrik Lundh、Neil Schemenauer、Thomas Wouters。</p>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:32:58 创建于: 2025-11-27 09:32:58
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

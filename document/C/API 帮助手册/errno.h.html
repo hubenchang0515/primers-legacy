@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh" class="view-height-100">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/primers-legacy/icon.svg">
+    <title>编程伙伴  - C - API 帮助手册 - errno.h</title>
+    <link rel="canonical" href="http://hubenchang0515.github.io/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" />
+    <meta name="description" content="C语言标准库头文件errno.h!class:info请查看[C语言标准库头文件列表](/document/zh/06.C/99.API%20帮助手册/01.标准库.md)了解更多相关API。这个头文件提供**报告错误情况**的相关功能，它定义了一个全局变量`">
+    <link rel="stylesheet" href="/primers-legacy/view/view.css">
+    <link rel="stylesheet" href="/primers-legacy/adapter/adapter.css">
+    <script src="/primers-legacy/MathJax/es5/tex-svg.js" async></script>
+    <style>
+        #side-menu {
+            transition: all 500ms;
+        }
+
+        .side-menu-toggle-0 {
+            width: 16rem;
+        }
+
+        .side-menu-toggle-1 {
+            width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .side-menu-toggle-0 {
+            width: 0;
+        }
+
+        .side-menu-toggle-1 {
+            width: 16rem;
+        }
+        }
+
+        .markdown-content {
+            min-width: 16rem;
+        }
+
+        .markdown-content * {
+            max-width: 100%;
+        } 
+
+        .markdown-content > * {
+            margin-block-start: 1rem;
+            margin-block-end: 1rem;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .markdown-content > img,
+        .markdown-content > svg,
+        .markdown-content img:only-child,
+        .markdown-content svg:only-child {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .markdown-content .highlight pre {
+            background-color: #2E3440;
+        }
+
+        .markdown-content .math, .markdown-content .math * {
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+        pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #3B4252 }
+.highlight { background: #2E3440; color: #d8dee9 }
+.highlight .c { color: #616e87; font-style: italic } /* Comment */
+.highlight .err { color: #bf616a } /* Error */
+.highlight .esc { color: #d8dee9 } /* Escape */
+.highlight .g { color: #d8dee9 } /* Generic */
+.highlight .k { color: #81a1c1; font-weight: bold } /* Keyword */
+.highlight .l { color: #d8dee9 } /* Literal */
+.highlight .n { color: #d8dee9 } /* Name */
+.highlight .o { color: #81a1c1; font-weight: bold } /* Operator */
+.highlight .x { color: #d8dee9 } /* Other */
+.highlight .p { color: #eceff4 } /* Punctuation */
+.highlight .ch { color: #616e87; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #616e87; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #5e81ac; font-style: italic } /* Comment.Preproc */
+.highlight .cpf { color: #616e87; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #616e87; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #616e87; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #bf616a } /* Generic.Deleted */
+.highlight .ge { color: #d8dee9; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #d8dee9; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #bf616a } /* Generic.Error */
+.highlight .gh { color: #88c0d0; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #a3be8c } /* Generic.Inserted */
+.highlight .go { color: #d8dee9 } /* Generic.Output */
+.highlight .gp { color: #616e88; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #d8dee9; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #88c0d0; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #bf616a } /* Generic.Traceback */
+.highlight .kc { color: #81a1c1; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #81a1c1; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #81a1c1; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #81a1c1 } /* Keyword.Pseudo */
+.highlight .kr { color: #81a1c1; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #81a1c1 } /* Keyword.Type */
+.highlight .ld { color: #d8dee9 } /* Literal.Date */
+.highlight .m { color: #b48ead } /* Literal.Number */
+.highlight .s { color: #a3be8c } /* Literal.String */
+.highlight .na { color: #8fbcbb } /* Name.Attribute */
+.highlight .nb { color: #81a1c1 } /* Name.Builtin */
+.highlight .nc { color: #8fbcbb } /* Name.Class */
+.highlight .no { color: #8fbcbb } /* Name.Constant */
+.highlight .nd { color: #d08770 } /* Name.Decorator */
+.highlight .ni { color: #d08770 } /* Name.Entity */
+.highlight .ne { color: #bf616a } /* Name.Exception */
+.highlight .nf { color: #88c0d0 } /* Name.Function */
+.highlight .nl { color: #d8dee9 } /* Name.Label */
+.highlight .nn { color: #8fbcbb } /* Name.Namespace */
+.highlight .nx { color: #d8dee9 } /* Name.Other */
+.highlight .py { color: #d8dee9 } /* Name.Property */
+.highlight .nt { color: #81a1c1 } /* Name.Tag */
+.highlight .nv { color: #d8dee9 } /* Name.Variable */
+.highlight .ow { color: #81a1c1; font-weight: bold } /* Operator.Word */
+.highlight .pm { color: #eceff4 } /* Punctuation.Marker */
+.highlight .w { color: #d8dee9 } /* Text.Whitespace */
+.highlight .mb { color: #b48ead } /* Literal.Number.Bin */
+.highlight .mf { color: #b48ead } /* Literal.Number.Float */
+.highlight .mh { color: #b48ead } /* Literal.Number.Hex */
+.highlight .mi { color: #b48ead } /* Literal.Number.Integer */
+.highlight .mo { color: #b48ead } /* Literal.Number.Oct */
+.highlight .sa { color: #a3be8c } /* Literal.String.Affix */
+.highlight .sb { color: #a3be8c } /* Literal.String.Backtick */
+.highlight .sc { color: #a3be8c } /* Literal.String.Char */
+.highlight .dl { color: #a3be8c } /* Literal.String.Delimiter */
+.highlight .sd { color: #616e87 } /* Literal.String.Doc */
+.highlight .s2 { color: #a3be8c } /* Literal.String.Double */
+.highlight .se { color: #ebcb8b } /* Literal.String.Escape */
+.highlight .sh { color: #a3be8c } /* Literal.String.Heredoc */
+.highlight .si { color: #a3be8c } /* Literal.String.Interpol */
+.highlight .sx { color: #a3be8c } /* Literal.String.Other */
+.highlight .sr { color: #ebcb8b } /* Literal.String.Regex */
+.highlight .s1 { color: #a3be8c } /* Literal.String.Single */
+.highlight .ss { color: #a3be8c } /* Literal.String.Symbol */
+.highlight .bp { color: #81a1c1 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #88c0d0 } /* Name.Function.Magic */
+.highlight .vc { color: #d8dee9 } /* Name.Variable.Class */
+.highlight .vg { color: #d8dee9 } /* Name.Variable.Global */
+.highlight .vi { color: #d8dee9 } /* Name.Variable.Instance */
+.highlight .vm { color: #d8dee9 } /* Name.Variable.Magic */
+.highlight .il { color: #b48ead } /* Literal.Number.Integer.Long */
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWG32HWNXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EWG32HWNXT');
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector("#side-menu");
+            if (menu.classList.contains("side-menu-toggle-0")) {
+                menu.classList.remove("side-menu-toggle-0");
+                menu.classList.add("side-menu-toggle-1");
+            } else {
+                menu.classList.remove("side-menu-toggle-1");
+                menu.classList.add("side-menu-toggle-0");
+            }
+        }
+    </script>
+</head>
+
+<body class="view-height-100">
+    <div id="root" class="view-display-flex view-flex-direction-column view-height-100">
+        <nav class="view-display-flex view-background-miku view-align-items-center view-gap-1 view-flex-shrink-0 view-overflow-y-hidden view-overflow-x-auto" role="navigation">
+            <a class="view-text-light view-text-decoration-none" href="/primers-legacy/">
+                <h5 class="view-padding-x-2">Primers</h5>
+            </a>
+            
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Python/index.html">Python</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/HTML/index.html">HTML</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-light view-text-decoration-solid" href="/primers-legacy/document/C/index.html">C</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Lua/index.html">Lua</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/Bash/index.html">Bash</a>
+                    
+                
+            
+                
+                    
+                        <a class="view-text-nowrap view-text-light view-text-decoration-none" href="/primers-legacy/document/%E9%80%9A%E8%AF%86%E5%9F%BA%E7%A1%80/index.html">通识基础</a>
+                    
+                
+            
+                
+                    
+                    
+                
+            
+        </nav>
+        
+        <div class="view-flex-grow-1 view-display-flex view-flex-direction-row view-overflow-hidden">
+            
+                <aside id="side-menu" class="side-menu-toggle-0 view-background-hint view-overflow-y-auto view-overflow-x-hidden view-flex-shrink-0 view-display-flex view-text-nowrap">
+                    <div class="view-flex-grow-1 view-display-flex view-flex-direction-column view-padding-2 ">
+                        
+                            
+                                <ul class="view-padding-0">
+                                    
+                                        <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/index.html" title="index">index</a></p>
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预备</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/C%20%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AE%80%E4%BB%8B%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html" title="C 语言的简介与环境配置">C 语言的简介与环境配置</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%87/Hello%20World.html" title="Hello World">Hello World</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">基础</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.html" title="变量与基本类型">变量与基本类型</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html" title="显示输出">显示输出</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.html" title="基本运算">基本运算</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%8C%87%E9%92%88.html" title="指针">指针</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5.html" title="获取输入">获取输入</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/if%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5.html" title="if 条件语句">if 条件语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/switch%20%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5.html" title="switch 分支语句">switch 分支语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/while%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="while 循环语句">while 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/for%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5.html" title="for 循环语句">for 循环语句</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84.html" title="数组">数组</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%AD%97%E7%AC%A6%E4%B8%B2.html" title="字符串">字符串</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%BB%93%E6%9E%84%E4%BD%93%20struct.html" title="结构体 struct">结构体 struct</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E6%9E%9A%E4%B8%BE%20enum.html" title="枚举 enum">枚举 enum</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%85%B1%E7%94%A8%E4%BD%93%20union.html" title="共用体 union">共用体 union</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20typedef.html" title="类型别名 typedef">类型别名 typedef</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E5%87%BD%E6%95%B0.html" title="函数">函数</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F.html" title="作用域">作用域</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">进阶</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E8%BF%9B%E9%98%B6/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.html" title="动态内存管理">动态内存管理</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">预处理指令</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%AF%B4%E6%98%8E.html" title="说明">说明</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%8C%87%E4%BB%A4.html" title="文件包含指令">文件包含指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4.html" title="宏定义指令">宏定义指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4.html" title="条件编译指令">条件编译指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E8%A1%8C%E5%8F%B7%E4%BF%AE%E6%94%B9%E6%8C%87%E4%BB%A4.html" title="行号修改指令">行号修改指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E9%94%99%E8%AF%AF%E5%92%8C%E8%AD%A6%E5%91%8A%E6%8C%87%E4%BB%A4.html" title="错误和警告指令">错误和警告指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E6%8C%87%E4%BB%A4.html" title="文件嵌入指令">文件嵌入指令</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4/%E7%BC%96%E8%AF%91%E5%99%A8%E6%8C%87%E4%BB%A4.html" title="编译器指令">编译器指令</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                                <p class="view-text-miku">API 帮助手册</p>
+                                <ul class="view-padding-0">
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html" title="标准库">标准库</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/assert.h.html" title="assert.h">assert.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/complex.h.html" title="complex.h">complex.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/ctype.h.html" title="ctype.h">ctype.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2 view-background-miku"><a class="view-text-light view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/errno.h.html" title="errno.h">errno.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/fenv.h.html" title="fenv.h">fenv.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/float.h.html" title="float.h">float.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/inttypes.h.html" title="inttypes.h">inttypes.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/iso646.h.html" title="iso646.h">iso646.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/limits.h.html" title="limits.h">limits.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/locale.h.html" title="locale.h">locale.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/math.h.html" title="math.h">math.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/setjmp.h.html" title="setjmp.h">setjmp.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/signal.h.html" title="signal.h">signal.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdalign.h.html" title="stdalign.h">stdalign.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdarg.h.html" title="stdarg.h">stdarg.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdatomic.h.html" title="stdatomic.h">stdatomic.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbit.h.html" title="stdbit.h">stdbit.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdbool.h.html" title="stdbool.h">stdbool.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdckdint.h.html" title="stdckdint.h">stdckdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stddef.h.html" title="stddef.h">stddef.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdint.h.html" title="stdint.h">stdint.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdio.h.html" title="stdio.h">stdio.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdlib.h.html" title="stdlib.h">stdlib.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/stdnoreturn.h.html" title="stdnoreturn.h">stdnoreturn.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html" title="string.h">string.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/threads.h.html" title="threads.h">threads.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/time.h.html" title="time.h">time.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wchar.h.html" title="wchar.h">wchar.h</a></p>
+                                        
+                                    
+                                        
+                                            <p class="view-padding-x-2"><a class="view-text-miku view-text-decoration-none" href="/primers-legacy/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/wctype.h.html" title="wctype.h">wctype.h</a></p>
+                                        
+                                    
+                                </ul>
+                            
+                        
+                            
+                            
+                        
+                    </div>
+                </aside>
+                <div class="view-display-flex view-flex-direction-column view-justify-content-center">
+                    <button class="view-button view-height-10" onclick="toggleMenu()">&lt;&gt;</button>
+                </div>
+            
+
+            <div class="view-flex-grow-1 view-overflow-auto view-height-100">
+                <div class="view-container-lg view-padding-x-1">
+                    <div class="markdown-content">
+                        <div class="view-message-success">
+                            国际访客建议访问
+                            
+                            <a class="view-text-light" href="https://xplanc.org/primers/document/zh" rel="nofollow">
+                                    Primers 编程伙伴 国际版站点
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C" rel="nofollow">
+                                    C 教程
+                                </a>
+                                &gt;
+                                <a class="view-text-light" href="https://xplanc.org/primers/document/zh/06.C/99.API 帮助手册/EX.errno.h.md" rel="nofollow">
+                                    errno.h
+                                </a>
+                            
+                            以获得更好的体验。
+                        </div>
+
+                        <h1 id='40e9d9' class='view-h4'><a class='view-text-miku' href='#40e9d9'>#</a> C 语言标准库头文件 errno.h</h1><div class='custom info'>请查看 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/%E6%A0%87%E5%87%86%E5%BA%93.html'>C 语言标准库头文件列表</a> 了解更多相关 API。</div><p class='view-p'>这个头文件提供 <strong>报告错误情况</strong> 的相关功能，它定义了一个全局变量 <code class='view-text-secondary view-border-1 view-border-secondary'>errno</code>（错误编号）和一些标准的错误代码宏。<br />
+发生错误时可以通过读取 <code class='view-text-secondary view-border-1 view-border-secondary'>errno</code> 获知错误；通过 <a class='view-text-primary' href='/document/C/API%20%E5%B8%AE%E5%8A%A9%E6%89%8B%E5%86%8C/string.h.html'>string.h</a> 中的 <a class='view-text-primary' href='/document/C/%E6%A0%87%E5%87%86%E5%BA%93/strerror.html'>strerror</a> 函数可以获得可读的错误说明。<br />
+使用 <code class='view-text-secondary view-border-1 view-border-secondary'>stdio</code> 中的 <code class='view-text-secondary view-border-1 view-border-secondary'>perror</code> 函数可以便捷的打印错误说明。</p><h2 id='0d53f0' class='view-h5'><a class='view-text-miku' href='#0d53f0'>#</a> 示例</h2><div class='view-monofont'><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span><span class="c1">   // errno</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="c1">  // strerror</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 尝试打开一个不存在的文件</span>
+<span class="w">    </span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;nonexistent_file.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fp</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 使用 errno 获取错误代码</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;打开文件失败，错误代码: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">errno</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// 检查特定错误类型</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">errno</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ENOENT</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;特定错误: 文件不存在(ENOENT)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">// 使用 strerror 获取错误说明</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;错误说明: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">// 使用 perror 便捷打印错误说明，和上一行代码基本等价</span>
+<span class="w">        </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;错误说明&quot;</span><span class="p">);</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">// 返回失败</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 文件操作...</span>
+
+<span class="w">    </span><span class="c1">// 关闭文件</span>
+<span class="w">    </span><span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;文件操作成功完成</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div><p class='view-p'>运行结果：</p><code class='hljs' style="background:#000;">
+<pre>
+打开文件失败，错误代码: 2
+特定错误: 文件不存在(ENOENT)
+错误说明: No such file or directory
+错误说明: No such file or directory
+</pre>
+</code>
+<h2 id='d2ecd2' class='view-h5'><a class='view-text-miku' href='#d2ecd2'>#</a> 宏</h2><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">宏</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>errno</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">POSIX 兼容的线程局部错误号</td>
+</tr>
+</tbody>
+</table><h2 id='7c2ff5' class='view-h5'><a class='view-text-miku' href='#7c2ff5'>#</a> 错误编号</h2><p class='view-p'>注意：</p><ol><li><p>错误码在不同环境中可能有不同的具体数值</p></li><li><p>并非所有系统都支持表中的全部错误码</p></li><li><p>不同环境可能定义有表中不包含的其它错误码</p></li></ol><table class='view-width-100'><thead>
+<tr>
+  <th style="text-align:left">错误编号宏</th>
+  <th style="text-align:left">标准</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EDOM</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">数学函数的参数超过定义域范围</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EILSEQ</code></td>
+  <td style="text-align:left">C95</td>
+  <td style="text-align:left">非法字节序列</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ERANGE</code></td>
+  <td style="text-align:left">C89</td>
+  <td style="text-align:left">数据超出范围</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>E2BIG</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">参数列表太长</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EACCES</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">权限不足</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EADDRINUSE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">地址已被使用</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EADDRNOTAVAIL</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">地址不可用</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EAFNOSUPPORT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">地址族不支持</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EAGAIN</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">资源暂时不可用（通常等同于 <code class='view-text-secondary view-border-1 view-border-secondary'>EWOULDBLOCK</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EALREADY</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">连接已在进行中</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EBADF</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">错误的文件描述符</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EBADMSG</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">错误的消息</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EBUSY</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">设备或资源忙</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ECANCELED</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">操作已取消</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ECHILD</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无子进程</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ECONNABORTED</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">连接中止</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ECONNREFUSED</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">连接被拒绝</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ECONNRESET</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">连接被重置</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EDEADLK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">资源死锁</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EDESTADDRREQ</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">需要目标地址</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EDQUOT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">磁盘配额超出</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EEXIST</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">文件已存在</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EFAULT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">错误的地址</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EFBIG</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">文件太大</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EHOSTUNREACH</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">主机不可达</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EIDRM</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">标识符已移除</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EINPROGRESS</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">操作正在进行</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EINTR</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">系统调用被中断</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EINVAL</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无效参数</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EIO</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">输入/输出错误</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EISCONN</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">套接字已连接</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EISDIR</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">是一个目录</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ELOOP</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">符号链接层数过多</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EMFILE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">打开文件太多</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EMLINK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">链接太多</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EMSGSIZE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">消息太长</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EMULTIHOP</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">需要多跳</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENAMETOOLONG</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">文件名太长</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENETDOWN</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">网络已关闭</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENETRESET</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">网络被重置</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENETUNREACH</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">网络不可达</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENFILE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">系统打开文件太多</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOBUFS</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无缓冲区空间</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENODATA</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无可用数据</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENODEV</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无此设备</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOENT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无此文件或目录</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOEXEC</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">执行格式错误</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOLCK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无可用锁</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOLINK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">链接已断开</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOMEM</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">内存不足</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOMSG</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无此消息</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOPROTOOPT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">协议选项不可用</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOSPC</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">设备无剩余空间</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOSR</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无流资源</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOSTR</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">不是流</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOSYS</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">功能未实现</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTCONN</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">传输端点未连接</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTDIR</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">不是目录</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTEMPTY</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">目录非空</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTSOCK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">不是套接字</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTSUP</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">不支持的操作</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENOTTY</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">不适当的I/O控制操作</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ENXIO</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无此设备或地址</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EOPNOTSUPP</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">操作不支持</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EOVERFLOW</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">值太大无法存储</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EPERM</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">操作不允许</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EPIPE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">管道破裂</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EPROTO</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">协议错误</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EPROTONOSUPPORT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">协议不支持</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EPROTOTYPE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">协议类型错误</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EROFS</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">只读文件系统</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ESPIPE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">非法寻址</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ESRCH</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">无此进程</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ESTALE</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">句柄失效</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ETIME</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">流式I/O超时</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ETIMEDOUT</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">连接超时</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>ETXTBSY</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">文本文件忙</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EWOULDBLOCK</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">操作会阻塞（通常等同于 <code class='view-text-secondary view-border-1 view-border-secondary'>EAGAIN</code>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class='view-text-secondary view-border-1 view-border-secondary'>EXDEV</code></td>
+  <td style="text-align:left">POSIX</td>
+  <td style="text-align:left">跨设备链接</td>
+</tr>
+</tbody>
+</table><h2 id='fac4c8' class='view-h5'><a class='view-text-miku' href='#fac4c8'>#</a> 推荐阅读</h2><ul><li><p><a class='view-text-primary' href='https://en.cppreference.com/w/c/header/errno.html' target='_blank'>Standard library header &lt;errno.h&gt;</a></p></li><li><p><a class='view-text-primary' href='https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html' target='_blank'>POSIX 错误码</a></p></li></ul>
+
+                        <div class="view-text-hint">
+                            本文 更新于: 2025-11-27 09:33:03 创建于: 2025-11-27 09:33:03
+                        </div>
+                    </div>
+
+                    <footer class="view-background-miku">
+                        <div class="view-text-align-center view-text-light">
+                            <p>
+                                <a class="view-text-light" href="https://beian.miit.gov.cn">鄂ICP备2025099673号-1</a>
+                            </p>
+                            <p>
+                                Powered by <a class="view-text-light" href="https://hubenchang0515.github.io/primers/">Primers</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
