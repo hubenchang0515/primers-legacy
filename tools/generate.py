@@ -128,7 +128,7 @@ class MarkdownRenderer(mistune.HTMLRenderer):
         # 使用 shift 运行代码
         elif infos[1] == 'shift':
             lexer = get_lexer_by_name(infos[0], stripall=True)
-            b64code:str = base64.b64encode(quote(code).encode('utf-8')).decode('utf-8')
+            b64code:str = quote(base64.b64encode(quote(code).encode('utf-8')).decode('utf-8'))
             if len(infos) > 2:
                 b64input:str = base64.b64encode(quote(infos[2]).encode('utf-8')).decode('utf-8')
                 return f"<p><a class='view-message-success view-text-light' target='_blank' href='{SHIFT_URL}#lang={infos[0]}&input={b64input}&code={b64code}'>运行示例</a></p><div class='view-monofont'>{highlight(code, lexer, formatter)}</div>"
